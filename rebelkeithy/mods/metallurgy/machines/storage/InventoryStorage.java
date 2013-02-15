@@ -31,7 +31,7 @@ public class InventoryStorage implements IInventory
 		else
 			System.out.println("On server");
 		*/
-		System.out.println("Adding " + i + " to tab size " + items.length);
+		//System.out.println("Adding " + i + " to tab size " + items.length);
 		ItemStack[] newArray = new ItemStack[items.length + i];
 		for(int n = 0; n < items.length; n ++)
 			newArray[n] = items[n];

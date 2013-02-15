@@ -8,6 +8,7 @@ public class TileEntityStorageBlock extends TileEntity
 	int accessorX;
 	int accessorY;
 	int accessorZ;
+	int itemID;
 	public boolean isConnected;
 	public boolean isActive;
 	
@@ -48,6 +49,10 @@ public class TileEntityStorageBlock extends TileEntity
 		isConnected = true;
 		tesa.addBlock(xCoord, yCoord, zCoord);
 		return true;
+	}
+
+	public void setTabID(int itemID) {
+		this.itemID = itemID;
 	}
 	
 }

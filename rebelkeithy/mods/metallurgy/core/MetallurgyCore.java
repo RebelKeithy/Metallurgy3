@@ -10,6 +10,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 
 @Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="1.4.7-1.11.13-1a")
@@ -57,6 +59,8 @@ public class MetallurgyCore
 		{
 			MetalSet newSet = new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set));
 		}
+		
+		NetworkRegistry.instance().registerGuiHandler(this, GuiRegistry.instance());
 	}
 	
 	@Init

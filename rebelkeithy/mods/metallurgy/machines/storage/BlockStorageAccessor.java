@@ -50,8 +50,8 @@ public class BlockStorageAccessor extends BlockContainer
             
             if (var10 != null)
             {
-            	System.out.println("Size = " + var10.corner2.subtract(var10.corner1));
-            	System.out.println("openning gui");
+            	//System.out.println("Size = " + var10.corner2.subtract(var10.corner1));
+            	//System.out.println("openning gui");
             	int firstID = 0;
             	if(var10.inventories.size() > 0)
             		firstID = var10.inventories.keySet().iterator().next();

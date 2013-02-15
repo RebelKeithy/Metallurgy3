@@ -2,6 +2,9 @@ package rebelkeithy.mods.metallurgy.machines.storage;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -23,7 +26,42 @@ public class BlockStorage extends BlockContainer
      */
     public void onBlockAdded(World world, int x, int y, int z) 
     {
+    }
+    
+    @Override
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving par5EntityLiving)
+    {
+    	ItemStack par6ItemStack = par5EntityLiving.getHeldItem();
+    	if(par6ItemStack.hasTagCompound())
+    	{
+    		NBTTagCompound tag = par6ItemStack.getTagCompound();
+    		tag.setInteger("tabID", 257);
+    		par6ItemStack.setTagCompound(tag);
+    	} else {
+    		NBTTagCompound tag = new NBTTagCompound();
+    		tag.setInteger("tabID", 257);
+    		par6ItemStack.setTagCompound(tag);
+    	}
+    	
     	TileEntityStorageBlock tesb = (TileEntityStorageBlock) world.getBlockTileEntity(x, y, z);
+    	if(par6ItemStack.hasTagCompound())
+    	{
+    		NBTTagCompound tag = par6ItemStack.getTagCompound();
+    		if(tag.hasKey("tabID"))
+    		{
+    			int tabID = tag.getInteger("tabID");
+    			tesb.setTabID(tabID);
+    			System.out.println("Block setting tab ID " + tabID);
+    		}
+    	}
+    }
+    
+    @Override
+    public void onPostBlockPlaced(World world, int x, int y, int z, int meta)
+    {
+
+    	TileEntityStorageBlock tesb = (TileEntityStorageBlock) world.getBlockTileEntity(x, y, z);
+    	//tesb.setTabID(par6ItemStack).tabID);
     	boolean foundIt = false;
     	List<Coord>adjacent = Coord.getAdjacentCoords(new Coord(x, y, z));
     	for(Coord c : adjacent)

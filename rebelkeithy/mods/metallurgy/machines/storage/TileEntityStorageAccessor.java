@@ -65,7 +65,7 @@ public class TileEntityStorageAccessor extends TileEntity
 			return getInventory();
 		else
 		{
-			System.out.println("getting inventory " + id);
+			//System.out.println("getting inventory " + id);
 			return inventories.get(id);
 		}
 	}
@@ -76,7 +76,7 @@ public class TileEntityStorageAccessor extends TileEntity
 			return new InventoryStorage(this, 0);
 		}
 		
-		for(InventoryStorage si : inventories.values())
+		/*for(InventoryStorage si : inventories.values())
 		{
 			System.out.println("getting default inventory ");
 			System.out.println("number of invenotries = " + inventories.size());
@@ -84,7 +84,7 @@ public class TileEntityStorageAccessor extends TileEntity
 			System.out.println("inventory items " + si.items);
 			System.out.println("inventory size " + si.getSizeInventory());
 			return si;
-		}
+		}*/
 		return null;
 	}
 
@@ -219,9 +219,12 @@ public class TileEntityStorageAccessor extends TileEntity
 	private void activateBlock(Coord c)
 	{
 		activatedBlocks.add(c);
-		//System.out.println("adding block " + c);
-		int itemID = (int) ((Math.random() + 0.1) * 20) + 264;
-		this.addTab(new ItemStack(itemID, 1, 0), 3*9);
+		if(worldObj.getBlockId(c.x, c.y, c.z) == MetallurgyMachines.instance.storageBlock.blockID)
+		{
+			int itemID = ((TileEntityStorageBlock)worldObj.getBlockTileEntity(c.x, c.y, c.z)).itemID;
+			System.out.println("Activating block and adding tab " + itemID);
+			this.addTab(new ItemStack(itemID, 1, 0), 3*9);
+		}
 	}
 	
 	private boolean checkNewBlock(int x, int y, int z)
@@ -229,8 +232,10 @@ public class TileEntityStorageAccessor extends TileEntity
 		int id = worldObj.getBlockId(x, y, z);
 		if(id == MetallurgyMachines.instance.storageAccessor.blockID || id == MetallurgyMachines.instance.storageBlock.blockID)
 		{
+			System.out.println("Checking bock id " + id + " at " + x + " " + y + " " + z + "... True");
 			return true;
 		} else {
+			System.out.println("Checking bock " + id + " at " + x + " " + y + " " + z + "... False");
 			return false;
 		}
 	}
@@ -242,7 +247,7 @@ public class TileEntityStorageAccessor extends TileEntity
 			if(inventories.containsKey(itemStack.itemID))
 			{
 				int change = size - inventories.get(itemStack.itemID).items.length;
-				System.out.println("[CLIENT] Adding " + change + " to inventory "+ itemStack.itemID);
+				//System.out.println("[CLIENT] Adding " + change + " to inventory "+ itemStack.itemID);
 				addTab(itemStack, change);
 			} else {
 				addTab(itemStack, size);
