@@ -57,6 +57,7 @@ public class MetallurgyCore
 		}
 		for(String set : setsToRead)
 		{
+			System.out.println("reading set " + set);
 			MetalSet newSet = new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set));
 		}
 		
@@ -95,7 +96,7 @@ public class MetallurgyCore
 		
 		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").value.split("\\s*,\\s*"));
 		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").value.split("\\s*,\\s*"));
-		
+		System.out.println("reading sets " + setsToRead.size());
 		config.save();
 	}
 	

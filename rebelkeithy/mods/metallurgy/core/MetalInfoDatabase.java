@@ -71,11 +71,13 @@ public class MetalInfoDatabase
 	
 	public static Map<String, Map<String, String>> getSpreadsheetDataForSet(String name)
 	{
-		if(spreadsheet == null)
+		Map<String, Map<String, String>> returnData = new HashMap<String, Map<String, String>>();
+		
+		if(spreadsheet == null || !spreadsheet.contains(name))
 		{
+			return returnData;
 		}
 		
-		Map<String, Map<String, String>> returnData = new HashMap<String, Map<String, String>>();
 		for(Map<String, String> data : spreadsheet)
 		{
 			
