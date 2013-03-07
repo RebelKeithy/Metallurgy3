@@ -53,12 +53,15 @@ public class MetallurgyCore
 		
 		for(String filename : csvFiles)
 		{
-			MetalInfoDatabase.readDataFromFile("/config/Metallurgy3/" + filename);
+			if(!filename.equals(""))
+				MetalInfoDatabase.readMetalDataFromFile("/config/Metallurgy3/" + filename);
 		}
 		for(String set : setsToRead)
 		{
-			System.out.println("reading set " + set);
-			MetalSet newSet = new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set));
+			if(!set.equals(""))
+			{
+				new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set));
+			}
 		}
 		
 		NetworkRegistry.instance().registerGuiHandler(this, GuiRegistry.instance());

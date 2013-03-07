@@ -4,6 +4,7 @@ import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ALLOY;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.CATALYST;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ORE;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.RESPAWN;
+import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.DROP;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -36,6 +37,7 @@ import java.util.Random;
 
 import rebelkeithy.mods.metablock.MetaBlock;
 import rebelkeithy.mods.metablock.SubBlock;
+import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 
 public class OreInfo implements IWorldGenerator
 {
@@ -49,6 +51,10 @@ public class OreInfo implements IWorldGenerator
 	protected int brickID;
 	protected int brickMeta;
 	protected int itemIDs;
+	
+	protected String dropName;
+	protected int dropMin;
+	protected int dropMax;
 	
 	//TODO: remove in 1.5
 	protected int iconColumn;
@@ -111,6 +117,8 @@ public class OreInfo implements IWorldGenerator
 			type = ALLOY;
 		else if(info.get("Type").equals("Respawn"))
 			type = RESPAWN;
+		else if(info.get("Type").equals("Drop"))
+			type = DROP;
 		
 		alloyRecipe = info.get("Alloy Recipe").split(" ");
 		for(int n = 0; n < alloyRecipe.length; n++)
@@ -121,10 +129,30 @@ public class OreInfo implements IWorldGenerator
 			oreID = Integer.parseInt(info.get("Ore ID").split(":")[0]);
 			oreMeta = Integer.parseInt(info.get("Ore ID").split(":")[1]);
 		}
-		blockID = Integer.parseInt(info.get("Block ID").split(":")[0]);
-		blockMeta = Integer.parseInt(info.get("Block ID").split(":")[1]);
-		brickID = Integer.parseInt(info.get("Brick ID").split(":")[0]);
-		brickMeta = Integer.parseInt(info.get("Brick ID").split(":")[1]);
+		if(!info.get("Block ID").equals("0"))
+		{
+			blockID = Integer.parseInt(info.get("Block ID").split(":")[0]);
+			blockMeta = Integer.parseInt(info.get("Block ID").split(":")[1]);
+		}
+		if(!info.get("Brick ID").equals("0"))
+		{
+			brickID = Integer.parseInt(info.get("Brick ID").split(":")[0]);
+			brickMeta = Integer.parseInt(info.get("Brick ID").split(":")[1]);
+		}
+		
+		if(type == DROP)
+		{
+			dropName = info.get("Drops").replace("\"", "");
+			if(info.get("Drop Amount").contains("-"))
+			{
+				dropMin = Integer.parseInt(info.get("Drop Amount").split("-")[0]);
+				dropMax = Integer.parseInt(info.get("Drop Amount").split("-")[1]);
+			} else {
+				dropMin = Integer.parseInt(info.get("Drop Amount"));
+				dropMax = dropMin;
+			}
+		}
+				
 		itemIDs = Integer.parseInt(info.get("Item IDs"));
 		
 		iconColumn = Integer.parseInt(info.get("Icon Column"));
@@ -132,7 +160,7 @@ public class OreInfo implements IWorldGenerator
 		abstractorXP = Integer.parseInt(info.get("Abstractor XP"));
 		blockLvl = Integer.parseInt(info.get("Block lvl"));
 		
-		if(type != CATALYST)
+		if(type != CATALYST && type != DROP)
 		{
 			pickLvl = Integer.parseInt(info.get("Pick lvl"));
 			toolDura = Integer.parseInt(info.get("Durability"));
@@ -149,6 +177,7 @@ public class OreInfo implements IWorldGenerator
 		
 		dungeonLootChance = Integer.parseInt(info.get("Dungeon Loot Chance"));
 		dungeonLootAmount = Integer.parseInt(info.get("Dungeon Loot Amount"));
+		
 		if(type.generates())
 		{
 			veinCount = Integer.parseInt(info.get("Veins Per Chunk"));
@@ -167,30 +196,35 @@ public class OreInfo implements IWorldGenerator
 		if(!type.equals(RESPAWN))
 		{
 			String id;
-			if((type == ORE || type == CATALYST) && oreID != 0)
+			if((type == ORE || type == CATALYST || type == DROP) && oreID != 0)
 			{
 				id = config.get(name + ".IDs", "Ore", oreID + ":" + oreMeta).value;
 				oreID = Integer.parseInt(id.split(":")[0]);
 				oreMeta = Integer.parseInt(id.split(":")[1]);
 			}
-			if(blockID != 0)
+			if(type != DROP && blockID != 0)
 			{
 				id = config.get(name + ".IDs", "Block", blockID + ":" + blockMeta).value;
 				blockID = Integer.parseInt(id.split(":")[0]);
 				blockMeta = Integer.parseInt(id.split(":")[1]);
 			}
-			if(brickID != 0)
+			if(type != DROP && brickID != 0)
 			{
 				id = config.get(name + ".IDs", "Brick", brickID + ":" + brickMeta).value;
 				brickID = Integer.parseInt(id.split(":")[0]);
 				brickMeta = Integer.parseInt(id.split(":")[1]);
 			}
-			itemIDs = config.get(name + ".IDs", "Item IDs (reserves 50)", itemIDs).getInt();
 			
-			abstractorXP = config.get(name + ".misc", "abstractor xp", abstractorXP).getInt();
+			if(type != DROP)
+			{
+				itemIDs = config.get(name + ".IDs", "Item IDs (reserves 50)", itemIDs).getInt();
+			
+				abstractorXP = config.get(name + ".misc", "abstractor xp", abstractorXP).getInt();
+			}
+			
 			blockLvl = config.get(name + ".misc", "Block Hardness Level", blockLvl).getInt();
 			
-			if(type != CATALYST)
+			if(type != CATALYST && type != DROP)
 			{
 				pickLvl = config.get(name + ".Tool Info", "Pick Level", pickLvl).getInt();
 				toolDura = config.get(name + ".Tool Info", "Durability", toolDura).getInt();
@@ -205,8 +239,11 @@ public class OreInfo implements IWorldGenerator
 				armorDura = config.get(name + ".Armor Info", "Durability Multiplier", armorDura).getInt();
 			}
 			
-			dungeonLootChance = config.get(name + ".World Gen", "Dungeon Loot Chance", dungeonLootChance).getInt();
-			dungeonLootAmount = config.get(name + ".World Gen", "Dungeon Loot Amount", dungeonLootAmount).getInt();
+			if(type != DROP)
+			{
+				dungeonLootChance = config.get(name + ".World Gen", "Dungeon Loot Chance", dungeonLootChance).getInt();
+				dungeonLootAmount = config.get(name + ".World Gen", "Dungeon Loot Amount", dungeonLootAmount).getInt();
+			}
 		}
 		if(type.generates())
 		{
@@ -236,21 +273,29 @@ public class OreInfo implements IWorldGenerator
 			{
 				ore = new SubBlock(oreID, oreMeta).setBlockName(setName + oreID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
 				ore.setBlockTextureIndex(iconColumn);
+				if(type == DROP)
+				{
+					System.out.println("getting block drop " + dropName);
+					ore.setBlockDrops(MetalInfoDatabase.getItem(dropName), dropMin, dropMax);
+				}
 			}
-			if(blockID != 0)
+			if(type != DROP && blockID != 0)
 			{
 				block = new SubBlock(blockID, blockMeta).setBlockName(setName + blockID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
 				block.setBlockTextureIndex(iconColumn + 16);
 			}
-			if(brickID != 0)
+			if(type != DROP && brickID != 0)
 			{
 				brick = new SubBlock(brickID, brickMeta).setBlockName(setName + brickID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
 				brick.setBlockTextureIndex(iconColumn + 16 * 2);
 			}
-			dust = new Item(itemIDs).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 3).setItemName(setName + "." + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
-			ingot = new Item(itemIDs+1).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 4).setItemName(setName + "." + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
+			if(type != DROP)
+			{
+				dust = new Item(itemIDs).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 3).setItemName(setName + "." + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
+				ingot = new Item(itemIDs+1).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 4).setItemName(setName + "." + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
+			}
 			
-			if(type != CATALYST)
+			if(type != CATALYST && type != DROP)
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
@@ -270,7 +315,6 @@ public class OreInfo implements IWorldGenerator
 		
 		if(type.generates())
 		{
-			
 			GameRegistry.registerWorldGenerator(this);
 		}
 	}
@@ -285,9 +329,12 @@ public class OreInfo implements IWorldGenerator
 				MetaBlock.registerID(brickID);
 			if(blockID != 0)
 				MetaBlock.registerID(blockID);
-			
+
 			setLevels();
-			addRecipes();
+			if(type != DROP)
+			{
+				addRecipes();
+			}
 			registerMetal();
 		}
 	}
@@ -296,11 +343,18 @@ public class OreInfo implements IWorldGenerator
 	{
 		MinecraftForge.setToolClass(pickaxe, "pickaxe", pickLvl);
 		if(ore != null)
+		{
 			MinecraftForge.setBlockHarvestLevel(ore.getBlock(), oreMeta, "pickaxe", blockLvl);
+			ore.setHardness(2F).setResistance(1F);
+		}
 		if(block != null)
+		{
 			MinecraftForge.setBlockHarvestLevel(block.getBlock(), blockMeta, "pickaxe", blockLvl);
+		}
 		if(brick != null)
+		{
 			MinecraftForge.setBlockHarvestLevel(brick.getBlock(), brickMeta, "pickaxe", blockLvl);
+		}
 	}
 	
 	public void addRecipes()
@@ -362,8 +416,11 @@ public class OreInfo implements IWorldGenerator
 			OreDictionary.registerOre("ore" + name, new ItemStack(oreID, 1, oreMeta));
 		if(block != null)
 			OreDictionary.registerOre("block" + name, new ItemStack(blockID, 1, blockMeta));
-		OreDictionary.registerOre("ingot" + name, ingot);
-		OreDictionary.registerOre("dust" + name, dust);
+		if(type != DROP)
+		{
+			OreDictionary.registerOre("ingot" + name, ingot);
+			OreDictionary.registerOre("dust" + name, dust);
+		}
 	}
 
 	public void registerNames() {
@@ -379,10 +436,13 @@ public class OreInfo implements IWorldGenerator
 		if(brick != null)
 			LanguageRegistry.addName(new ItemStack(brickID, 1, brickMeta), name + " Brick");
 		
-		LanguageRegistry.addName(dust, name + " Dust");
-		LanguageRegistry.addName(ingot, name + " Ingot");
-
-		if(type != CATALYST)
+		if(type != DROP)
+		{
+			LanguageRegistry.addName(dust, name + " Dust");
+			LanguageRegistry.addName(ingot, name + " Ingot");
+		}
+		
+		if(type != CATALYST && type != DROP)
 		{
 			LanguageRegistry.addName(pickaxe, name + " Pickaxe");
 			LanguageRegistry.addName(shovel, name + " Shovel");

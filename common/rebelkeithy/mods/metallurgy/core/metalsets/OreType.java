@@ -2,7 +2,7 @@ package rebelkeithy.mods.metallurgy.core.metalsets;
 
 public enum OreType { 
 	
-	ORE(true), CATALYST(true), ALLOY(false), RESPAWN(true); 
+	ORE(true), CATALYST(true), ALLOY(false), RESPAWN(true), DROP(true); 
 	
 	private boolean generates;
 

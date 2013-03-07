@@ -1,15 +1,15 @@
-package rebelkeithy.mods.metallurgy.machines.crusher;
+package rebelkeithy.mods.metallurgy.machines.furnace;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class TileEntityCrusher extends TileEntity implements IInventory, ISidedInventory, ISpecialInventory
+public class TileEntityMetalFurnace extends TileEntity implements ISidedInventory, ISpecialInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -45,13 +45,9 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     
     public int furnaceTimeBase = 200;
 
-    public int direction = 2;
+    public int direction = 0;
 
 	private int ticksSinceSync;
-
-	private boolean needsUpdate;
-
-	private int type;
     
     public void setSpeed(int var1)
     {
@@ -69,7 +65,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     /**
      * Returns the stack in slot i
      */
-    @Override
     public ItemStack getStackInSlot(int par1)
     {
         return this.furnaceItemStacks[par1];
@@ -89,7 +84,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      * Decrease the size of the stack in slot (first int arg) by the amount of the second int arg. Returns the new
      * stack.
      */
-    @Override
     public ItemStack decrStackSize(int par1, int par2)
     {
         if (this.furnaceItemStacks[par1] != null)
@@ -124,7 +118,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
-    @Override
     public ItemStack getStackInSlotOnClosing(int par1)
     {
         if (this.furnaceItemStacks[par1] != null)
@@ -142,7 +135,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
-    @Override
     public void setInventorySlotContents(int par1, ItemStack par2ItemStack)
     {
         this.furnaceItemStacks[par1] = par2ItemStack;
@@ -156,7 +148,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     /**
      * Returns the name of the inventory.
      */
-    @Override
     public String getInvName()
     {
         return "container.furnace";
@@ -165,7 +156,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     /**
      * Reads a tile entity from NBT.
      */
-    @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
@@ -188,13 +178,12 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
         this.direction = par1NBTTagCompound.getShort("Direction");
         this.furnaceTimeBase = par1NBTTagCompound.getShort("TimeBase");
         this.currentItemBurnTime = getItemBurnTime(this.furnaceItemStacks[1]);
-        ticksSinceSync = 20;
+        ticksSinceSync = 80;
     }
 
     /**
      * Writes a tile entity to NBT.
      */
-    @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
@@ -222,7 +211,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      * Returns the maximum stack size for a inventory slot. Seems to always be 64, possibly will be extended. *Isn't
      * this more of a set than a get?*
      */
-    @Override
     public int getInventoryStackLimit()
     {
         return 64;
@@ -235,9 +223,8 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     public int getCookProgressScaled(int par1)
     {
     	if(furnaceTimeBase == 0)
-    		return 0;
-    	
-        return furnaceCookTime * par1 / furnaceTimeBase;
+    		furnaceTimeBase = 200;
+        return this.furnaceCookTime * par1 / furnaceTimeBase;
     }
 
     /**
@@ -246,12 +233,12 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      */
     public int getBurnTimeRemainingScaled(int par1)
     {
-        if (currentItemBurnTime == 0)
+        if (this.currentItemBurnTime == 0)
         {
-            currentItemBurnTime = furnaceTimeBase;
+            this.currentItemBurnTime = furnaceTimeBase;
         }
 
-        return furnaceBurnTime * par1 / currentItemBurnTime;
+        return this.furnaceBurnTime * par1 / this.currentItemBurnTime;
     }
 
     /**
@@ -266,21 +253,18 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      * Allows the entity to update its state. Overridden in most subclasses, e.g. the mob spawner uses this to count
      * ticks and creates a new spawn inside its implementation.
      */
-    @Override
     public void updateEntity()
     {
-
-		if ((++ticksSinceSync % 80) == 0 && !worldObj.isRemote) 
+    	
+		if (++ticksSinceSync > 80) 
         {
-			/*
 			int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
 			worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 1, direction);
-			worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 2, furnaceTimeBase);
-			worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 3, furnaceBurnTime);
-			worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 4, furnaceCookTime);
-			*/
-            sendPacket();
-		}
+			//int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
+			//worldObj.addBlockEvent(xCoord, yCoord, zCoord, id, 11, direction);
+			sendPacket();
+			ticksSinceSync = 0;
+        }
 		
         boolean var1 = this.furnaceBurnTime > 0;
         boolean var2 = false;
@@ -310,8 +294,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
                         }
                     }
                 }
-                
-                this.worldObj.updateAllLightTypes(xCoord, yCoord, zCoord);
             }
 
             if (this.isBurning() && this.canSmelt())
@@ -342,16 +324,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
             sendPacket();
         }
     }
-    
-    
-    /*public void sync()
-    {
-    	
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, mod_MetallurgyCore.crusher.blockID, 1, direction);
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, mod_MetallurgyCore.crusher.blockID, 2, furnaceTimeBase);
-		worldObj.addBlockEvent(xCoord, yCoord, zCoord, mod_MetallurgyCore.crusher.blockID, 3, furnaceBurnTime);
-    	
-    }*/
 
     /**
      * Returns true if the furnace can smelt an item, i.e. has a source item, destination stack isn't full, etc.
@@ -364,7 +336,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
         }
         else
         {
-            ItemStack var1 = CrusherRecipes.smelting().getCrushingResult(this.furnaceItemStacks[0]);
+            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
             if (var1 == null) return false;
             if (this.furnaceItemStacks[2] == null) return true;
             if (!this.furnaceItemStacks[2].isItemEqual(var1)) return false;
@@ -380,7 +352,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     {
         if (this.canSmelt())
         {
-            ItemStack var1 = CrusherRecipes.smelting().getCrushingResult(this.furnaceItemStacks[0]);
+            ItemStack var1 = FurnaceRecipes.smelting().getSmeltingResult(this.furnaceItemStacks[0]);
 
             if (this.furnaceItemStacks[2] == null)
             {
@@ -388,7 +360,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
             }
             else if (this.furnaceItemStacks[2].isItemEqual(var1))
             {
-                this.furnaceItemStacks[2].stackSize += var1.stackSize;
+                ++this.furnaceItemStacks[2].stackSize;
             }
 
             --this.furnaceItemStacks[0].stackSize;
@@ -404,40 +376,40 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      * Returns the number of ticks that the supplied fuel item will keep the furnace burning, or 0 if the item isn't
      * fuel
      */
-    public static int getItemBurnTime(ItemStack par1ItemStack)
+    public static int getItemBurnTime(ItemStack par0ItemStack)
     {
-        if (par1ItemStack == null)
+        if (par0ItemStack == null)
         {
             return 0;
         }
         else
         {
-            int var1 = par1ItemStack.getItem().itemID;
-            Item var2 = par1ItemStack.getItem();
+            int var1 = par0ItemStack.getItem().itemID;
+            Item var2 = par0ItemStack.getItem();
 
-            if (par1ItemStack.getItem() instanceof ItemBlock && Block.blocksList[var1] != null)
+            if (par0ItemStack.getItem() instanceof ItemBlock && Block.blocksList[var1] != null)
             {
                 Block var3 = Block.blocksList[var1];
 
                 if (var3 == Block.woodSingleSlab)
                 {
-                    return 113;
+                    return 150;
                 }
 
                 if (var3.blockMaterial == Material.wood)
                 {
-                    return 225;
+                    return 300;
                 }
             }
-            if (var2 instanceof ItemTool && ((ItemTool) var2).getToolMaterialName().equals("WOOD")) return 150;
-            if (var2 instanceof ItemSword && ((ItemSword) var2).func_77825_f().equals("WOOD")) return 150;
-            if (var2 instanceof ItemHoe && ((ItemHoe) var2).func_77842_f().equals("WOOD")) return 150;
-            if (var1 == Item.stick.itemID) return 75;
-            if (var1 == Item.coal.itemID) return 1200;
-            if (var1 == Item.bucketLava.itemID) return 15000;
-            if (var1 == Block.sapling.blockID) return 75;
-            if (var1 == Item.blazeRod.itemID) return 1800;
-            return (int) Math.ceil(GameRegistry.getFuelValue(par1ItemStack) * 0.75);
+            if (var2 instanceof ItemTool && ((ItemTool) var2).getToolMaterialName().equals("WOOD")) return 200;
+            if (var2 instanceof ItemSword && ((ItemSword) var2).getToolMaterialName().equals("WOOD")) return 200;
+            if (var2 instanceof ItemHoe && ((ItemHoe) var2).func_77842_f().equals("WOOD")) return 200;
+            if (var1 == Item.stick.itemID) return 100;
+            if (var1 == Item.coal.itemID) return 1600;
+            if (var1 == Item.bucketLava.itemID) return 20000;
+            if (var1 == Block.sapling.blockID) return 100;
+            if (var1 == Item.blazeRod.itemID) return 2400;
+            return GameRegistry.getFuelValue(par0ItemStack);
         }
     }
 
@@ -456,20 +428,15 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
-    
+
     @Override
 	public void receiveClientEvent(int i, int j) 
     {
-		if (i == 1)
+		if (i == 11) {
 			direction = j;
-		if (i == 2)
-			furnaceTimeBase = j;
-		if (i == 3)
-			furnaceBurnTime = j;
-		if (i == 4)
+		}if (i == 4) {
 			furnaceCookTime = j;
-
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		}
 	}
 
     public void openChest() {}
@@ -491,13 +458,8 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     }
 
 	public int getType() {
-		if(worldObj != null)
-		{
-			int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
-			return (meta < 8) ? meta : meta - 8;
-		}
-		
-		return type;
+		int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
+		return (meta < 8) ? meta : meta - 8;
 	}
 	
 	public void sendPacket()
@@ -508,6 +470,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(140);
 		DataOutputStream dos = new DataOutputStream(bos);
 		try {
+			dos.writeShort(1);
 			dos.writeInt(xCoord);
 			dos.writeInt(yCoord);
 			dos.writeInt(zCoord);
@@ -519,7 +482,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 			// UNPOSSIBLE?
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "MetallurgyCore";
+		packet.channel = "MetallurgyBase";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		packet.isChunkDataPacket = true;
@@ -527,10 +490,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 		if (packet != null) {
 			PacketDispatcher.sendPacketToAllAround(xCoord, yCoord, zCoord, 16, worldObj.provider.dimensionId, packet);
 		}
-	}
-
-	public void setType(int metadata) {
-		type = metadata;
 	}
 
 	@Override
@@ -579,5 +538,4 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 		}
 		return null;
 	}
-
 }

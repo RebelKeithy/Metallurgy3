@@ -1,13 +1,11 @@
-package rebelkeithy.mods.metallurgy.machines.forge;
+package rebelkeithy.mods.metallurgy.machines.furnace;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,10 +19,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
+import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
-public class BlockNetherForge extends BlockContainer
+public class BlockMetalFurnace extends BlockContainer
 {
     /**
      * Is the random generator used by furnace to drop the inventory contents in random directions.
@@ -40,17 +39,17 @@ public class BlockNetherForge extends BlockContainer
      */
     private static boolean keepFurnaceInventory = false;
 
-    public BlockNetherForge(int par1, boolean par2)
+    public BlockMetalFurnace(int par1, boolean par2)
     {
         super(par1, Material.rock);
         this.isActive = par2;
         setRequiresSelfNotify();
-        //this.setCreativeTab(MetallurgyNether.creativeTab);
+        //this.setCreativeTab(MetallurgyBaseMetals.baseTab);
     }
-    
+
     @Override
 	public String getTextureFile() {
-		return "/shadow/MetallurgyNetherForges.png";
+		return "/shadow/MetallurgyFurnaces.png";
 	}
 
     /**
@@ -59,7 +58,7 @@ public class BlockNetherForge extends BlockContainer
     @Override
     public int idDropped(int par1, Random par2Random, int par3)
     {
-        return ConfigMachines.forgeID;
+        return ConfigMachines.furnaceID;
     }
     
     @Override
@@ -72,21 +71,20 @@ public class BlockNetherForge extends BlockContainer
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
     @Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int metadata)
+    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-    	metadata = (metadata < 8) ? metadata : metadata - 8;
+    	par2 = (par2 < 8 ? par2 : par2 - 8);
+    	par2++;
         if (par1 == 1 || par1 == 0)
         {
-            return 14 + (metadata * 16);
+            return 2 + (par2 * 16);
         }
         else
         {
-            //int var6 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-            //int var6 = ((TileEntityMetalFurnace)(par1IBlockAccess.getBlockTileEntity(par2, par3, par4))).getDirection();
             if(par1 != 3)
-            	return 9 + (metadata * 16);
+            	return 1 + (par2 * 16);
             else
-            	return 0 + (metadata * 16);
+            	return 0 + (par2 * 16);
         }
     }
 
@@ -97,35 +95,24 @@ public class BlockNetherForge extends BlockContainer
     public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
     	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
-    	int metadata = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-    	int type = (metadata < 8) ? metadata : metadata - 8;
-    	int	dir = (tileEntity instanceof TileEntityNetherForge) ? ((TileEntityNetherForge)tileEntity).getDirection() : 0;
-    	int time = (tileEntity instanceof TileEntityNetherForge) ? (((TileEntityNetherForge)tileEntity).furnaceCookTime * 10) % 2 : 0;
-
-    	int	fuel = (tileEntity instanceof TileEntityNetherForge) ? ((TileEntityNetherForge)tileEntity).getScaledFuel(4) : 0;
-    	boolean isBurning = (tileEntity instanceof TileEntityNetherForge) ? ((TileEntityNetherForge)tileEntity).isBurning() : false;
+    	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+    	int type = (meta < 8) ? meta : meta - 8;
+    	int	dir = (tileEntity instanceof TileEntityMetalFurnace) ? ((TileEntityMetalFurnace)tileEntity).getDirection() : 0;
+    	int time = (tileEntity instanceof TileEntityMetalFurnace) ? (((TileEntityMetalFurnace)tileEntity).furnaceCookTime * 10) % 2 : 0;
+    	boolean isBurning = (tileEntity instanceof TileEntityMetalFurnace) ? ((TileEntityMetalFurnace)tileEntity).isBurning() : false;
     	
-    	
-    	//par5 = ((TileEntityMetalFurnace)(par1IBlockAccess.getBlockTileEntity(par2, par3, par4))).getDirection();
-        if (par5 == 1)
+        if (par5 == 1 || par5 == 0)
         {
-            if(metadata >= 8)
-            	return 15 + (type * 16);
-            else 
-            	return 14 + (type * 16);
-        } 
-        else if(par5 == 0)
-        {
-        	return 15*16 + type;
+            return 2 + ((type + 1) * 16);
         }
         else
         {
             if(par5 != dir)
-            	return 9 + fuel + (type * 16);
+            	return 1 + ((type + 1) * 16);
             else if(isBurning)
-            	return 4 + fuel + (type * 16);
+            	return 3 + ((type + 1) * 16) + time;
             else
-            	return 0 + fuel + (type * 16);
+            	return 0 + ((type + 1) * 16);
         }
     }
 
@@ -135,12 +122,12 @@ public class BlockNetherForge extends BlockContainer
     @Override
     public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-    	int metadata = par1World.getBlockMetadata(par2, par3, par4);
-    	TileEntityNetherForge tef = (TileEntityNetherForge) par1World.getBlockTileEntity(par2, par3, par4);
+        int meta = par1World.getBlockMetadata(par2, par3, par4);
+        TileEntityMetalFurnace tef = (TileEntityMetalFurnace) par1World.getBlockTileEntity(par2, par3, par4);
         if (tef.isBurning())
         {
             //int var6 = par1World.getBlockMetadata(par2, par3, par4);
-            int var6 = ((TileEntityNetherForge)(par1World.getBlockTileEntity(par2, par3, par4))).getDirection();
+            int var6 = tef.getDirection();
             float var7 = (float)par2 + 0.5F;
             float var8 = (float)par3 + 0.0F + par5Random.nextFloat() * 6.0F / 16.0F;
             float var9 = (float)par4 + 0.5F;
@@ -195,57 +182,13 @@ public class BlockNetherForge extends BlockContainer
         {
         	return false;
         }
-        
-		ItemStack currentItem = par5EntityPlayer.inventory.getCurrentItem();
-		
-        TileEntityNetherForge var6 = (TileEntityNetherForge)par1World.getBlockTileEntity(par2, par3, par4);
 
-    	par5EntityPlayer.sendChatToPlayer("Fuel: " + var6.fuel);
-    	par5EntityPlayer.sendChatToPlayer("MaxFuel: " + var6.maxFuel);
-    	
-    	if(currentItem != null)
-    	{
-    		if(currentItem.itemID == Item.bucketLava.itemID)
-    		{
-            	if(var6.fuel == var6.maxFuel)
-            		return false;
-            	
-    			var6.addFuelBucket();
-    			if(!par5EntityPlayer.capabilities.isCreativeMode)
-    				par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketEmpty, 1));
-    			return true;
-    		}
-    		if(currentItem.itemID == Item.bucketEmpty.itemID)
-    		{
-            	if(var6.fuel < 1000)
-            		return false;
-            	
-    			var6.addTakeBucket();
-    			if(!par5EntityPlayer.capabilities.isCreativeMode)
-    				par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketLava, 1));
-    			return true;
-    		}
-    		
-    		/*
-			LiquidStack liquid = LiquidManager.getLiquidForFilledItem(currentItem);
-			
-            if(liquid != null)
-            {
-            	if(var6.fuel == var6.maxFuel || liquid.itemID == Block.lavaMoving.blockID)
-            		return false;
-            	
-            	if(!par5EntityPlayer.capabilities.isCreativeMode)
-            		par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, Utils.consumeItem(currentItem));
-            	
-            	var6.addFuelBucket();
-            	return true;
-            }
-            */
-    	}
+        TileEntityMetalFurnace var6 = (TileEntityMetalFurnace)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (var6 != null)
         {
-            par5EntityPlayer.openGui(MetallurgyMachines.instance, -1, par1World, par2, par3, par4);
+            //par5EntityPlayer.openGui(MetallurgyMachines.instance, 0, par1World, par2, par3, par4);
+        	GuiRegistry.openGui("MetalFurnace", MetallurgyMachines.instance, par5EntityPlayer, par1World, par2, par3, par4);
         }
 
         return true;
@@ -254,21 +197,18 @@ public class BlockNetherForge extends BlockContainer
     /**
      * Update which block ID the furnace is using depending on whether or not it is burning
      */
-    public static void updateFurnaceBlockState(boolean par0, World par1World, int par2, int par3, int par4)
+    public static void updateFurnaceBlockState(boolean par0, World par1World, int x, int y, int z)
     {
-        int metadata = par1World.getBlockMetadata(par2, par3, par4);
-        keepFurnaceInventory = true;
+        int meta = par1World.getBlockMetadata(x, y, z);
 
-        if (par0 && metadata < 8)
+        if (!par0 && meta >= 8)
         {
-        	par1World.setBlockMetadata(par2, par3, par4, metadata + 8);
+            par1World.setBlockMetadata(x, y, z, meta - 8);
         }
-        else if(!par0 && metadata >= 8)
+        else if(par0 && meta < 8)
         {
-        	par1World.setBlockMetadata(par2, par3, par4, metadata - 8);
+            par1World.setBlockMetadata(x, y, z, meta + 8);
         }
-
-        keepFurnaceInventory = false;
     }
 
     /**
@@ -277,17 +217,9 @@ public class BlockNetherForge extends BlockContainer
     @Override
     public TileEntity createNewTileEntity(World world)
     {
-        return new TileEntityNetherForge();
+        return new TileEntityMetalFurnace();
     }
 
-    /**
-     * Called when the block is clicked by a player. Args: x, y, z, entityPlayer
-     */
-    @Override
-    public void onBlockClicked(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer) 
-    {
-    }
-    
     /**
      * Called when the block is placed in the world.
      */
@@ -299,33 +231,56 @@ public class BlockNetherForge extends BlockContainer
         if (var6 == 0)
         {
             //par1World.setBlockMetadataWithNotify(par2, par3, par4, 2);
-            ((TileEntityNetherForge)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(2);
+            ((TileEntityMetalFurnace)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(2);
         }
 
         if (var6 == 1)
         {
             //par1World.setBlockMetadataWithNotify(par2, par3, par4, 5);
-            ((TileEntityNetherForge)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(5);
+            ((TileEntityMetalFurnace)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(5);
         }
 
         if (var6 == 2)
         {
             //par1World.setBlockMetadataWithNotify(par2, par3, par4, 3);
-            ((TileEntityNetherForge)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(3);
+            ((TileEntityMetalFurnace)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(3);
         }
 
         if (var6 == 3)
         {
             //par1World.setBlockMetadataWithNotify(par2, par3, par4, 4);
-            ((TileEntityNetherForge)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(4);
+            ((TileEntityMetalFurnace)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(4);
         }
         
         
-        TileEntityNetherForge var5 = (TileEntityNetherForge)par1World.getBlockTileEntity(par2, par3, par4);
+        TileEntityMetalFurnace var5 = (TileEntityMetalFurnace)par1World.getBlockTileEntity(par2, par3, par4);
         int metadata = par1World.getBlockMetadata(par2, par3, par4);
+        switch(metadata)
+        {
+        case 0:
+        {
+            var5.setSpeed((int)(20 * ConfigMachines.copperSpeed));
+            break;
+        }
+        case 1:
+        {
+        	var5.setSpeed((int)(20 * ConfigMachines.bronzeSpeed));
+        	break;
+        }
+        case 2:
+        {
+        	var5.setSpeed((int)(20 * ConfigMachines.ironSpeed));
+        	break;
+        }
+        case 3:
+        {
+        	var5.setSpeed((int)(20 * ConfigMachines.steelSpeed));
+        	break;
+        }
+        default:
+        	break;
+        }
         
-        var5.setSpeed((int)(20 * ConfigMachines.forgeSpeeds[metadata]));
-        var5.setMaxBuckets((int)(ConfigMachines.firgeBuckets[metadata]));
     }
 
     /**
@@ -333,14 +288,10 @@ public class BlockNetherForge extends BlockContainer
      */
     @Override
     public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
-    {        	
-    	boolean spawnLava = false;
-        if(((TileEntityNetherForge)par1World.getBlockTileEntity(par2, par3, par4)).getFuelScaled(2) > 0)
-        	spawnLava = true;
-        
+    {
         if (!keepFurnaceInventory)
         {
-            TileEntityNetherForge var5 = (TileEntityNetherForge)par1World.getBlockTileEntity(par2, par3, par4);
+            TileEntityMetalFurnace var5 = (TileEntityMetalFurnace)par1World.getBlockTileEntity(par2, par3, par4);
 
             if (var5 != null)
             {
@@ -368,7 +319,7 @@ public class BlockNetherForge extends BlockContainer
 
                             if (var7.hasTagCompound())
                             {
-                                var12.func_92014_d().setTagCompound((NBTTagCompound)var7.getTagCompound().copy());
+                                var12.getEntityItem().setTagCompound((NBTTagCompound)var7.getTagCompound().copy());
                             }
 
                             float var13 = 0.05F;
@@ -381,19 +332,17 @@ public class BlockNetherForge extends BlockContainer
                 }
             }
         }
-    
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
-        if(ConfigMachines.smelterDropsLava && spawnLava)	
-        	par1World.setBlockWithNotify(par2, par3, par4, Block.lavaMoving.blockID);
-    }
-
-	@Override
+    }	
+    
+    @Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int n = 0; n < 8; n++) {
+		for (int n = 0; n < 4; n++) {
 			par3List.add(new ItemStack(this, 1, n));
+
 		}
 	}
 }
