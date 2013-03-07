@@ -64,11 +64,11 @@ public class VanillaAddons {
 		Configuration config = new Configuration(cfgFile);
 		config.load();
 		
-		ironBrickID = Integer.parseInt(config.get("Iron", "Brick ID", "903:0").value.split(":")[0]);
-		ironBrickMeta = Integer.parseInt(config.get("Iron", "Brick ID", "903:0").value.split(":")[1]);
+		ironBrickID = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").value.split(":")[0]);
+		ironBrickMeta = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").value.split(":")[1]);
 		
-		goldBrickID = Integer.parseInt(config.get("Gold", "Brick ID", "903:1").value.split(":")[0]);
-		goldBrickMeta = Integer.parseInt(config.get("Gold", "Brick ID", "903:1").value.split(":")[1]);
+		goldBrickID = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").value.split(":")[0]);
+		goldBrickMeta = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").value.split(":")[1]);
 		
 		ironDustID = config.get("Iron", "Iron Dust ID", 26200).getInt();
 		goldDustID = config.get("Gold", "Gold Dust ID", 26201).getInt();

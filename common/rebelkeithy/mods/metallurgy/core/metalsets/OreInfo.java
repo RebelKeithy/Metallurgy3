@@ -267,6 +267,7 @@ public class OreInfo implements IWorldGenerator
 	
 	public void init()
 	{
+		System.out.println("Initializeing Ore " + name);
 		if(!type.equals(RESPAWN))
 		{
 			if(type.generates() && oreID != 0)

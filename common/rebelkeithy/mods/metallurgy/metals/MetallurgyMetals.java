@@ -18,6 +18,7 @@ public class MetallurgyMetals {
 
 	public MetalSet baseSet;
 	public MetalSet preciousSet;
+	public MetalSet netherSet;
 	public MetalSet utilitySet;
 	
 	public Configuration baseConfig;
@@ -47,6 +48,7 @@ public class MetallurgyMetals {
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"));
 		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"));
+		netherSet = new MetalSet("Nether", MetalInfoDatabase.getSpreadsheetDataForSet("Nether"));
 		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"));
 	}
 }

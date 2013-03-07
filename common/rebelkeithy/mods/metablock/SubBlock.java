@@ -131,4 +131,9 @@ public class SubBlock
 	{
 		return blockResistance/5.0F;
 	}
+	
+	public String toString()
+	{
+		return super.toString() + metaBlock.getBlockName();
+	}
 }
