@@ -38,6 +38,7 @@ import java.util.Random;
 import rebelkeithy.mods.metablock.MetaBlock;
 import rebelkeithy.mods.metablock.SubBlock;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
+import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 
 public class OreInfo implements IWorldGenerator
 {
@@ -294,6 +295,7 @@ public class OreInfo implements IWorldGenerator
 			{
 				dust = new Item(itemIDs).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 3).setItemName(setName + "." + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
 				ingot = new Item(itemIDs+1).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 4).setItemName(setName + "." + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
+				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
 			if(type != CATALYST && type != DROP)

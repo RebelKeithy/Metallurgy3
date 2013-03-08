@@ -21,6 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
+import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
@@ -245,7 +246,7 @@ public class BlockNetherForge extends BlockContainer
 
         if (var6 != null)
         {
-            par5EntityPlayer.openGui(MetallurgyMachines.instance, -1, par1World, par2, par3, par4);
+            GuiRegistry.openGui("NetherForge", MetallurgyMachines.instance, par5EntityPlayer, par1World, par2, par3, par4);
         }
 
         return true;

@@ -19,4 +19,6 @@ public class ConfigMachines
 	public static float[] forgeSpeeds = new float[] {6, 5.5F, 5, 4.5F, 4, 3.5F, 3, 2};
 	public static int[] firgeBuckets = new int[] {10, 20, 30, 40, 50, 60, 80, 100};
 	public static boolean smelterDropsLava = false;
+	
+	public static int abstractorID = 4003;
 }

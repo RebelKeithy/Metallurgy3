@@ -1,4 +1,4 @@
-package rebelkeithy.mods.metallurgy.core;
+package rebelkeithy.mods.metallurgy.metals;
 
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -9,7 +9,6 @@ import java.io.File;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import rebelkeithy.mods.metallurgy.machines.storage.ContainerStorage;
 import rebelkeithy.mods.metallurgy.machines.storage.GuiStorage;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
 
 public class CommonProxy
 {
@@ -17,15 +16,5 @@ public class CommonProxy
 	public File getMinecraftDir() 
 	{
 		return new File(".");
-	}
-
-	public void registerNamesForMetalSet(MetalSet baseSet) {}
-
-	
-	public void spawnParticle(String string, World par1World, double x, double y, double z, double r, double g, double b) {}
-
-	public World getClientWorld()
-	{
-		return null;
 	}
 }

@@ -1,26 +1,32 @@
 package rebelkeithy.mods.metallurgy.machines;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.world.World;
-
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.machines.abstractor.TileEntityAbstractor;
+import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusher;
+import rebelkeithy.mods.metallurgy.machines.forge.TileEntityNetherForge;
+import rebelkeithy.mods.metallurgy.machines.furnace.TileEntityMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.storage.InventoryStorage;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageAccessor;
+
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
+
+import cpw.mods.fml.common.network.IPacketHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
 
 public class PacketHandler implements IPacketHandler
 {
@@ -103,6 +109,98 @@ public class PacketHandler implements IPacketHandler
 				for(Integer id : tabs)
 					tes.addTab(new ItemStack(id, 1, 0), 0);
 			}
+		}
+		else if(packetID == 50) // Nether Forge
+		{
+			int x = byteIn.readInt();
+			int y = byteIn.readInt();
+			int z = byteIn.readInt();
+			int direction = byteIn.readInt();
+			int speed = byteIn.readInt();
+			int burnTime = byteIn.readInt();
+			int cookTime = byteIn.readInt();
+			int fuel = byteIn.readInt();
+			int maxFuel = byteIn.readInt();
+
+			World world = MetallurgyCore.proxy.getClientWorld();
+			TileEntity te = world.getBlockTileEntity(x, y, z);
+			TileEntityNetherForge icte = null;
+			if (te instanceof TileEntityNetherForge) {
+				icte = (TileEntityNetherForge) te;
+				icte.setDirection(direction);
+				icte.furnaceTimeBase = speed;
+				icte.furnaceBurnTime = burnTime;
+				icte.furnaceCookTime = cookTime;
+				icte.fuel = fuel;
+				icte.maxFuel= maxFuel;
+			}
+		}
+		else if(packetID == 51)
+		{
+			int x = byteIn.readInt();
+			int y = byteIn.readInt();
+			int z = byteIn.readInt();
+			int direction = byteIn.readInt();
+			int speed = byteIn.readInt();
+			int burnTime = byteIn.readInt();
+
+			World world = MetallurgyCore.proxy.getClientWorld();
+			TileEntity te = world.getBlockTileEntity(x, y, z);
+			TileEntityAbstractor icte = null;
+			if (te instanceof TileEntityAbstractor) {
+				icte = (TileEntityAbstractor) te;
+				icte.setDirection(direction);
+				icte.furnaceTimeBase = speed;
+				icte.furnaceBurnTime = burnTime;
+			}
+
+			world.markBlockForUpdate(x, y, z);
+		}
+		else if(packetID == 52)
+		{
+			int x = byteIn.readInt();
+			int y = byteIn.readInt();
+			int z = byteIn.readInt();
+			int direction = byteIn.readInt();
+			int speed = byteIn.readInt();
+			int burnTime = byteIn.readInt();
+			int cookTime = byteIn.readInt();
+
+			World world = MetallurgyCore.proxy.getClientWorld();
+			TileEntity te = world.getBlockTileEntity(x, y, z);
+			TileEntityCrusher icte = null;
+			if (te instanceof TileEntityCrusher) {
+				icte = (TileEntityCrusher) te;
+				icte.setDirection(direction);
+				icte.furnaceTimeBase = speed;
+				icte.furnaceBurnTime = burnTime;
+				icte.furnaceCookTime = cookTime;
+			}
+
+			world.markBlockForUpdate(x, y, z);
+		}
+		else if(packetID == 53)	//Metal Furnace
+		{
+			int x = byteIn.readInt();
+			int y = byteIn.readInt();
+			int z = byteIn.readInt();
+			int direction = byteIn.readInt();
+			int speed = byteIn.readInt();
+			int burnTime = byteIn.readInt();
+			int cookTime = byteIn.readInt();
+
+			World world = MetallurgyCore.proxy.getClientWorld();
+			TileEntity te = world.getBlockTileEntity(x, y, z);
+			TileEntityMetalFurnace icte = null;
+			if (te instanceof TileEntityMetalFurnace) {
+				icte = (TileEntityMetalFurnace) te;
+				icte.setDirection(direction);
+				icte.furnaceTimeBase = speed;
+				icte.furnaceBurnTime = burnTime;
+				icte.furnaceCookTime = cookTime;
+			}
+
+			world.markBlockForUpdate(x, y, z);
 		}
 	}
 	

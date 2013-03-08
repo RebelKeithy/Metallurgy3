@@ -19,11 +19,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class MetalInfoDatabase 
 {
 	private static List<Map<String, String>> spreadsheet;
 	private static Map<String, Item> items;
+	private static Map<String, String> oreDictNames;
 	
 	private static void readOreData(BufferedReader in)
 	{
@@ -57,6 +59,8 @@ public class MetalInfoDatabase
 	{
 		if(items == null)
 			items = new HashMap<String, Item>();
+		if(oreDictNames == null)
+			oreDictNames = new HashMap<String, String>();
 
 		try {
 			String input = in.readLine();
@@ -82,11 +86,21 @@ public class MetalInfoDatabase
 				LanguageRegistry.addName(item, itemMap.get("Item Name"));
 				
 				items.put(itemMap.get("Item Name"), item);
+				if(!itemMap.get("Ore Dictionary Name").equals("0"))
+					oreDictNames.put(itemMap.get("Item Name"), itemMap.get("Ore Dictionary Name"));
 				input = in.readLine();
 			}
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void registerItemsWithOreDict()
+	{
+		for(String name : oreDictNames.keySet())
+		{
+			OreDictionary.registerOre(oreDictNames.get(name), items.get(name));
 		}
 	}
 	

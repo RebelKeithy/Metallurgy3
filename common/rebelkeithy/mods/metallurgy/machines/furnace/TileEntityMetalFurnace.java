@@ -470,7 +470,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(140);
 		DataOutputStream dos = new DataOutputStream(bos);
 		try {
-			dos.writeShort(1);
+			dos.writeShort(53);
 			dos.writeInt(xCoord);
 			dos.writeInt(yCoord);
 			dos.writeInt(zCoord);
@@ -482,7 +482,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 			// UNPOSSIBLE?
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "MetallurgyBase";
+		packet.channel = "M3Machines";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		packet.isChunkDataPacket = true;

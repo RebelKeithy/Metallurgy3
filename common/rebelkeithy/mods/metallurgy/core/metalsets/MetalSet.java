@@ -89,5 +89,17 @@ public class MetalSet
 	{
 		return metals.get(name);
 	}
+
+	public OreInfo getOreInfo(int meta) 
+	{
+		for(OreInfo info : metals.values())
+		{
+			if(info.blockMeta == meta)
+			{
+				return info;
+			}
+		}
+		return null;
+	}
 	
 }

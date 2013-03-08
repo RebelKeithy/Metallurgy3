@@ -434,9 +434,12 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 		if(worldObj.isRemote)
 			return;
 		
+		System.out.println("Nether forge is sending packet");
+		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(bos);
 		try {
+			dos.writeShort(50);
 			dos.writeInt(xCoord);
 			dos.writeInt(yCoord);
 			dos.writeInt(zCoord);
@@ -450,7 +453,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 			// UNPOSSIBLE?
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "MetallurgyNether";
+		packet.channel = "M3Machines";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		packet.isChunkDataPacket = true;

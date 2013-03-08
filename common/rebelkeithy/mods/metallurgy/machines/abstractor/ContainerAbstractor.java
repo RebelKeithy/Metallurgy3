@@ -1,4 +1,4 @@
-package rebelkeithy.mods.metallurgy.machines.forge;
+package rebelkeithy.mods.metallurgy.machines.abstractor;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -6,22 +6,21 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 
-public class ContainerNetherForge extends Container
+public class ContainerAbstractor extends Container
 {
-    private TileEntityNetherForge furnace;
+    private TileEntityAbstractor abstractor;
     private int lastCookTime = 0;
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
 
-    public ContainerNetherForge(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityNetherForge)
+    public ContainerAbstractor(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityMetalFurnace)
     {
-        this.furnace = (TileEntityNetherForge) par2TileEntityNetherForge;
-        this.addSlotToContainer(new Slot(furnace, 0, 36, 34));
-        this.addSlotToContainer(new SlotNetherForge(par1InventoryPlayer.player, furnace, 1, 96, 34));
+        this.abstractor = (TileEntityAbstractor) par2TileEntityMetalFurnace;
+        this.addSlotToContainer(new Slot(abstractor, 0, 56, 17));
+        this.addSlotToContainer(new Slot(abstractor, 1, 56, 53));
+        this.addSlotToContainer(new SlotAbstractor(par1InventoryPlayer.player, abstractor, 2, 116, 35));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3)
@@ -50,20 +49,25 @@ public class ContainerNetherForge extends Container
         {
             ICrafting var2 = (ICrafting)this.crafters.get(var1);
 
-            if (this.lastCookTime != this.furnace.furnaceCookTime)
+            if (this.lastCookTime != this.abstractor.furnaceCookTime)
             {
-                var2.sendProgressBarUpdate(this, 0, this.furnace.furnaceCookTime);
+                var2.sendProgressBarUpdate(this, 0, this.abstractor.furnaceCookTime);
             }
 
-            if (this.lastItemBurnTime != this.furnace.currentItemBurnTime)
+            if (this.lastBurnTime != this.abstractor.furnaceBurnTime)
             {
-                var2.sendProgressBarUpdate(this, 1, this.furnace.currentItemBurnTime);
+                var2.sendProgressBarUpdate(this, 1, this.abstractor.furnaceBurnTime);
+            }
+
+            if (this.lastItemBurnTime != this.abstractor.currentItemBurnTime)
+            {
+                var2.sendProgressBarUpdate(this, 2, this.abstractor.currentItemBurnTime);
             }
         }
 
-        this.lastCookTime = this.furnace.furnaceCookTime;
-        this.lastBurnTime = this.furnace.furnaceBurnTime;
-        this.lastItemBurnTime = this.furnace.currentItemBurnTime;
+        this.lastCookTime = this.abstractor.furnaceCookTime;
+        this.lastBurnTime = this.abstractor.furnaceBurnTime;
+        this.lastItemBurnTime = this.abstractor.currentItemBurnTime;
     }
 
     @Override
@@ -71,19 +75,24 @@ public class ContainerNetherForge extends Container
     {
         if (par1 == 0)
         {
-            this.furnace.furnaceCookTime = par2;
+            this.abstractor.furnaceCookTime = par2;
         }
 
         if (par1 == 1)
         {
-            this.furnace.currentItemBurnTime = par2;
+            this.abstractor.furnaceBurnTime = par2;
+        }
+
+        if (par1 == 2)
+        {
+            this.abstractor.currentItemBurnTime = par2;
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer par1EntityPlayer)
     {
-        return this.furnace.isUseableByPlayer(par1EntityPlayer);
+        return this.abstractor.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**
@@ -100,9 +109,9 @@ public class ContainerNetherForge extends Container
             ItemStack var4 = var3.getStack();
             var2 = var4.copy();
 
-            if (par1 == 1)
+            if (par1 == 2)
             {
-                if (!this.mergeItemStack(var4, 2, 38, true))
+                if (!this.mergeItemStack(var4, 3, 39, true))
                 {
                     return null;
                 }
@@ -111,33 +120,33 @@ public class ContainerNetherForge extends Container
             }
             else if (par1 != 1 && par1 != 0)
             {
-                if (FurnaceRecipes.smelting().getSmeltingResult(var4) != null)
+                if (AbstractorRecipes.essence().getEssenceResult(var4) != 0)
                 {
                     if (!this.mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
-                else if (TileEntityFurnace.isItemFuel(var4))
+                else if (TileEntityAbstractor.isItemFuel(var4))
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!this.mergeItemStack(var4, 1, 2, false))
                     {
                         return null;
                     }
                 }
-                else if (par1 >= 2 && par1 < 29)
+                else if (par1 >= 3 && par1 < 30)
                 {
-                    if (!this.mergeItemStack(var4, 29, 38, false))
+                    if (!this.mergeItemStack(var4, 30, 39, false))
                     {
                         return null;
                     }
                 }
-                else if (par1 >= 29 && par1 < 38 && !this.mergeItemStack(var4, 2, 29, false))
+                else if (par1 >= 30 && par1 < 39 && !this.mergeItemStack(var4, 3, 30, false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(var4, 2, 38, false))
+            else if (!this.mergeItemStack(var4, 3, 39, false))
             {
                 return null;
             }

@@ -2,6 +2,7 @@ package rebelkeithy.mods.metallurgy.machines.forge;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
@@ -11,11 +12,11 @@ public class GuiNetherForge extends GuiContainer
     public static String[] names = {"Ignatius", "Shadow Iron", "Shadow Steel", "Vyroxeres", "Inolashite", "Kalendrite", "Vulcanite", "Sanguinite"};
     private int type;
     
-    public GuiNetherForge(InventoryPlayer par1InventoryPlayer, TileEntityNetherForge par2TileEntityFurnace)
+    public GuiNetherForge(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityFurnace)
     {
         super(new ContainerNetherForge(par1InventoryPlayer, par2TileEntityFurnace));
-        this.furnaceInventory = par2TileEntityFurnace;
-        this.type = par2TileEntityFurnace.getType();
+        this.furnaceInventory = (TileEntityNetherForge) par2TileEntityFurnace;
+        this.type = furnaceInventory.getType();
     }
 
     /**
