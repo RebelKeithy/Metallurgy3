@@ -388,7 +388,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 
 
     @Override
-	public void receiveClientEvent(int i, int j) 
+	public boolean receiveClientEvent(int i, int j) 
     {
     	/*
 		if (i == 1) {
@@ -403,6 +403,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 			furnaceCookTime = j;
 		}
 		*/
+    	return false;
 	}
 
     @Override
@@ -563,5 +564,17 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 			return new LiquidTank(Block.lavaStill.blockID, fuel, maxFuel);
 		else
 			return null;
+	}
+
+	@Override
+	public boolean func_94042_c() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean func_94041_b(int i, ItemStack itemstack) {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

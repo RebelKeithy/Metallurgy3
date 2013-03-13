@@ -16,7 +16,7 @@ public class BlockMetalFurnaceItem extends ItemBlock {
 	}
 
 	@Override
-	public String getItemNameIS(ItemStack itemstack) {
+	public String getUnlocalizedName(ItemStack itemstack) {
 		String name = "";
 		switch (itemstack.getItemDamage()) {
 		case 0: {
@@ -38,6 +38,6 @@ public class BlockMetalFurnaceItem extends ItemBlock {
 		default:
 			name = "brick";
 		}
-		return getItemName() + "." + name;
+		return getUnlocalizedName() + "." + name;
 	}
 }

@@ -15,7 +15,7 @@ public class BlockCrusherItem extends ItemBlock
         }
         
         @Override
-        public String getItemNameIS(ItemStack itemstack)
+        public String getUnlocalizedName(ItemStack itemstack)
         {
             String name = "";
             switch(itemstack.getItemDamage()) {
@@ -41,6 +41,6 @@ public class BlockCrusherItem extends ItemBlock
 	            }
 	            default: name = "brick";
             }
-            return getItemName() + "." + name;
+            return getUnlocalizedName() + "." + name;
         }
 }

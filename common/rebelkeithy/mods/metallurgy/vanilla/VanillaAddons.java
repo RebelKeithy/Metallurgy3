@@ -35,13 +35,13 @@ public class VanillaAddons {
 	{
 		initConfig();
 		
-		goldBrick = new SubBlock(goldBrickID, goldBrickMeta).setTextureFile("/Overrides.png").setBlockTextureIndex(16*5+1).setBlockName("GoldBricks").setCreativeTab(CreativeTabs.tabBlock);
-		ironBrick = new SubBlock(ironBrickID, ironBrickMeta).setTextureFile("/Overrides.png").setBlockTextureIndex(16*5).setBlockName("IronBricks").setCreativeTab(CreativeTabs.tabBlock);
+		goldBrick = new SubBlock(goldBrickID, goldBrickMeta, "Metallurgy:GoldBrick").setUnlocalizedName("GoldBricks").setCreativeTab(CreativeTabs.tabBlock);
+		ironBrick = new SubBlock(ironBrickID, ironBrickMeta, "Metallurgy:IronBrick").setUnlocalizedName("IronBricks").setCreativeTab(CreativeTabs.tabBlock);
 		MetaBlock.registerID(goldBrickID);
 		MetaBlock.registerID(ironBrickID);
 		
-		dustIron = new Item(ironDustID).setTextureFile("/Overrides.png").setIconCoord(5, 4).setItemName("MetallurgyIronDust").setCreativeTab(CreativeTabs.tabMaterials);
-		dustGold = new Item(goldDustID).setTextureFile("/Overrides.png").setIconCoord(6, 4).setItemName("MetallurgyGoldDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustIron = new Item(ironDustID).setUnlocalizedName("MetallurgyIronDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustGold = new Item(goldDustID).setUnlocalizedName("MetallurgyGoldDust").setCreativeTab(CreativeTabs.tabMaterials);
 	}
 	
 	public static void initConfig()
@@ -64,11 +64,11 @@ public class VanillaAddons {
 		Configuration config = new Configuration(cfgFile);
 		config.load();
 		
-		ironBrickID = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").value.split(":")[0]);
-		ironBrickMeta = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").value.split(":")[1]);
+		ironBrickID = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").getString().split(":")[0]);
+		ironBrickMeta = Integer.parseInt(config.get("Iron", "Brick ID", "900:3").getString().split(":")[1]);
 		
-		goldBrickID = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").value.split(":")[0]);
-		goldBrickMeta = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").value.split(":")[1]);
+		goldBrickID = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").getString().split(":")[0]);
+		goldBrickMeta = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").getString().split(":")[1]);
 		
 		ironDustID = config.get("Iron", "Iron Dust ID", 26200).getInt();
 		goldDustID = config.get("Gold", "Gold Dust ID", 26201).getInt();
@@ -90,7 +90,6 @@ public class VanillaAddons {
 
 	public static void registerNames() 
 	{
-		System.out.println("Setting vanilla addon names " + (new ItemStack(goldBrickID, 1, goldBrickMeta)).getItem().getItemNameIS(new ItemStack(goldBrickID, 1, goldBrickMeta)) + " " + (new ItemStack(ironBrickID, 1, ironBrickMeta)).getItem().getItemNameIS(new ItemStack(ironBrickID, 1, ironBrickMeta)));
 		LanguageRegistry.addName(new ItemStack(goldBrickID, 1, goldBrickMeta), "Gold Bricks");
 		LanguageRegistry.addName(new ItemStack(ironBrickID, 1, ironBrickMeta), "Iron Bricks");
 		

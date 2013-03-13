@@ -103,8 +103,8 @@ public class MetallurgyCore
 		config = new Configuration(cfgFile);
 		config.load();
 		
-		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").value.split("\\s*,\\s*"));
-		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").value.split("\\s*,\\s*"));
+		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").getString().split("\\s*,\\s*"));
+		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").getString().split("\\s*,\\s*"));
 		System.out.println("reading sets " + setsToRead.size());
 		config.save();
 	}

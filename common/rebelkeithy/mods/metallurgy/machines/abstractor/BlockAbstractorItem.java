@@ -16,7 +16,7 @@ public class BlockAbstractorItem extends ItemBlock
         }
         
         @Override
-        public String getItemNameIS(ItemStack itemstack)
+        public String getUnlocalizedName(ItemStack itemstack)
         {
             String name = "";
             switch(itemstack.getItemDamage()) {
@@ -37,35 +37,31 @@ public class BlockAbstractorItem extends ItemBlock
 	                break;
 	            }
 	            case 4: {
-	                name = "AredriteFurnace";
-	                break;
-	            }
-	            case 5: {
 	                name = "MithrilFurnace";
 	                break;
 	            }
-	            case 6: {
+	            case 5: {
 	                name = "HaderothFurnace";
 	                break;
 	            }
-	            case 7: {
+	            case 6: {
 	                name = "OrichalcumFurnace";
 	                break;
 	            }
-	            case 8: {
+	            case 7: {
 	                name = "AdamantineFurnace";
 	                break;
 	            }
-	            case 9: {
+	            case 8: {
 	                name = "AtlarusFurnace";
 	                break;
 	            }
-	            case 10: {
+	            case 9: {
 	                name = "TartariteFurnace";
 	                break;
 	            }
 	            default: name = "brick";
             }
-            return getItemName() + "." + name;
+            return getUnlocalizedName() + "." + name;
         }
 }

@@ -1,16 +1,17 @@
 package rebelkeithy.mods.metallurgy.metals.utilityItems.tnt;
 
-import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
 public class LargeTNT extends BlockTNT{
 
-	public LargeTNT(int par1, int par2) 
+	public LargeTNT(int par1) 
 	{
-		super(par1, par2);
+		super(par1);
 	}
 
     /**
@@ -21,7 +22,7 @@ public class LargeTNT extends BlockTNT{
         if (par5EntityPlayer.getCurrentEquippedItem() != null && isActivator(par5EntityPlayer.getCurrentEquippedItem().itemID))
         {
             this.onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
-            par1World.setBlockWithNotify(par2, par3, par4, 0);
+            par1World.setBlockAndMetadataWithNotify(par2, par3, par4, 0, 0, 3);
             return true;
         }
         else
@@ -42,7 +43,7 @@ public class LargeTNT extends BlockTNT{
      * Called upon the block being destroyed by an explosion
      */
 	@Override
-    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4)
+    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4, Explosion par5Explosion)
     {
         if (!par1World.isRemote)
         {

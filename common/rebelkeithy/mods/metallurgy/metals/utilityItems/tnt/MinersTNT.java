@@ -1,25 +1,19 @@
 package rebelkeithy.mods.metallurgy.metals.utilityItems.tnt;
 
-import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.Icon;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
 
 public class MinersTNT extends BlockTNT{
 
-	public MinersTNT(int par1, int par2) {
-		super(par1, par2);
+	public MinersTNT(int par1) {
+		super(par1);
 	}
-
-    /**
-     * Returns the block texture based on the side being looked at.  Args: side
-     */
-    public int getBlockTextureFromSide(int par1)
-    {
-        return par1 == 0 ? this.blockIndexInTexture + 2 : (par1 == 1 ? this.blockIndexInTexture + 1 : this.blockIndexInTexture);
-    }
 
     /**
      * Called upon block activation (right click on the block.)
@@ -29,7 +23,7 @@ public class MinersTNT extends BlockTNT{
         if (par5EntityPlayer.getCurrentEquippedItem() != null && isActivator(par5EntityPlayer.getCurrentEquippedItem().itemID))
         {
             this.onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
-            par1World.setBlockWithNotify(par2, par3, par4, 0);
+            par1World.setBlockAndMetadataWithNotify(par2, par3, par4, 0, 0, 3);
             return true;
         }
         else
@@ -50,7 +44,7 @@ public class MinersTNT extends BlockTNT{
      * Called upon the block being destroyed by an explosion
      */
 	@Override
-    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4)
+    public void onBlockDestroyedByExplosion(World par1World, int par2, int par3, int par4, Explosion par5Explosion)
     {
         if (!par1World.isRemote)
         {

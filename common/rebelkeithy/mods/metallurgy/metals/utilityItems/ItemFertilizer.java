@@ -107,7 +107,7 @@ public class ItemFertilizer extends Item
             {
                 if (!par3World.isRemote)
                 {
-                    par3World.setBlockMetadataWithNotify(par4, par5, par6, 8 | BlockDirectional.getDirection(par3World.getBlockMetadata(par4, par5, par6)));
+                    par3World.setBlockMetadataWithNotify(par4, par5, par6, 8 | BlockDirectional.getDirection(par3World.getBlockMetadata(par4, par5, par6)), 2);
                     --par1ItemStack.stackSize;
                 }
 
@@ -145,7 +145,7 @@ public class ItemFertilizer extends Item
                             {
                                 if (Block.tallGrass.canBlockStay(par3World, var13, var14, var15))
                                 {
-                                    par3World.setBlockAndMetadataWithNotify(var13, var14, var15, Block.tallGrass.blockID, 1);
+                                    par3World.setBlockAndMetadataWithNotify(var13, var14, var15, Block.tallGrass.blockID, 1, 2);
                                 }
                             }
                             else

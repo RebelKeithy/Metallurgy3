@@ -4,15 +4,18 @@ import java.io.File;
 import java.io.IOException;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
+import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
@@ -20,12 +23,15 @@ import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.LargeTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.MinersTNT;
+import rebelkeithy.mods.particleregistry.ParticleRegistry;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -48,7 +54,11 @@ public class MetallurgyMetals {
 	public static Configuration utilityConfig;
 	public static Configuration fantasyConfig;
 
+	//Vanilla Items
+	public static Item dustIron;
+	public static Item dustGold;
 	
+	//Utility Items
 	public static Item magnesiumIgniter;
 	public static Item match;
 	public static Item fertilizer;
@@ -92,36 +102,72 @@ public class MetallurgyMetals {
 	@Init
 	public void Init(FMLInitializationEvent event)
 	{
+		//TODO add config for vanilla dusts
+		dustIron = new Item(5100).setUnlocalizedName("M3DustIron").setCreativeTab(CreativeTabs.tabMaterials);
+		dustGold = new Item(5101).setUnlocalizedName("M3DustGold").setCreativeTab(CreativeTabs.tabMaterials);
+		LanguageRegistry.addName(dustIron, "Iron Dust");
+		LanguageRegistry.addName(dustGold, "Gold Dust");
+		OreDictionary.registerOre("dustIron", dustIron);
+		OreDictionary.registerOre("dustGold", dustGold);
+		
 		createUtilityItems();
 		utilityConfig.save();
+		
+		ParticleRegistry.registerParticle("FantasyOre", EntityFantasyOreFX.class);
+
+		fantasySet.getOreInfo("Astral Silver").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.8, 0.95));
+		fantasySet.getOreInfo("Carmot").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.4));
+		fantasySet.getOreInfo("Mithril").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.9, 0.95));
+		fantasySet.getOreInfo("Orichalcum").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.3, 0.5, 0.15));
+		fantasySet.getOreInfo("Adamantine").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.5, 0.2, 0.2));
+		fantasySet.getOreInfo("Atlarus").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.2));
+		
+		ParticleRegistry.registerParticle("NetherOre", EntityNetherOreFX.class);
+		
+		netherSet.getOreInfo("Midasium").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 1.0, 0.8, 0.25));
+		netherSet.getOreInfo("Vyroxeres").ore.addDisplayListener(new DisplayListenerVyroxeresOreParticles());
+		netherSet.getOreInfo("Ceruclase").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.35, 0.6, 0.9));
+		netherSet.getOreInfo("Kalendrite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.8, 0.4, 0.8));
+		netherSet.getOreInfo("Vulcanite").ore.addDisplayListener(new DisplayListenerVulcaniteOreParticles());
+		netherSet.getOreInfo("Sanguinite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.85, 0.0, 0.0));
+		
+		netherSet.getOreInfo("Vyroxeres").ore.addCollisionListener(new VyroxeresCollisionListener());
+		
+		addSwordEffects();
+	}
+	
+	@PostInit
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		createMidasiumRecipes();
 	}
 	
 	public void createUtilityItems()
 	{
 		int id = utilityConfig.get("Item IDs", "HE TNT", 911).getInt();
-		largeTNT = new LargeTNT(id, 16 * 3).setBlockName("M3HETNT").setCreativeTab(utilityTab);
+		largeTNT = new LargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
 		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(largeTNT, "HE TNT");
 		
 		id = utilityConfig.get("Item IDs", "LE TNT", 912).getInt();
-		minersTNT = new MinersTNT(id, 16 * 4).setBlockName("M3LETNT").setCreativeTab(utilityTab);
+		minersTNT = new MinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 25022).getInt();
-		magnesiumIgniter = new ItemIgniter(id).setItemName("M3MagnesiumIgniter").setTextureFile("/Metallurgy/MagnesiumIgniter.png").setCreativeTab(utilityTab);
+		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("M3MagnesiumIgniter").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
 
 		id = utilityConfig.get("Item IDs", "Match", 25023).getInt();
-		match = new ItemIgniter(id).setItemName("M3Match").setTextureFile("/Metallurgy/Match.png").setCreativeTab(utilityTab);
+		match = new ItemIgniter(id).setUnlocalizedName("M3Match").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(match, "Match");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(match), "X", "|", 'X', "dustPhosphorus", '|', Item.stick));
 		
 		id = utilityConfig.get("Item IDs", "Fertilizer", 25024).getInt();
-		fertilizer = new ItemFertilizer(id).setItemName("M3Fertilizer").setTextureFile("/Metallurgy/Fertilizer.png").setCreativeTab(utilityTab);
+		fertilizer = new ItemFertilizer(id).setUnlocalizedName("M3Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustPotash"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
@@ -130,7 +176,7 @@ public class MetallurgyMetals {
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
 		id = utilityConfig.get("Item IDs", "Tar", 25025).getInt();
-		tar = new Item(id).setItemName("M3Tar").setTextureFile("/Metallurgy/Tar.png").setCreativeTab(utilityTab);
+		tar = new Item(id).setUnlocalizedName("M3Tar").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
 		
@@ -157,5 +203,79 @@ public class MetallurgyMetals {
         }
         
         return new Configuration(cfgFile);
+	}
+	
+	public void createMidasiumRecipes()
+	{
+		String[] ores = OreDictionary.getOreNames();
+		System.out.println("Searching for dust for midsasium recipes");
+		int count = 0;
+		for(String name : ores)
+		{
+			if(name.contains("dust"))
+			{
+				System.out.println("Adding recipe for " + name + " midasium = gold");
+				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustGold), "dustMidasium", name));
+				count++;
+			}
+		}
+		System.out.println("found " + count + " recipes");
+	}
+	
+	public void addSwordEffects()
+	{
+		ISwordHitListener swordEffects = new NetherSwordHitListener();
+		MinecraftForge.EVENT_BUS.register(swordEffects); // Registers the on death event needed by Midasium's looting effect
+		netherSet.getOreInfo("Ignatius").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Ignatius").sword.setSubText("cIgnite I");
+		netherSet.getOreInfo("Shadow Iron").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Shadow Iron").sword.setSubText("cWeakness I");
+		netherSet.getOreInfo("Shadow Steel").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Shadow Steel").sword.setSubText("7Weakness II");
+		// Midsium'ss effect comes from the onDeath event, not the onHit method
+		netherSet.getOreInfo("Midasium").sword.setSubText("7Looting I");
+		netherSet.getOreInfo("Vyroxeres").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Vyroxeres").sword.setSubText("cPoison I");
+		netherSet.getOreInfo("Ceruclase").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Ceruclase").sword.setSubText("cSlowness");
+		netherSet.getOreInfo("Inolashite").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Inolashite").sword.setSubText("7Poison, Sloness");
+		netherSet.getOreInfo("Kalendrite").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Kalendrite").sword.setSubText("7Regen");
+		netherSet.getOreInfo("Amordrine").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Amordrine").sword.setSubText("7Healing");
+		netherSet.getOreInfo("Vulcanite").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Vulcanite").sword.setSubText("cIgnite II");
+		netherSet.getOreInfo("Sanguinite").sword.addHitListener(swordEffects);
+		netherSet.getOreInfo("Sanguinite").sword.setSubText("cWither I");
+		
+		swordEffects = new FantasySwordHitListener();
+		MinecraftForge.EVENT_BUS.register(swordEffects); // Registers the on death event needed by Astral Silver's and Carmot's looting effect
+		fantasySet.getOreInfo("Deep Iron").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Deep Iron").sword.setSubText("cBlindness I");
+		fantasySet.getOreInfo("Black Steel").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Black Steel").sword.setSubText("cBlindness II");
+		fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
+		//fantasySet.getOreInfo("Astral Silver").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Astral Silver").sword.setSubText("7Looting I");
+		//fantasySet.getOreInfo("Carmot").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Carmot").sword.setSubText("7Looting II");
+		fantasySet.getOreInfo("Mithril").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Mithril").sword.setSubText("7Haste I");
+		fantasySet.getOreInfo("Quicksilver").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Quicksilver").sword.setSubText("7Speed I");
+		fantasySet.getOreInfo("Haderoth").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Haderoth").sword.setSubText("cHaste I, Ignite II");
+		fantasySet.getOreInfo("Orichalcum").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Orichalcum").sword.setSubText("cResistance II");
+		fantasySet.getOreInfo("Celenegil").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Celenegil").sword.setSubText("7Resistance III");
+		fantasySet.getOreInfo("Adamantine").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Adamantine").sword.setSubText("7Fire Resist I, Ignite II");
+		fantasySet.getOreInfo("Atlarus").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Atlarus").sword.setSubText("7Strength II");
+		fantasySet.getOreInfo("Tartarite").sword.addHitListener(swordEffects);
+		fantasySet.getOreInfo("Tartarite").sword.setSubText("cWither, Igntite II");
 	}
 }

@@ -48,7 +48,6 @@ public class BlockCrusher extends BlockContainer
     {
         super(par1, Material.rock);
         this.isActive = par2;
-        setRequiresSelfNotify();
         renderId = RenderingRegistry.getNextAvailableRenderId();
     }
     
@@ -267,7 +266,7 @@ public class BlockCrusher extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int x, int y, int z, EntityLiving par5EntityLiving)
+    public void onBlockPlacedBy(World par1World, int x, int y, int z, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 

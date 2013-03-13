@@ -16,7 +16,7 @@ public class ItemMetaBlock extends ItemBlock
     public String getItemDisplayName(ItemStack par1ItemStack)
     {
 		//return getItemNameIS(par1ItemStack);
-        return ("" + StringTranslate.getInstance().translateNamedKey(this.getLocalItemName(par1ItemStack))).trim();
+        return ("" + StringTranslate.getInstance().translateNamedKey(this.getLocalizedName(par1ItemStack))).trim();
     }
 	
 	@Override
@@ -26,9 +26,9 @@ public class ItemMetaBlock extends ItemBlock
 	}
 	
 	@Override
-	public String getItemNameIS(ItemStack itemstack)
+	public String getUnlocalizedName(ItemStack itemstack)
 	{
 		int meta = itemstack.getItemDamage();
-		return getItemName() + "." + meta;
+		return getUnlocalizedName() + "." + meta;
 	}
 }

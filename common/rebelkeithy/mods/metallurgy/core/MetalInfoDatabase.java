@@ -82,7 +82,7 @@ public class MetalInfoDatabase
 				
 				id = config.get("Items", itemMap.get("Item Name"), id).getInt();
 				
-				Item item = new Item(id).setTextureFile(itemMap.get("Texture File")).setItemName("M3Item" + itemMap.get("Item Name")).setCreativeTab(CreativeTabs.tabMisc);
+				Item item = new Item(id).setUnlocalizedName("M3" + itemMap.get("Item Name")).setCreativeTab(CreativeTabs.tabMisc);
 				LanguageRegistry.addName(item, itemMap.get("Item Name"));
 				
 				items.put(itemMap.get("Item Name"), item);

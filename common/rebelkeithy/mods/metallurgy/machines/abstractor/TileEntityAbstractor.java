@@ -450,7 +450,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     }
 
     @Override
-	public void receiveClientEvent(int i, int j) 
+	public boolean receiveClientEvent(int i, int j) 
     {
 		if (i == 1) {
 			direction = j;
@@ -460,8 +460,12 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 			furnaceBurnTime = j;
 		} else if (i == 4) {
 			furnaceCookTime = j;
+		} else {
+			return false;
 		}
+
         worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		return true;
 	}
     
     /**
@@ -475,13 +479,16 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
+    @Override
     public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer)
     {
         return this.worldObj.getBlockTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : par1EntityPlayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
 
+    @Override
     public void openChest() {}
 
+    @Override
     public void closeChest() {}
 
     @Override
@@ -569,5 +576,18 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 	@Override
 	public ItemStack[] extractItem(boolean doRemove, ForgeDirection from, int maxItemCount) {
 		return null;
+	}
+
+	@Override
+	public boolean func_94042_c() 
+	{
+		return false;
+	}
+
+	@Override
+	public boolean func_94041_b(int i, ItemStack itemstack) 
+	{
+		//TODO fix this
+		return true;
 	}
 }

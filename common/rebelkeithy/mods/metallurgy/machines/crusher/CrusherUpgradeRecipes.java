@@ -19,7 +19,7 @@ public class CrusherUpgradeRecipes {
 	{
 
 		GameRegistry.addRecipe(new ItemStack(MetallurgyMachines.instance.crusher, 1, 0),
-			"XSX", "SFS", "XSX", 'X', Block.cobblestone, 'S', Item.stick, 'F', Block.stoneOvenIdle);
+			"XSX", "SFS", "XSX", 'X', Block.cobblestone, 'S', Item.stick, 'F', Block.furnaceIdle);
 	    
 		ShapedOreRecipe copperRecipe = new ShapedOreRecipe(new ItemStack(MetallurgyMachines.instance.crusher, 1, 1),
 				"XXX", "XFX", "XXX", 'X', "ingotCopper", 'F', new ItemStack(MetallurgyMachines.instance.crusher, 1, 0));

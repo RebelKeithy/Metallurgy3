@@ -1,7 +1,13 @@
 package rebelkeithy.mods.metallurgy.machines.furnace;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -9,19 +15,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
-
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockMetalFurnace extends BlockContainer
 {
@@ -32,6 +34,13 @@ public class BlockMetalFurnace extends BlockContainer
 
     /** True if this is an active furnace, false if idle */
     private final boolean isActive;
+    
+    private static int front = 0;
+    private static int side = 1;
+    private static int top = 2;
+    private static int active = 3;
+    
+    private Map<Integer, Icon[]> iconMap;
 
     /**
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
@@ -43,14 +52,7 @@ public class BlockMetalFurnace extends BlockContainer
     {
         super(par1, Material.rock);
         this.isActive = par2;
-        setRequiresSelfNotify();
-        //this.setCreativeTab(MetallurgyBaseMetals.baseTab);
     }
-
-    @Override
-	public String getTextureFile() {
-		return "/shadow/MetallurgyFurnaces.png";
-	}
 
     /**
      * Returns the ID of the items to drop on destruction.
@@ -66,33 +68,12 @@ public class BlockMetalFurnace extends BlockContainer
     {
     	return (metadata < 8) ? metadata : metadata - 8;
     }
-    
-    /**
-     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-     */
-    @Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
-    {
-    	par2 = (par2 < 8 ? par2 : par2 - 8);
-    	par2++;
-        if (par1 == 1 || par1 == 0)
-        {
-            return 2 + (par2 * 16);
-        }
-        else
-        {
-            if(par1 != 3)
-            	return 1 + (par2 * 16);
-            else
-            	return 0 + (par2 * 16);
-        }
-    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
      */
     @Override
-    public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
     	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
     	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
@@ -103,16 +84,16 @@ public class BlockMetalFurnace extends BlockContainer
     	
         if (par5 == 1 || par5 == 0)
         {
-            return 2 + ((type + 1) * 16);
+            return iconMap.get(meta)[top];
         }
         else
         {
             if(par5 != dir)
-            	return 1 + ((type + 1) * 16);
+            	return iconMap.get(meta)[side];
             else if(isBurning)
-            	return 3 + ((type + 1) * 16) + time;
+            	return iconMap.get(meta)[active];
             else
-            	return 0 + ((type + 1) * 16);
+            	return iconMap.get(meta)[front];
         }
     }
 
@@ -158,15 +139,6 @@ public class BlockMetalFurnace extends BlockContainer
     }
 
     /**
-     * Returns the block texture based on the side being looked at.  Args: side
-     */
-    @Override
-    public int getBlockTextureFromSide(int par1)
-    {
-        return par1 == 1 ? this.blockIndexInTexture + 17 : (par1 == 0 ? this.blockIndexInTexture + 17 : (par1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
-    }
-
-    /**
      * Called upon block activation (left or right click on the block.). The three integers represent x,y,z of the
      * block.
      */
@@ -203,11 +175,11 @@ public class BlockMetalFurnace extends BlockContainer
 
         if (!par0 && meta >= 8)
         {
-            par1World.setBlockMetadata(x, y, z, meta - 8);
+            par1World.setBlockMetadataWithNotify(x, y, z, meta - 8, 2);
         }
         else if(par0 && meta < 8)
         {
-            par1World.setBlockMetadata(x, y, z, meta + 8);
+            par1World.setBlockMetadataWithNotify(x, y, z, meta + 8, 2);
         }
     }
 
@@ -224,7 +196,7 @@ public class BlockMetalFurnace extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
@@ -335,6 +307,22 @@ public class BlockMetalFurnace extends BlockContainer
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }	
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	iconMap = new HashMap<Integer, Icon[]>();
+    	for(int i = 0; i < 10; i++)
+    	{
+    		Icon[] iArray = new Icon[5];
+    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Front");
+    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Side");
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Top");
+    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Active");
+    		iconMap.put(i, iArray);
+    	}
+    }
     
     @Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })

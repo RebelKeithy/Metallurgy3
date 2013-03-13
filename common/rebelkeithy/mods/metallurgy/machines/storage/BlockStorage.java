@@ -29,9 +29,8 @@ public class BlockStorage extends BlockContainer
     }
     
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving par5EntityLiving)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
     {
-    	ItemStack par6ItemStack = par5EntityLiving.getHeldItem();
     	if(par6ItemStack.hasTagCompound())
     	{
     		NBTTagCompound tag = par6ItemStack.getTagCompound();

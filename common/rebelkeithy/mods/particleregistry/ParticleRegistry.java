@@ -11,7 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.world.World;
-import rebelkeithy.mods.metallurgy.metals.EntityOreFX;
+import rebelkeithy.mods.metallurgy.metals.EntityFantasyOreFX;
 
 public class ParticleRegistry 
 {
@@ -34,6 +34,7 @@ public class ParticleRegistry
 				if(entityConstructor != null)
 				{
 					EntityFX entity = (EntityFX) entityConstructor.newInstance(par1World, x, y, z, r, g, b);
+					entity.setRBGColorF((float)r, (float)g, (float)b);
 					Minecraft.getMinecraft().effectRenderer.addEffect(entity);
 				}
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

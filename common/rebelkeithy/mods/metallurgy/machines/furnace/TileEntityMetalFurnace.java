@@ -430,13 +430,17 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
     }
 
     @Override
-	public void receiveClientEvent(int i, int j) 
+	public boolean receiveClientEvent(int i, int j) 
     {
 		if (i == 11) {
 			direction = j;
-		}if (i == 4) {
+		} if (i == 4) {
 			furnaceCookTime = j;
+		} else {
+			return false;
 		}
+		
+		return true;
 	}
 
     public void openChest() {}
@@ -537,5 +541,17 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 			return returnStack;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean func_94042_c() 
+	{
+		return false;
+	}
+
+	@Override
+	public boolean func_94041_b(int i, ItemStack itemstack) {
+		// TODO fix this
+		return true;
 	}
 }

@@ -43,10 +43,7 @@ public class MetallurgyVanilla
 	
 	@Init
 	public void Init(FMLInitializationEvent event)
-	{
-		Block.oreGold.setTextureFile("/Overrides.png");
-		Block.oreGold.blockIndexInTexture = 16*5 + 1;
-		
+	{		
 		VanillaAddons.load();
 		proxy.registerNames();
 	}

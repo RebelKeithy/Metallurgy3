@@ -1,15 +1,13 @@
 package rebelkeithy.mods.metallurgy.machines.abstractor;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Random;
-
-import rebelkeithy.mods.guiregistry.GuiRegistry;
-import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
-import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -17,9 +15,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -33,6 +35,14 @@ public class BlockAbstractor extends BlockContainer
 
     /** True if this is an active furnace, false if idle */
     private final boolean isActive;
+    
+    private static int front = 0;
+    private static int side = 1;
+    private static int top = 2;
+    private static int bottom = 3;
+    private static int active = 4;
+    
+    private Map<Integer, Icon[]> iconMap;
 
     /**
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
@@ -44,7 +54,8 @@ public class BlockAbstractor extends BlockContainer
     {
         super(par1, Material.rock);
         this.isActive = par2;
-        setRequiresSelfNotify();
+        iconMap = new HashMap<Integer, Icon[]>();
+        //setRequiresSelfNotify();
     }
     
     @Override
@@ -52,31 +63,12 @@ public class BlockAbstractor extends BlockContainer
     {
     	return metadata;
     }
-    
-    /**
-     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-     */
-    @Override
-    public int getBlockTextureFromSideAndMetadata(int side, int metadata)
-    {
-        if (side == 1 || side == 0)
-        {
-            return 2 + (metadata * 16);
-        }
-        else
-        {
-            if(side != 3)
-            	return 1 + (metadata * 16);
-            else
-            	return 0 + (metadata * 16);
-        }
-    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
      */
     @Override
-    public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
     	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
     	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
@@ -86,16 +78,16 @@ public class BlockAbstractor extends BlockContainer
     			    	
         if (par5 == 1 || par5 == 0)
         {
-            return 2 + ((meta) * 16);
+            return iconMap.get(meta)[top];
         }
         else
         {
             if(par5 != dir)
-            	return 1 + ((meta) * 16);
+            	return iconMap.get(meta)[side];
             else if(isBurning)
-            	return 4 + ((meta) * 16);
+            	return iconMap.get(meta)[active];
             else
-            	return 0 + ((meta) * 16);
+            	return iconMap.get(meta)[front];
         }
     }
 
@@ -153,15 +145,6 @@ public class BlockAbstractor extends BlockContainer
     }
 
     /**
-     * Returns the block texture based on the side being looked at.  Args: side
-     */
-    @Override
-    public int getBlockTextureFromSide(int par1)
-    {
-        return par1 == 1 ? this.blockIndexInTexture + 17 : (par1 == 0 ? this.blockIndexInTexture + 17 : (par1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
-    }
-
-    /**
      * Called upon block activation (left or right click on the block.). The three integers represent x,y,z of the
      * block.
      */
@@ -202,7 +185,7 @@ public class BlockAbstractor extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
@@ -285,12 +268,27 @@ public class BlockAbstractor extends BlockContainer
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
+    
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	for(int i = 0; i < 10; i++)
+    	{
+    		Icon[] iArray = new Icon[5];
+    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Front");
+    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Side");
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Top");
+    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Bottom");
+    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Active");
+    		iconMap.put(i, iArray);
+    	}
+    }
 
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int n = 0; n < 11; n++) {
+		for (int n = 0; n < 10; n++) {
 			par3List.add(new ItemStack(this, 1, n));
 		}
 	}

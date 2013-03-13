@@ -1,20 +1,22 @@
 package rebelkeithy.mods.metablock;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 //Things that can't be changed per subblock:
 // - Creative Tab
@@ -23,6 +25,7 @@ import java.util.Random;
 public class MetaBlock extends Block {
 
 	SubBlock[] subBlocks;
+	List<Integer> tickList;
 	
 	public static List registeredIDs;
 	
@@ -46,6 +49,7 @@ public class MetaBlock extends Block {
 	{
 		super(id, Material.rock);
 		subBlocks = new SubBlock[16];
+		tickList = new ArrayList();
 	}
 
 	public void addSubBlock(SubBlock block, int meta)
@@ -71,14 +75,61 @@ public class MetaBlock extends Block {
 		}
 	}
 	
+
+	//--Listeners--//
+	public void setTickRandomly(int meta) 
+	{
+		if(!tickList.contains(meta))
+		{
+			this.setTickRandomly(true);
+			tickList.add(meta);
+		}
+	}
+	
+	@Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+		int meta = par1World.getBlockMetadata(par2, par3, par4);
+    	AxisAlignedBB ret = subBlocks[meta].getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+    	
+    	if(ret != null)
+    		return ret;
+    	else
+    		return super.getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+    }
+	
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    {
+    	int meta = par1World.getBlockMetadata(par2, par3, par4);
+    	subBlocks[meta].onEntityCollidedWithBlock(par1World, par2, par3, par4, par5Entity);
+    }
+
+    public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    {
+        int meta = par1World.getBlockMetadata(par2, par3, par4);
+        subBlocks[meta].randomDisplayTick(par1World, par2, par3, par4, par5Random);
+    }
+	
 	//--Block Redirect Methods--//
 
     @SideOnly(Side.CLIENT)
 	@Override
-    public int getBlockTexture(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
+    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
     {
 		int meta = par1IBlockAccess.getBlockMetadata(x, y, z);
 		return subBlocks[meta].getBlockTexture(par1IBlockAccess, x, y, z, side);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+        for (int i = 0; i < 16; ++i)
+        {
+            if(subBlocks[i] != null)
+            {
+            	subBlocks[i].func_94332_a(par1IconRegister);
+            }
+        }
     }
 
     /**
@@ -86,9 +137,12 @@ public class MetaBlock extends Block {
      */
     
     @Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-        return subBlocks[par2].getBlockTextureFromSide(par1);
+    	if(subBlocks[par2] != null)
+    		return subBlocks[par2].getBlockTextureFromSide(par1);
+    	
+    	return null;
     }
 
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)

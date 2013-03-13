@@ -77,13 +77,14 @@ public class GuiStorage extends GuiContainer
         {
             super.initGui();
             guiTop += 26;
-            this.controlList.clear();
+            // TODO these should not be commented out
+            //this.controlList.clear();
             Keyboard.enableRepeatEvents(true);
             int tabCount = tabList.size();
             if (tabCount > 6)
             {
-                controlList.add(new GuiButton(101, guiLeft,              guiTop - 50, 20, 20, "<"));
-                controlList.add(new GuiButton(102, guiLeft + xSize - 20, guiTop - 50, 20, 20, ">"));
+                //controlList.add(new GuiButton(101, guiLeft,              guiTop - 50, 20, 20, "<"));
+                //controlList.add(new GuiButton(102, guiLeft + xSize - 20, guiTop - 50, 20, 20, ">"));
                 maxPages = (tabCount-1)/6;
             }
         }
@@ -188,8 +189,6 @@ public class GuiStorage extends GuiContainer
     {
     	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderHelper.enableGUIStandardItemLighting();
-        int tabImage = this.mc.renderEngine.getTexture("/gui/allitems.png");
-        int backgroundImage = this.mc.renderEngine.getTexture("/gui/creative_inv/inv_storage.png");
         int var8 = tabList.size();
         var8 = Math.min(tabList.size(), (tabPage + 1) * 6);
         
@@ -198,7 +197,7 @@ public class GuiStorage extends GuiContainer
         for (int n = start; n < var8; ++n)
         {
             StorageTabs var10 = tabList.get(n);
-            this.mc.renderEngine.bindTexture(tabImage);
+            this.mc.renderEngine.func_98187_b("/gui/allitems.png");  // Calls bindTexture
 
             if (var10 != null && n != selectedTabIndex && var8-n < 7)
             {
@@ -206,13 +205,13 @@ public class GuiStorage extends GuiContainer
             }
         }
 
-        this.mc.renderEngine.bindTexture(backgroundImage);
+        this.mc.renderEngine.func_98187_b("/gui/creative_inv/inv_storage.png"); // Calls bindTexture
         this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         int var11 = this.guiLeft + 175;
         var8 = this.guiTop + 18;
         int var9 = var8 + 112;
-        this.mc.renderEngine.bindTexture(tabImage);
+        this.mc.renderEngine.func_98187_b("/gui/allitems.png");
 
         int invHeight = ((ContainerStorage)this.inventorySlots).inventory.getSizeInventory()/9 -5;
         this.drawTexturedModalRect(var11, var8 + (int)((currentScroll/(float)invHeight)*96), 232 + (this.needsScrollBars() ? 0 : 12), 0, 12, 15);

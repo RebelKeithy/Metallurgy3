@@ -21,6 +21,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,7 +61,7 @@ public class OreInfo implements IWorldGenerator
 	//TODO: remove in 1.5
 	protected int iconColumn;
 	
-	protected Object[] alloyRecipe;
+	protected String[] alloyRecipe;
 	protected int abstractorXP;
 	protected int blockLvl;
 	
@@ -98,7 +99,7 @@ public class OreInfo implements IWorldGenerator
 	public Item shovel;
 	public Item axe;
 	public Item hoe;
-	public Item sword;
+	public ItemMetallurgySword sword;
 	
 	public Item helmet;
 	public Item chest;
@@ -123,7 +124,7 @@ public class OreInfo implements IWorldGenerator
 		
 		alloyRecipe = info.get("Alloy Recipe").split(" ");
 		for(int n = 0; n < alloyRecipe.length; n++)
-			alloyRecipe[n] = "dust" + alloyRecipe[n];
+			alloyRecipe[n] = "dust" + alloyRecipe[n].replace("\"", "");
 		
 		if(type.generates())
 		{
@@ -199,19 +200,19 @@ public class OreInfo implements IWorldGenerator
 			String id;
 			if((type == ORE || type == CATALYST || type == DROP) && oreID != 0)
 			{
-				id = config.get(name + ".IDs", "Ore", oreID + ":" + oreMeta).value;
+				id = config.get(name + ".IDs", "Ore", oreID + ":" + oreMeta).getString();
 				oreID = Integer.parseInt(id.split(":")[0]);
 				oreMeta = Integer.parseInt(id.split(":")[1]);
 			}
 			if(type != DROP && blockID != 0)
 			{
-				id = config.get(name + ".IDs", "Block", blockID + ":" + blockMeta).value;
+				id = config.get(name + ".IDs", "Block", blockID + ":" + blockMeta).getString();
 				blockID = Integer.parseInt(id.split(":")[0]);
 				blockMeta = Integer.parseInt(id.split(":")[1]);
 			}
 			if(type != DROP && brickID != 0)
 			{
-				id = config.get(name + ".IDs", "Brick", brickID + ":" + brickMeta).value;
+				id = config.get(name + ".IDs", "Brick", brickID + ":" + brickMeta).getString();
 				brickID = Integer.parseInt(id.split(":")[0]);
 				brickMeta = Integer.parseInt(id.split(":")[1]);
 			}
@@ -262,7 +263,7 @@ public class OreInfo implements IWorldGenerator
 				for(int n = 1; n < diminsions.length; n++)
 					dimCombined += " " + diminsions[n];
 			}
-			diminsions = config.get(name + ".World Gen", "Diminsions", dimCombined).value.split(" ");
+			diminsions = config.get(name + ".World Gen", "Diminsions", dimCombined).getString().split(" ");
 		}
 	}
 	
@@ -273,8 +274,7 @@ public class OreInfo implements IWorldGenerator
 		{
 			if(type.generates() && oreID != 0)
 			{
-				ore = new SubBlock(oreID, oreMeta).setBlockName(setName + oreID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
-				ore.setBlockTextureIndex(iconColumn);
+				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(CreativeTabs.tabBlock);
 				if(type == DROP)
 				{
 					System.out.println("getting block drop " + dropName);
@@ -283,18 +283,16 @@ public class OreInfo implements IWorldGenerator
 			}
 			if(type != DROP && blockID != 0)
 			{
-				block = new SubBlock(blockID, blockMeta).setBlockName(setName + blockID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
-				block.setBlockTextureIndex(iconColumn + 16);
+				block = new SubBlock(blockID, blockMeta, "Metallurgy:" + name + "Block").setUnlocalizedName(setName + blockID).setCreativeTab(CreativeTabs.tabBlock);
 			}
 			if(type != DROP && brickID != 0)
 			{
-				brick = new SubBlock(brickID, brickMeta).setBlockName(setName + brickID).setTextureFile("/Metallurgy" + setName + ".png").setCreativeTab(CreativeTabs.tabBlock);
-				brick.setBlockTextureIndex(iconColumn + 16 * 2);
+				brick = new SubBlock(brickID, brickMeta, "Metallurgy:" + name + "Brick").setUnlocalizedName(setName + brickID).setCreativeTab(CreativeTabs.tabBlock);
 			}
 			if(type != DROP)
 			{
-				dust = new Item(itemIDs).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 3).setItemName(setName + "." + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
-				ingot = new Item(itemIDs+1).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 4).setItemName(setName + "." + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
+				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
+				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
 				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
@@ -302,17 +300,17 @@ public class OreInfo implements IWorldGenerator
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
-				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 7).setItemName(setName + "." + name + "Pick").setCreativeTab(CreativeTabs.tabTools);
-				shovel = new ItemSpade(itemIDs + 3, toolEnum).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 8).setItemName(setName + "." + name + "Shovel").setCreativeTab(CreativeTabs.tabTools);
-				axe = new ItemAxe(itemIDs + 4, toolEnum).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 5).setItemName(setName + "." + name + "Axe").setCreativeTab(CreativeTabs.tabTools);
-				hoe = new ItemHoe(itemIDs + 5, toolEnum).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 6).setItemName(setName + "." + name + "Hoe").setCreativeTab(CreativeTabs.tabTools);
-				sword = new ItemSword(itemIDs + 6, toolEnum).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 9).setItemName(setName + "." + name + "Sword").setCreativeTab(CreativeTabs.tabCombat);
+				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Pick").setCreativeTab(CreativeTabs.tabTools);
+				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Shovel").setCreativeTab(CreativeTabs.tabTools);
+				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Axe").setCreativeTab(CreativeTabs.tabTools);
+				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Hoe").setCreativeTab(CreativeTabs.tabTools);
+				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Sword").setCreativeTab(CreativeTabs.tabCombat);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
-				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 12).setItemName(setName + "." + name + "Helmet").setCreativeTab(CreativeTabs.tabCombat);
-				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 13).setItemName(setName + "." + name + "Chest").setCreativeTab(CreativeTabs.tabCombat);
-				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 14).setItemName(setName + "." + name + "Legs").setCreativeTab(CreativeTabs.tabCombat);
-				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setTextureFile("/Metallurgy" + setName + ".png").setIconCoord(iconColumn, 15).setItemName(setName + "." + name + "Boots").setCreativeTab(CreativeTabs.tabCombat);
+				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setUnlocalizedName("Metallurgy:" + name + "Helmet").setCreativeTab(CreativeTabs.tabCombat);
+				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setUnlocalizedName("Metallurgy:" + name + "Chest").setCreativeTab(CreativeTabs.tabCombat);
+				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setUnlocalizedName("Metallurgy:" + name + "Legs").setCreativeTab(CreativeTabs.tabCombat);
+				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setUnlocalizedName("Metallurgy:" + name + "Boots").setCreativeTab(CreativeTabs.tabCombat);
 			}
 		}
 		
@@ -408,7 +406,7 @@ public class OreInfo implements IWorldGenerator
 		
 		if(type == ALLOY)
 		{
-			System.out.println("Adding alloy recipe for " + name);
+			System.out.println("Adding alloy recipe " + alloyRecipe[0] + " + " + alloyRecipe[1] + " for " + name);
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dust, 2), alloyRecipe));
 		}
 	}
@@ -472,7 +470,8 @@ public class OreInfo implements IWorldGenerator
 			int randPosY = random.nextInt(maxHeight - minHeight) + minHeight;
 			int randPosZ = chunkZ*16 + random.nextInt(16);
 			
-			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
+			new WorldGenMinable(oreID, oreMeta, oreCount).generate(world, random, randPosX, randPosY, randPosZ);
+			//new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
 			//new WorldGenMinable(oreID, oreMeta, 40).generate(world, random, randPosX, randPosY, randPosZ);
 		}
 	}

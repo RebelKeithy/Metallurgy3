@@ -458,7 +458,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     }
     
     @Override
-	public void receiveClientEvent(int i, int j) 
+	public boolean receiveClientEvent(int i, int j) 
     {
 		if (i == 1)
 			direction = j;
@@ -468,8 +468,11 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 			furnaceBurnTime = j;
 		if (i == 4)
 			furnaceCookTime = j;
+		else
+			return false;
 
 		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+		return true;
 	}
 
     public void openChest() {}
@@ -579,6 +582,18 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 			return returnStack;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean func_94042_c() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean func_94041_b(int i, ItemStack itemstack) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

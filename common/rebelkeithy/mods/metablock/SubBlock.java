@@ -1,19 +1,28 @@
 package rebelkeithy.mods.metablock;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 
 public class SubBlock 
 {
 	private MetaBlock metaBlock;
 	int meta;
 	
-	private int[] textureIndex;
+	private int textureIndex;
 	
 	private ItemStack drop;
 	private int dropMin;
@@ -22,7 +31,14 @@ public class SubBlock
 	private float hardness;
 	private float blockResistance;
 	
-	public SubBlock(int id, int meta)
+	public List<IDisplayListener> dlList = new ArrayList<IDisplayListener>();
+	public List<ICollisionListener> clList = new ArrayList<ICollisionListener>();
+	private boolean collisionEffect;
+	
+	public Icon icon;
+	public String iconName;
+	
+	public SubBlock(int id, int meta, String iconName)
 	{
 		if(Block.blocksList[id] == null)
 		{
@@ -33,32 +49,63 @@ public class SubBlock
 			metaBlock.addSubBlock(this, meta);
 		}
 		
-		textureIndex = new int[16];
+		this.iconName = iconName;
 	}
-
 	
-	public SubBlock setBlockTextureIndex(int textureIndex)
+	//Listeners
+    public void addDisplayListener(IDisplayListener dl)
+    {
+        metaBlock.setTickRandomly(meta);
+    	dlList.add(dl);
+    }
+    
+    public void addCollisionListener(ICollisionListener cl)
+    {
+    	collisionEffect = true;
+    	clList.add(cl);
+    }
+    
+	public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random) 
 	{
-		this.textureIndex[meta] = textureIndex;
-		return this;
+		for(IDisplayListener dl : dlList)
+		{
+			dl.randomDisplayTick(par1World, par2, par3, par4, par5Random);
+		}
 	}
 	
-	public int getBlockTexture(IBlockAccess par1iBlockAccess, int x, int y, int z, int side) {
-		return textureIndex[meta];
-	}
-
-
-	public int getBlockTextureFromSide(int par1) {
-		return textureIndex[meta];
-	}
-
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    {
+    	if(collisionEffect)
+    	{
+    		float var5 = 0.025F;
+    		return AxisAlignedBB.getAABBPool().getAABB((double)par2, (double)par3, (double)par4, (double)(par2 + 1), (double)((float)(par3 + 1) - var5), (double)(par4 + 1));
+    	}
+    	
+    	return null;
+    }
 	
-	public SubBlock setTextureFile(String texturePath)
-    {		
-		metaBlock.setTextureFile(texturePath);
-		return this;
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    {
+        for(ICollisionListener cl : clList)
+        	cl.collide(par1World, par2, par3, par4, par5Entity, meta);
+    }
+	
+	public Icon getBlockTexture(IBlockAccess par1iBlockAccess, int x, int y, int z, int side) 
+	{
+		return icon;
+		
+	}
+
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister iconRegister)
+    {
+    	this.icon = iconRegister.func_94245_a(iconName);
     }
 
+
+	public Icon getBlockTextureFromSide(int par1) {
+		return icon;
+	}
 
 	public SubBlock setCreativeTab(CreativeTabs tab) 
 	{
@@ -67,8 +114,8 @@ public class SubBlock
 	}
 
 
-	public SubBlock setBlockName(String string) {
-		metaBlock.setBlockName(string);
+	public SubBlock setUnlocalizedName(String string) {
+		metaBlock.setUnlocalizedName(string);
 		return this;
 	}
 
@@ -134,6 +181,7 @@ public class SubBlock
 	
 	public String toString()
 	{
-		return super.toString() + metaBlock.getBlockName();
+		return super.toString() + metaBlock.getUnlocalizedName();
 	}
+
 }

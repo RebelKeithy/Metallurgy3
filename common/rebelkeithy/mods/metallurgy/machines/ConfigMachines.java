@@ -21,4 +21,22 @@ public class ConfigMachines
 	public static boolean smelterDropsLava = false;
 	
 	public static int abstractorID = 4003;
+	
+	public static int chestID = 4004;
+	
+	public static int mintID = 4005;
+	public static int mintStorageID = 4006;
+	
+	public static int coinID = 29345;
+	public static int stackID = 29346;
+	public static int coinBagID = 29347;
+	public static int bullionID = 29348;
+	
+	public static boolean tradesEnabled = true;
+	
+	public static int lanternID = 4007;
+	public static int glassDustID = 29349;
+	public static int coloredGlassID = 4008;
+	
+	public static int ladderID = 4009;
 }

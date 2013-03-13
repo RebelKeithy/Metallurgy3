@@ -1,8 +1,14 @@
 package rebelkeithy.mods.metallurgy.machines.forge;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -11,19 +17,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
-import java.util.List;
-import java.util.Random;
-
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockNetherForge extends BlockContainer
 {
@@ -34,6 +36,14 @@ public class BlockNetherForge extends BlockContainer
 
     /** True if this is an active furnace, false if idle */
     private final boolean isActive;
+    
+    private static int front = 0;
+    private static int side = 5;
+    private static int active = 10;
+    private static int top = 15;
+    private static int bottom = 17;
+    
+    private Map<Integer, Icon[]> iconMap;
 
     /**
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
@@ -45,14 +55,8 @@ public class BlockNetherForge extends BlockContainer
     {
         super(par1, Material.rock);
         this.isActive = par2;
-        setRequiresSelfNotify();
         //this.setCreativeTab(MetallurgyNether.creativeTab);
     }
-    
-    @Override
-	public String getTextureFile() {
-		return "/shadow/MetallurgyNetherForges.png";
-	}
 
     /**
      * Returns the ID of the items to drop on destruction.
@@ -68,34 +72,12 @@ public class BlockNetherForge extends BlockContainer
     {
     	return (metadata < 8) ? metadata : metadata - 8;
     }
-    
-    /**
-     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-     */
-    @Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int metadata)
-    {
-    	metadata = (metadata < 8) ? metadata : metadata - 8;
-        if (par1 == 1 || par1 == 0)
-        {
-            return 14 + (metadata * 16);
-        }
-        else
-        {
-            //int var6 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-            //int var6 = ((TileEntityMetalFurnace)(par1IBlockAccess.getBlockTileEntity(par2, par3, par4))).getDirection();
-            if(par1 != 3)
-            	return 9 + (metadata * 16);
-            else
-            	return 0 + (metadata * 16);
-        }
-    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
      */
     @Override
-    public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
     	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
     	int metadata = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
@@ -110,23 +92,20 @@ public class BlockNetherForge extends BlockContainer
     	//par5 = ((TileEntityMetalFurnace)(par1IBlockAccess.getBlockTileEntity(par2, par3, par4))).getDirection();
         if (par5 == 1)
         {
-            if(metadata >= 8)
-            	return 15 + (type * 16);
-            else 
-            	return 14 + (type * 16);
+            return iconMap.get(type)[top];
         } 
         else if(par5 == 0)
         {
-        	return 15*16 + type;
+        	return iconMap.get(type)[bottom];
         }
         else
         {
             if(par5 != dir)
-            	return 9 + fuel + (type * 16);
+            	return iconMap.get(type)[side+fuel];
             else if(isBurning)
-            	return 4 + fuel + (type * 16);
+            	return iconMap.get(type)[active+fuel];
             else
-            	return 0 + fuel + (type * 16);
+            	return iconMap.get(type)[front+fuel];
         }
     }
 
@@ -169,15 +148,6 @@ public class BlockNetherForge extends BlockContainer
                 par1World.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
             }
         }
-    }
-
-    /**
-     * Returns the block texture based on the side being looked at.  Args: side
-     */
-    @Override
-    public int getBlockTextureFromSide(int par1)
-    {
-        return par1 == 1 ? this.blockIndexInTexture + 17 : (par1 == 0 ? this.blockIndexInTexture + 17 : (par1 == 3 ? this.blockIndexInTexture - 1 : this.blockIndexInTexture));
     }
 
     /**
@@ -262,11 +232,11 @@ public class BlockNetherForge extends BlockContainer
 
         if (par0 && metadata < 8)
         {
-        	par1World.setBlockMetadata(par2, par3, par4, metadata + 8);
+        	par1World.setBlockMetadataWithNotify(par2, par3, par4, metadata + 8, 2);
         }
         else if(!par0 && metadata >= 8)
         {
-        	par1World.setBlockMetadata(par2, par3, par4, metadata - 8);
+        	par1World.setBlockMetadataWithNotify(par2, par3, par4, metadata - 8, 2);
         }
 
         keepFurnaceInventory = false;
@@ -293,7 +263,7 @@ public class BlockNetherForge extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 
@@ -386,7 +356,27 @@ public class BlockNetherForge extends BlockContainer
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
         if(ConfigMachines.smelterDropsLava && spawnLava)	
-        	par1World.setBlockWithNotify(par2, par3, par4, Block.lavaMoving.blockID);
+        	par1World.setBlockAndMetadataWithNotify(par2, par3, par4, Block.lavaMoving.blockID, 0, 2);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	iconMap = new HashMap<Integer, Icon[]>();
+    	for(int i = 0; i < 10; i++)
+    	{
+    		Icon[] iArray = new Icon[18];
+    		for(int j = 0; j < 5; j++)
+    		{
+    			iArray[front + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Front" + j);
+        		iArray[side + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Side" + j);
+        		iArray[active + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Active" + j);
+    		}
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Top0");
+    		iArray[top+1] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Top1");
+    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Bottom");
+    		iconMap.put(i, iArray);
+    	}
     }
 
 	@Override

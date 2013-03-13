@@ -18,8 +18,7 @@ public class Ideas
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
 	{
-		orenode = new OreNode(918).setHardness(3);
-		orenode.blockIndexInTexture = 22;
+		orenode = new OreNode(918).setUnlocalizedName("Metallurgy:OreNode").setHardness(3);
 		
 	}
 	

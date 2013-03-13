@@ -69,8 +69,7 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
 		int currentID = world.getBlockId(x, y, z);
         if(replaceableBlocks.contains(currentID))
         {
-        	world.setBlock(x, y, z, this.minableBlockId);
-        	world.setBlockMetadata(x, y, z, this.metadata);
+        	world.setBlockAndMetadataWithNotify(x, y, z, this.minableBlockId, this.metadata, 2);
         	return true;
         }
         
