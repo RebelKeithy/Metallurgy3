@@ -36,7 +36,7 @@ public class ItemBlockMetalLadder extends ItemBlock {
 		icons = new Icon[4];
     	for(int i = 0; i < 4; i++)
     	{
-    		icons[i] = par1IconRegister.func_94245_a("Metallurgy:Ladder_" + i);
+    		icons[i] = par1IconRegister.func_94245_a("Metallurgy:machines/ladder/Ladder_" + i);
     	}
     }
 

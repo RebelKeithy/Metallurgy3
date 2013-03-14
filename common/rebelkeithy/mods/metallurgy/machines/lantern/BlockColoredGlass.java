@@ -2,6 +2,7 @@ package rebelkeithy.mods.metallurgy.machines.lantern;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
@@ -11,6 +12,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +20,7 @@ public class BlockColoredGlass extends Block
 {
 	public int renderId = RenderingRegistry.getNextAvailableRenderId();
 	private int color;
+	private Icon[] icons;
 	
     public BlockColoredGlass(int par1)
     {
@@ -70,10 +73,10 @@ public class BlockColoredGlass extends Block
     /**
      * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
      */
-    /*public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-        return (par2/2)*16 + (par2%2);
-    }*/
+        return icons[par2];
+    }
     
     /**
      * Get the block's damage value (for use with pick block).
@@ -81,6 +84,21 @@ public class BlockColoredGlass extends Block
     public int getDamageValue(World par1World, int par2, int par3, int par4)
     {
     	return par1World.getBlockMetadata(par2, par3, par4);
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+    	icons = new Icon[8];
+    	icons[0] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassRed");
+    	icons[1] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassGreen");
+    	icons[2] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassBlue");
+    	icons[3] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassOrange");
+    	icons[4] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassYellow");
+    	icons[5] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassPurple");
+    	icons[6] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassGrey");
+    	icons[7] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassWhite");
     }
     
     @Override

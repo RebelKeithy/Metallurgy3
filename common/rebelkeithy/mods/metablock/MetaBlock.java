@@ -61,6 +61,11 @@ public class MetaBlock extends Block {
 			throw new IllegalArgumentException("[MetaBlock] In block " + this.blockID + " " + this + " metadata " + meta + " is already occupied by " + subBlocks[meta] + " when adding " + block);
 		}
 	}
+	
+    public int damageDropped(int par1)
+    {
+        return par1;
+    }
 
 
 	@Override

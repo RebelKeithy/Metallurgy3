@@ -28,20 +28,13 @@ public class VanillaAddons {
 	public static int goldBrickMeta;
 	public static int ironBrickMeta;
 	
-	public static int ironDustID;
-	public static int goldDustID;
-	
 	public static void init()
 	{
 		initConfig();
-		
-		goldBrick = new SubBlock(goldBrickID, goldBrickMeta, "Metallurgy:GoldBrick").setUnlocalizedName("GoldBricks").setCreativeTab(CreativeTabs.tabBlock);
-		ironBrick = new SubBlock(ironBrickID, ironBrickMeta, "Metallurgy:IronBrick").setUnlocalizedName("IronBricks").setCreativeTab(CreativeTabs.tabBlock);
+		goldBrick = new SubBlock(goldBrickID, goldBrickMeta, "Metallurgy:Vanilla/GoldBrick").setUnlocalizedName("Metallurgy:Vanilla/GoldBricks").setCreativeTab(CreativeTabs.tabBlock);
+		ironBrick = new SubBlock(ironBrickID, ironBrickMeta, "Metallurgy:Vanilla/IronBrick").setUnlocalizedName("Metallurgy:Vanilla/IronBricks").setCreativeTab(CreativeTabs.tabBlock);
 		MetaBlock.registerID(goldBrickID);
 		MetaBlock.registerID(ironBrickID);
-		
-		dustIron = new Item(ironDustID).setUnlocalizedName("MetallurgyIronDust").setCreativeTab(CreativeTabs.tabMaterials);
-		dustGold = new Item(goldDustID).setUnlocalizedName("MetallurgyGoldDust").setCreativeTab(CreativeTabs.tabMaterials);
 	}
 	
 	public static void initConfig()
@@ -70,17 +63,11 @@ public class VanillaAddons {
 		goldBrickID = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").getString().split(":")[0]);
 		goldBrickMeta = Integer.parseInt(config.get("Gold", "Brick ID", "900:4").getString().split(":")[1]);
 		
-		ironDustID = config.get("Iron", "Iron Dust ID", 26200).getInt();
-		goldDustID = config.get("Gold", "Gold Dust ID", 26201).getInt();
-		
 		config.save();
 	}
 	
 	public static void load()
-	{
-		OreDictionary.registerOre("dustIron", dustIron);
-		OreDictionary.registerOre("dustGold", dustGold);
-		
+	{		
 		GameRegistry.addRecipe(new ItemStack(goldBrickID, 4, goldBrickMeta), "XX", "XX", 'X', Item.ingotGold);
 		GameRegistry.addRecipe(new ItemStack(ironBrickID, 4, ironBrickMeta), "XX", "XX", 'X', Item.ingotIron);
 		GameRegistry.addShapelessRecipe(new ItemStack(Item.ingotGold), new ItemStack(goldBrickID, 1, goldBrickMeta));
@@ -91,10 +78,6 @@ public class VanillaAddons {
 	public static void registerNames() 
 	{
 		LanguageRegistry.addName(new ItemStack(goldBrickID, 1, goldBrickMeta), "Gold Bricks");
-		LanguageRegistry.addName(new ItemStack(ironBrickID, 1, ironBrickMeta), "Iron Bricks");
-		
-		LanguageRegistry.addName(dustIron, "Iron Dust");
-		LanguageRegistry.addName(dustGold, "Gold Dust");
-		
+		LanguageRegistry.addName(new ItemStack(ironBrickID, 1, ironBrickMeta), "Iron Bricks");		
 	}
 }

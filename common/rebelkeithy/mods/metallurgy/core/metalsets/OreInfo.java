@@ -274,7 +274,7 @@ public class OreInfo implements IWorldGenerator
 		{
 			if(type.generates() && oreID != 0)
 			{
-				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(CreativeTabs.tabBlock);
+				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + setName + "/" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(CreativeTabs.tabBlock);
 				if(type == DROP)
 				{
 					System.out.println("getting block drop " + dropName);
@@ -283,16 +283,16 @@ public class OreInfo implements IWorldGenerator
 			}
 			if(type != DROP && blockID != 0)
 			{
-				block = new SubBlock(blockID, blockMeta, "Metallurgy:" + name + "Block").setUnlocalizedName(setName + blockID).setCreativeTab(CreativeTabs.tabBlock);
+				block = new SubBlock(blockID, blockMeta, "Metallurgy:" + setName + "/" + name + "Block").setUnlocalizedName(setName + blockID).setCreativeTab(CreativeTabs.tabBlock);
 			}
 			if(type != DROP && brickID != 0)
 			{
-				brick = new SubBlock(brickID, brickMeta, "Metallurgy:" + name + "Brick").setUnlocalizedName(setName + brickID).setCreativeTab(CreativeTabs.tabBlock);
+				brick = new SubBlock(brickID, brickMeta, "Metallurgy:" + setName + "/" + name + "Brick").setUnlocalizedName(setName + brickID).setCreativeTab(CreativeTabs.tabBlock);
 			}
 			if(type != DROP)
 			{
-				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
-				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + name + "Bar").setCreativeTab(CreativeTabs.tabMaterials);
+				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
+				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(CreativeTabs.tabMaterials);
 				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
@@ -300,17 +300,17 @@ public class OreInfo implements IWorldGenerator
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
-				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Pick").setCreativeTab(CreativeTabs.tabTools);
-				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Shovel").setCreativeTab(CreativeTabs.tabTools);
-				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Axe").setCreativeTab(CreativeTabs.tabTools);
-				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Hoe").setCreativeTab(CreativeTabs.tabTools);
-				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + name + "Sword").setCreativeTab(CreativeTabs.tabCombat);
+				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(CreativeTabs.tabTools);
+				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(CreativeTabs.tabTools);
+				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Axe").setCreativeTab(CreativeTabs.tabTools);
+				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Hoe").setCreativeTab(CreativeTabs.tabTools);
+				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(CreativeTabs.tabCombat);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
-				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setUnlocalizedName("Metallurgy:" + name + "Helmet").setCreativeTab(CreativeTabs.tabCombat);
-				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setUnlocalizedName("Metallurgy:" + name + "Chest").setCreativeTab(CreativeTabs.tabCombat);
-				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setUnlocalizedName("Metallurgy:" + name + "Legs").setCreativeTab(CreativeTabs.tabCombat);
-				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setUnlocalizedName("Metallurgy:" + name + "Boots").setCreativeTab(CreativeTabs.tabCombat);
+				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(CreativeTabs.tabCombat);
+				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(CreativeTabs.tabCombat);
+				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(CreativeTabs.tabCombat);
+				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(CreativeTabs.tabCombat);
 			}
 		}
 		

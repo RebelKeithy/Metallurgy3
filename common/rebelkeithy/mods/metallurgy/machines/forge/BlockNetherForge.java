@@ -72,6 +72,32 @@ public class BlockNetherForge extends BlockContainer
     {
     	return (metadata < 8) ? metadata : metadata - 8;
     }
+    
+    public Icon getNetherForgeTexture(int side, int meta, int facing, int fuel, boolean isActive)
+    {
+        if (side == 1)
+        {
+            return iconMap.get(meta)[top];
+        } 
+        else if(side == 0)
+        {
+        	return iconMap.get(meta)[bottom];
+        }
+        else
+        {
+            if(side != facing)
+            	return iconMap.get(meta)[this.side+fuel];
+            else if(isActive)
+            	return iconMap.get(meta)[active+fuel];
+            else
+            	return iconMap.get(meta)[front+fuel];
+        }
+    }
+    
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+    	return this.getNetherForgeTexture(par1, par2, 3, 0, false);
+    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
@@ -88,25 +114,13 @@ public class BlockNetherForge extends BlockContainer
     	int	fuel = (tileEntity instanceof TileEntityNetherForge) ? ((TileEntityNetherForge)tileEntity).getScaledFuel(4) : 0;
     	boolean isBurning = (tileEntity instanceof TileEntityNetherForge) ? ((TileEntityNetherForge)tileEntity).isBurning() : false;
     	
+    	if(fuel == 0)
+    	{
+    		isBurning = false;
+    	}
     	
     	//par5 = ((TileEntityMetalFurnace)(par1IBlockAccess.getBlockTileEntity(par2, par3, par4))).getDirection();
-        if (par5 == 1)
-        {
-            return iconMap.get(type)[top];
-        } 
-        else if(par5 == 0)
-        {
-        	return iconMap.get(type)[bottom];
-        }
-        else
-        {
-            if(par5 != dir)
-            	return iconMap.get(type)[side+fuel];
-            else if(isBurning)
-            	return iconMap.get(type)[active+fuel];
-            else
-            	return iconMap.get(type)[front+fuel];
-        }
+    	return this.getNetherForgeTexture(par5, metadata, dir, fuel, isBurning);
     }
 
     /**
@@ -296,7 +310,7 @@ public class BlockNetherForge extends BlockContainer
         int metadata = par1World.getBlockMetadata(par2, par3, par4);
         
         var5.setSpeed((int)(20 * ConfigMachines.forgeSpeeds[metadata]));
-        var5.setMaxBuckets((int)(ConfigMachines.firgeBuckets[metadata]));
+        var5.setMaxBuckets((int)(ConfigMachines.forgeBuckets[metadata]));
     }
 
     /**
@@ -363,18 +377,19 @@ public class BlockNetherForge extends BlockContainer
     public void func_94332_a(IconRegister par1IconRegister)
     {
     	iconMap = new HashMap<Integer, Icon[]>();
-    	for(int i = 0; i < 10; i++)
+    	for(int i = 0; i < 8; i++)
     	{
     		Icon[] iArray = new Icon[18];
     		for(int j = 0; j < 5; j++)
     		{
-    			iArray[front + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Front" + j);
-        		iArray[side + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Side" + j);
-        		iArray[active + j] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Active" + j);
+    			iArray[front + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Front" + j);
+        		iArray[side + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Side" + j);
+        		if(j > 0)
+        			iArray[active + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Active" + j);
     		}
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Top0");
-    		iArray[top+1] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Top1");
-    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:Smelter" + i + "Bottom");
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Top0");
+    		iArray[top+1] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Top1");
+    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Bottom");
     		iconMap.put(i, iArray);
     	}
     }

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
@@ -50,6 +51,8 @@ public class MetallurgyMetals {
 	public static MetalSet fantasySet;
 	public static MetalSet utilitySet;
 	
+	public static CreativeTabs baseTab;
+	
 	public static Configuration baseConfig;
 	public static Configuration utilityConfig;
 	public static Configuration fantasyConfig;
@@ -92,19 +95,21 @@ public class MetallurgyMetals {
 		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", "mods\\MetallurgyBase.jar");
 		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", "mods\\MetallurgyBase.jar");
 		
-		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"));
-		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"));
-		netherSet = new MetalSet("Nether", MetalInfoDatabase.getSpreadsheetDataForSet("Nether"));
-		fantasySet = new MetalSet("Fantasy", MetalInfoDatabase.getSpreadsheetDataForSet("Fantasy"));
-		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"));
+		baseTab = new CreativeTabs("Metallurgy: Base");
+		
+		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
+		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"), baseTab);
+		netherSet = new MetalSet("Nether", MetalInfoDatabase.getSpreadsheetDataForSet("Nether"), baseTab);
+		fantasySet = new MetalSet("Fantasy", MetalInfoDatabase.getSpreadsheetDataForSet("Fantasy"), baseTab);
+		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), baseTab);
 	}
 	
 	@Init
 	public void Init(FMLInitializationEvent event)
 	{
 		//TODO add config for vanilla dusts
-		dustIron = new Item(5100).setUnlocalizedName("M3DustIron").setCreativeTab(CreativeTabs.tabMaterials);
-		dustGold = new Item(5101).setUnlocalizedName("M3DustGold").setCreativeTab(CreativeTabs.tabMaterials);
+		dustIron = new Item(5100).setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustGold = new Item(5101).setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
 		LanguageRegistry.addName(dustIron, "Iron Dust");
 		LanguageRegistry.addName(dustGold, "Gold Dust");
 		OreDictionary.registerOre("dustIron", dustIron);
@@ -144,30 +149,30 @@ public class MetallurgyMetals {
 	
 	public void createUtilityItems()
 	{
-		int id = utilityConfig.get("Item IDs", "HE TNT", 911).getInt();
+		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
 		largeTNT = new LargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
 		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(largeTNT, "HE TNT");
 		
-		id = utilityConfig.get("Item IDs", "LE TNT", 912).getInt();
+		id = utilityConfig.get("Item IDs", "LE TNT", 921).getInt();
 		minersTNT = new MinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
 		
-		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 25022).getInt();
-		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("M3MagnesiumIgniter").setCreativeTab(utilityTab);
+		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
+		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:utility/Igniter").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
 
-		id = utilityConfig.get("Item IDs", "Match", 25023).getInt();
-		match = new ItemIgniter(id).setUnlocalizedName("M3Match").setCreativeTab(utilityTab);
+		id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
+		match = new ItemIgniter(id).setUnlocalizedName("Metallurgy:utility/Match").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(match, "Match");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(match), "X", "|", 'X', "dustPhosphorus", '|', Item.stick));
 		
-		id = utilityConfig.get("Item IDs", "Fertilizer", 25024).getInt();
-		fertilizer = new ItemFertilizer(id).setUnlocalizedName("M3Fertilizer").setCreativeTab(utilityTab);
+		id = utilityConfig.get("Item IDs", "Fertilizer", 29009).getInt();
+		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:utility/Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustPotash"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
@@ -175,8 +180,8 @@ public class MetallurgyMetals {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustSaltpeter", "dustMagnesium", "dustPotash"));
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
-		id = utilityConfig.get("Item IDs", "Tar", 25025).getInt();
-		tar = new Item(id).setUnlocalizedName("M3Tar").setCreativeTab(utilityTab);
+		id = utilityConfig.get("Item IDs", "Tar", 29010).getInt();
+		tar = new Item(id).setUnlocalizedName("Metallurgy:utility/Tar").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
 		

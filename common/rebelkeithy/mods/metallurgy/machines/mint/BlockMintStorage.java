@@ -27,9 +27,9 @@ public class BlockMintStorage extends BlockContainer
 {
     private Random random = new Random();
 
-    private static int side = 1;
-    private static int top = 2;
-    private static int bottom = 3;
+    private static int side = 0;
+    private static int top = 1;
+    private static int bottom = 2;
     
     private Icon[] icons;
     
@@ -79,21 +79,19 @@ public class BlockMintStorage extends BlockContainer
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
      */
     @Override
-    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-    	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-    	
-        if (par5 == 1)
+        if (par1 == 1)
         {
             return icons[top];
         }
-        else if (par5 == 0)
+        else if (par1 == 0)
         {
-            return icons[side];
+            return icons[bottom];
         }
         else
         {
-        	return icons[bottom];
+        	return icons[side];
         }
     }
 
@@ -173,13 +171,14 @@ public class BlockMintStorage extends BlockContainer
         }
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
     public void func_94332_a(IconRegister par1IconRegister)
     {
-    		Icon[] icons = new Icon[5];
-    		icons[side] = par1IconRegister.func_94245_a("Metallurgy:MintStorageSide");
-    		icons[top] = par1IconRegister.func_94245_a("Metallurgy:MintStorageTop");
-    		icons[bottom] = par1IconRegister.func_94245_a("Metallurgy:MintStorageBottom");
+    		icons = new Icon[3];
+    		icons[side] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageSide");
+    		icons[top] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageTop");
+    		icons[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageBottom");
     }
 
     /**

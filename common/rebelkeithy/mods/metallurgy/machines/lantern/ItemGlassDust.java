@@ -15,6 +15,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemGlassDust extends Item 
 {
 	private Map<Integer, Icon> iconMap;
+	private static String[] names = {"Glass", "Red", "Green", "Blue", "Orange", "Yellow", "Purple", "Grey", "White"};
 	
 	public ItemGlassDust(int i) 
 	{
@@ -40,47 +41,10 @@ public class ItemGlassDust extends Item
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
 		String name = "";
-		switch (itemstack.getItemDamage()) {
-		case 0: {
-			name = "glass";
-			break;
-		}
-		case 1: {
-			name = "red";
-			break;
-		}
-		case 2: {
-			name = "green";
-			break;
-		}
-		case 3: {
-			name = "blue";
-			break;
-		}
-		case 4: {
-			name = "orange";
-			break;
-		}
-		case 5: {
-			name = "yellow";
-			break;
-		}
-		case 6: {
-			name = "purple";
-			break;
-		}
-		case 7: {
-			name = "grey";
-			break;
-		}
-		case 8: {
-			name = "white";
-			break;
-		}
-		default:
-			name = "error";
-		}
-		return getUnlocalizedName() + "." + name;
+		if(itemstack.getItemDamage() < 9)
+		 return getUnlocalizedName() + "." + names[itemstack.getItemDamage()];
+		
+		return getUnlocalizedName();
 	}
 
 	@Override
@@ -88,9 +52,10 @@ public class ItemGlassDust extends Item
     public void func_94581_a(IconRegister par1IconRegister)
     {
 		iconMap = new HashMap<Integer, Icon>();
-    	for(int i = 0; i < 9; i++)
+		iconMap.put(0, par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassDust"));
+    	for(int i = 1; i < 9; i++)
     	{
-    		Icon icon = par1IconRegister.func_94245_a("GlassDust_" + i);
+    		Icon icon = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassDust" + names[i]);
     		iconMap.put(i, icon);
     	}
     }

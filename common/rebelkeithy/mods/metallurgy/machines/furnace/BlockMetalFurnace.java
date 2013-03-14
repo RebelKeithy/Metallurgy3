@@ -68,6 +68,28 @@ public class BlockMetalFurnace extends BlockContainer
     {
     	return (metadata < 8) ? metadata : metadata - 8;
     }
+    
+    public Icon getFurnaceTexture(int side, int meta, int facing, boolean isActive)
+    {
+        if (side == 1 || side == 0)
+        {
+            return iconMap.get(meta)[top];
+        }
+        else
+        {
+            if(side != facing)
+            	return iconMap.get(meta)[this.side];
+            else if(isActive)
+            	return iconMap.get(meta)[active];
+            else
+            	return iconMap.get(meta)[front];
+        }
+    }
+    
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+        return getFurnaceTexture(par1, par2, 3, false);
+    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
@@ -79,23 +101,12 @@ public class BlockMetalFurnace extends BlockContainer
     	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
     	int type = (meta < 8) ? meta : meta - 8;
     	int	dir = (tileEntity instanceof TileEntityMetalFurnace) ? ((TileEntityMetalFurnace)tileEntity).getDirection() : 0;
-    	int time = (tileEntity instanceof TileEntityMetalFurnace) ? (((TileEntityMetalFurnace)tileEntity).furnaceCookTime * 10) % 2 : 0;
     	boolean isBurning = (tileEntity instanceof TileEntityMetalFurnace) ? ((TileEntityMetalFurnace)tileEntity).isBurning() : false;
     	
-        if (par5 == 1 || par5 == 0)
-        {
-            return iconMap.get(meta)[top];
-        }
-        else
-        {
-            if(par5 != dir)
-            	return iconMap.get(meta)[side];
-            else if(isBurning)
-            	return iconMap.get(meta)[active];
-            else
-            	return iconMap.get(meta)[front];
-        }
+    	return getFurnaceTexture(par5, meta, dir, isBurning);
     }
+    
+    
 
     /**
      * A randomly called display update to be able to add particles or other items for display
@@ -231,22 +242,22 @@ public class BlockMetalFurnace extends BlockContainer
         {
         case 0:
         {
-            var5.setSpeed((int)(20 * ConfigMachines.copperSpeed));
+            var5.setSpeed((int)(20 * ConfigMachines.copperFurnaceSpeed));
             break;
         }
         case 1:
         {
-        	var5.setSpeed((int)(20 * ConfigMachines.bronzeSpeed));
+        	var5.setSpeed((int)(20 * ConfigMachines.bronzeFurnaceSpeed));
         	break;
         }
         case 2:
         {
-        	var5.setSpeed((int)(20 * ConfigMachines.ironSpeed));
+        	var5.setSpeed((int)(20 * ConfigMachines.ironFurnaceSpeed));
         	break;
         }
         case 3:
         {
-        	var5.setSpeed((int)(20 * ConfigMachines.steelSpeed));
+        	var5.setSpeed((int)(20 * ConfigMachines.steelFurnaceSpeed));
         	break;
         }
         default:
@@ -313,13 +324,13 @@ public class BlockMetalFurnace extends BlockContainer
     public void func_94332_a(IconRegister par1IconRegister)
     {
     	iconMap = new HashMap<Integer, Icon[]>();
-    	for(int i = 0; i < 10; i++)
+    	for(int i = 0; i < 4; i++)
     	{
     		Icon[] iArray = new Icon[5];
-    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Front");
-    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Side");
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Top");
-    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:Furnace" + i + "Active");
+    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Front");
+    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Side");
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Top");
+    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Active");
     		iconMap.put(i, iArray);
     	}
     }

@@ -63,6 +63,29 @@ public class BlockAbstractor extends BlockContainer
     {
     	return metadata;
     }
+    
+    public Icon getAbstractorTexture(int side, int meta, int facing, boolean isBurning)
+    {	    	
+        if (side == 1 || side == 0)
+        {
+            return iconMap.get(meta)[top];
+        }
+        else
+        {
+            if(side != facing)
+            	return iconMap.get(meta)[this.side];
+            else if(isBurning)
+            	return iconMap.get(meta)[active];
+            else
+            	return iconMap.get(meta)[front];
+        }
+    }
+    
+    @Override
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+    	return getAbstractorTexture(par1, par2, 3, false);
+    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
@@ -73,22 +96,9 @@ public class BlockAbstractor extends BlockContainer
     	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
     	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
     	int	dir = (tileEntity instanceof TileEntityAbstractor) ? ((TileEntityAbstractor)tileEntity).getDirection() : 0;
-    	int time = (tileEntity instanceof TileEntityAbstractor) ? (((TileEntityAbstractor)tileEntity).furnaceCookTime * 10) % 2 : 0;
     	boolean isBurning = (tileEntity instanceof TileEntityAbstractor) ? (((TileEntityAbstractor)tileEntity).isBurning()) : false;
-    			    	
-        if (par5 == 1 || par5 == 0)
-        {
-            return iconMap.get(meta)[top];
-        }
-        else
-        {
-            if(par5 != dir)
-            	return iconMap.get(meta)[side];
-            else if(isBurning)
-            	return iconMap.get(meta)[active];
-            else
-            	return iconMap.get(meta)[front];
-        }
+    		
+    	return getAbstractorTexture(par5, meta, dir, isBurning);
     }
 
     /**
@@ -275,11 +285,11 @@ public class BlockAbstractor extends BlockContainer
     	for(int i = 0; i < 10; i++)
     	{
     		Icon[] iArray = new Icon[5];
-    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Front");
-    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Side");
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Top");
-    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Bottom");
-    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:Abstractor" + i + "Active");
+    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Front");
+    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Side");
+    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Top");
+    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Bottom");
+    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Active");
     		iconMap.put(i, iArray);
     	}
     }

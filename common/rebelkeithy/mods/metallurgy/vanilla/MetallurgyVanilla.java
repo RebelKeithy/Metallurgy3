@@ -1,6 +1,7 @@
 package rebelkeithy.mods.metallurgy.vanilla;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 
 import net.minecraftforge.common.MinecraftForge;
 
@@ -33,7 +34,7 @@ public class MetallurgyVanilla
 		vanillaList.remove("Stone/Chainmail");
 		for(Map<String, String> list : vanillaList.values())
 			System.out.println("adding vanilla " + list.get(1));
-		vanillaSet = new MetalSet("Vanilla", vanillaList);
+		vanillaSet = new MetalSet("Vanilla", vanillaList, CreativeTabs.tabBlock);
 		
 		VanillaAddons.init();
 		

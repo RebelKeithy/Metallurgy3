@@ -104,8 +104,8 @@ public class MetallurgyMachines
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{	
-		/*
-		initStorage();
+		
+		//initStorage();
 		initCrusher();
 		initFurnace();
 		initForge();
@@ -118,7 +118,7 @@ public class MetallurgyMachines
 		proxy.registerTileEntitySpecialRenderer();
 		NetworkRegistry.instance().registerGuiHandler(this, new StorageGuiHandler());
 		NetworkRegistry.instance().registerGuiHandler(this, GuiRegistry.instance());
-		*/
+		
 	}
 	
 	@cpw.mods.fml.common.Mod.Init
@@ -154,10 +154,10 @@ public class MetallurgyMachines
 		
 		GuiRegistry.registerGui(GuiMintStorage.class, ContainerMintStorage.class, this, "MintStorage");
 		
-		coin = new Item(ConfigMachines.coinID).setUnlocalizedName("M3Coin").setCreativeTab(CreativeTabs.tabMisc);
-		stack = new Item(ConfigMachines.stackID).setUnlocalizedName("M3Stack").setCreativeTab(CreativeTabs.tabMisc);
-		bag = new Item(ConfigMachines.coinBagID).setUnlocalizedName("M3CoinBag").setCreativeTab(CreativeTabs.tabMisc);
-		bullion = new Item(ConfigMachines.bullionID).setUnlocalizedName("M3Bullion").setCreativeTab(CreativeTabs.tabMisc);
+		coin = new Item(ConfigMachines.coinID).setUnlocalizedName("Metallurgy:precious/Coin").setCreativeTab(CreativeTabs.tabMisc);
+		stack = new Item(ConfigMachines.stackID).setUnlocalizedName("Metallurgy:precious/Stack").setCreativeTab(CreativeTabs.tabMisc);
+		bag = new Item(ConfigMachines.coinBagID).setUnlocalizedName("Metallurgy:precious/Bag").setCreativeTab(CreativeTabs.tabMisc);
+		bullion = new Item(ConfigMachines.bullionID).setUnlocalizedName("Metallurgy:precious/Bullion").setCreativeTab(CreativeTabs.tabMisc);
 		LanguageRegistry.addName(coin, "Coin");
 		LanguageRegistry.addName(stack, "Stack");
 		LanguageRegistry.addName(bag, "Bag");
@@ -178,6 +178,12 @@ public class MetallurgyMachines
 	{
 		ladder = new BlockMetalLadder(ConfigMachines.ladderID).setUnlocalizedName("M3Ladder").setCreativeTab(CreativeTabs.tabDecorations);
 		GameRegistry.registerBlock(ladder, ItemBlockMetalLadder.class, "M3MetalLadder");
+		
+		LanguageRegistry.addName(new ItemStack(ladder, 1, 0), "Copper Ladder");
+		LanguageRegistry.addName(new ItemStack(ladder, 1, 1), "Bronze Ladder");
+		LanguageRegistry.addName(new ItemStack(ladder, 1, 2), "Iron Ladder");
+		LanguageRegistry.addName(new ItemStack(ladder, 1, 3), "Steel Ladder");
+		
 	}
 	
 	public void initLantern()
@@ -185,7 +191,14 @@ public class MetallurgyMachines
 		lantern = new BlockLantern(ConfigMachines.lanternID).setUnlocalizedName("M3Lantern").setCreativeTab(CreativeTabs.tabDecorations);
 		GameRegistry.registerBlock(lantern, ItemBlockLantern.class, "M3Lantern");
 		GameRegistry.registerTileEntity(TileEntityLantern.class, "TileEntityLantern");
-		LanguageRegistry.addName(new ItemStack(lantern), "Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 0), "Red Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 1), "Green Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 2), "Blue Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 3), "Orange Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 4), "Yellow Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 5), "Purple Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 6), "Grey Lantern");
+		LanguageRegistry.addName(new ItemStack(lantern, 1, 7), "White Lantern");
 		
 		coloredGlass = new BlockColoredGlass(ConfigMachines.coloredGlassID).setUnlocalizedName("M3ColoredGlass").setCreativeTab(CreativeTabs.tabDecorations);
 		GameRegistry.registerBlock(coloredGlass, ItemBlockColoredGlass.class, "M3ColoredGlass");
@@ -217,7 +230,11 @@ public class MetallurgyMachines
 		chest = new BlockPreciousChest(ConfigMachines.chestID).setUnlocalizedName("M3PreciousChest").setCreativeTab(CreativeTabs.tabDecorations);
 		GameRegistry.registerBlock(chest, ItemBlockPreciousChest.class, "PreciousChest");
 		GameRegistry.registerTileEntity(TileEntityPreciousChest.class, "TileEntityPreciousChest");
-		LanguageRegistry.addName(chest, "Precious Chest");
+		LanguageRegistry.addName(new ItemStack(chest, 1, 0), "Brass Chest");
+		LanguageRegistry.addName(new ItemStack(chest, 1, 1), "Silver Chest");
+		LanguageRegistry.addName(new ItemStack(chest, 1, 2), "Gold Chest");
+		LanguageRegistry.addName(new ItemStack(chest, 1, 3), "Electrum Chest");
+		LanguageRegistry.addName(new ItemStack(chest, 1, 4), "Platinum Chest");
 		
 		GuiRegistry.registerGui(GuiPreciousChest.class, ContainerPreciousChest.class, this, "PreciousChest");
 	}
@@ -324,41 +341,56 @@ public class MetallurgyMachines
 	public void createMachineRecipes()
 	{
 		//Crusher Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(crusher, 1, 0)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(crusher, 1, 1)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 3), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(crusher, 1, 2)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(crusher, 1, 3)));
-
+		if(ConfigMachines.crusherEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 0), "CSC", "SFS", "CSC", 'C', Block.cobblestone, 'S', Item.stick, 'F', Block.furnaceIdle));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(crusher, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(crusher, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 3), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(crusher, 1, 2)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(crusher, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(crusher, 1, 3)));
+		}
+		
 		//Furnace Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 0), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(Block.furnaceIdle)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(crusher, 1, 0)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(crusher, 1, 1)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(crusher, 1, 1)));
-	
+		if(ConfigMachines.furnaceEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 0), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(Block.furnaceIdle)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(crusher, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(crusher, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(crusher, 1, 1)));
+		}
+		
 		//Nether Forge Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 0), "XXX", "X X", "XXX", 'X', "ingotIgnatius"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotShadow Iron", 'O', new ItemStack(forge, 1, 0)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotShadow Steel", 'O', new ItemStack(forge, 1, 1)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotVyroxeres", 'O', new ItemStack(forge, 1, 2)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotInolashite", 'O', new ItemStack(forge, 1, 3)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotKalendrite", 'O', new ItemStack(forge, 1, 4)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotVulcanite", 'O', new ItemStack(forge, 1, 5)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotSanguinite", 'O', new ItemStack(forge, 1, 6)));
+		if(ConfigMachines.forgeEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 0), "XXX", "X X", "XXX", 'X', "ingotIgnatius"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotShadow Iron", 'O', new ItemStack(forge, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotShadow Steel", 'O', new ItemStack(forge, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotVyroxeres", 'O', new ItemStack(forge, 1, 2)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotInolashite", 'O', new ItemStack(forge, 1, 3)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotKalendrite", 'O', new ItemStack(forge, 1, 4)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotVulcanite", 'O', new ItemStack(forge, 1, 5)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(forge, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotSanguinite", 'O', new ItemStack(forge, 1, 6)));
+		}
 		
 		//Abstractor Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 0), "XXX", "X X", "XXX", 'X', "ingotPrometheum"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotDeep Iron", 'O', new ItemStack(abstractor, 1, 0)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBlack Steel", 'O', new ItemStack(abstractor, 1, 1)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotOureclase", 'O', new ItemStack(abstractor, 1, 2)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotMithril", 'O', new ItemStack(abstractor, 1, 3)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotHaderoth", 'O', new ItemStack(abstractor, 1, 4)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotOrichalcum", 'O', new ItemStack(abstractor, 1, 5)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotAdamantine", 'O', new ItemStack(abstractor, 1, 6)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 8), "XXX", "XOX", "XXX", 'X', "ingotAtlarus", 'O', new ItemStack(abstractor, 1, 7)));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 9), "XXX", "XOX", "XXX", 'X', "ingotTartarite", 'O', new ItemStack(abstractor, 1, 8)));
+		if(ConfigMachines.abstractorEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 0), "XXX", "X X", "XXX", 'X', "ingotPrometheum"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotDeep Iron", 'O', new ItemStack(abstractor, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBlack Steel", 'O', new ItemStack(abstractor, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotOureclase", 'O', new ItemStack(abstractor, 1, 2)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotMithril", 'O', new ItemStack(abstractor, 1, 3)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotHaderoth", 'O', new ItemStack(abstractor, 1, 4)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotOrichalcum", 'O', new ItemStack(abstractor, 1, 5)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotAdamantine", 'O', new ItemStack(abstractor, 1, 6)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 8), "XXX", "XOX", "XXX", 'X', "ingotAtlarus", 'O', new ItemStack(abstractor, 1, 7)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 9), "XXX", "XOX", "XXX", 'X', "ingotTartarite", 'O', new ItemStack(abstractor, 1, 8)));
+		}
 		
 		//Mint Recipes
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mint), "III", "SRS", "IPI", 'I', Item.ingotIron, 'S', Item.stick, 'R', Item.redstone, 'P', Block.pistonBase));
+		if(ConfigMachines.mintEnabled)
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mint), "III", "SRS", "IPI", 'I', Item.ingotIron, 'S', Item.stick, 'R', Item.redstone, 'P', Block.pistonBase));
+		
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stack), "CCC", "CCC", "CCC", 'C', coin));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bag), "CCC", "CCC", "CCC", 'C', stack));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bullion), "CCC", "CCC", "CCC", 'C', bag));
@@ -385,9 +417,12 @@ public class MetallurgyMachines
 		
 		CrusherRecipes.addCrushing(Block.glass.blockID, 0, new ItemStack(glassDust, 1, 0));
 		
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 0), "I I", "III", "I I", 'I', "ingotCopper"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 1), "I I", "III", "I I", 'I', "ingotBronze"));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 2), "I I", "III", "I I", 'I', Item.ingotIron));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 3), "I I", "III", "I I", 'I', "ingotSteel"));
+		if(ConfigMachines.ladderEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 0), "I I", "III", "I I", 'I', "ingotCopper"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 1), "I I", "III", "I I", 'I', "ingotBronze"));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 2), "I I", "III", "I I", 'I', Item.ingotIron));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ladder, 8, 3), "I I", "III", "I I", 'I', "ingotSteel"));
+		}
 	}
 }
