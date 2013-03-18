@@ -175,7 +175,7 @@ public class EntityMinersTNTPrimed extends Entity {
 			// UNPOSSIBLE?
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "MetallurgyUtility";
+		packet.channel = "MetallurgyBase";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		packet.isChunkDataPacket = true;

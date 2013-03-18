@@ -435,8 +435,6 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 		if(worldObj.isRemote)
 			return;
 		
-		System.out.println("Nether forge is sending packet");
-		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		DataOutputStream dos = new DataOutputStream(bos);
 		try {

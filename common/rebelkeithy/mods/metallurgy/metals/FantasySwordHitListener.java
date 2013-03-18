@@ -113,7 +113,7 @@ public class FantasySwordHitListener implements ISwordHitListener
 							m.invoke(event.entityLiving, (Boolean)true, (Integer)0);
 					}
 					//m.setAccessible(false);
-				} catch (SecurityException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

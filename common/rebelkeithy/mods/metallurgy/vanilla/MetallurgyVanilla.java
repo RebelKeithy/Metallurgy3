@@ -32,8 +32,6 @@ public class MetallurgyVanilla
 		Map<String, Map<String, String>> vanillaList = MetalInfoDatabase.getSpreadsheetDataForSet("Vanilla");
 		vanillaList.remove("Wood/Leather");
 		vanillaList.remove("Stone/Chainmail");
-		for(Map<String, String> list : vanillaList.values())
-			System.out.println("adding vanilla " + list.get(1));
 		vanillaSet = new MetalSet("Vanilla", vanillaList, CreativeTabs.tabBlock);
 		
 		VanillaAddons.init();

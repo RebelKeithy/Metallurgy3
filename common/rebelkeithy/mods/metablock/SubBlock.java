@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 public class SubBlock 
 {
 	private MetaBlock metaBlock;
+	private CreativeTabs tab;
 	int meta;
 	
 	private int textureIndex;
@@ -110,7 +111,13 @@ public class SubBlock
 	public SubBlock setCreativeTab(CreativeTabs tab) 
 	{
 		metaBlock.setCreativeTab(tab);
+		this.tab = tab;
 		return this;
+	}
+	
+	public CreativeTabs getCreativeTab()
+	{
+		return tab;
 	}
 
 

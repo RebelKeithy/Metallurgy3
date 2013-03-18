@@ -20,21 +20,21 @@ public class TileEntityLanternRenderer extends TileEntitySpecialRenderer {
     	int color = par1TileEntityLantern.color;
     	
     	if(color == 0)
-    		this.bindTextureByName("/shadow/LanternRed.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternRed.png");
     	else if(color == 1)
-    		this.bindTextureByName("/shadow/LanternGreen.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternGreen.png");
     	else if(color == 2)
-    		this.bindTextureByName("/shadow/LanternBlue.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternBlue.png");
     	else if(color == 3)
-    		this.bindTextureByName("/shadow/LanternOrange.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternOrange.png");
     	else if(color == 4)
-    		this.bindTextureByName("/shadow/LanternYellow.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternYellow.png");
     	else if(color == 5)
-    		this.bindTextureByName("/shadow/LanternPurple.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternPurple.png");
     	else if(color == 6)
-    		this.bindTextureByName("/shadow/LanternGrey.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternGrey.png");
     	else if(color == 7)
-    		this.bindTextureByName("/shadow/LanternWhite.png");
+    		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternWhite.png");
     		
         
         if(par1TileEntityLantern.worldObj != null)

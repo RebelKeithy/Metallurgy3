@@ -37,7 +37,7 @@ public class ParticleRegistry
 					entity.setRBGColorF((float)r, (float)g, (float)b);
 					Minecraft.getMinecraft().effectRenderer.addEffect(entity);
 				}
-			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}	
 		}

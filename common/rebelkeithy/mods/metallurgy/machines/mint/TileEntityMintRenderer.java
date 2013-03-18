@@ -59,7 +59,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
 
         var14 = this.mintModel;
         ModelMintHead mintHead = new ModelMintHead();
-        this.bindTextureByName("/shadow/Mint.png");
+        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/Mint.png");
         
 
         GL11.glPushMatrix();
@@ -103,7 +103,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
         	
         GL11.glTranslatef(0F, headOffset + offset, 0F);
         
-        this.bindTextureByName("/shadow/MintHead.png");
+        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/MintHead.png");
         mintHead.renderAll();
         
         //GL11.glDisable(GL12.GL_RESCALE_NORMAL);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
@@ -60,7 +61,8 @@ public class MetallurgyCore
 		{
 			if(!set.equals(""))
 			{
-				new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set));
+				CreativeTabs tab = new CreativeTabs(set);
+				new MetalSet(set, MetalInfoDatabase.getSpreadsheetDataForSet(set), tab);
 			}
 		}
 		

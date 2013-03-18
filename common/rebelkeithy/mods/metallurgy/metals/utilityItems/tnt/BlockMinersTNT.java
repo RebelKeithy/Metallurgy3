@@ -1,18 +1,35 @@
 package rebelkeithy.mods.metallurgy.metals.utilityItems.tnt;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockTNT;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.Icon;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
-public class LargeTNT extends BlockTNT{
 
-	public LargeTNT(int par1) 
-	{
+public class BlockMinersTNT extends BlockTNT{
+
+	private Icon field_94393_a;
+	private Icon field_94392_b;
+
+	public BlockMinersTNT(int par1) {
 		super(par1);
 	}
+
+    @SideOnly(Side.CLIENT)
+
+    /**
+     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
+     */
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+        return par1 == 0 ? this.field_94392_b : (par1 == 1 ? this.field_94393_a : this.field_94336_cN);
+    }
 
     /**
      * Called upon block activation (right click on the block.)
@@ -47,7 +64,7 @@ public class LargeTNT extends BlockTNT{
     {
         if (!par1World.isRemote)
         {
-        	EntityLargeTNTPrimed var5 = new EntityLargeTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F));
+            EntityMinersTNTPrimed var5 = new EntityMinersTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F));
             var5.fuse = par1World.rand.nextInt(var5.fuse / 4) + var5.fuse / 8;
             par1World.spawnEntityInWorld(var5);
         }
@@ -63,11 +80,19 @@ public class LargeTNT extends BlockTNT{
         {
             if ((par5 & 1) == 1)
             {
-            	EntityLargeTNTPrimed var6 = new EntityLargeTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F));
+            	EntityMinersTNTPrimed var6 = new EntityMinersTNTPrimed(par1World, (double)((float)par2 + 0.5F), (double)((float)par3 + 0.5F), (double)((float)par4 + 0.5F));
                 par1World.spawnEntityInWorld(var6);
                 par1World.playSoundAtEntity(var6, "random.fuse", 1.0F, 1.0F);
             }
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void func_94332_a(IconRegister par1IconRegister)
+    {
+        this.field_94336_cN = par1IconRegister.func_94245_a("Metallurgy:Utility/LETNTSide");
+        this.field_94393_a = par1IconRegister.func_94245_a("Metallurgy:Utility/LETNTTop");
+        this.field_94392_b = par1IconRegister.func_94245_a("Metallurgy:Utility/LETNTBottom");
     }
 
 

@@ -167,8 +167,6 @@ public class BlockMetalLadder extends Block
         {
             direction = 3;
         }
-        
-        System.out.println("direction = " + direction);
 
         par1World.setBlockMetadataWithNotify(par2, par3, par4, type * 4 + direction, 2);
         return type * 4 + direction;

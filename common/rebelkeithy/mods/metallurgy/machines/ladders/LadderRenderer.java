@@ -12,7 +12,6 @@ public class LadderRenderer implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) {
-		System.out.println("rendering inventory");
 
 	}
 

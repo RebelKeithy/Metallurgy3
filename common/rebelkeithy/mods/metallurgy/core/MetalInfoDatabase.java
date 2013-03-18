@@ -42,7 +42,7 @@ public class MetalInfoDatabase
 				Map<String, String> oreMap = new HashMap<String, String>();
 				for(int n = 0; n < inputArray.length; n++)
 				{
-					if(inputArray[n].equals(""))
+					if(inputArray[n].equals("") || inputArray[n].equals("-"))
 						inputArray[n] = "0";
 					oreMap.put(header[n], inputArray[n]);
 				}
@@ -55,7 +55,7 @@ public class MetalInfoDatabase
 		}
 	}
 
-	private static void readItemData(Configuration config, BufferedReader in)
+	private static void readItemData(Configuration config, BufferedReader in, CreativeTabs tab)
 	{
 		if(items == null)
 			items = new HashMap<String, Item>();
@@ -82,7 +82,7 @@ public class MetalInfoDatabase
 				
 				id = config.get("Items", itemMap.get("Item Name"), id).getInt();
 				
-				Item item = new Item(id).setUnlocalizedName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setCreativeTab(CreativeTabs.tabMisc);
+				Item item = new Item(id).setUnlocalizedName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setCreativeTab(tab);
 				LanguageRegistry.addName(item, itemMap.get("Item Name"));
 				
 				items.put(itemMap.get("Item Name"), item);
@@ -104,25 +104,25 @@ public class MetalInfoDatabase
 		}
 	}
 	
-	public static void readItemDataFromFile(Configuration config, String filepath)
+	public static void readItemDataFromFile(Configuration config, String filepath, CreativeTabs tab)
 	{
 		try {
 			File file = new File(MetallurgyCore.proxy.getMinecraftDir() + filepath);
 			BufferedReader in = new BufferedReader(new FileReader(file));
-			readItemData(config, in);
+			readItemData(config, in, tab);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void readItemDataFromJar(Configuration config, String filename, String jarpath) 
+	public static void readItemDataFromJar(Configuration config, String filename, String jarpath, CreativeTabs tab) 
 	{
 		ZipFile zip;
 		try {
 			zip = new ZipFile(MetallurgyCore.proxy.getMinecraftDir() + "\\" + jarpath);
 			ZipEntry entry = zip.getEntry(filename);
 			BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
-			readItemData(config, in);
+			readItemData(config, in, tab);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -169,7 +169,6 @@ public class MetalInfoDatabase
 				returnData.put(data.get("Name"), data);
 			}
 		}
-		System.out.println("found " + returnData.size() + " items");
 		return returnData;
 	}
 
@@ -177,7 +176,6 @@ public class MetalInfoDatabase
 	{
 		if(items == null || !items.containsKey(itemName))
 		{
-			System.out.println("Item " + itemName + " not found");
 			return null;
 		}
 		

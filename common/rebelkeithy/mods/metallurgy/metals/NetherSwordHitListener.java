@@ -102,7 +102,7 @@ public class NetherSwordHitListener implements ISwordHitListener
 					m.setAccessible(true);
 					m.invoke(event.entityLiving, (Boolean)true, (Integer)0);
 					//m.setAccessible(false);
-				} catch (SecurityException | NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

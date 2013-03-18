@@ -339,19 +339,19 @@ public class TileEntityMint extends TileEntity
 
 	public String getIngotImage() {
 		if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Silver").ingot.itemID)
-			return "/shadow/MintSilver.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintSilver.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Brass").ingot.itemID)
-			return "/shadow/MintBrass.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintBrass.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Electrum").ingot.itemID)
-			return "/shadow/MintElectrum.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintElectrum.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Platinum").ingot.itemID)
-			return "/shadow/MintPlatinum.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintPlatinum.png";
 		else if(ingotId == Item.ingotGold.itemID)
-			return "/shadow/MintGold.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintGold.png";
 		
 		if(!MintRecipes.minting().getImage(ingotId).equals(""))
 			return MintRecipes.minting().getImage(ingotId);
 		else
-			return "/shadow/MintBrass.png";
+			return "/mods/Metallurgy/textures/blocks/machines/mint/MintBrass.png";
 	}
 }

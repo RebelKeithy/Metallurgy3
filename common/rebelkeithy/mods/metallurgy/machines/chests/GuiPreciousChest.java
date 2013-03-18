@@ -37,32 +37,32 @@ public class GuiPreciousChest extends GuiContainer
         
         int type = ((TileEntityPreciousChest)chestInv).getType();
         
-        image = "/shadow/ironcontainer.png";
+        image = "/mods/Metallurgy/textures/guis/ironcontainer.png";
         switch(type)
         {
 	        case 0:
 	        {
-	        	image = "/shadow/ironcontainer.png";
+	        	image = "/mods/Metallurgy/textures/guis/ironcontainer.png";
 	        	break;
 	        }	
 	        case 1:
 	        {
-	        	image = "/shadow/silvercontainer.png";
+	        	image = "/mods/Metallurgy/textures/guis/silvercontainer.png";
 	        	break;
 	        }	
 	        case 2:
 	        {
-	        	image = "/shadow/goldcontainer.png";
+	        	image = "/mods/Metallurgy/textures/guis/goldcontainer.png";
 	        	break;
 	        }	
 	        case 3:
 	        {
-	        	image = "/shadow/electrumcontainer.png";
+	        	image = "/mods/Metallurgy/textures/guis/electrumcontainer.png";
 	        	break;
 	        }	
 	        case 4:
 	        {
-	        	image = "/shadow/diamondcontainer.png";
+	        	image = "/mods/Metallurgy/textures/guis/diamondcontainer.png";
 	        	break;
 	        }	
         }

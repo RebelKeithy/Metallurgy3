@@ -45,6 +45,7 @@ public class OreInfo implements IWorldGenerator
 {
 	protected String setName;
 	protected String name;
+	protected CreativeTabs tab;
 	protected OreType type;
 	protected int oreID;
 	protected int oreMeta;
@@ -57,9 +58,6 @@ public class OreInfo implements IWorldGenerator
 	protected String dropName;
 	protected int dropMin;
 	protected int dropMax;
-	
-	//TODO: remove in 1.5
-	protected int iconColumn;
 	
 	protected String[] alloyRecipe;
 	protected int abstractorXP;
@@ -106,10 +104,11 @@ public class OreInfo implements IWorldGenerator
 	public Item legs;
 	public Item boots;
 	
-	public OreInfo(Map<String, String> info)
+	public OreInfo(Map<String, String> info, CreativeTabs tab)
 	{
 		setName = info.get("Metal Set");
 		name = info.get("Name");
+		this.tab = tab;
 		System.out.println("reading " + name);
 		if(info.get("Type").equals("Ore"))
 			type = ORE;
@@ -156,8 +155,6 @@ public class OreInfo implements IWorldGenerator
 		}
 				
 		itemIDs = Integer.parseInt(info.get("Item IDs"));
-		
-		iconColumn = Integer.parseInt(info.get("Icon Column"));
 		
 		abstractorXP = Integer.parseInt(info.get("Abstractor XP"));
 		blockLvl = Integer.parseInt(info.get("Block lvl"));
@@ -274,7 +271,7 @@ public class OreInfo implements IWorldGenerator
 		{
 			if(type.generates() && oreID != 0)
 			{
-				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + setName + "/" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(CreativeTabs.tabBlock);
+				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + setName + "/" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(tab);
 				if(type == DROP)
 				{
 					System.out.println("getting block drop " + dropName);
@@ -283,16 +280,16 @@ public class OreInfo implements IWorldGenerator
 			}
 			if(type != DROP && blockID != 0)
 			{
-				block = new SubBlock(blockID, blockMeta, "Metallurgy:" + setName + "/" + name + "Block").setUnlocalizedName(setName + blockID).setCreativeTab(CreativeTabs.tabBlock);
+				block = new SubBlock(blockID, blockMeta, "Metallurgy:" + setName + "/" + name + "Block").setUnlocalizedName(setName + blockID).setCreativeTab(tab);
 			}
 			if(type != DROP && brickID != 0)
 			{
-				brick = new SubBlock(brickID, brickMeta, "Metallurgy:" + setName + "/" + name + "Brick").setUnlocalizedName(setName + brickID).setCreativeTab(CreativeTabs.tabBlock);
+				brick = new SubBlock(brickID, brickMeta, "Metallurgy:" + setName + "/" + name + "Brick").setUnlocalizedName(setName + brickID).setCreativeTab(tab);
 			}
 			if(type != DROP)
 			{
-				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Dust").setCreativeTab(CreativeTabs.tabMaterials);
-				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(CreativeTabs.tabMaterials);
+				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Dust").setCreativeTab(tab);
+				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(tab);
 				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
@@ -300,17 +297,17 @@ public class OreInfo implements IWorldGenerator
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
-				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(CreativeTabs.tabTools);
-				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(CreativeTabs.tabTools);
-				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Axe").setCreativeTab(CreativeTabs.tabTools);
-				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Hoe").setCreativeTab(CreativeTabs.tabTools);
-				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(CreativeTabs.tabCombat);
+				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(tab);
+				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(tab);
+				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Axe").setCreativeTab(tab);
+				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Hoe").setCreativeTab(tab);
+				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(tab);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
-				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(CreativeTabs.tabCombat);
-				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(CreativeTabs.tabCombat);
-				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(CreativeTabs.tabCombat);
-				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(CreativeTabs.tabCombat);
+				helmet = new ItemArmor(itemIDs + 7, armorEnum, 0, 0).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
+				chest = new ItemArmor(itemIDs + 8, armorEnum, 1, 1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(tab);
+				legs = new ItemArmor(itemIDs + 9, armorEnum, 2, 2).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(tab);
+				boots = new ItemArmor(itemIDs + 10, armorEnum, 3, 3).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(tab);
 			}
 		}
 		
@@ -458,10 +455,36 @@ public class OreInfo implements IWorldGenerator
 		}
 	}
 	
+	private boolean spawnsInDim(int dim)
+	{
+		for(String string : diminsions)
+		{
+			System.out.println("checking dim '" + string + "' against" + dim);
+			if(string.contains("-") && !string.startsWith("-"))
+			{
+				int min = Integer.parseInt(string.split("-")[0]);
+				int max = Integer.parseInt(string.split("-")[1]);
+				if(min > max)
+				{
+					int temp = min;
+					min = max;
+					max = temp;
+				}
+				if(dim >= min && dim <= max)
+					return true;
+			} else {
+				int check = Integer.parseInt(string);
+				if(dim == check)
+					return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) 
 	{
-		if(!type.generates() || ore == null)
+		if(!type.generates() || ore == null || !spawnsInDim(world.provider.dimensionId))
 			return;
 		
 		for(int n = 0; n < veinCount; n++)
@@ -470,8 +493,8 @@ public class OreInfo implements IWorldGenerator
 			int randPosY = random.nextInt(maxHeight - minHeight) + minHeight;
 			int randPosZ = chunkZ*16 + random.nextInt(16);
 			
-			new WorldGenMinable(oreID, oreMeta, oreCount).generate(world, random, randPosX, randPosY, randPosZ);
-			//new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
+			//new WorldGenMinable(oreID, oreMeta, oreCount).generate(world, random, randPosX, randPosY, randPosZ);
+			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
 			//new WorldGenMinable(oreID, oreMeta, 40).generate(world, random, randPosX, randPosY, randPosZ);
 		}
 	}

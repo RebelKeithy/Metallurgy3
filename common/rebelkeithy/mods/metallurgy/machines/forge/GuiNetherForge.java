@@ -34,7 +34,7 @@ public class GuiNetherForge extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.func_98187_b("/shadow/lavafurnace.png"); //Calls bindTexture
+        this.mc.renderEngine.func_98187_b("/mods/Metallurgy/textures/guis/lavafurnace.png"); //Calls bindTexture
         int leftSide = (this.width - this.xSize) / 2;
         int topSide = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(leftSide, topSide, 0, 0, this.xSize, this.ySize);

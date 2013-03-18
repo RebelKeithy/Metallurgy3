@@ -22,8 +22,8 @@ import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
-import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.LargeTNT;
-import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.MinersTNT;
+import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockLargeTNT;
+import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockMinersTNT;
 import rebelkeithy.mods.particleregistry.ParticleRegistry;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -43,15 +43,20 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public static MetallurgyTabs utilityTab;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;
 	public static MetalSet netherSet;
 	public static MetalSet fantasySet;
+	public static MetalSet enderSet;
 	public static MetalSet utilitySet;
 	
-	public static CreativeTabs baseTab;
+	public static MetallurgyTabs baseTab;
+	public static MetallurgyTabs preciousTab;
+	public static MetallurgyTabs netherTab;
+	public static MetallurgyTabs fantasyTab;
+	public static MetallurgyTabs enderTab;
+	public static MetallurgyTabs utilityTab;
 	
 	public static Configuration baseConfig;
 	public static Configuration utilityConfig;
@@ -81,27 +86,38 @@ public class MetallurgyMetals {
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
 	{        
-        baseConfig = initConfig("MetallurgyBase");
+        baseConfig = initConfig("Base");
         baseConfig.load();
         
-        utilityConfig = initConfig("MetallurgyUtility");
+        utilityConfig = initConfig("Utility");
         utilityConfig.load();
         
-        fantasyConfig = initConfig("MetallurgyFantasy");
+        fantasyConfig = initConfig("Fantasy");
         
-        utilityTab = new MetallurgyTabs("Metallurgy Utility");
-        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy Utility", "Metallurgy Utility");
+		baseTab = new MetallurgyTabs("Metallurgy: Base");
+		preciousTab = new MetallurgyTabs("Metallurgy: Precious");
+		netherTab = new MetallurgyTabs("Metallurgy: Nether");
+		fantasyTab = new MetallurgyTabs("Metallurgy: Fantasy");
+		enderTab = new MetallurgyTabs("Metallurgy: Ender");
+        utilityTab = new MetallurgyTabs("Metallurgy: Utility");
+        
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Base", "Metallurgy: Base");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Precious", "Metallurgy: Precious");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Nether", "Metallurgy: Nether");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Fantasy", "Metallurgy: Fantasy");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Utility", "Metallurgy: Utility");
+        LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Ender", "Metallurgy: Ender");
 		
-		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", "mods\\MetallurgyBase.jar");
-		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", "mods\\MetallurgyBase.jar");
+		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", "mods\\Metallurgy.jar");
+		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", "mods\\Metallurgy.jar", utilityTab);
 		
-		baseTab = new CreativeTabs("Metallurgy: Base");
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
-		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"), baseTab);
-		netherSet = new MetalSet("Nether", MetalInfoDatabase.getSpreadsheetDataForSet("Nether"), baseTab);
-		fantasySet = new MetalSet("Fantasy", MetalInfoDatabase.getSpreadsheetDataForSet("Fantasy"), baseTab);
-		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), baseTab);
+		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"), preciousTab);
+		netherSet = new MetalSet("Nether", MetalInfoDatabase.getSpreadsheetDataForSet("Nether"), netherTab);
+		fantasySet = new MetalSet("Fantasy", MetalInfoDatabase.getSpreadsheetDataForSet("Fantasy"), fantasyTab);
+		enderSet = new MetalSet("Ender", MetalInfoDatabase.getSpreadsheetDataForSet("Ender"), enderTab);
+		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), utilityTab);
 	}
 	
 	@Init
@@ -144,35 +160,41 @@ public class MetallurgyMetals {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
+		baseTab.setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
+		preciousTab.setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
+		netherTab.setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
+		fantasyTab.setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
+		enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
+		
 		createMidasiumRecipes();
 	}
 	
 	public void createUtilityItems()
 	{
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
-		largeTNT = new LargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
+		largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
 		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(largeTNT, "HE TNT");
 		
 		id = utilityConfig.get("Item IDs", "LE TNT", 921).getInt();
-		minersTNT = new MinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
+		minersTNT = new BlockMinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
-		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:utility/Igniter").setCreativeTab(utilityTab);
+		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
 
 		id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
-		match = new ItemIgniter(id).setUnlocalizedName("Metallurgy:utility/Match").setCreativeTab(utilityTab);
+		match = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(match, "Match");
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(match), "X", "|", 'X', "dustPhosphorus", '|', Item.stick));
 		
 		id = utilityConfig.get("Item IDs", "Fertilizer", 29009).getInt();
-		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:utility/Fertilizer").setCreativeTab(utilityTab);
+		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:Utility/Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustPotash"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
@@ -181,7 +203,7 @@ public class MetallurgyMetals {
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
 		id = utilityConfig.get("Item IDs", "Tar", 29010).getInt();
-		tar = new Item(id).setUnlocalizedName("Metallurgy:utility/Tar").setCreativeTab(utilityTab);
+		tar = new Item(id).setUnlocalizedName("Metallurgy:Utility/Tar").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
 		
@@ -224,7 +246,6 @@ public class MetallurgyMetals {
 				count++;
 			}
 		}
-		System.out.println("found " + count + " recipes");
 	}
 	
 	public void addSwordEffects()

@@ -34,7 +34,7 @@ public class GuiMintStorage extends GuiContainer
         this.inventoryCols = 3;
         this.ySize = var4 + this.inventoryRows * 18;
         
-        image = "/shadow/mintstorage.png";
+        image = "/mods/Metallurgy/textures/guis/mintstorage.png";
         		
     }
 

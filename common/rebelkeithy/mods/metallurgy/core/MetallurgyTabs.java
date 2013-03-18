@@ -4,7 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class MetallurgyTabs extends CreativeTabs
 {
-	int iconID;
+	int iconID = 1;
 
 	public MetallurgyTabs(String label) 
 	{

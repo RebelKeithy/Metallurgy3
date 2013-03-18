@@ -41,7 +41,6 @@ public class GuiRegistry implements IGuiHandler
 	{
 		ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
 		String fixedID = guiID + mc.getName();
-		System.out.println("id: " + fixedID);
 		player.openGui(mod, fixedID.hashCode(), world, x, y, z);
 	}
 

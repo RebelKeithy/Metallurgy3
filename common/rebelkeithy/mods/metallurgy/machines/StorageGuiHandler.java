@@ -22,7 +22,6 @@ public class StorageGuiHandler implements IGuiHandler
 {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		System.out.println("getting container");
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		if (te != null && te instanceof TileEntityNetherForge) 
 		{
@@ -43,7 +42,6 @@ public class StorageGuiHandler implements IGuiHandler
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		System.out.println("getting gui element");
 		TileEntity te = world.getBlockTileEntity(x, y, z);
 		if (te != null && te instanceof TileEntityNetherForge) 
 		{

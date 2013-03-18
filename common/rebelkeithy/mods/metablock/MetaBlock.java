@@ -26,6 +26,7 @@ public class MetaBlock extends Block {
 
 	SubBlock[] subBlocks;
 	List<Integer> tickList;
+	ArrayList<CreativeTabs> tabs;
 	
 	public static List registeredIDs;
 	
@@ -71,9 +72,11 @@ public class MetaBlock extends Block {
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int n = 0; n < 16; n++) {
-			if(subBlocks[n] != null)
+	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) 
+	{
+		for (int n = 0; n < 16; n++) 
+		{
+			if(subBlocks[n] != null && par2CreativeTabs == subBlocks[n].getCreativeTab())
 			{
 				par3List.add(new ItemStack(this, 1, n));
 			}
@@ -194,4 +197,26 @@ public class MetaBlock extends Block {
     	int meta = world.getBlockMetadata(x, y, z);
         return subBlocks[meta].getExplosionResistance(entity);
     }
+
+    /**
+     * Sets the CreativeTab to display this block on.
+     */
+    public Block setCreativeTab(CreativeTabs par1CreativeTabs)
+    {
+    	if(tabs == null)
+    		tabs = new ArrayList<CreativeTabs>();
+    	
+    	if(!tabs.contains(par1CreativeTabs))
+    		tabs.add(par1CreativeTabs);
+        
+    	return this;
+    }
+
+	public CreativeTabs[] getCreativeTabArray() 
+	{
+		if(tabs == null)
+			return new CreativeTabs[0];
+		
+		return tabs.toArray(new CreativeTabs[tabs.size()]);
+	}
 }

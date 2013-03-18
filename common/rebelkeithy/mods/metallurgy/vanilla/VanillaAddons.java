@@ -41,7 +41,7 @@ public class VanillaAddons {
 	{
 		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
     	fileDir.mkdir();
-    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/MetalSetVanilla.cfg");
+    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/MetallurgyVanilla.cfg");
     	
         try
         {

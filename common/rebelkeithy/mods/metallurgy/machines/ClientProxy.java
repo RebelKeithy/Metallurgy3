@@ -9,6 +9,9 @@ import rebelkeithy.mods.metallurgy.machines.chests.TileEntityPreciousChestRender
 import rebelkeithy.mods.metallurgy.machines.crusher.CrusherRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusherRenderer;
+import rebelkeithy.mods.metallurgy.machines.enchanter.MetallurgyEnchantmentTableRenderHelper;
+import rebelkeithy.mods.metallurgy.machines.enchanter.RenderMetallurgyEnchantmentTable;
+import rebelkeithy.mods.metallurgy.machines.enchanter.TileEntityMetallurgyEnchantmentTable;
 import rebelkeithy.mods.metallurgy.machines.ladders.BlockMetalLadder;
 import rebelkeithy.mods.metallurgy.machines.ladders.LadderRenderer;
 import rebelkeithy.mods.metallurgy.machines.lantern.LanternRenderHelper;
@@ -37,6 +40,9 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerBlockHandler(new LanternRenderHelper());
 
 		RenderingRegistry.registerBlockHandler(BlockMetalLadder.renderType, new LadderRenderer());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
+		RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
 	}
 	
 	public File getMinecraftDir() 

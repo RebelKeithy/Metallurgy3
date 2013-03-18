@@ -1,5 +1,6 @@
 package rebelkeithy.mods.metallurgy.core.metalsets;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 
 import java.io.File;
@@ -17,7 +18,7 @@ public class MetalSet
 	private Map<String, OreInfo> metals;
 	private Configuration config;
 	
-	public MetalSet(String setName, Map<String, Map<String, String>> baseData)
+	public MetalSet(String setName, Map<String, Map<String, String>> baseData, CreativeTabs tab)
 	{
 		this.setName = setName;
 		
@@ -25,7 +26,7 @@ public class MetalSet
 		
 		for(Map<String, String> metalInfo : baseData.values())
 		{
-			metals.put(metalInfo.get("Name"), new OreInfo(metalInfo));
+			metals.put(metalInfo.get("Name"), new OreInfo(metalInfo, tab));
 		}
 		
 		MetallurgyCore.getMetalSetList().add(this);
@@ -38,7 +39,7 @@ public class MetalSet
 	{
 		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
     	fileDir.mkdir();
-    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/MetalSet" + setName + ".cfg");
+    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/Metallurgy" + setName + ".cfg");
     	
         try
         {

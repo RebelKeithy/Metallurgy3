@@ -71,7 +71,7 @@ public class TileEntityPreciousChestRenderer extends TileEntitySpecialRenderer
         ModelChest var14;
 
         var14 = this.chestModel;
-        this.bindTextureByName("/shadow/" + imageName);
+        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/chests/" + imageName);
 
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

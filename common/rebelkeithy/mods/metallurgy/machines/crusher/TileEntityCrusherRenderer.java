@@ -45,9 +45,9 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         	type = "Steel";
         
         if(par1TileEntityCrusher.isBurning())
-        	this.bindTextureByName("/shadow/ModelCrusher" + type + "Burning.png");
+        	this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
         else
-            this.bindTextureByName("/shadow/ModelCrusher" + type + ".png");
+            this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + ".png");
         
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
