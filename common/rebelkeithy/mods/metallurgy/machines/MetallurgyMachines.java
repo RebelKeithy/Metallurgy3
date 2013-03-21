@@ -185,11 +185,28 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(bag, "Bag");
 		LanguageRegistry.addName(bullion, "Bullion");
 		
-		MintRecipes.minting().addMinting(MetallurgyMetals.preciousSet.getOreInfo("Silver").ingot.itemID, 0, 3);
-		MintRecipes.minting().addMinting(MetallurgyMetals.preciousSet.getOreInfo("Platinum").ingot.itemID, 0, 27);
-		MintRecipes.minting().addMinting(MetallurgyMetals.preciousSet.getOreInfo("Brass").ingot.itemID, 0, 1);
-		MintRecipes.minting().addMinting(MetallurgyMetals.preciousSet.getOreInfo("Electrum").ingot.itemID, 0, 13);
-		MintRecipes.minting().addMinting(Item.ingotGold.itemID, 0, 9);
+		if(MetallurgyMetals.preciousSet != null)
+		{
+			Item ingot;
+			
+			ingot = MetallurgyMetals.preciousSet.getOreInfo("Silver").ingot;
+			if(ingot != null)
+				MintRecipes.minting().addMinting(ingot.itemID, 0, 3);
+			
+			ingot = MetallurgyMetals.preciousSet.getOreInfo("Platinum").ingot;
+			if(ingot != null)
+				MintRecipes.minting().addMinting(ingot.itemID, 0, 27);
+			
+			ingot = MetallurgyMetals.preciousSet.getOreInfo("Brass").ingot;
+			if(ingot != null)
+				MintRecipes.minting().addMinting(ingot.itemID, 0, 1);
+			
+			ingot = MetallurgyMetals.preciousSet.getOreInfo("Electrum").ingot;
+			if(ingot != null)
+				MintRecipes.minting().addMinting(ingot.itemID, 0, 13);
+			
+			MintRecipes.minting().addMinting(Item.ingotGold.itemID, 0, 9);
+		}
 		
 		if(ConfigMachines.tradesEnabled)
 			for(int i = 0; i < 5; i++)

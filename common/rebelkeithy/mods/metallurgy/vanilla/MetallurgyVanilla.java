@@ -36,7 +36,7 @@ public class MetallurgyVanilla
 		
 		VanillaAddons.init();
 		
-		MinecraftForge.ORE_GEN_BUS.register(new VanillaOreInhibitor());
+		//MinecraftForge.ORE_GEN_BUS.register(new VanillaOreInhibitor());
 		
 	}
 	

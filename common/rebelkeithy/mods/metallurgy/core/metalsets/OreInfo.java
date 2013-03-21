@@ -47,8 +47,8 @@ public class OreInfo implements IWorldGenerator
 	protected String name;
 	protected CreativeTabs tab;
 	protected OreType type;
-	protected int oreID;
-	protected int oreMeta;
+	public int oreID;
+	public int oreMeta;
 	protected int blockID;
 	protected int blockMeta;
 	protected int brickID;
@@ -411,7 +411,9 @@ public class OreInfo implements IWorldGenerator
 	public void registerMetal()
 	{
 		if(ore != null)
+		{
 			OreDictionary.registerOre("ore" + name, new ItemStack(oreID, 1, oreMeta));
+		}
 		if(block != null)
 			OreDictionary.registerOre("block" + name, new ItemStack(blockID, 1, blockMeta));
 		if(type != DROP)
@@ -459,7 +461,7 @@ public class OreInfo implements IWorldGenerator
 	{
 		for(String string : diminsions)
 		{
-			System.out.println("checking dim '" + string + "' against" + dim);
+			//System.out.println("checking dim '" + string + "' against" + dim);
 			if(string.contains("-") && !string.startsWith("-"))
 			{
 				int min = Integer.parseInt(string.split("-")[0]);
@@ -484,7 +486,7 @@ public class OreInfo implements IWorldGenerator
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) 
 	{
-		if(!type.generates() || ore == null || !spawnsInDim(world.provider.dimensionId))
+		if(!type.generates() || (ore == null && type != RESPAWN) || !spawnsInDim(world.provider.dimensionId))
 			return;
 		
 		for(int n = 0; n < veinCount; n++)
@@ -494,7 +496,7 @@ public class OreInfo implements IWorldGenerator
 			int randPosZ = chunkZ*16 + random.nextInt(16);
 			
 			//new WorldGenMinable(oreID, oreMeta, oreCount).generate(world, random, randPosX, randPosY, randPosZ);
-			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
+			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate2(world, random, randPosX, randPosY, randPosZ);
 			//new WorldGenMinable(oreID, oreMeta, 40).generate(world, random, randPosX, randPosY, randPosZ);
 		}
 	}

@@ -25,6 +25,7 @@ import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockLargeTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockMinersTNT;
 import rebelkeithy.mods.particleregistry.ParticleRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -107,9 +108,16 @@ public class MetallurgyMetals {
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Fantasy", "Metallurgy: Fantasy");
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Utility", "Metallurgy: Utility");
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Ender", "Metallurgy: Ender");
-		
-		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", "mods\\Metallurgy.jar");
-		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", "mods\\Metallurgy.jar", utilityTab);
+        
+        //TODO
+        String filepath = event.getSourceFile().getAbsolutePath();
+        if(filepath.equals("C:\\Users\\Keithy\\Documents\\Metallurgy 3 1.5\\eclipse\\Metallurgy 3\\bin"))
+        {
+        	filepath = MetallurgyCore.proxy.getMinecraftDir() + "/mods/Metallurgy.jar";
+        }
+        
+		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
+		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", filepath, utilityTab);
 		
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
@@ -130,6 +138,8 @@ public class MetallurgyMetals {
 		LanguageRegistry.addName(dustGold, "Gold Dust");
 		OreDictionary.registerOre("dustIron", dustIron);
 		OreDictionary.registerOre("dustGold", dustGold);
+		
+		Item debug = new ItemOreFinder(5102).setUnlocalizedName("stick").setCreativeTab(CreativeTabs.tabTools);
 		
 		createUtilityItems();
 		utilityConfig.save();

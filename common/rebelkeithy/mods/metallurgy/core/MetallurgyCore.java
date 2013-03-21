@@ -31,6 +31,9 @@ public class MetallurgyCore
 	
 	@Instance(value = "Metallurgy3Core")
 	public static MetallurgyCore instance;
+
+	
+	public static boolean spawnInAir = false;
 	
 	Configuration config;
 	
@@ -104,6 +107,8 @@ public class MetallurgyCore
         
 		config = new Configuration(cfgFile);
 		config.load();
+		
+		spawnInAir = config.get("Cheats", "Spawn Ore In Air", false).getBoolean(false);
 		
 		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").getString().split("\\s*,\\s*"));
 		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").getString().split("\\s*,\\s*"));

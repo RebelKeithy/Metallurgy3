@@ -1,16 +1,15 @@
 package rebelkeithy.mods.metallurgy.core.metalsets;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Random;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 
 public class MetallurgyWorldGenMinable extends WorldGenerator
 {
@@ -125,9 +124,10 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
                                 double d14 = ((double)i3 + 0.5D - d8) / (d10 / 2.0D);
 
                                 Block block = Block.blocksList[par1World.getBlockId(k2, l2, i3)];
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (block != null && (block.isGenMineableReplaceable(par1World, k2, l2, i3, 0) || block.blockID == Block.netherrack.blockID || block.blockID == Block.whiteStone.blockID)))
+                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D)
                                 {
-                                    par1World.setBlockAndMetadataWithNotify(k2, l2, i3, this.minableBlockId, metadata, 2);
+                                	if(MetallurgyCore.spawnInAir || ( block != null && (block.isGenMineableReplaceable(par1World, k2, l2, i3, 0) || block.blockID == Block.netherrack.blockID || block.blockID == Block.whiteStone.blockID)))
+                                		par1World.setBlockAndMetadataWithNotify(k2, l2, i3, this.minableBlockId, metadata, 2);
                                 }
                             }
                         }

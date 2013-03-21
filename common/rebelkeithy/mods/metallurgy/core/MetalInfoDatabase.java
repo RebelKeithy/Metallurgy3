@@ -107,7 +107,7 @@ public class MetalInfoDatabase
 	public static void readItemDataFromFile(Configuration config, String filepath, CreativeTabs tab)
 	{
 		try {
-			File file = new File(MetallurgyCore.proxy.getMinecraftDir() + filepath);
+			File file = new File(filepath);
 			BufferedReader in = new BufferedReader(new FileReader(file));
 			readItemData(config, in, tab);
 		} catch (FileNotFoundException e) {
@@ -119,7 +119,7 @@ public class MetalInfoDatabase
 	{
 		ZipFile zip;
 		try {
-			zip = new ZipFile(MetallurgyCore.proxy.getMinecraftDir() + "\\" + jarpath);
+			zip = new ZipFile(jarpath);
 			ZipEntry entry = zip.getEntry(filename);
 			BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
 			readItemData(config, in, tab);
@@ -131,7 +131,7 @@ public class MetalInfoDatabase
 	public static void readMetalDataFromFile(String filepath)
 	{
 		try {
-			File file = new File(MetallurgyCore.proxy.getMinecraftDir() + filepath);
+			File file = new File(filepath);
 			BufferedReader in = new BufferedReader(new FileReader(file));
 			readOreData(in);
 		} catch (FileNotFoundException e) {
@@ -141,9 +141,10 @@ public class MetalInfoDatabase
 	
 	public static void readMetalDataFromJar(String filename, String jarpath)
 	{
+		System.out.println("reading file " + filename + "  from file " + jarpath);
 		ZipFile zip;
 		try {
-			zip = new ZipFile(MetallurgyCore.proxy.getMinecraftDir() + "\\" + jarpath);
+			zip = new ZipFile(jarpath);
 			ZipEntry entry = zip.getEntry(filename);
 			BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
 			readOreData(in);
