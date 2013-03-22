@@ -145,7 +145,7 @@ public class ItemFertilizer extends Item
                             {
                                 if (Block.tallGrass.canBlockStay(par3World, var13, var14, var15))
                                 {
-                                    par3World.setBlockAndMetadataWithNotify(var13, var14, var15, Block.tallGrass.blockID, 1, 2);
+                                    par3World.setBlock(var13, var14, var15, Block.tallGrass.blockID, 1, 2);
                                 }
                             }
                             else

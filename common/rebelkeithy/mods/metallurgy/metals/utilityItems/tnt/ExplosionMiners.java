@@ -144,7 +144,7 @@ public class ExplosionMiners extends Explosion {
                     var19 /= var33;
                     double var32 = (double)this.worldObj.getBlockDensity(var30, var31.boundingBox);
                     double var34 = (1.0D - var13) * var32;
-                    var31.attackEntityFrom(DamageSource.func_94539_a(this), (int)((var34 * var34 + var34) / 2.0D * 8.0D * (double)this.explosionSize + 1.0D));
+                    var31.attackEntityFrom(DamageSource.setExplosionSource(this), (int)((var34 * var34 + var34) / 2.0D * 8.0D * (double)this.explosionSize + 1.0D));
                     var31.motionX += var15 * var34;
                     var31.motionY += var17 * var34;
                     var31.motionZ += var19 * var34;
@@ -255,7 +255,7 @@ public class ExplosionMiners extends Explosion {
                 {
                     Block.blocksList[var7].dropBlockAsItemWithChance(this.worldObj, var4, var5, var6, this.worldObj.getBlockMetadata(var4, var5, var6), 0.3F, 0);
 
-                    if (this.worldObj.setBlockAndMetadataWithNotify(var4, var5, var6, 0, 0, 3))
+                    if (this.worldObj.setBlockToAir(var4, var5, var6))
                     {
                         this.worldObj.notifyBlocksOfNeighborChange(var4, var5, var6, 0);
                     }
@@ -280,7 +280,7 @@ public class ExplosionMiners extends Explosion {
 
                 if (var7 == 0 && Block.opaqueCubeLookup[var24] && this.explosionRNG.nextInt(3) == 0)
                 {
-                    this.worldObj.setBlockAndMetadataWithNotify(var4, var5, var6, Block.fire.blockID, 0, 2);
+                    this.worldObj.setBlock(var4, var5, var6, Block.fire.blockID, 0, 2);
                 }
             }
         }

@@ -128,14 +128,15 @@ public class MetaBlock extends Block {
 		return subBlocks[meta].getBlockTexture(par1IBlockAccess, x, y, z, side);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
         for (int i = 0; i < 16; ++i)
         {
             if(subBlocks[i] != null)
             {
-            	subBlocks[i].func_94332_a(par1IconRegister);
+            	subBlocks[i].registerIcons(par1IconRegister);
             }
         }
     }

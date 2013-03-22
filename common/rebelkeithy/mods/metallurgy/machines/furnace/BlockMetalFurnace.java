@@ -321,16 +321,16 @@ public class BlockMetalFurnace extends BlockContainer
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
     	iconMap = new HashMap<Integer, Icon[]>();
     	for(int i = 0; i < 4; i++)
     	{
     		Icon[] iArray = new Icon[5];
-    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Front");
-    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Side");
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Top");
-    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:machines/furnace/Furnace" + i + "Active");
+    		iArray[front] = par1IconRegister.registerIcon("Metallurgy:machines/furnace/Furnace" + i + "Front");
+    		iArray[side] = par1IconRegister.registerIcon("Metallurgy:machines/furnace/Furnace" + i + "Side");
+    		iArray[top] = par1IconRegister.registerIcon("Metallurgy:machines/furnace/Furnace" + i + "Top");
+    		iArray[active] = par1IconRegister.registerIcon("Metallurgy:machines/furnace/Furnace" + i + "Active");
     		iconMap.put(i, iArray);
     	}
     }

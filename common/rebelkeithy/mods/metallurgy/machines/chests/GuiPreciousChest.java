@@ -84,7 +84,7 @@ public class GuiPreciousChest extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.func_98187_b(image); // Calls bindTexture
+        this.mc.renderEngine.bindTexture(image); // Calls bindTexture
         int imageWidth = (11 + 18 *inventoryCols + 11);
         int imageHeight = (7 + 18 *inventoryRows + 4 + 18 * 3 + 4 + 18 + 7);
         

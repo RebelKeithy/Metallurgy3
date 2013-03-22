@@ -88,17 +88,17 @@ public class BlockColoredGlass extends Block
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
     	icons = new Icon[8];
-    	icons[0] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassRed");
-    	icons[1] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassGreen");
-    	icons[2] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassBlue");
-    	icons[3] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassOrange");
-    	icons[4] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassYellow");
-    	icons[5] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassPurple");
-    	icons[6] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassGrey");
-    	icons[7] = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassWhite");
+    	icons[0] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassRed");
+    	icons[1] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassGreen");
+    	icons[2] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassBlue");
+    	icons[3] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassOrange");
+    	icons[4] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassYellow");
+    	icons[5] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassPurple");
+    	icons[6] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassGrey");
+    	icons[7] = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassWhite");
     }
     
     @Override

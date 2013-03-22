@@ -98,9 +98,9 @@ public class SubBlock
 	}
 
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister iconRegister)
+    public void registerIcons(IconRegister iconRegister)
     {
-    	this.icon = iconRegister.func_94245_a(iconName);
+    	this.icon = iconRegister.registerIcon(iconName);
     }
 
 

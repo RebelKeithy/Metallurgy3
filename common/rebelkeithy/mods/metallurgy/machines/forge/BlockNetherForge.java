@@ -370,11 +370,12 @@ public class BlockNetherForge extends BlockContainer
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
         if(ConfigMachines.smelterDropsLava && spawnLava)	
-        	par1World.setBlockAndMetadataWithNotify(par2, par3, par4, Block.lavaMoving.blockID, 0, 2);
+        	par1World.setBlock(par2, par3, par4, Block.lavaMoving.blockID, 0, 2);
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
     	iconMap = new HashMap<Integer, Icon[]>();
     	for(int i = 0; i < 8; i++)
@@ -382,14 +383,14 @@ public class BlockNetherForge extends BlockContainer
     		Icon[] iArray = new Icon[18];
     		for(int j = 0; j < 5; j++)
     		{
-    			iArray[front + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Front" + j);
-        		iArray[side + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Side" + j);
+    			iArray[front + j] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Front" + j);
+        		iArray[side + j] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Side" + j);
         		if(j > 0)
-        			iArray[active + j] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Active" + j);
+        			iArray[active + j] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Active" + j);
     		}
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Top0");
-    		iArray[top+1] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Top1");
-    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/smelter/Smelter" + i + "Bottom");
+    		iArray[top] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Top0");
+    		iArray[top+1] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Top1");
+    		iArray[bottom] = par1IconRegister.registerIcon("Metallurgy:machines/smelter/Smelter" + i + "Bottom");
     		iconMap.put(i, iArray);
     	}
     }

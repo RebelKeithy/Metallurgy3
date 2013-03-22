@@ -173,12 +173,12 @@ public class BlockMintStorage extends BlockContainer
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
     		icons = new Icon[3];
-    		icons[side] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageSide");
-    		icons[top] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageTop");
-    		icons[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/mint/MintStorageBottom");
+    		icons[side] = par1IconRegister.registerIcon("Metallurgy:machines/mint/MintStorageSide");
+    		icons[top] = par1IconRegister.registerIcon("Metallurgy:machines/mint/MintStorageTop");
+    		icons[bottom] = par1IconRegister.registerIcon("Metallurgy:machines/mint/MintStorageBottom");
     }
 
     /**

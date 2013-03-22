@@ -68,7 +68,7 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
 		int currentID = world.getBlockId(x, y, z);
         if(replaceableBlocks.contains(currentID))
         {
-        	world.setBlockAndMetadataWithNotify(x, y, z, this.minableBlockId, this.metadata, 2);
+        	world.setBlock(x, y, z, this.minableBlockId, this.metadata, 2);
         	return true;
         }
         
@@ -126,8 +126,17 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
                                 Block block = Block.blocksList[par1World.getBlockId(k2, l2, i3)];
                                 if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D)
                                 {
-                                	if(MetallurgyCore.spawnInAir || ( block != null && (block.isGenMineableReplaceable(par1World, k2, l2, i3, 0) || block.blockID == Block.netherrack.blockID || block.blockID == Block.whiteStone.blockID)))
-                                		par1World.setBlockAndMetadataWithNotify(k2, l2, i3, this.minableBlockId, metadata, 2);
+                                	if(MetallurgyCore.spawnInAir)
+                                		par1World.setBlock(k2, l2, i3, this.minableBlockId, metadata, 2);
+                                	else if(block != null)
+                                	{
+                                		//System.out.println("Generationg in" + block.blockID);
+                                		if(block.blockID == block.stone.blockID || block.isGenMineableReplaceable(par1World, k2, l2, i3, block.stone.blockID) || block.blockID == Block.netherrack.blockID || block.blockID == Block.whiteStone.blockID)
+                                		{
+                                    		//System.out.println("not null" + this.minableBlockId);
+                                			par1World.setBlock(k2, l2, i3, this.minableBlockId, metadata, 2);
+                                		}
+                                	}
                                 }
                             }
                         }

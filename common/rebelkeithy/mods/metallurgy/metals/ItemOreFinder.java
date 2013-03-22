@@ -4,27 +4,55 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemOreFinder extends Item
 {
 
-	public ItemOreFinder(int par1) {
+	public ItemOreFinder(int par1) 
+	{
 		super(par1);
-		// TODO Auto-generated constructor stub
+        this.setMaxDamage(64);
+        this.maxStackSize = 1;
 	}
 	
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
+    	int mode = 0;
+    	if(par1ItemStack.hasTagCompound())
+    		mode = par1ItemStack.getTagCompound().getInteger("mode");
+    	else
+    	{
+    		par1ItemStack.setTagCompound(new NBTTagCompound());
+    		par1ItemStack.getTagCompound().setInteger("mode", mode);
+    	}
+    	
+    	System.out.println("Mode " + mode);
+		
+    	if(par2EntityPlayer.isSneaking())
+    	{
+    		mode++;
+    		mode = mode%3;
+    		par1ItemStack.getTagCompound().setInteger("mode", mode);
+    		par2EntityPlayer.sendChatToPlayer("Radius: " + (mode+1) + " chunk" + (mode!=0?"s":""));
+    		return false;
+    	}
+
     	if(par3World.isRemote)
     		return false;
+    	
     	Map<String, Integer> oreCount = new HashMap<String, Integer>();
     	System.out.println("Checking");
 
@@ -32,9 +60,9 @@ public class ItemOreFinder extends Item
     	
     	for(int y = 0; y < 128; y++)
     	{
-    		for(int x = par4 - par4%16; x < par4 - par4%16 + 16; x++)
+    		for(int x = par4 - par4%16 - 16*mode; x < par4 - par4%16 + 16*(mode+1); x++)
     		{
-    			for(int z = par6 - par6%16; z < par6 - par6%16 + 16; z++)
+    			for(int z = par6 - par6%16 - 16*mode; z < par6 - par6%16 + 16*(mode+1); z++)
     			{
     				int id = par3World.getBlockId(x, y, z);
     				int meta = par3World.getBlockMetadata(x, y, z);
@@ -52,15 +80,7 @@ public class ItemOreFinder extends Item
     				} else if(id == Block.oreDiamond.blockID) {
     					name = "oreDiamond";
     				}
-
-    				if(id == MetallurgyMetals.preciousSet.getOreInfo("Platinum").oreID)
-    				{
-    					//if(meta == MetallurgyMetals.preciousSet.getOreInfo("Platinum").oreMeta)
-    					{
-    						System.out.println("found platinum!! " + stack.itemID + ":" + meta);
-    						System.out.println(MetallurgyMetals.preciousSet.getOreInfo("Platinum").oreID);
-    					}
-    				}
+    				
     				if(name != null)
     				{
     					if(oreCount.containsKey(name))
@@ -79,7 +99,7 @@ public class ItemOreFinder extends Item
     	Set<String> names = oreCount.keySet();
     	String[] sort = names.toArray(new String[names.size()]);
     	Arrays.sort(sort);
-    	par2EntityPlayer.sendChatToPlayer("In Area (" + (par4 - par4%16) + ", " + (par6 - par6%16) + ") to (" + (par4 - par4%16 + 16) + ", " + (par6 - par6%16 + 16) + ")");
+    	par2EntityPlayer.sendChatToPlayer("In Area (" + (par4 - par4%16 - 16*mode) + ", " + (par6 - par6%16 - 16*mode) + ") to (" + (par4 - par4%16 + 16*(mode+1)) + ", " + (par6 - par6%16 + 16*(mode+1)) + ")");
     	for(String name : names)
     	{
     		int amount = oreCount.get(name);
@@ -89,4 +109,11 @@ public class ItemOreFinder extends Item
         return false;
     }
 
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public void updateIcons(IconRegister par1IconRegister)
+    {
+		iconIndex = par1IconRegister.registerIcon("Metallurgy:machines/OreFinder");
+    }
 }

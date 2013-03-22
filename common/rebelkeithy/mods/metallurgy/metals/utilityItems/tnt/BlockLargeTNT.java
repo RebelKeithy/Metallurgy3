@@ -28,7 +28,7 @@ public class BlockLargeTNT extends BlockTNT{
      */
     public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-        return par1 == 0 ? this.field_94392_b : (par1 == 1 ? this.field_94393_a : this.field_94336_cN);
+        return par1 == 0 ? this.field_94392_b : (par1 == 1 ? this.field_94393_a : this.blockIcon);
     }
 
     /**
@@ -39,7 +39,7 @@ public class BlockLargeTNT extends BlockTNT{
         if (par5EntityPlayer.getCurrentEquippedItem() != null && isActivator(par5EntityPlayer.getCurrentEquippedItem().itemID))
         {
             this.onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
-            par1World.setBlockAndMetadataWithNotify(par2, par3, par4, 0, 0, 3);
+            par1World.setBlockToAir(par2, par3, par4);
             return true;
         }
         else
@@ -87,12 +87,13 @@ public class BlockLargeTNT extends BlockTNT{
         }
     }
 
+	@Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-        this.field_94336_cN = par1IconRegister.func_94245_a("Metallurgy:Utility/HETNTSide");
-        this.field_94393_a = par1IconRegister.func_94245_a("Metallurgy:Utility/HETNTTop");
-        this.field_94392_b = par1IconRegister.func_94245_a("Metallurgy:Utility/HETNTBottom");
+        this.blockIcon = par1IconRegister.registerIcon("Metallurgy:Utility/HETNTSide");
+        this.field_94393_a = par1IconRegister.registerIcon("Metallurgy:Utility/HETNTTop");
+        this.field_94392_b = par1IconRegister.registerIcon("Metallurgy:Utility/HETNTBottom");
     }
 
 

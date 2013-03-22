@@ -31,12 +31,12 @@ public class ItemBlockMetalLadder extends ItemBlock {
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void func_94581_a(IconRegister par1IconRegister)
+    public void updateIcons(IconRegister par1IconRegister)
     {
 		icons = new Icon[4];
     	for(int i = 0; i < 4; i++)
     	{
-    		icons[i] = par1IconRegister.func_94245_a("Metallurgy:machines/ladder/Ladder_" + i);
+    		icons[i] = par1IconRegister.registerIcon("Metallurgy:machines/ladder/Ladder_" + i);
     	}
     }
 

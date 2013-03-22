@@ -26,10 +26,10 @@ public class LadderRenderer implements ISimpleBlockRenderingHandler {
 		tessellator.setBrightness(par1Block.getMixedBrightnessForBlock(world, par2, par3, par4));
 		float var7 = 1.0F;
 		tessellator.setColorOpaque_F(var7, var7, var7);
-		double d0 = icon.func_94209_e();
-		double d1 = icon.func_94206_g();
-		double d2 = icon.func_94212_f();
-		double d3 = icon.func_94210_h();
+        double d0 = (double)icon.getMinU();
+        double d1 = (double)icon.getMinV();
+        double d2 = (double)icon.getMaxU();
+        double d3 = (double)icon.getMaxV();
 		double d4 = 0.0D;
 		double d5 = 0.05D;
 

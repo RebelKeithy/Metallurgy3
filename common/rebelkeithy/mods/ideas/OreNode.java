@@ -29,7 +29,7 @@ public class OreNode extends Block
 			dropBlockAsItem_do(par1World, par2, par3, par4, new ItemStack(Item.ingotIron));
 		}
 		if(Math.random() > 0.1)
-			par1World.setBlockAndMetadataWithNotify(par2, par3, par4, blockID, 0, 2);
+			par1World.setBlockToAir(par2, par3, par4);
     }
 
 }

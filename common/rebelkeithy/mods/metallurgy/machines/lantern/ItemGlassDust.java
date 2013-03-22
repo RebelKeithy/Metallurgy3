@@ -49,13 +49,13 @@ public class ItemGlassDust extends Item
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void func_94581_a(IconRegister par1IconRegister)
+    public void updateIcons(IconRegister par1IconRegister)
     {
 		iconMap = new HashMap<Integer, Icon>();
-		iconMap.put(0, par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassDust"));
+		iconMap.put(0, par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust"));
     	for(int i = 1; i < 9; i++)
     	{
-    		Icon icon = par1IconRegister.func_94245_a("Metallurgy:machines/lantern/GlassDust" + names[i]);
+    		Icon icon = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust" + names[i]);
     		iconMap.put(i, icon);
     	}
     }

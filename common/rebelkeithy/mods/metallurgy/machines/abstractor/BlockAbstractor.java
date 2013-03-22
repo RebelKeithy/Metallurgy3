@@ -279,17 +279,18 @@ public class BlockAbstractor extends BlockContainer
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
     	for(int i = 0; i < 10; i++)
     	{
     		Icon[] iArray = new Icon[5];
-    		iArray[front] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Front");
-    		iArray[side] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Side");
-    		iArray[top] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Top");
-    		iArray[bottom] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Bottom");
-    		iArray[active] = par1IconRegister.func_94245_a("Metallurgy:machines/abstractor/Abstractor" + i + "Active");
+    		iArray[front] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Front");
+    		iArray[side] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Side");
+    		iArray[top] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Top");
+    		iArray[bottom] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Bottom");
+    		iArray[active] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Active");
     		iconMap.put(i, iArray);
     	}
     }

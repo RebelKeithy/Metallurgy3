@@ -25,6 +25,7 @@ public class BlockMetallurgyEnchantmentTable extends BlockContainer
     private Icon field_94461_a;
     @SideOnly(Side.CLIENT)
     private Icon field_94460_b;
+	private Icon field_94336_cN;
 
     public BlockMetallurgyEnchantmentTable(int par1)
     {
@@ -143,11 +144,12 @@ public class BlockMetallurgyEnchantmentTable extends BlockContainer
         }
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-        this.field_94336_cN = par1IconRegister.func_94245_a("Metallurgy:machines/enchanter/enchantment_side");
-        this.field_94461_a = par1IconRegister.func_94245_a("Metallurgy:machines/enchanter/enchantment_top");
-        this.field_94460_b = par1IconRegister.func_94245_a("Metallurgy:machines/enchanter/enchantment_bottom");
+        this.field_94336_cN = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_side");
+        this.field_94461_a = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_top");
+        this.field_94460_b = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_bottom");
     }
 }

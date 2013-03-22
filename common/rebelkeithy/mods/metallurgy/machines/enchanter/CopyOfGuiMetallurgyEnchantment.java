@@ -100,7 +100,7 @@ public class CopyOfGuiMetallurgyEnchantment extends GuiContainer
     {
     	System.out.println("Drawing background GUI");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.func_98187_b("/gui/enchant.png");
+        this.mc.renderEngine.bindTexture("/gui/enchant.png");
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -121,7 +121,7 @@ public class CopyOfGuiMetallurgyEnchantment extends GuiContainer
         float f2 = 5.0F;
         GL11.glScalef(f2, f2, f2);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-        this.mc.renderEngine.func_98187_b("/item/book.png");
+        this.mc.renderEngine.bindTexture("/item/book.png");
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
         float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
         GL11.glTranslatef((1.0F - f3) * 0.2F, (1.0F - f3) * 0.1F, (1.0F - f3) * 0.25F);
@@ -163,14 +163,14 @@ public class CopyOfGuiMetallurgyEnchantment extends GuiContainer
         GL11.glPopMatrix();
         RenderHelper.disableStandardItemLighting();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.func_98187_b("/gui/enchant.png");
+        this.mc.renderEngine.bindTexture("/gui/enchant.png");
         //TODO EnchantmentNameParts.instance.setRandSeed(this.containerEnchantment.nameSeed);
 
         for (int i1 = 0; i1 < 3; ++i1)
         {
             String s = EnchantmentNameParts.instance.generateRandomEnchantName();
             this.zLevel = 0.0F;
-            this.mc.renderEngine.func_98187_b("/gui/enchant.png");
+            this.mc.renderEngine.bindTexture("/gui/enchant.png");
             int j1 = 0;//TODO this.containerEnchantment.enchantLevels[i1];
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 

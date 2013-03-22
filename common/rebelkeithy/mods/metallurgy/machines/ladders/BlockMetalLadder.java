@@ -206,7 +206,7 @@ public class BlockMetalLadder extends Block
         if (!canStay)
         {
             this.dropBlockAsItem(par1World, par2, par3, par4, type*4 + var6, 0);
-            par1World.func_94571_i(par2, par3, par4); // Remove Block
+            par1World.setBlockToAir(par2, par3, par4); // Remove Block
         }
 
         super.onNeighborBlockChange(par1World, par2, par3, par4, par5);
@@ -253,13 +253,14 @@ public class BlockMetalLadder extends Block
     	//par5Entity.moveEntity(0, 0.1, 0);
     }
     
+    @Override
     @SideOnly(Side.CLIENT)
-    public void func_94332_a(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
 		icons = new Icon[4];
     	for(int i = 0; i < 4; i++)
     	{
-    		icons[i] = par1IconRegister.func_94245_a("Metallurgy:machines/ladder/Ladder_" + i);
+    		icons[i] = par1IconRegister.registerIcon("Metallurgy:machines/ladder/Ladder_" + i);
     	}
     }
 

@@ -543,15 +543,16 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 		return null;
 	}
 
+
 	@Override
-	public boolean func_94042_c() 
-	{
+	public boolean isInvNameLocalized() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean func_94041_b(int i, ItemStack itemstack) {
-		// TODO fix this
+	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
+		// TODO Auto-generated method stub
 		return true;
 	}
 }

@@ -496,7 +496,7 @@ public class OreInfo implements IWorldGenerator
 			int randPosZ = chunkZ*16 + random.nextInt(16);
 			
 			//new WorldGenMinable(oreID, oreMeta, oreCount).generate(world, random, randPosX, randPosY, randPosZ);
-			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate2(world, random, randPosX, randPosY, randPosZ);
+			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
 			//new WorldGenMinable(oreID, oreMeta, 40).generate(world, random, randPosX, randPosY, randPosZ);
 		}
 	}

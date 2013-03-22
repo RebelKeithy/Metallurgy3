@@ -31,7 +31,7 @@ public class ItemBlockLantern extends ItemBlock
 	@Override
     public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int metadata)
     {
-       if (!world.setBlockAndMetadataWithNotify(x, y, z, MetallurgyMachines.lantern.blockID, this.getMetadata(stack.getItemDamage()), 2 ))
+       if (!world.setBlock(x, y, z, MetallurgyMachines.lantern.blockID, this.getMetadata(stack.getItemDamage()), 2 ))
        {
                return false;
        }

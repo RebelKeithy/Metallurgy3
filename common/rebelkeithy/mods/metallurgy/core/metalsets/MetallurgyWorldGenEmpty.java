@@ -14,7 +14,7 @@ public class MetallurgyWorldGenEmpty
 			for(int j = 0; j < world.getActualHeight(); j++)
 				for(int k = 0; k < 16; k++)
 					if(world.getBlockId(x+i, j, z+k) == id)
-						world.setBlockAndMetadataWithNotify(x+i, j, z+k, 0, 0, 2);
+						world.setBlockToAir(x+i, j, z+k);
 		return true;
 	}
 }

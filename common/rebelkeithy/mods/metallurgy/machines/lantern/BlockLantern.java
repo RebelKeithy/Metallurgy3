@@ -137,7 +137,7 @@ public class BlockLantern extends BlockContainer
 		if(dropBlock)
 		{
 			//this.dropBlockAsItem(par1World, x, y, z, this.blockID, meta);
-			par1World.func_94571_i(x, y, z);  // remove block
+			par1World.setBlockToAir(x, y, z);  // remove block
 		}
 	}
 	
@@ -160,7 +160,7 @@ public class BlockLantern extends BlockContainer
         else if(par1World.isBlockNormalCube(x, y, z-1))
         	var6 = 4;
         
-        par1World.setBlockAndMetadataWithNotify(x, y, z, this.blockID, var6, 2);
+        par1World.setBlock(x, y, z, this.blockID, var6, 2);
         
     }
 
