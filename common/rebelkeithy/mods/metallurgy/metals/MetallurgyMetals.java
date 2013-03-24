@@ -275,7 +275,7 @@ public class MetallurgyMetals {
 		netherSet.getOreInfo("Ceruclase").sword.addHitListener(swordEffects);
 		netherSet.getOreInfo("Ceruclase").sword.setSubText("cSlowness");
 		netherSet.getOreInfo("Inolashite").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Inolashite").sword.setSubText("7Poison, Sloness");
+		netherSet.getOreInfo("Inolashite").sword.setSubText("7Poison, Slowness");
 		netherSet.getOreInfo("Kalendrite").sword.addHitListener(swordEffects);
 		netherSet.getOreInfo("Kalendrite").sword.setSubText("7Regen");
 		netherSet.getOreInfo("Amordrine").sword.addHitListener(swordEffects);
