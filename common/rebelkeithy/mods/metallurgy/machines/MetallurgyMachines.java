@@ -296,6 +296,11 @@ public class MetallurgyMachines
 	{
 		//CrusherUpgradeRecipes.addRecipes();
 		createMachineRecipes();
+		
+		CrusherRecipes.addCrushing(Block.oreIron.blockID, 0, new ItemStack(MetallurgyMetals.dustIron, 2));
+		CrusherRecipes.addCrushing(Block.oreGold.blockID, 0, new ItemStack(MetallurgyMetals.dustGold, 2));
+		CrusherRecipes.addCrushing(Item.ingotIron.itemID, 0, new ItemStack(MetallurgyMetals.dustIron));
+		CrusherRecipes.addCrushing(Item.ingotGold.itemID, 0, new ItemStack(MetallurgyMetals.dustGold));
 	}
 	
 	public void initFurnace()
