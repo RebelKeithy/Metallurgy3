@@ -51,7 +51,7 @@ public class EntityNetherOreFX extends EntityFX
 	    float var8 = ((float)this.particleAge + f) / (float)this.particleMaxAge;
 	    this.particleScale = this.flameScale * (1.0F - var8 * var8 * 0.5F);
 
-	    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/shadow/NetherMetalsParticle.png"));
+	    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/mods/Metallurgy/textures/particles/NetherMetalsParticle.png"));
 	    float f0 = 0;//(float)(getParticleTextureIndex() % 16) / 16F;
 	    float f7 = f0 + 1/16F;
 	    float f8 = 1;//(float)(getParticleTextureIndex() / 16) / 16F;
