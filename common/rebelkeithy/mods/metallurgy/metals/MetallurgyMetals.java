@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
@@ -139,6 +140,9 @@ public class MetallurgyMetals {
 		//TODO add config for vanilla dusts
 		dustIron = new Item(5100).setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
 		dustGold = new Item(5101).setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
+		FurnaceRecipes.smelting().addSmelting(dustIron.itemID, 0, new ItemStack(Item.ingotIron), 0.7F);
+		FurnaceRecipes.smelting().addSmelting(dustGold.itemID, 0, new ItemStack(Item.ingotGold), 0.7F);
+		
 		LanguageRegistry.addName(dustIron, "Iron Dust");
 		LanguageRegistry.addName(dustGold, "Gold Dust");
 		OreDictionary.registerOre("dustIron", dustIron);
