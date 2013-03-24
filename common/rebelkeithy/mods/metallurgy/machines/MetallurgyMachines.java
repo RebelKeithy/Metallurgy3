@@ -398,9 +398,9 @@ public class MetallurgyMachines
 		if(ConfigMachines.furnaceEnabled)
 		{
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 0), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(Block.furnaceIdle)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(crusher, 1, 0)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(crusher, 1, 1)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(crusher, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(furnace, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(furnace, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(furnace, 1, 1)));
 		}
 		
 		//Nether Forge Recipes

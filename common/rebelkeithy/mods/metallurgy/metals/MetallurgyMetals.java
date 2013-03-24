@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.src.ModLoader;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -83,6 +84,8 @@ public class MetallurgyMetals {
 	public static MetallurgyMetals instance;
 
 
+	public static Potion potion;
+
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
@@ -94,6 +97,8 @@ public class MetallurgyMetals {
         utilityConfig.load();
         
         fantasyConfig = initConfig("Fantasy");
+        
+        potion = new MetallurgyPotion(21, false, 8356754).setPotionName("Low Gravity");
         
 		baseTab = new MetallurgyTabs("Metallurgy: Base");
 		preciousTab = new MetallurgyTabs("Metallurgy: Precious");
