@@ -46,6 +46,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
+	public boolean isRelease = false;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;
@@ -117,9 +118,10 @@ public class MetallurgyMetals {
         
         //TODO
         String filepath = event.getSourceFile().getAbsolutePath();
-        if(filepath.equals("C:\\Users\\Keithy\\Documents\\Metallurgy 3 1.5\\eclipse\\Metallurgy 3\\bin"))
+        if(!isRelease)
         {
-        	filepath = MetallurgyCore.proxy.getMinecraftDir() + "/mods/Metallurgy.jar";
+        	//filepath = MetallurgyCore.proxy.getMinecraftDir() + "/mods/Metallurgy.jar";
+        	filepath = "mods/Metallurgy.jar";
         }
         
 		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
