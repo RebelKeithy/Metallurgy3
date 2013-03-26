@@ -33,6 +33,7 @@ import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
@@ -121,7 +122,8 @@ public class OreInfo implements IWorldGenerator
 		else if(info.get("Type").equals("Drop"))
 			type = DROP;
 		
-		alloyRecipe = info.get("Alloy Recipe").split(" ");
+		alloyRecipe = info.get("Alloy Recipe").split("\" \"");
+		System.out.println("alloy recipe: " + Arrays.toString(alloyRecipe));
 		for(int n = 0; n < alloyRecipe.length; n++)
 			alloyRecipe[n] = "dust" + alloyRecipe[n].replace("\"", "");
 		
