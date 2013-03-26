@@ -3,20 +3,35 @@ package rebelkeithy.mods.metallurgy.machines;
 import java.io.File;
 
 import net.minecraft.client.Minecraft;
+import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.machines.abstractor.ContainerAbstractor;
+import rebelkeithy.mods.metallurgy.machines.abstractor.GuiAbstractor;
+import rebelkeithy.mods.metallurgy.machines.chests.ContainerPreciousChest;
+import rebelkeithy.mods.metallurgy.machines.chests.GuiPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.chests.RenderHelperPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.chests.TileEntityPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.chests.TileEntityPreciousChestRenderer;
+import rebelkeithy.mods.metallurgy.machines.crusher.ContainerCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.CrusherRenderHelper;
+import rebelkeithy.mods.metallurgy.machines.crusher.GuiCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusherRenderer;
+import rebelkeithy.mods.metallurgy.machines.enchanter.ContainerMetallurgyEnchantment;
+import rebelkeithy.mods.metallurgy.machines.enchanter.GuiMetallurgyEnchantment;
 import rebelkeithy.mods.metallurgy.machines.enchanter.MetallurgyEnchantmentTableRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.enchanter.RenderMetallurgyEnchantmentTable;
 import rebelkeithy.mods.metallurgy.machines.enchanter.TileEntityMetallurgyEnchantmentTable;
+import rebelkeithy.mods.metallurgy.machines.forge.ContainerNetherForge;
+import rebelkeithy.mods.metallurgy.machines.forge.GuiNetherForge;
+import rebelkeithy.mods.metallurgy.machines.furnace.ContainerMetalFurnace;
+import rebelkeithy.mods.metallurgy.machines.furnace.GuiMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.ladders.BlockMetalLadder;
 import rebelkeithy.mods.metallurgy.machines.ladders.LadderRenderer;
 import rebelkeithy.mods.metallurgy.machines.lantern.LanternRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLantern;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLanternRenderer;
+import rebelkeithy.mods.metallurgy.machines.mint.ContainerMintStorage;
+import rebelkeithy.mods.metallurgy.machines.mint.GuiMintStorage;
 import rebelkeithy.mods.metallurgy.machines.mint.MintRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMint;
 import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMintRenderer;
@@ -43,6 +58,18 @@ public class ClientProxy extends CommonProxy
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
 		RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
+	}
+	
+	public void registerGUIs()
+	{
+		GuiRegistry.registerGui(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, this, "Enchanter");
+		GuiRegistry.registerGui(GuiMintStorage.class, ContainerMintStorage.class, this, "MintStorage");
+		GuiRegistry.registerGui(GuiPreciousChest.class, ContainerPreciousChest.class, this, "PreciousChest");
+		GuiRegistry.registerGui(GuiCrusher.class, ContainerCrusher.class, this, "Crusher");
+		GuiRegistry.registerGui(GuiMetalFurnace.class, ContainerMetalFurnace.class, this, "MetalFurnace");
+		GuiRegistry.registerGui(GuiNetherForge.class, ContainerNetherForge.class, this, "NetherForge");
+		GuiRegistry.registerGui(GuiAbstractor.class, ContainerAbstractor.class, this, "Abstractor");
+		
 	}
 	
 	public File getMinecraftDir() 

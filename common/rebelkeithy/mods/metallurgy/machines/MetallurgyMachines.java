@@ -145,8 +145,6 @@ public class MetallurgyMachines
 		enchanter = new BlockMetallurgyEnchantmentTable(930).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setCreativeTab(machineTab);
 		GameRegistry.registerBlock(enchanter, "M3Enchanter");
 		GameRegistry.registerTileEntity(TileEntityMetallurgyEnchantmentTable.class, "TileEntityM3Enchanter");
-		
-		GuiRegistry.registerGui(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, this, "Enchanter");
 	}
 	
 	public void initStorage()
@@ -173,8 +171,6 @@ public class MetallurgyMachines
 		
 		LanguageRegistry.addName(mint, "Mint");
 		LanguageRegistry.addName(mintStorage, "Mint Storage");
-		
-		GuiRegistry.registerGui(GuiMintStorage.class, ContainerMintStorage.class, this, "MintStorage");
 		
 		coin = new Item(ConfigMachines.coinID).setUnlocalizedName("Metallurgy:Precious/coin").setCreativeTab(machineTab);
 		stack = new Item(ConfigMachines.stackID).setUnlocalizedName("Metallurgy:Precious/ctack").setCreativeTab(machineTab);
@@ -274,8 +270,6 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(chest, 1, 2), "Gold Chest");
 		LanguageRegistry.addName(new ItemStack(chest, 1, 3), "Electrum Chest");
 		LanguageRegistry.addName(new ItemStack(chest, 1, 4), "Platinum Chest");
-		
-		GuiRegistry.registerGui(GuiPreciousChest.class, ContainerPreciousChest.class, this, "PreciousChest");
 	}
 	
 	public void initCrusher()
@@ -289,7 +283,6 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(crusher, 1, 3), "Iron Crusher");
 		LanguageRegistry.addName(new ItemStack(crusher, 1, 4), "Steel Crusher");
 		
-		GuiRegistry.registerGui(GuiCrusher.class, ContainerCrusher.class, this, "Crusher");
 	}
 	
 	public void loadCrusher()
@@ -313,7 +306,6 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(furnace, 1, 2), "Iron Furnace");
 		LanguageRegistry.addName(new ItemStack(furnace, 1, 3), "Steel Furnace");
 		
-		GuiRegistry.registerGui(GuiMetalFurnace.class, ContainerMetalFurnace.class, this, "MetalFurnace");
 	}
 	
 	public void initForge()
@@ -331,7 +323,6 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(forge, 1, 6), "Vulcanite Smelter");
 		LanguageRegistry.addName(new ItemStack(forge, 1, 7), "Sanguinite Smelter");
 		
-		GuiRegistry.registerGui(GuiNetherForge.class, ContainerNetherForge.class, this, "NetherForge");
 	}
 	
 	public void initAbstractor()
@@ -379,7 +370,6 @@ public class MetallurgyMachines
 		
 		MetallurgyMetals.fantasyConfig.save();
 		
-		GuiRegistry.registerGui(GuiAbstractor.class, ContainerAbstractor.class, this, "Abstractor");
 	}
 	
 	public void createMachineRecipes()
