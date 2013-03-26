@@ -304,10 +304,12 @@ public class OreInfo implements IWorldGenerator
 				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(tab);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
-				helmet = new ItemMetallurgyArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile(name + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
-				chest = new ItemMetallurgyArmor(itemIDs + 8, armorEnum, 1, 1).setTextureFile(name + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(tab);
-				legs = new ItemMetallurgyArmor(itemIDs + 9, armorEnum, 2, 2).setTextureFile(name + "_2").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(tab);
-				boots = new ItemMetallurgyArmor(itemIDs + 10, armorEnum, 3, 3).setTextureFile(name + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(tab);
+				String armorTexture = name;
+				armorTexture = armorTexture.replaceAll("\\s","").toLowerCase();
+				helmet = new ItemMetallurgyArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
+				chest = new ItemMetallurgyArmor(itemIDs + 8, armorEnum, 1, 1).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(tab);
+				legs = new ItemMetallurgyArmor(itemIDs + 9, armorEnum, 2, 2).setTextureFile(armorTexture + "_2").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(tab);
+				boots = new ItemMetallurgyArmor(itemIDs + 10, armorEnum, 3, 3).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(tab);
 			}
 		}
 		
