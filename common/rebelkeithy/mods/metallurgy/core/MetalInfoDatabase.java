@@ -80,7 +80,8 @@ public class MetalInfoDatabase
 				
 				int id = Integer.parseInt(itemMap.get("Item ID"));
 				
-				id = config.get("Items", itemMap.get("Item Name"), id).getInt();
+				System.out.println("config for item " + itemMap.get("Item Name") + " = " + id);
+				id = config.get("Item IDs", itemMap.get("Item Name"), id).getInt();
 				
 				Item item = new Item(id).setUnlocalizedName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setCreativeTab(tab);
 				LanguageRegistry.addName(item, itemMap.get("Item Name"));

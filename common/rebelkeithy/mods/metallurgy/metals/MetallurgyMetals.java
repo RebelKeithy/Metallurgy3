@@ -125,7 +125,7 @@ public class MetallurgyMetals {
         }
         
 		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
-		MetalInfoDatabase.readItemDataFromJar(baseConfig, "Items.csv", filepath, utilityTab);
+		MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
 		
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
