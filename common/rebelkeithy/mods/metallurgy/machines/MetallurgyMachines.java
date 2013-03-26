@@ -126,6 +126,7 @@ public class MetallurgyMachines
 		
 		initEnchanter();
 		
+		proxy.registerGUIs();
 		proxy.registerTileEntitySpecialRenderer();
 		NetworkRegistry.instance().registerGuiHandler(this, new StorageGuiHandler());
 		NetworkRegistry.instance().registerGuiHandler(this, GuiRegistry.instance());

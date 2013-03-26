@@ -62,13 +62,13 @@ public class ClientProxy extends CommonProxy
 	
 	public void registerGUIs()
 	{
-		GuiRegistry.registerGui(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, this, "Enchanter");
-		GuiRegistry.registerGui(GuiMintStorage.class, ContainerMintStorage.class, this, "MintStorage");
-		GuiRegistry.registerGui(GuiPreciousChest.class, ContainerPreciousChest.class, this, "PreciousChest");
-		GuiRegistry.registerGui(GuiCrusher.class, ContainerCrusher.class, this, "Crusher");
-		GuiRegistry.registerGui(GuiMetalFurnace.class, ContainerMetalFurnace.class, this, "MetalFurnace");
-		GuiRegistry.registerGui(GuiNetherForge.class, ContainerNetherForge.class, this, "NetherForge");
-		GuiRegistry.registerGui(GuiAbstractor.class, ContainerAbstractor.class, this, "Abstractor");
+		GuiRegistry.registerGui(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, MetallurgyMachines.instance, "Enchanter");
+		GuiRegistry.registerGui(GuiMintStorage.class, ContainerMintStorage.class, MetallurgyMachines.instance, "MintStorage");
+		GuiRegistry.registerGui(GuiPreciousChest.class, ContainerPreciousChest.class, MetallurgyMachines.instance, "PreciousChest");
+		GuiRegistry.registerGui(GuiCrusher.class, ContainerCrusher.class, MetallurgyMachines.instance, "Crusher");
+		GuiRegistry.registerGui(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
+		GuiRegistry.registerGui(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
+		GuiRegistry.registerGui(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
 		
 	}
 	
