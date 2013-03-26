@@ -19,13 +19,34 @@ public class MetallurgyPotion extends Potion
 		double vy = par1EntityLiving.motionY;
 		double vz = par1EntityLiving.motionZ;
 		double gravity = 0.7;
-		if(vy < 0)
-			vy += 0.02/gravity;
-		if(vy > 0)
+		//if(vy < 0)
+			//vy += 0.02/gravity;
+		//if(vy > 0)
+		if(par1EntityLiving.isJumping || vy < 0)
 		{
-			//vy += 0.05;
-			vy *= 1.260504;
+			//vy += 0.0734000015258789;
+			vy += 0.0734000015258789;
+			//vy *= 1.260504;
+			System.out.println(vy);
+		} else {
+			vy += 0.0734000015258789/1.5;
 		}
+		
+		
+		if(par1EntityLiving.isSprinting() && par1EntityLiving.onGround)
+		{
+			System.out.println("leaping");
+			vy += 0.3;
+			//par1EntityLiving;
+		}
+		else if((Math.abs(par1EntityLiving.motionX) > 0.1 || Math.abs(par1EntityLiving.motionZ) > 0.1) && par1EntityLiving.onGround)
+		{
+			double distance = Math.sqrt(Math.pow(par1EntityLiving.motionX, 2) + Math.pow(par1EntityLiving.motionZ, 2));
+			
+			System.out.println(par1EntityLiving.motionX);
+			vy += 0.15 * (distance - 0.05) * 10;
+		}
+		
     	par1EntityLiving.setVelocity(vx, vy, vz);
     }
     
@@ -37,7 +58,7 @@ public class MetallurgyPotion extends Potion
     
     public boolean isReady(int par1, int par2)
     {
-    	System.out.println("is ready?");
+    	//System.out.println("is ready?");
     	return true;
         /*
         if (this.id != regeneration.id && this.id != poison.id)
