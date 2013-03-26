@@ -160,6 +160,8 @@ public class OreInfo implements IWorldGenerator
 		
 		abstractorXP = Integer.parseInt(info.get("Abstractor XP"));
 		blockLvl = Integer.parseInt(info.get("Block lvl"));
+		System.out.println("Block level default: " + info.get("Block lvl"));
+		System.out.println("Block level set to : " + blockLvl);
 		
 		if(type != CATALYST && type != DROP)
 		{

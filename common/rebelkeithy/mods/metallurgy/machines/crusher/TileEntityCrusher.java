@@ -595,7 +595,6 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
      */
     public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
     {
-    	System.out.println("test");
         return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
     }
 
@@ -605,22 +604,19 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     @Override
     public int[] getSizeInventorySide(int par1)
     {
-    	System.out.println("test");
-        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0} : new int[] {1});
+        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0, 1} : new int[] {1});
     }
 
 
     @Override
     public boolean func_102007_a(int par1, ItemStack par2ItemStack, int par3)
     {
-    	System.out.println("test");
         return this.isStackValidForSlot(par1, par2ItemStack);
     }
 
     @Override
     public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3)
     {
-    	System.out.println("test");
         return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
 
