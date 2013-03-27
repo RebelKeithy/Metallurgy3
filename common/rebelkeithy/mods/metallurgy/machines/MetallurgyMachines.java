@@ -224,7 +224,7 @@ public class MetallurgyMachines
 	
 	public void initLantern()
 	{
-		lantern = new BlockLantern(ConfigMachines.lanternID).setUnlocalizedName("M3Lantern").setCreativeTab(machineTab);
+		lantern = new BlockLantern(ConfigMachines.lanternID).setUnlocalizedName("M3Lantern").setLightValue(1.0F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(lantern, ItemBlockLantern.class, "M3Lantern");
 		GameRegistry.registerTileEntity(TileEntityLantern.class, "TileEntityLantern");
 		LanguageRegistry.addName(new ItemStack(lantern, 1, 0), "Red Lantern");
