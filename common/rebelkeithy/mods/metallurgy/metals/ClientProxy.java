@@ -14,4 +14,10 @@ public class ClientProxy extends CommonProxy
 	{
 		return Minecraft.getMinecraftDir();
 	}
+	
+	public void registerParticles()
+	{
+		ParticleRegistry.registerParticle("NetherOre", EntityNetherOreFX.class);
+		ParticleRegistry.registerParticle("FantasyOre", EntityFantasyOreFX.class);
+	}
 }

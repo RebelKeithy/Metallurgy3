@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
+import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -147,6 +148,15 @@ public class BlockMetalFurnace extends BlockContainer
                 par1World.spawnParticle("flame", (double)(var7 + var11), (double)var8, (double)(var9 + var10), 0.0D, 0.0D, 0.0D);
             }
         }
+    }
+    
+    public int getLightValue(IBlockAccess world, int x, int y, int z) 
+    {
+    	TileEntityMetalFurnace var6 = ((TileEntityMetalFurnace)(world.getBlockTileEntity(x, y, z)));
+        if(var6 != null && var6.isBurning())
+        	return 12;
+        else
+        	return 0;
     }
 
     /**

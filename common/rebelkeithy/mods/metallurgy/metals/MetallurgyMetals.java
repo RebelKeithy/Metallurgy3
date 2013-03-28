@@ -154,8 +154,6 @@ public class MetallurgyMetals {
 		
 		createUtilityItems();
 		utilityConfig.save();
-		
-		ParticleRegistry.registerParticle("FantasyOre", EntityFantasyOreFX.class);
 
 		fantasySet.getOreInfo("Astral Silver").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.8, 0.95));
 		fantasySet.getOreInfo("Carmot").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.4));
@@ -163,8 +161,6 @@ public class MetallurgyMetals {
 		fantasySet.getOreInfo("Orichalcum").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.3, 0.5, 0.15));
 		fantasySet.getOreInfo("Adamantine").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.5, 0.2, 0.2));
 		fantasySet.getOreInfo("Atlarus").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.2));
-		
-		ParticleRegistry.registerParticle("NetherOre", EntityNetherOreFX.class);
 		
 		netherSet.getOreInfo("Midasium").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 1.0, 0.8, 0.25));
 		netherSet.getOreInfo("Vyroxeres").ore.addDisplayListener(new DisplayListenerVyroxeresOreParticles());
@@ -176,6 +172,8 @@ public class MetallurgyMetals {
 		netherSet.getOreInfo("Vyroxeres").ore.addCollisionListener(new VyroxeresCollisionListener());
 		
 		addSwordEffects();
+		
+		proxy.registerParticles();
 	}
 	
 	@PostInit

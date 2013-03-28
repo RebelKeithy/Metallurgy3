@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import net.minecraftforge.common.Configuration;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
 public class ConfigMachines 
 {
@@ -57,6 +58,8 @@ public class ConfigMachines
 	
 	private static int ironDustID = 29000;
 	private static int goldDustID = 29001;
+	public static int[] extractorSpeeds;
+	public static double[] xpBonus;
 	
 	public static void initConfig()
 	{
@@ -102,6 +105,32 @@ public class ConfigMachines
 		bronzeFurnaceSpeed = config.get("Furnace Speeds", "Bronze", bronzeFurnaceSpeed*1000).getInt()/1000F;
 		ironFurnaceSpeed = config.get("Furnace Speeds", "Iron", ironFurnaceSpeed*1000).getInt()/1000F;
 		steelFurnaceSpeed = config.get("Furnace Speeds", "Steel", steelFurnaceSpeed*1000).getInt()/1000F;
+
+		extractorSpeeds = new int[11];
+		extractorSpeeds[0] = config.get("Abstractor", "Speed Prometheum", 22).getInt();
+		extractorSpeeds[1] = config.get("Abstractor", "Speed Deep Iron", 20).getInt();
+		extractorSpeeds[2] = config.get("Abstractor", "Speed Block Steel", 18).getInt();
+		extractorSpeeds[3] = config.get("Abstractor", "Speed Oureclase", 16).getInt();
+		extractorSpeeds[4] = config.get("Abstractor", "Speed Aredrite", 14).getInt();
+		extractorSpeeds[5] = config.get("Abstractor", "Speed Mithril", 12).getInt();
+		extractorSpeeds[6] = config.get("Abstractor", "Speed Haderoth", 10).getInt();
+		extractorSpeeds[7] = config.get("Abstractor", "Speed Orichalcum", 8).getInt();
+		extractorSpeeds[8] = config.get("Abstractor", "Speed Adamantine", 6).getInt();
+		extractorSpeeds[9] = config.get("Abstractor", "Speed Atlarus", 4).getInt();
+		extractorSpeeds[10] = config.get("Abstractor", "Speed Tartarite", 2).getInt();
+		
+		xpBonus = new double[11];
+		xpBonus[0] = config.get("Abstractor", "Bonus Prometheum", 1.0).getDouble(1.0);
+		xpBonus[1] = config.get("Abstractor", "Bonus Deep Iron", 1.2).getDouble(1.2);
+		xpBonus[2] = config.get("Abstractor", "Bonus Black Steel", 1.4).getDouble(1.4);
+		xpBonus[3] = config.get("Abstractor", "Bonus Oureclase", 1.6).getDouble(1.6);
+		xpBonus[4] = config.get("Abstractor", "Bonus Aredrite", 1.8).getDouble(1.8);
+		xpBonus[5] = config.get("Abstractor", "Bonus Mithril", 2.0).getDouble(2.0);
+		xpBonus[6] = config.get("Abstractor", "Bonus Haderoth", 2.4).getDouble(2.4);
+		xpBonus[7] = config.get("Abstractor", "Bonus Oreichalcum", 2.8).getDouble(2.8);
+		xpBonus[8] = config.get("Abstractor", "Bonus Admantine", 3.2).getDouble(3.2);
+		xpBonus[9] = config.get("Abstractor", "Bonus Atlarus", 3.6).getDouble(3.6);
+		xpBonus[10] = config.get("Abstractor", "Bonus Tartarite", 4.0).getDouble(4.0);
 		
 		String[] forgeNames = {"Ignatius", "Shadow Iron", "Shadow Steel", "Vyroxeres", "Inolashite", "Kalendrite", "Vulcanite", "Sanguinite"};
 		for(int i = 0; i < 8; i++)

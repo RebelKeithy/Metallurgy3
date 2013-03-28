@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
+import rebelkeithy.mods.metallurgy.machines.furnace.TileEntityMetalFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -71,6 +72,15 @@ public class BlockNetherForge extends BlockContainer
 	public int damageDropped(int metadata)
     {
     	return (metadata < 8) ? metadata : metadata - 8;
+    }
+    
+    public int getLightValue(IBlockAccess world, int x, int y, int z) 
+    {
+    	TileEntityNetherForge var6 = ((TileEntityNetherForge)(world.getBlockTileEntity(x, y, z)));
+        if(var6 != null && var6.isBurning())
+        	return 12;
+        else
+        	return 0;
     }
     
     public Icon getNetherForgeTexture(int side, int meta, int facing, int fuel, boolean isActive)

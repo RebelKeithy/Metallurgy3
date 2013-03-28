@@ -320,6 +320,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 
         if (var2)
         {
+        	worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             this.onInventoryChanged();
             sendPacket();
         }

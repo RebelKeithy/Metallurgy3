@@ -17,4 +17,9 @@ public class CommonProxy
 	{
 		return new File(".");
 	}
+	
+	public void registerParticles()
+	{
+		
+	}
 }

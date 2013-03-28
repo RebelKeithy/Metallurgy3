@@ -16,6 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.ISidedInventory;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import buildcraft.api.inventory.ISpecialInventory;
@@ -318,6 +319,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 
         if (var2)
         {
+        	worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             this.onInventoryChanged();
             sendPacket();
             /*
@@ -358,7 +360,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 
             int type = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
             
-            int totalXP = (int) (var1 * MetallurgyMachines.xpBonus[type]);
+            int totalXP = (int) (var1 * ConfigMachines.xpBonus[type]);
             
             --this.furnaceItemStacks[0].stackSize;
 

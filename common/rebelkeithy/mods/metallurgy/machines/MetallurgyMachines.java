@@ -105,9 +105,6 @@ public class MetallurgyMachines
 	public static Block ladder;
 	public static Block enchanter;
 
-	public static int[] extractorSpeeds;
-	public static double[] xpBonus;
-
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -341,36 +338,7 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 6), "Orichalcum Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 7), "Adamantine Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 8), "Atlarus Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Tartarite Abstractor");
-		
-		extractorSpeeds = new int[11];
-		extractorSpeeds[0] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Prometheum", 22).getInt();
-		extractorSpeeds[1] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Deep Iron", 20).getInt();
-		extractorSpeeds[2] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Block Steel", 18).getInt();
-		extractorSpeeds[3] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Oureclase", 16).getInt();
-		extractorSpeeds[4] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Aredrite", 14).getInt();
-		extractorSpeeds[5] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Mithril", 12).getInt();
-		extractorSpeeds[6] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Haderoth", 10).getInt();
-		extractorSpeeds[7] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Orichalcum", 8).getInt();
-		extractorSpeeds[8] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Adamantine", 6).getInt();
-		extractorSpeeds[9] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Atlarus", 4).getInt();
-		extractorSpeeds[10] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Speed Tartarite", 2).getInt();
-		
-		xpBonus = new double[11];
-		xpBonus[0] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Prometheum", 1.0).getDouble(1.0);
-		xpBonus[1] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Deep Iron", 1.2).getDouble(1.2);
-		xpBonus[2] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Black Steel", 1.4).getDouble(1.4);
-		xpBonus[3] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Oureclase", 1.6).getDouble(1.6);
-		xpBonus[4] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Aredrite", 1.8).getDouble(1.8);
-		xpBonus[5] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Mithril", 2.0).getDouble(2.0);
-		xpBonus[6] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Haderoth", 2.4).getDouble(2.4);
-		xpBonus[7] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Oreichalcum", 2.8).getDouble(2.8);
-		xpBonus[8] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Admantine", 3.2).getDouble(3.2);
-		xpBonus[9] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Atlarus", 3.6).getDouble(3.6);
-		xpBonus[10] = MetallurgyMetals.fantasyConfig.get("Abstractor", "Bonus Tartarite", 4.0).getDouble(4.0);
-		
-		MetallurgyMetals.fantasyConfig.save();
-		
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Tartarite Abstractor");		
 	}
 	
 	public void createMachineRecipes()

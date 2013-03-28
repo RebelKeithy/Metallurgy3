@@ -338,6 +338,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 
         if (var2)
         {
+        	worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             this.onInventoryChanged();
             sendPacket();
         }

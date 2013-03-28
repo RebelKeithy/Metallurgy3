@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -21,6 +22,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import rebelkeithy.mods.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -85,6 +87,16 @@ public class BlockAbstractor extends BlockContainer
     public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
     	return getAbstractorTexture(par1, par2, 3, false);
+    }
+    
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z)
+    {
+        TileEntityAbstractor tea = (TileEntityAbstractor) world.getBlockTileEntity(x, y, z);
+        if(tea != null && tea.isBurning())
+        	return 5;
+        
+        return 0;
     }
 
     /**
@@ -222,7 +234,7 @@ public class BlockAbstractor extends BlockContainer
         
         TileEntityAbstractor var5 = (TileEntityAbstractor)par1World.getBlockTileEntity(par2, par3, par4);
         int metadata = par1World.getBlockMetadata(par2, par3, par4);
-        var5.setSpeed((int) (20 * MetallurgyMachines.extractorSpeeds[metadata]));
+        var5.setSpeed((int) (20 * ConfigMachines.extractorSpeeds[metadata]));
         
     }
 

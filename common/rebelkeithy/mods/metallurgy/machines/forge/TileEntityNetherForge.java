@@ -326,6 +326,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 
         if (checkBurning)
         {
+        	worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
             onInventoryChanged();
 			//int id = worldObj.getBlockId(xCoord, yCoord, zCoord);
 			//sync();
