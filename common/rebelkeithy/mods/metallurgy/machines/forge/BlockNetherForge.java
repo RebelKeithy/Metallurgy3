@@ -76,11 +76,18 @@ public class BlockNetherForge extends BlockContainer
     
     public int getLightValue(IBlockAccess world, int x, int y, int z) 
     {
+    	try
+    	{
     	TileEntityNetherForge var6 = ((TileEntityNetherForge)(world.getBlockTileEntity(x, y, z)));
         if(var6 != null && var6.isBurning())
         	return 12;
-        else
-        	return 0;
+    	}
+    	catch(ClassCastException e)
+    	{
+    		return 0;
+    	}
+
+        return 0;
     }
     
     public Icon getNetherForgeTexture(int side, int meta, int facing, int fuel, boolean isActive)

@@ -2,6 +2,8 @@ package rebelkeithy.mods.metallurgy.machines.forge;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,7 +12,6 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.ISidedInventory;
 import net.minecraftforge.liquids.ILiquidTank;
 import net.minecraftforge.liquids.ITankContainer;
 import net.minecraftforge.liquids.LiquidStack;
@@ -23,7 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class TileEntityNetherForge extends TileEntity implements ISidedInventory, ITankContainer, ISpecialInventory
+public class TileEntityNetherForge extends TileEntity implements ISidedInventory, ITankContainer, ISpecialInventory, net.minecraftforge.common.ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -273,6 +274,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
      */
     public int getCookProgressScaled(int par1)
     {
+    	//System.out.println(furnaceTimeBase);
         return furnaceCookTime * par1 / furnaceTimeBase;
     }
 
@@ -290,6 +292,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
      */
     public void updateEntity()
     {
+    	furnaceTimeBase = 20;
 		if ((++ticksSinceSync % 80) == 0) 
         {
 			sendPacket();
@@ -570,10 +573,39 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+    /**
+     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+     */
+    public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
+    {
+        return par1 == 2 ? false : true;
+    }
 
-	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    /**
+     * Get the size of the side inventory.
+     */
+    @Override
+    public int[] getSizeInventorySide(int par1)
+    {
+        if(par1 == 1)
+        	return new int[] {0};
+        else if(par1 == 2)
+        	return new int[] {1};
+        else 
+        	return new int[] {0};
+    }
+
+
+    @Override
+    public boolean func_102007_a(int par1, ItemStack par2ItemStack, int par3)
+    {
+        return this.isStackValidForSlot(par1, par2ItemStack);
+    }
+
+    @Override
+    public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3)
+    {
+        return par3 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+    }
 }

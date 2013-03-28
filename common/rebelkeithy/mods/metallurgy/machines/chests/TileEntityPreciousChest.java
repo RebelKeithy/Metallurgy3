@@ -360,6 +360,6 @@ public class TileEntityPreciousChest extends TileEntity implements IInventory
 	@Override
 	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 }

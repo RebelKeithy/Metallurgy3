@@ -152,11 +152,19 @@ public class BlockMetalFurnace extends BlockContainer
     
     public int getLightValue(IBlockAccess world, int x, int y, int z) 
     {
-    	TileEntityMetalFurnace var6 = ((TileEntityMetalFurnace)(world.getBlockTileEntity(x, y, z)));
-        if(var6 != null && var6.isBurning())
-        	return 12;
-        else
+    	try {
+    		
+    		TileEntityMetalFurnace var6 = ((TileEntityMetalFurnace)(world.getBlockTileEntity(x, y, z)));
+        	
+    		if(var6 != null && var6.isBurning())
+            	return 12;
+    	}
+        catch(ClassCastException e)
+        {
         	return 0;
+        }
+        
+    	return 0;
     }
 
     /**

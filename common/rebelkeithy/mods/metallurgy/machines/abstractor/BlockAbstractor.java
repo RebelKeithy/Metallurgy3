@@ -92,10 +92,17 @@ public class BlockAbstractor extends BlockContainer
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z)
     {
-        TileEntityAbstractor tea = (TileEntityAbstractor) world.getBlockTileEntity(x, y, z);
-        if(tea != null && tea.isBurning())
-        	return 5;
-        
+    	try
+    	{
+	        TileEntityAbstractor tea = (TileEntityAbstractor) world.getBlockTileEntity(x, y, z);
+	        if(tea != null && tea.isBurning())
+	        	return 5;
+		}
+	    catch(ClassCastException e)
+	    {
+	    	return 0;
+	    }
+    	
         return 0;
     }
 

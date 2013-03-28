@@ -118,11 +118,18 @@ public class BlockCrusher extends BlockContainer
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) 
     {
-    	TileEntityCrusher var6 = ((TileEntityCrusher)(world.getBlockTileEntity(x, y, z)));
-        if(var6 != null && var6.isBurning())
-        	return 12;
-        else
-        	return 0;
+    	try
+    	{
+	    	TileEntityCrusher var6 = ((TileEntityCrusher)(world.getBlockTileEntity(x, y, z)));
+	        if(var6 != null && var6.isBurning())
+	        	return 12;
+		}
+	    catch(ClassCastException e)
+	    {
+	    	return 0;
+	    }
+        
+    	return 0;
     }
 
     /**

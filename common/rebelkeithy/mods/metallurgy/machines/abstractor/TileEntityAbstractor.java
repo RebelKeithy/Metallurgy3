@@ -7,6 +7,7 @@ import java.util.Random;
 
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +15,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
-import net.minecraftforge.common.ISidedInventory;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
@@ -22,7 +22,7 @@ import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import buildcraft.api.inventory.ISpecialInventory;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileEntityAbstractor extends TileEntity implements ISpecialInventory, ISidedInventory
+public class TileEntityAbstractor extends TileEntity implements ISpecialInventory, ISidedInventory, net.minecraftforge.common.ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -585,10 +585,34 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+    /**
+     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+     */
+    public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
+    {
+        return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
+    }
 
-	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    /**
+     * Get the size of the side inventory.
+     */
+    @Override
+    public int[] getSizeInventorySide(int par1)
+    {
+        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0, 1} : new int[] {1});
+    }
+
+
+    @Override
+    public boolean func_102007_a(int par1, ItemStack par2ItemStack, int par3)
+    {
+        return this.isStackValidForSlot(par1, par2ItemStack);
+    }
+
+    @Override
+    public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3)
+    {
+        return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+    }
 }
