@@ -191,4 +191,12 @@ public class SubBlock
 		return super.toString() + metaBlock.getUnlocalizedName();
 	}
 
+	public int damageDropped(int meta) 
+	{
+		if(idDropped(new Random(), meta) == metaBlock.blockID)
+			return meta;
+		else
+			return 0;
+	}
+
 }

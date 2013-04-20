@@ -63,9 +63,13 @@ public class MetaBlock extends Block {
 		}
 	}
 	
-    public int damageDropped(int par1)
+    public int damageDropped(int meta)
     {
-        return par1;
+    	if(subBlocks[meta] != null)
+    	{
+    		return subBlocks[meta].damageDropped(meta);
+    	}
+        return meta;
     }
 
 

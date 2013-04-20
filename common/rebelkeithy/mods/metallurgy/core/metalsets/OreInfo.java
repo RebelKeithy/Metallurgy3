@@ -300,6 +300,7 @@ public class OreInfo implements IWorldGenerator
 			if(type != CATALYST && type != DROP)
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
+				toolEnum.customCraftingMaterial = ingot;
 				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
 				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(tab);
 				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(tab);
@@ -308,6 +309,7 @@ public class OreInfo implements IWorldGenerator
 				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(tab);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
+				armorEnum.customCraftingMaterial = ingot;
 				String armorTexture = name;
 				armorTexture = armorTexture.replaceAll("\\s","").toLowerCase();
 				helmet = new ItemMetallurgyArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
@@ -404,6 +406,11 @@ public class OreInfo implements IWorldGenerator
 			recipe = new ShapedOreRecipe(new ItemStack(legs), "XXX", "X X", "X X", 'X', "ingot" + name);
 			GameRegistry.addRecipe(recipe);
 			recipe = new ShapedOreRecipe(new ItemStack(boots), "X X", "X X", 'X', "ingot" + name);
+			GameRegistry.addRecipe(recipe);
+			
+			recipe = new ShapedOreRecipe(new ItemStack(Item.bucketEmpty), "X X", " X ", 'X', "ingot" + name);
+			GameRegistry.addRecipe(recipe);
+			recipe = new ShapedOreRecipe(new ItemStack(Item.shears), "X ", " X", 'X', "ingot" + name);
 			GameRegistry.addRecipe(recipe);
 		}
 		
