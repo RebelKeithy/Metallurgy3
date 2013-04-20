@@ -89,6 +89,7 @@ public class MetallurgyMachines
 	public static Item bag;
 	public static Item bullion;
 	public static Item glassDust;
+	public static Item goldCog;
 	
 	public static Block storageAccessor;
 	public static Block storageBlock;
@@ -176,10 +177,12 @@ public class MetallurgyMachines
 		stack = new Item(ConfigMachines.stackID).setUnlocalizedName("Metallurgy:Precious/ctack").setCreativeTab(machineTab);
 		bag = new Item(ConfigMachines.coinBagID).setUnlocalizedName("Metallurgy:Precious/bag").setCreativeTab(machineTab);
 		bullion = new Item(ConfigMachines.bullionID).setUnlocalizedName("Metallurgy:Precious/bullion").setCreativeTab(machineTab);
+		goldCog = new Item(ConfigMachines.goldCogID).setUnlocalizedName("Metallurgy:Precious/goldCog").setCreativeTab(machineTab);
 		LanguageRegistry.addName(coin, "Coin");
 		LanguageRegistry.addName(stack, "Stack");
 		LanguageRegistry.addName(bag, "Bag");
 		LanguageRegistry.addName(bullion, "Bullion");
+		LanguageRegistry.addName(goldCog, "Gold Cog");
 		
 		if(MetallurgyMetals.preciousSet != null)
 		{
@@ -405,7 +408,11 @@ public class MetallurgyMachines
 		
 		//Mint Recipes
 		if(ConfigMachines.mintEnabled)
+		{
+			GameRegistry.addRecipe(new ItemStack(goldCog), " G ", "GIG", " G ", 'G', Item.ingotGold, 'I', Item.ingotIron);
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mint), "III", "SRS", "IPI", 'I', Item.ingotIron, 'S', Item.stick, 'R', Item.redstone, 'P', Block.pistonBase));
+			GameRegistry.addRecipe(new ItemStack(mintStorage), "GIG", "PCP", "GIG", 'G', goldCog, 'P', Block.pistonBase, 'C', Block.chest, 'I', Item.ingotIron);
+		}
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stack), "CCC", "CCC", "CCC", 'C', coin));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bag), "CCC", "CCC", "CCC", 'C', stack));

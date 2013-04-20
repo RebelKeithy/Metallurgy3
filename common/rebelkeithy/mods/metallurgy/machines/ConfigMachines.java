@@ -46,6 +46,7 @@ public class ConfigMachines
 	public static int stackID = 29003;
 	public static int coinBagID = 29004;
 	public static int bullionID = 29005;
+	public static int goldCogID = 29017;
 	
 	public static boolean tradesEnabled = true;
 	
