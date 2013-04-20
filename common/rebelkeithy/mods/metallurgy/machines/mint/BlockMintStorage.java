@@ -79,7 +79,7 @@ public class BlockMintStorage extends BlockContainer
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
      */
     @Override
-    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getIcon(int par1, int par2)
     {
         if (par1 == 1)
         {

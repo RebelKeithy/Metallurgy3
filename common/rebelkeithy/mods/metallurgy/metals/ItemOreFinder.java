@@ -112,8 +112,8 @@ public class ItemOreFinder extends Item
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void updateIcons(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
-		iconIndex = par1IconRegister.registerIcon("Metallurgy:machines/OreFinder");
+		itemIcon = par1IconRegister.registerIcon("Metallurgy:machines/OreFinder");
     }
 }

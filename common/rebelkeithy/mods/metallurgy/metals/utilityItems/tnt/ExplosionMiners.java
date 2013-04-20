@@ -177,6 +177,7 @@ public class ExplosionMiners extends Explosion {
 		oreBlockIDs.add(Block.oreDiamond.blockID);
 		oreBlockIDs.add(Block.oreRedstone.blockID);
 		oreBlockIDs.add(Block.oreLapis.blockID);
+		oreBlockIDs.add(Block.oreNetherQuartz.blockID);
 
 		String[] names = OreDictionary.getOreNames();
 

@@ -146,7 +146,7 @@ public class MetaBlock extends Block {
      */
     
     @Override
-    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getIcon(int par1, int par2)
     {
     	if(subBlocks[par2] != null)
     		return subBlocks[par2].getBlockTextureFromSide(par1);
@@ -154,6 +154,7 @@ public class MetaBlock extends Block {
     	return null;
     }
 
+    @Override
     public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
     {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
@@ -202,6 +203,7 @@ public class MetaBlock extends Block {
     /**
      * Sets the CreativeTab to display this block on.
      */
+    @Override
     public Block setCreativeTab(CreativeTabs par1CreativeTabs)
     {
     	if(tabs == null)

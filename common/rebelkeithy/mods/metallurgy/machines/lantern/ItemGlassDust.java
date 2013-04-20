@@ -49,7 +49,7 @@ public class ItemGlassDust extends Item
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void updateIcons(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
 		iconMap = new HashMap<Integer, Icon>();
 		iconMap.put(0, par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust"));

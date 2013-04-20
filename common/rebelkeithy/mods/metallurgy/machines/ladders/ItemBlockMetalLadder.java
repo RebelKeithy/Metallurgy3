@@ -31,7 +31,7 @@ public class ItemBlockMetalLadder extends ItemBlock {
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void updateIcons(IconRegister par1IconRegister)
+    public void registerIcons(IconRegister par1IconRegister)
     {
 		icons = new Icon[4];
     	for(int i = 0; i < 4; i++)

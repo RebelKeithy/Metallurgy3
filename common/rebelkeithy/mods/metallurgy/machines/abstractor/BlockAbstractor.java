@@ -84,7 +84,7 @@ public class BlockAbstractor extends BlockContainer
     }
     
     @Override
-    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public Icon getIcon(int par1, int par2)
     {
     	return getAbstractorTexture(par1, par2, 3, false);
     }

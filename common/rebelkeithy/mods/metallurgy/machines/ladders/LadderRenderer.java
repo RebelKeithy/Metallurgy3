@@ -20,7 +20,7 @@ public class LadderRenderer implements ISimpleBlockRenderingHandler {
 
 		Tessellator tessellator = Tessellator.instance;
 		int var17 = world.getBlockMetadata(par2, par3, par4);
-		Icon icon = par1Block.getBlockTextureFromSideAndMetadata(0, var17);
+		Icon icon = par1Block.getIcon(0, var17);
 		var17 = var17 % 4;
 		
 		tessellator.setBrightness(par1Block.getMixedBrightnessForBlock(world, par2, par3, par4));

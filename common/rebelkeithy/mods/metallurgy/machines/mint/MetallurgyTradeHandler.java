@@ -67,15 +67,15 @@ public class MetallurgyTradeHandler implements IVillageTradeHandler {
 			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 10), new ItemStack(Item.legsChain, 1)));
 			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 6), new ItemStack(Item.bootsChain, 1)));
 			//Iron
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.helmetSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 13), new ItemStack(Item.plateSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 9), new ItemStack(Item.legsSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.bootsSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 10), new ItemStack(Item.swordSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 8), new ItemStack(Item.pickaxeSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 7), new ItemStack(Item.axeSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.shovelSteel, 1)));
-			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.hoeSteel, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.helmetIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 13), new ItemStack(Item.plateIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 9), new ItemStack(Item.legsIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.bootsIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 10), new ItemStack(Item.swordIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 8), new ItemStack(Item.pickaxeIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 7), new ItemStack(Item.axeIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.shovelIron, 1)));
+			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(MetallurgyMachines.stack, 5), new ItemStack(Item.hoeIron, 1)));
 			//Bars
 			recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(Item.ingotIron, 1), new ItemStack(MetallurgyMachines.coin, 3, 1)));
 

@@ -120,8 +120,9 @@ public class MetallurgyMetals {
         String filepath = event.getSourceFile().getAbsolutePath();
         if(!isRelease)
         {
-        	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
-        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
+        	//TODO: Note: Other users will need to point this to the directory containing Metallurgy.jar
+        	//filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
+        	filepath = "C:/Users/Wesley/Documents/Metallurgy 3/eclipse/Minecraft/bin/mods/Metallurgy.jar";
         }
         
 		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
