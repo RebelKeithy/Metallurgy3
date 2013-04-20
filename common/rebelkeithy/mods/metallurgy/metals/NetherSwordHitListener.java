@@ -77,9 +77,9 @@ public class NetherSwordHitListener implements ISwordHitListener
 			entityliving.addPotionEffect(new PotionEffect(poison, 80, 0));
 			entityliving.addPotionEffect(new PotionEffect(slowness, 80, 0));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.netherSet.getOreInfo("Amoredrine").sword.itemID)
+		else if(itemstack.getItem().itemID == MetallurgyMetals.netherSet.getOreInfo("Amordrine").sword.itemID)
 		{
-			player.heal(4);
+			player.heal(3);
 		}
 		
 		return false;
