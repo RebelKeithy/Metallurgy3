@@ -191,17 +191,24 @@ public class MetallurgyMetals {
 	
 	public void createUtilityItems()
 	{
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this.dustIron, 2), "dustShadow Iron", "dustIgnatius"));
+		
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
 		largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
 		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(largeTNT, "HE TNT");
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "SPS", "PTP", "SPS", 'S', "dustSulfur", 'P', "dustSaltpeter", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PSP", "STS", "PSP", 'S', "dustSulfur", 'P', "dustSaltpeter", 'T', Block.tnt));
 		
 		id = utilityConfig.get("Item IDs", "LE TNT", 921).getInt();
 		minersTNT = new BlockMinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "SPS", "PTP", "SPS", 'S', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "PSP", "STS", "PSP", 'S', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
 		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
@@ -216,10 +223,10 @@ public class MetallurgyMetals {
 		id = utilityConfig.get("Item IDs", "Fertilizer", 29009).getInt();
 		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:Utility/Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustPotash"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustPhosphorus", "dustSaltpeter", "dustPotash"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer), "dustSaltpeter", "dustMagnesium", "dustPotash"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustPotash"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustSaltpeter", "dustPotash"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustSaltpeter", "dustMagnesium", "dustPotash"));
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
 		id = utilityConfig.get("Item IDs", "Tar", 29010).getInt();
@@ -227,7 +234,7 @@ public class MetallurgyMetals {
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
 		
-		GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, "dustSulfur", "dustSaltpeter"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
 		GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
 		
