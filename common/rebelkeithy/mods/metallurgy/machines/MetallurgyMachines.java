@@ -361,8 +361,19 @@ public class MetallurgyMachines
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 0), "XXX", "XOX", "XXX", 'X', "ingotCopper", 'O', new ItemStack(Block.furnaceIdle)));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotBronze", 'O', new ItemStack(furnace, 1, 0)));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotIron, 'O', new ItemStack(furnace, 1, 1)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(furnace, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(furnace, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotSteel", 'O', new ItemStack(furnace, 1, 2)));
 		}
+		
+		//Precious Chests Recipes
+		if(ConfigMachines.chestEnabled)
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chest, 1, 0), "XXX", "XOX", "XXX", 'X', "ingotBrass", 'O', new ItemStack(Block.chest)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chest, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotSilver", 'O', new ItemStack(chest, 1, 0)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chest, 1, 2), "XXX", "XOX", "XXX", 'X', Item.ingotGold, 'O', new ItemStack(chest, 1, 1)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chest, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotElectrum", 'O', new ItemStack(chest, 1, 2)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(chest, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotPlatinum", 'O', new ItemStack(chest, 1, 3)));
+		}
+		
 		
 		//Nether Forge Recipes
 		if(ConfigMachines.forgeEnabled)
