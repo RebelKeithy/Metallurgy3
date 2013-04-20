@@ -161,8 +161,8 @@ public class MetallurgyMachines
 	
 	public void initMint()
 	{
-		mint = new BlockMint(ConfigMachines.mintID).setUnlocalizedName("M3Mint").setCreativeTab(machineTab);
-		mintStorage = new BlockMintStorage(ConfigMachines.mintStorageID).setUnlocalizedName("M3MintStorage").setCreativeTab(machineTab);
+		mint = new BlockMint(ConfigMachines.mintID).setHardness(2.0F).setUnlocalizedName("M3Mint").setCreativeTab(machineTab);
+		mintStorage = new BlockMintStorage(ConfigMachines.mintStorageID).setHardness(2.0F).setUnlocalizedName("M3MintStorage").setCreativeTab(machineTab);
 		
 		GameRegistry.registerBlock(mint, "M3Mint");
 		GameRegistry.registerBlock(mintStorage, "M3MintStorage");
