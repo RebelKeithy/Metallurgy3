@@ -171,6 +171,7 @@ public class MetallurgyMetals {
 		
 		netherSet.getOreInfo("Vyroxeres").ore.addCollisionListener(new VyroxeresCollisionListener());
 		
+		addRailRecipes();
 		addSwordEffects();
 		
 		proxy.registerParticles();
@@ -237,6 +238,18 @@ public class MetallurgyMetals {
 		GameRegistry.addSmelting(MetalInfoDatabase.getItem("Bitumen").itemID, new ItemStack(tar), 0.1F);
 		
 		utilityTab.setIconItem(fertilizer.itemID);
+	}
+	
+	  
+	private void addRailRecipes() 
+	{
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 4), "X X", "XSX", "X X", 'X', "ingotCopper", 'S', Item.stick));
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 10), "X X", "XSX", "X X", 'X', "ingotBronze", 'S', Item.stick));
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 14), "X X", "XSX", "X X", 'X', "ingotHepatizon", 'S', Item.stick));
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 26), "X X", "XSX", "X X", 'X', "ingotDamascus Steel", 'S', Item.stick));
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 22), "X X", "XSX", "X X", 'X', "ingotAngmallen", 'S', Item.stick));
+	   GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 32), "X X", "XSX", "X X", 'X', "ingotAngmallen", 'S', Item.stick));
+	   
 	}
 	
 	public Configuration initConfig(String name)
