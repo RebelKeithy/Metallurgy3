@@ -96,16 +96,17 @@ public class ConfigMachines
 		bullionID = config.get("Item IDs", "Bullion", bullionID).getInt();
 		glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
 		
-		stoneCrusherSpeed = config.get("Crusher Speeds", "Stone", stoneCrusherSpeed*1000).getInt()/1000F;
-		copperCrusherSpeed = config.get("Crusher Speeds", "Copper", copperCrusherSpeed*1000).getInt()/1000F;
-		bronzeCrusherSpeed = config.get("Crusher Speeds", "Bronze", bronzeCrusherSpeed*1000).getInt()/1000F;
-		ironCrusherSpeed = config.get("Crusher Speeds", "Iron", ironCrusherSpeed*1000).getInt()/1000F;
-		steelCrusherSpeed = config.get("Crusher Speeds", "Steel", steelCrusherSpeed*1000).getInt()/1000F;
+		stoneCrusherSpeed = config.get("Crusher Speeds", "Stone", (int)(stoneCrusherSpeed*1000)).getInt()/1000F;
+		System.out.println("config " + stoneCrusherSpeed);
+		copperCrusherSpeed = config.get("Crusher Speeds", "Copper", (int)(copperCrusherSpeed*1000)).getInt()/1000F;
+		bronzeCrusherSpeed = config.get("Crusher Speeds", "Bronze", (int)(bronzeCrusherSpeed*1000)).getInt()/1000F;
+		ironCrusherSpeed = config.get("Crusher Speeds", "Iron", (int)(ironCrusherSpeed*1000)).getInt()/1000F;
+		steelCrusherSpeed = config.get("Crusher Speeds", "Steel", (int)(steelCrusherSpeed*1000)).getInt()/1000F;
 		
-		copperFurnaceSpeed = config.get("Furnace Speeds", "Copper", copperFurnaceSpeed*1000).getInt()/1000F;
-		bronzeFurnaceSpeed = config.get("Furnace Speeds", "Bronze", bronzeFurnaceSpeed*1000).getInt()/1000F;
-		ironFurnaceSpeed = config.get("Furnace Speeds", "Iron", ironFurnaceSpeed*1000).getInt()/1000F;
-		steelFurnaceSpeed = config.get("Furnace Speeds", "Steel", steelFurnaceSpeed*1000).getInt()/1000F;
+		copperFurnaceSpeed = config.get("Furnace Speeds", "Copper", (int)(copperFurnaceSpeed*1000)).getInt()/1000F;
+		bronzeFurnaceSpeed = config.get("Furnace Speeds", "Bronze", (int)(bronzeFurnaceSpeed*1000)).getInt()/1000F;
+		ironFurnaceSpeed = config.get("Furnace Speeds", "Iron", (int)(ironFurnaceSpeed*1000)).getInt()/1000F;
+		steelFurnaceSpeed = config.get("Furnace Speeds", "Steel", (int)(steelFurnaceSpeed*1000)).getInt()/1000F;
 
 		extractorSpeeds[0] = config.get("Abstractor", "Speed Prometheum", 22).getInt();
 		extractorSpeeds[1] = config.get("Abstractor", "Speed Deep Iron", 20).getInt();

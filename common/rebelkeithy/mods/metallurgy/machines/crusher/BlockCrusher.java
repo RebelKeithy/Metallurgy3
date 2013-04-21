@@ -2,6 +2,7 @@ package rebelkeithy.mods.metallurgy.machines.crusher;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -17,7 +19,9 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import rebelkeithy.mods.guiregistry.GuiRegistry;
@@ -37,6 +41,7 @@ public class BlockCrusher extends BlockContainer
     private final boolean isActive;
 
 	private int renderId;
+    private Icon[] iconArray;
 
     /**
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
@@ -50,11 +55,6 @@ public class BlockCrusher extends BlockContainer
         this.isActive = par2;
         renderId = RenderingRegistry.getNextAvailableRenderId();
     }
-    
-	public String getTextureFile() 
-	{
-		return "/shadow/MetallurgyFurnaces.png";
-	}
 
     /**
      * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
@@ -104,6 +104,11 @@ public class BlockCrusher extends BlockContainer
 	public int damageDropped(int metadata)
     {
     	return (metadata < 8) ? metadata : metadata - 8;
+    }
+    
+    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    {
+        return iconArray[par2];
     }
     
     /**
@@ -389,6 +394,18 @@ public class BlockCrusher extends BlockContainer
         }
 
         super.breakBlock(par1World, par2, par3, par4, par5, par6);
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+    	iconArray = new Icon[5];
+    	iconArray[0] = par1IconRegister.registerIcon("Metallurgy:machines/crusher/CrusherStone");
+    	iconArray[1] = par1IconRegister.registerIcon("Metallurgy:machines/crusher/CrusherCopper");
+    	iconArray[2] = par1IconRegister.registerIcon("Metallurgy:machines/crusher/CrusherBronze");
+    	iconArray[3] = par1IconRegister.registerIcon("Metallurgy:machines/crusher/CrusherIron");
+    	iconArray[4] = par1IconRegister.registerIcon("Metallurgy:machines/crusher/CrusherSteel");
     }
     
 	@Override

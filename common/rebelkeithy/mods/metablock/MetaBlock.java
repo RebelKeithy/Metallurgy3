@@ -30,6 +30,8 @@ public class MetaBlock extends Block {
 	
 	public static List registeredIDs;
 	
+	//public static SubBlock air = new SubBlock(0, 0, "").setHardness(0).setResistance(0);
+	
 	public static void registerID(int id)
 	{
 		if(registeredIDs == null)
@@ -49,7 +51,11 @@ public class MetaBlock extends Block {
 	public MetaBlock(int id) 
 	{
 		super(id, Material.rock);
+		System.out.println("test");
 		subBlocks = new SubBlock[16];
+		//for(int i = 0; i > 16; i++)
+		//	subBlocks[i] = air;
+		
 		tickList = new ArrayList();
 	}
 
@@ -194,14 +200,20 @@ public class MetaBlock extends Block {
     public float getBlockHardness(World world, int x, int y, int z)
     {
     	int meta = world.getBlockMetadata(x, y, z);
-        return subBlocks[meta].getBlockHardness();
+    	if(subBlocks[meta] != null)
+    		return subBlocks[meta].getBlockHardness();
+    	
+    	return 0;
     }
 
     @Override
     public float getExplosionResistance(Entity entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
     {
     	int meta = world.getBlockMetadata(x, y, z);
-        return subBlocks[meta].getExplosionResistance(entity);
+    	if(subBlocks[meta] != null)
+    		return subBlocks[meta].getExplosionResistance(entity);
+    	
+    	return 0;
     }
 
     /**

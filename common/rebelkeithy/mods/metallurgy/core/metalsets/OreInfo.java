@@ -2,45 +2,40 @@ package rebelkeithy.mods.metallurgy.core.metalsets;
 
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ALLOY;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.CATALYST;
+import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.DROP;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ORE;
 import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.RESPAWN;
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.DROP;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import cpw.mods.fml.common.IWorldGenerator;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Random;
-
 import rebelkeithy.mods.metablock.MetaBlock;
 import rebelkeithy.mods.metablock.SubBlock;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
+import cpw.mods.fml.common.IWorldGenerator;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class OreInfo implements IWorldGenerator
 {
@@ -293,7 +288,7 @@ public class OreInfo implements IWorldGenerator
 			if(type != DROP)
 			{
 				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Dust").setCreativeTab(tab);
-				ingot = new Item(itemIDs+1).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(tab);
+				ingot = new ItemMetallurgy(itemIDs+1).setSmeltinExperience(abstractorXP/3f).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(tab);
 				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
@@ -367,10 +362,10 @@ public class OreInfo implements IWorldGenerator
 	{
 		if(type.generates() && ore != null)
 		{
-			FurnaceRecipes.smelting().addSmelting(oreID, oreMeta, new ItemStack(ingot), abstractorXP/10f);	
+			FurnaceRecipes.smelting().addSmelting(oreID, oreMeta, new ItemStack(ingot), 0);	
 		}
 		
-		FurnaceRecipes.smelting().addSmelting(dust.itemID, 0, new ItemStack(ingot), abstractorXP/10f);
+		FurnaceRecipes.smelting().addSmelting(dust.itemID, 0, new ItemStack(ingot), 0);
 
 		ShapedOreRecipe recipe;
 		if(block != null)

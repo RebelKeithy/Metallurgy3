@@ -29,7 +29,14 @@ public class GuiRegistry implements IGuiHandler
 		return instance;
 	}
 	
-	public static void registerGui(Class<? extends GuiContainer> gui, Class<? extends Container> container, Object mod, String guiID)
+	public static void registerGuiServer(Class<? extends Container> container, Object mod, String guiID)
+	{
+		ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
+		String fixedID = guiID + mc.getName();
+		containerList.put(fixedID.hashCode(), container);
+	}
+	
+	public static void registerGuiClient(Class<? extends GuiContainer> gui, Class<? extends Container> container, Object mod, String guiID)
 	{
 		ModContainer mc = FMLCommonHandler.instance().findContainerFor(mod);
 		String fixedID = guiID + mc.getName();

@@ -5,6 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotFurnace;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +22,7 @@ public class ContainerMetalFurnace extends Container
         this.furnace = (TileEntityMetalFurnace) par2TileEntityMetalFurnace;
         this.addSlotToContainer(new Slot(furnace, 0, 56, 17));
         this.addSlotToContainer(new Slot(furnace, 1, 56, 53));
-        this.addSlotToContainer(new SlotMetalFurnace(par1InventoryPlayer.player, furnace, 2, 116, 35));
+        this.addSlotToContainer(new SlotFurnace(par1InventoryPlayer.player, furnace, 2, 116, 35));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3)

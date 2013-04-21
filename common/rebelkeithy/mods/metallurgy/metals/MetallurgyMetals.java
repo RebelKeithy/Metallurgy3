@@ -120,9 +120,8 @@ public class MetallurgyMetals {
         String filepath = event.getSourceFile().getAbsolutePath();
         if(!isRelease)
         {
-        	//TODO: Note: Other users will need to point this to the directory containing Metallurgy.jar
-        	//filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
-        	filepath = "C:/Users/Wesley/Documents/Metallurgy 3/eclipse/Minecraft/bin/mods/Metallurgy.jar";
+        	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
+        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
         }
         
 		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
@@ -174,11 +173,9 @@ public class MetallurgyMetals {
 		
 		addSwordEffects();
 		
-		addRailRecipes();
-		
 		proxy.registerParticles();
 	}
-
+	
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
@@ -190,39 +187,24 @@ public class MetallurgyMetals {
 		
 		createMidasiumRecipes();
 	}
-
-	
-	private void addRailRecipes() 
-	{
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 4), "X X", "XSX", "X X", 'X', "ingotCopper", 'S', Item.stick));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 10), "X X", "XSX", "X X", 'X', "ingotBronze", 'S', Item.stick));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 14), "X X", "XSX", "X X", 'X', "ingotHepatizon", 'S', Item.stick));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 26), "X X", "XSX", "X X", 'X', "ingotDamascus Steel", 'S', Item.stick));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 22), "X X", "XSX", "X X", 'X', "ingotAngmallen", 'S', Item.stick));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 32), "X X", "XSX", "X X", 'X', "ingotAngmallen", 'S', Item.stick));
-		
-	}
 	
 	public void createUtilityItems()
 	{
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this.dustIron, 2), "dustShadow Iron", "dustIgnatius"));
-		
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
 		largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
 		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(largeTNT, "HE TNT");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "SPS", "PTP", "SPS", 'S', "dustSulfur", 'P', "dustSaltpeter", 'T', Block.tnt));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PSP", "STS", "PSP", 'S', "dustSulfur", 'P', "dustSaltpeter", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PMP", "MTM", "PMP", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
 		
 		id = utilityConfig.get("Item IDs", "LE TNT", 921).getInt();
 		minersTNT = new BlockMinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "SPS", "PTP", "SPS", 'S', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "PSP", "STS", "PSP", 'S', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
 		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
