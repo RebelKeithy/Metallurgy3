@@ -31,13 +31,14 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.metablock.MetaBlock;
 import rebelkeithy.mods.metablock.SubBlock;
+import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-public class OreInfo implements IWorldGenerator
+public class OreInfo implements IOreInfo, IWorldGenerator
 {
 	protected String setName;
 	protected String name;
@@ -507,5 +508,41 @@ public class OreInfo implements IWorldGenerator
 			new MetallurgyWorldGenMinable(oreID, oreMeta, oreCount, veinDensity, Block.stone.blockID, 0).generate(world, random, randPosX, randPosY, randPosZ);
 			//new WorldGenMinable(oreID, oreMeta, 40).generate(world, random, randPosX, randPosY, randPosZ);
 		}
+	}
+
+	@Override
+	public String getName() 
+	{
+		return name;
+	}
+
+	@Override
+	public ItemStack getOre() 
+	{
+		return new ItemStack(oreID, 1, oreMeta);
+	}
+
+	@Override
+	public ItemStack getBlock() 
+	{
+		return new ItemStack(blockID, 1, blockMeta);
+	}
+
+	@Override
+	public ItemStack getBrick() 
+	{
+		return new ItemStack(brickID, 1, brickMeta);
+	}
+
+	@Override
+	public ItemStack getDust() 
+	{
+		return new ItemStack(dust);
+	}
+
+	@Override
+	public ItemStack getIngot() 
+	{
+		return new ItemStack(ingot);
 	}
 }

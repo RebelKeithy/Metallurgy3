@@ -191,6 +191,10 @@ public class MetallurgyMetals {
 	
 	public void createUtilityItems()
 	{
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this.dustIron, 2), "dustShadow Iron", "dustIgnatius"));
+
+		
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
 		largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
 		GameRegistry.registerBlock(largeTNT, "M3HETNT");
@@ -204,8 +208,8 @@ public class MetallurgyMetals {
 		GameRegistry.registerBlock(minersTNT, "M3LETNT");
 		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
 		LanguageRegistry.addName(minersTNT, "LE TNT");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
 		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);

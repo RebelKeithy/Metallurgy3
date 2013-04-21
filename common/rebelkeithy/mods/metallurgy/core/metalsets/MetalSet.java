@@ -1,28 +1,28 @@
 package rebelkeithy.mods.metallurgy.core.metalsets;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraftforge.common.Configuration;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.Configuration;
+import rebelkeithy.mods.metallurgy.api.IMetalSet;
+import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 
-public class MetalSet 
+public class MetalSet implements IMetalSet
 {
 	private String setName;
-	private Map<String, OreInfo> metals;
+	private Map<String, IOreInfo> metals;
 	private Configuration config;
 	
 	public MetalSet(String setName, Map<String, Map<String, String>> baseData, CreativeTabs tab)
 	{
 		this.setName = setName;
 		
-		metals = new HashMap<String, OreInfo>();
+		metals = new HashMap<String, IOreInfo>();
 		
 		for(Map<String, String> metalInfo : baseData.values())
 		{
@@ -55,9 +55,9 @@ public class MetalSet
 		config = new Configuration(cfgFile);
 		config.load();
 		
-		for(OreInfo oreInfo : metals.values())
+		for(IOreInfo oreInfo : metals.values())
 		{
-			oreInfo.initConfig(config);
+			((OreInfo)oreInfo).initConfig(config);
 		}
 		
 		config.save();
@@ -65,42 +65,47 @@ public class MetalSet
 	
 	public void init()
 	{
-		for(OreInfo oreInfo : metals.values())
+		for(IOreInfo oreInfo : metals.values())
 		{
-			oreInfo.init();
+			((OreInfo)oreInfo).init();
 		}
 	}
 	
 	public void load()
 	{
-		for(OreInfo oreInfo : metals.values())
+		for(IOreInfo oreInfo : metals.values())
 		{
-			oreInfo.load();
+			((OreInfo)oreInfo).load();
 		}
 	}
 
 	public void registerNames() {
-		for(OreInfo oreInfo : metals.values())
+		for(IOreInfo oreInfo : metals.values())
 		{
-			oreInfo.registerNames();
+			((OreInfo)oreInfo).registerNames();
 		}
 	}
 	
 	public OreInfo getOreInfo(String name)
 	{
-		return metals.get(name);
+		return (OreInfo)metals.get(name);
 	}
 
 	public OreInfo getOreInfo(int meta) 
 	{
-		for(OreInfo info : metals.values())
+		for(IOreInfo oreInfo : metals.values())
 		{
-			if(info.blockMeta == meta)
+			if(((OreInfo)oreInfo).oreMeta == meta)
 			{
-				return info;
+				return (OreInfo)oreInfo;
 			}
 		}
 		return null;
+	}
+
+	public Map<String, IOreInfo> getOreList() 
+	{
+		return metals;
 	}
 	
 }
