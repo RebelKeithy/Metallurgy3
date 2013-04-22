@@ -80,12 +80,12 @@ public class MetallurgyCore
 			set.load();
 			proxy.registerNamesForMetalSet(set);
 		}
+		MetalInfoDatabase.registerItemsWithOreDict();
 	}
 	
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		MetalInfoDatabase.registerItemsWithOreDict();
 	}
 	
 	public void initConfig()
