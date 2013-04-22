@@ -151,6 +151,8 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 				dropMin = Integer.parseInt(info.get("Drop Amount"));
 				dropMax = dropMin;
 			}
+		} else {
+			dropName = null;
 		}
 				
 		itemIDs = Integer.parseInt(info.get("Item IDs"));
@@ -547,13 +549,19 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public ItemStack getDust() 
 	{
-		return new ItemStack(dust);
+		if(dust != null)
+			return new ItemStack(dust);
+		else
+			return null;
 	}
 
 	@Override
 	public ItemStack getIngot() 
 	{
-		return new ItemStack(ingot);
+		if(ingot != null)
+			return new ItemStack(ingot);
+		else
+			return null;
 	}
 
 	@Override
@@ -566,5 +574,23 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public OreType getType() 
 	{
 		return type;
+	}
+
+	@Override
+	public String getDrop() 
+	{
+		return dropName;
+	}
+
+	@Override
+	public int getDropAmountMin() 
+	{
+		return dropMin;
+	}
+
+	@Override
+	public int getDropAmountMax() 
+	{
+		return dropMax;
 	}
 }
