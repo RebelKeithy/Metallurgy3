@@ -1,4 +1,4 @@
-package rebelkeithy.mods.metallurgy.core.metalsets;
+package rebelkeithy.mods.metallurgy.api;
 
 public enum OreType { 
 	

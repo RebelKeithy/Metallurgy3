@@ -46,7 +46,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public boolean isRelease = false;
+	public boolean isRelease = true;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;

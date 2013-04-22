@@ -1,10 +1,10 @@
 package rebelkeithy.mods.metallurgy.core.metalsets;
 
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ALLOY;
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.CATALYST;
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.DROP;
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.ORE;
-import static rebelkeithy.mods.metallurgy.core.metalsets.OreType.RESPAWN;
+import static rebelkeithy.mods.metallurgy.api.OreType.ALLOY;
+import static rebelkeithy.mods.metallurgy.api.OreType.CATALYST;
+import static rebelkeithy.mods.metallurgy.api.OreType.DROP;
+import static rebelkeithy.mods.metallurgy.api.OreType.ORE;
+import static rebelkeithy.mods.metallurgy.api.OreType.RESPAWN;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -32,6 +32,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.metablock.MetaBlock;
 import rebelkeithy.mods.metablock.SubBlock;
 import rebelkeithy.mods.metallurgy.api.IOreInfo;
+import rebelkeithy.mods.metallurgy.api.OreType;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 import cpw.mods.fml.common.IWorldGenerator;
@@ -544,5 +545,17 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public ItemStack getIngot() 
 	{
 		return new ItemStack(ingot);
+	}
+
+	@Override
+	public String[] getAlloyRecipe() 
+	{
+		return alloyRecipe;
+	}
+
+	@Override
+	public OreType getType() 
+	{
+		return type;
 	}
 }
