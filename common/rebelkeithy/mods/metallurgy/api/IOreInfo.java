@@ -17,9 +17,9 @@ public interface IOreInfo
 	// Returns the itemstack of ingot for this ore, if no ingot exists, returns null
 	public ItemStack getIngot();
 	
-	// If this ore drops something other than itself, this returns the OreDictionary name
+	// If this ore drops something other than itself, this returns the ItemStack
 	// of the drop, otherwise returns null
-	public String getDrop();
+	public ItemStack getDrop();
 	public int getDropAmountMin();
 	public int getDropAmountMax();
 	

@@ -577,9 +577,14 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	}
 
 	@Override
-	public String getDrop() 
+	public ItemStack getDrop() 
 	{
-		return dropName;
+		if(dropName != null)
+		{
+			return MetalInfoDatabase.getItem(dropName);
+		}
+		else
+			return null;
 	}
 
 	@Override
