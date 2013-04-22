@@ -520,19 +520,28 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public ItemStack getOre() 
 	{
-		return new ItemStack(oreID, 1, oreMeta);
+		if(oreID != 0)
+			return new ItemStack(oreID, 1, oreMeta);
+		else
+			return null;
 	}
 
 	@Override
 	public ItemStack getBlock() 
 	{
-		return new ItemStack(blockID, 1, blockMeta);
+		if(blockID != 0)
+			return new ItemStack(blockID, 1, blockMeta);
+		else
+			return null;
 	}
 
 	@Override
 	public ItemStack getBrick() 
 	{
-		return new ItemStack(brickID, 1, brickMeta);
+		if(brickID != 0)
+			return new ItemStack(brickID, 1, brickMeta);
+		else
+			return null;
 	}
 
 	@Override
