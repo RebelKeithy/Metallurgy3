@@ -18,7 +18,7 @@ import java.util.Map;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 
-@Mod(modid="Metallurgy3Vanilla", name="Metallurgy 3 Vanilla", version="1.4.7-1.11.13-1a")
+@Mod(modid="Metallurgy3Vanilla", name="Metallurgy 3 Vanilla", version="3.0.0.0.9.4")
 @NetworkMod(channels = {"MetallurgyVanilla"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyVanilla 
 {

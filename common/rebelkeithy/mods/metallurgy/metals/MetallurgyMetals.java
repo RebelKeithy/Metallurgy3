@@ -42,11 +42,11 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="1.4.7-1.11.13-1a")
+@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="3.0.0.0.9.4")
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public boolean isRelease = true;
+	public boolean isRelease = false;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;

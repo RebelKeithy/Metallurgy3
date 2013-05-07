@@ -72,7 +72,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
-@Mod(modid="Metallurgy3Machines", name="Metallurgy 3 Machines", dependencies = "required-after:Metallurgy3Base", version="1.4.7_1.16.13_1a")
+@Mod(modid="Metallurgy3Machines", name="Metallurgy 3 Machines", dependencies = "required-after:Metallurgy3Base", version="3.0.0.0.9.4")
 @NetworkMod(channels = {"M3Machines"}, clientSideRequired = true, serverSideRequired = false, packetHandler=PacketHandler.class)
 public class MetallurgyMachines 
 {

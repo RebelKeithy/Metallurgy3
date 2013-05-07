@@ -580,9 +580,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public ItemStack getDrop() 
 	{
 		if(dropName != null)
-		{
 			return MetalInfoDatabase.getItem(dropName);
-		}
 		else
 			return null;
 	}
