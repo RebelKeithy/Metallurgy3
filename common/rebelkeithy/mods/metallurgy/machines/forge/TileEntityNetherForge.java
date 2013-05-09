@@ -586,7 +586,7 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
      * Get the size of the side inventory.
      */
     @Override
-    public int[] getSizeInventorySide(int par1)
+    public int[] getAccessibleSlotsFromSide(int par1)
     {
         if(par1 == 1)
         	return new int[] {0};
@@ -598,13 +598,13 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
 
 
     @Override
-    public boolean func_102007_a(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
     {
         return this.isStackValidForSlot(par1, par2ItemStack);
     }
 
     @Override
-    public boolean func_102008_b(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
     {
         return par3 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }

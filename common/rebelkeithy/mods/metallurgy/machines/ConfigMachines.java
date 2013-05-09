@@ -96,6 +96,8 @@ public class ConfigMachines
 		bullionID = config.get("Item IDs", "Bullion", bullionID).getInt();
 		glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
 		
+		tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
+		
 		stoneCrusherSpeed = config.get("Crusher Speeds", "Stone", (int)(stoneCrusherSpeed*1000)).getInt()/1000F;
 		System.out.println("config " + stoneCrusherSpeed);
 		copperCrusherSpeed = config.get("Crusher Speeds", "Copper", (int)(copperCrusherSpeed*1000)).getInt()/1000F;

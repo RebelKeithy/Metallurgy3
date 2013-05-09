@@ -43,6 +43,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 {
 	protected String setName;
 	protected String name;
+	protected boolean enabled;
 	protected CreativeTabs tab;
 	protected OreType type;
 	public int oreID;
@@ -216,6 +217,8 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 				brickID = Integer.parseInt(id.split(":")[0]);
 				brickMeta = Integer.parseInt(id.split(":")[1]);
 			}
+
+			enabled = config.get(name, "Enabled", true).getBoolean(true);
 			
 			if(type != DROP)
 			{
@@ -269,6 +272,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	
 	public void init()
 	{
+		if(!enabled)
+			return;
+		
 		System.out.println("Initializeing Ore " + name);
 		if(!type.equals(RESPAWN))
 		{
@@ -326,6 +332,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
 	public void load()
 	{
+		if(!enabled)
+			return;
+		
 		if(!type.equals(RESPAWN))
 		{
 			if(oreID != 0)
@@ -346,6 +355,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	
 	public void setLevels()
 	{
+		if(!enabled)
+			return;
+		
 		MinecraftForge.setToolClass(pickaxe, "pickaxe", pickLvl);
 		if(ore != null)
 		{
@@ -364,6 +376,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	
 	public void addRecipes()
 	{
+		if(!enabled)
+			return;
+		
 		if(type.generates() && ore != null)
 		{
 			FurnaceRecipes.smelting().addSmelting(oreID, oreMeta, new ItemStack(ingot), 0);	
@@ -422,6 +437,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	
 	public void registerMetal()
 	{
+		if(!enabled)
+			return;
+		
 		if(ore != null)
 		{
 			OreDictionary.registerOre("ore" + name, new ItemStack(oreID, 1, oreMeta));
@@ -435,8 +453,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		}
 	}
 
-	public void registerNames() {
-		if(type == RESPAWN)
+	public void registerNames() 
+	{
+		if(type == RESPAWN || !enabled)
 			return;
 		
 		if(type.generates() && ore != null)
@@ -595,5 +614,11 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public int getDropAmountMax() 
 	{
 		return dropMax;
+	}
+	
+	@Override
+	public boolean isEnabled()
+	{
+		return enabled;
 	}
 }

@@ -43,11 +43,11 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="3.0.0.0.9.4")
+@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="3.0.0.0.10")
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public boolean isRelease = false;
+	public boolean isRelease = true;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;
@@ -119,12 +119,11 @@ public class MetallurgyMetals {
         
         //TODO
         String filepath = event.getSourceFile().getAbsolutePath();
-        filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
         if(!isRelease)
         {
         	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
-        	//filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
-        	filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
+        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
+        	//filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
         	
         }
         
@@ -284,7 +283,7 @@ public class MetallurgyMetals {
 		int count = 0;
 		for(String name : ores)
 		{
-			if(name.contains("dust"))
+			if(name.contains("dust") && !name.toLowerCase().contains("tiny") && !name.toLowerCase().contains("clay") && !name.toLowerCase().contains("quartz"))
 			{
 				System.out.println("Adding recipe for " + name + " midasium = gold");
 				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustGold), "dustMidasium", name));

@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.0.0.0.9.4")
+@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.0.0.0.10")
 @NetworkMod(channels = {"MetallurgyCore"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyCore 
 {
