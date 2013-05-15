@@ -20,8 +20,7 @@ import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.metallurgy.integration.RailcraftIntegration;
-import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
+import rebelkeithy.mods.metallurgy.integration.IntegrationHooks;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
@@ -191,8 +190,7 @@ public class MetallurgyMetals {
 		enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
 		
 		createMidasiumRecipes();
-		ThaumcraftIntegration.init();
-		RailcraftIntegration.init();
+		IntegrationHooks.init();
 	}
 	
 	public void createUtilityItems()
