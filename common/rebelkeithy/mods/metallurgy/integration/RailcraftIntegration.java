@@ -17,7 +17,7 @@ public class RailcraftIntegration {
 	public static Item tartariteBoreHead;
 	
 	public static void init(){
-		if (Loader.isModLoaded("Railcraft")){
+		try {
 			// TODO fix item ids
 			String texLocBase = "/mods/Metallurgy/textures/misc/";
 			mithrilBoreHead = new BoreHead(7000, 2000, "borehead.mithril", texLocBase + "tunnel_bore_mithril.png", 1.6F, 5);
@@ -38,5 +38,8 @@ public class RailcraftIntegration {
 			GameRegistry.addRecipe(new ShapedOreRecipe(vulcaniteBoreHead, new Object[] {"XXX","XBX","XXX",Character.valueOf('X'),"ingotSteel",Character.valueOf('B'), "blockVulcanite"}));
 			GameRegistry.addRecipe(new ShapedOreRecipe(tartariteBoreHead, new Object[] {"XXX","XBX","XXX",Character.valueOf('X'),"ingotBlackSteel",Character.valueOf('B'), "blockTartarite"}));
 		}
+	catch (Exception e){
+		
+	}
 	}
 }
