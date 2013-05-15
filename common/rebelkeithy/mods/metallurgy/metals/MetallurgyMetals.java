@@ -20,7 +20,7 @@ import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
+import rebelkeithy.mods.metallurgy.integration.IntegrationHooks;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
@@ -47,7 +47,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public boolean isRelease = true;
+	public boolean isRelease = false;
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;
@@ -122,8 +122,8 @@ public class MetallurgyMetals {
         if(!isRelease)
         {
         	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
-        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
-        	//filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
+        	//filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
+        	filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
         	
         }
         
@@ -190,7 +190,7 @@ public class MetallurgyMetals {
 		enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
 		
 		createMidasiumRecipes();
-		ThaumcraftIntegration.init();
+		IntegrationHooks.init();
 	}
 	
 	public void createUtilityItems()

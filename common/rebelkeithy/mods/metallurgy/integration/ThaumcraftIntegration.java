@@ -10,8 +10,11 @@ import thaumcraft.api.ThaumcraftApi;
 public class ThaumcraftIntegration {
 
 	public static void init(){
-		if (Loader.isModLoaded("Thaumcraft")){
+		try{
 		addAspects();
+		}
+		catch(Exception e){
+			
 		}
 	}
 
