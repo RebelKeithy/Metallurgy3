@@ -16,15 +16,14 @@ public class RailcraftIntegration {
 	public static Item vulcaniteBoreHead;
 	public static Item tartariteBoreHead;
 	
-	public static void init(){
+	public static void init(int[] rCBoreIds){
 		try {
-			// TODO fix item ids
 			String texLocBase = "/mods/Metallurgy/textures/misc/";
-			mithrilBoreHead = new BoreHead(7000, 2000, "borehead.mithril", texLocBase + "tunnel_bore_mithril.png", 1.6F, 5);
-			celenegilBoreHead = new BoreHead(7001, 4000, "borehead.celenegil", texLocBase + "tunnel_bore_celenegil.png", 1.7F, 6);
-			kalendriteBoreHead = new BoreHead(7002, 2000, "borehead.kalendrite", texLocBase + "tunnel_bore_kalendrite.png", 1.6F, 5);
-			vulcaniteBoreHead = new BoreHead(7003, 4000, "borehead.vulcanite", texLocBase + "tunnel_bore_vulcanite.png", 1.7F, 6);
-			tartariteBoreHead = new BoreHead(7004, 12000, "borehead.tartarite", texLocBase + "tunnel_bore_tartarite.png", 1.9F, 8);
+			mithrilBoreHead = new BoreHead(rCBoreIds[0] - 256, 2000, "borehead.mithril", texLocBase + "tunnel_bore_mithril.png", 1.6F, 5);
+			celenegilBoreHead = new BoreHead(rCBoreIds[1] - 256, 4000, "borehead.celenegil", texLocBase + "tunnel_bore_celenegil.png", 1.7F, 6);
+			kalendriteBoreHead = new BoreHead(rCBoreIds[2] - 256, 2000, "borehead.kalendrite", texLocBase + "tunnel_bore_kalendrite.png", 1.6F, 5);
+			vulcaniteBoreHead = new BoreHead(rCBoreIds[3] - 256, 4000, "borehead.vulcanite", texLocBase + "tunnel_bore_vulcanite.png", 1.7F, 6);
+			tartariteBoreHead = new BoreHead(rCBoreIds[4] -256, 12000, "borehead.tartarite", texLocBase + "tunnel_bore_tartarite.png", 1.9F, 8);
 			
 			LanguageRegistry.addName(mithrilBoreHead, "Mithril Bore Head");
 			LanguageRegistry.addName(celenegilBoreHead, "Celenegil Bore Head");
