@@ -21,6 +21,7 @@ import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
+import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
@@ -143,8 +144,8 @@ public class MetallurgyMetals {
 	public void Init(FMLInitializationEvent event)
 	{
 		//TODO add config for vanilla dusts
-		dustIron = new Item(5100).setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
-		dustGold = new Item(5101).setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustIron = new Item(ConfigMachines.ironDustID).setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustGold = new Item(ConfigMachines.goldDustID).setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
 		FurnaceRecipes.smelting().addSmelting(dustIron.itemID, 0, new ItemStack(Item.ingotIron), 0.7F);
 		FurnaceRecipes.smelting().addSmelting(dustGold.itemID, 0, new ItemStack(Item.ingotGold), 0.7F);
 		

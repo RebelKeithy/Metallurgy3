@@ -1,6 +1,10 @@
 package rebelkeithy.mods.ideas;
 
+import java.io.File;
+
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import net.minecraft.block.Block;
+import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.Mod;
@@ -14,12 +18,21 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class Ideas 
 {
 	Block orenode;
+	int orenodID = 999;
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
 	{
-		orenode = new OreNode(999).setUnlocalizedName("Metallurgy:OreNode").setHardness(3);
+		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
+    	fileDir.mkdir();
+    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/MetallurgyIdeas.cfg");
+
+		Configuration config = new Configuration(cfgFile);
+		orenodID = config.get("Block IDs", "Orenod", orenodID).getInt();
 		
+		config.save();
+		
+		orenode = new OreNode(orenodID).setUnlocalizedName("Metallurgy:OreNode").setHardness(3);
 	}
 	
 	@Init

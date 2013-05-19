@@ -16,7 +16,7 @@ public class VanillaTextureReplacer
 	{
 		Icon icon = event.map.registerIcon("Metallurgy:HelmetDiamond");
 		//Minecraft.getMinecraft().renderEngine.textureMapItems.registerIcon("Metallurgy:HelmetDiamond");
-		//ReflectionHelper.setPrivateValue(ItemArmor.class, Item.helmetDiamond, icon, "field_94604_cx");
-		Item.helmetDiamond.field_94604_cx = icon;
+		ReflectionHelper.setPrivateValue(ItemArmor.class, Item.helmetDiamond, icon, "field_94604_cx");
+		//Item.helmetDiamond.field_94604_cx = icon;
 	}
 }

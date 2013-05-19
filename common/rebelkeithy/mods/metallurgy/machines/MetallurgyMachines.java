@@ -60,6 +60,7 @@ import rebelkeithy.mods.metallurgy.machines.storage.BlockStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageBlock;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
+import rebelkeithy.mods.metallurgy2.TileEntityPreciousChestCompatibility;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -143,7 +144,7 @@ public class MetallurgyMachines
 	
 	public void initEnchanter()
 	{
-		enchanter = new BlockMetallurgyEnchantmentTable(930).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setHardness(2.0F).setCreativeTab(machineTab);
+		enchanter = new BlockMetallurgyEnchantmentTable(ConfigMachines.enchanterID).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setHardness(2.0F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(enchanter, "M3Enchanter");
 		GameRegistry.registerTileEntity(TileEntityMetallurgyEnchantmentTable.class, "TileEntityM3Enchanter");
 	}
@@ -268,6 +269,7 @@ public class MetallurgyMachines
 		chest = new BlockPreciousChest(ConfigMachines.chestID).setUnlocalizedName("M3PreciousChest").setHardness(1.0F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(chest, ItemBlockPreciousChest.class, "PreciousChest");
 		GameRegistry.registerTileEntity(TileEntityPreciousChest.class, "TileEntityPreciousChest");
+		GameRegistry.registerTileEntity(TileEntityPreciousChestCompatibility.class, "PreciousChest");
 		LanguageRegistry.addName(new ItemStack(chest, 1, 0), "Brass Chest");
 		LanguageRegistry.addName(new ItemStack(chest, 1, 1), "Silver Chest");
 		LanguageRegistry.addName(new ItemStack(chest, 1, 2), "Gold Chest");
@@ -338,12 +340,13 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 1), "Deep Iron Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 2), "Black Steel Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 3), "Oureclase Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 4), "Mithril Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 5), "Haderoth Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 6), "Orichalcum Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 7), "Adamantine Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 8), "Atlarus Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Tartarite Abstractor");		
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 4), "Aredrite Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 5), "Mithril Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 6), "Haderoth Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 7), "Orichalcum Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 8), "Adamantine Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Atlarus Abstractor");
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 10), "Tartarite Abstractor");		
 	}
 	
 	public void createMachineRecipes()
@@ -398,13 +401,14 @@ public class MetallurgyMachines
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotDeep Iron", 'O', new ItemStack(abstractor, 1, 0)));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBlack Steel", 'O', new ItemStack(abstractor, 1, 1)));
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotOureclase", 'O', new ItemStack(abstractor, 1, 2)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotMithril", 'O', new ItemStack(abstractor, 1, 3)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotHaderoth", 'O', new ItemStack(abstractor, 1, 4)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotOrichalcum", 'O', new ItemStack(abstractor, 1, 5)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotAdamantine", 'O', new ItemStack(abstractor, 1, 6)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 8), "XXX", "XOX", "XXX", 'X', "ingotAtlarus", 'O', new ItemStack(abstractor, 1, 7)));
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 9), "XXX", "XOX", "XXX", 'X', "ingotTartarite", 'O', new ItemStack(abstractor, 1, 8)));
-		}
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotAredrite", 'O', new ItemStack(abstractor, 1, 3)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotMithril", 'O', new ItemStack(abstractor, 1, 4)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotHaderoth", 'O', new ItemStack(abstractor, 1, 5)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotOrichalcum", 'O', new ItemStack(abstractor, 1, 6)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 8), "XXX", "XOX", "XXX", 'X', "ingotAdamantine", 'O', new ItemStack(abstractor, 1, 7)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 9), "XXX", "XOX", "XXX", 'X', "ingotAtlarus", 'O', new ItemStack(abstractor, 1, 8)));
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 10), "XXX", "XOX", "XXX", 'X', "ingotTartarite", 'O', new ItemStack(abstractor, 1, 9)));
+			}
 		
 		//Mint Recipes
 		if(ConfigMachines.mintEnabled)

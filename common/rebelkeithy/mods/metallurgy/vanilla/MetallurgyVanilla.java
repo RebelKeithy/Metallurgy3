@@ -5,6 +5,7 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.util.Icon;
 import net.minecraftforge.common.MinecraftForge;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
@@ -18,6 +19,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 @Mod(modid="Metallurgy3Vanilla", name="Metallurgy 3 Vanilla", version="3.0.0.0.10")
 @NetworkMod(channels = {"MetallurgyVanilla"}, clientSideRequired = true, serverSideRequired = false)
@@ -55,7 +57,7 @@ public class MetallurgyVanilla
 
 		//Icon icon = event.map.registerIcon("Metallurgy:HelmetDiamond");
 		Icon icon = Minecraft.getMinecraft().renderEngine.textureMapItems.registerIcon("Metallurgy:HelmetDiamond");
-		//ReflectionHelper.setPrivateValue(ItemArmor.class, Item.helmetDiamond, icon, "field_94604_cx");
-		Item.helmetDiamond.field_94604_cx = icon;
+		ReflectionHelper.setPrivateValue(ItemArmor.class, Item.helmetDiamond, icon, "field_94604_cx");
+		//Item.helmetDiamond.field_94604_cx = icon;
 	}
 }
