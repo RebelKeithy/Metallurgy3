@@ -20,6 +20,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid="Metallurgy3Vanilla", name="Metallurgy 3 Vanilla", version="3.0.0.0.10")
 @NetworkMod(channels = {"MetallurgyVanilla"}, clientSideRequired = true, serverSideRequired = false)
@@ -52,6 +54,7 @@ public class MetallurgyVanilla
 	}
 	
 	@PostInit
+    @SideOnly(Side.CLIENT)
 	public void PostInit(FMLPostInitializationEvent event)
 	{
 

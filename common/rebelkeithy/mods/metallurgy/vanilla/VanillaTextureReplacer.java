@@ -1,6 +1,8 @@
 package rebelkeithy.mods.metallurgy.vanilla;
 
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.item.Item;
@@ -12,6 +14,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class VanillaTextureReplacer 
 {
 	@ForgeSubscribe
+    @SideOnly(Side.CLIENT)
 	public void onTextureLoad(TextureStitchEvent event)
 	{
 		Icon icon = event.map.registerIcon("Metallurgy:HelmetDiamond");
