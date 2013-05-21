@@ -302,7 +302,7 @@ public class BlockAbstractor extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-    	for(int i = 0; i < 10; i++)
+    	for(int i = 0; i < 11; i++)
     	{
     		Icon[] iArray = new Icon[5];
     		iArray[front] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Front");
@@ -318,7 +318,7 @@ public class BlockAbstractor extends BlockContainer
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int n = 0; n < 10; n++) {
+		for (int n = 0; n < 11; n++) {
 			par3List.add(new ItemStack(this, 1, n));
 		}
 	}

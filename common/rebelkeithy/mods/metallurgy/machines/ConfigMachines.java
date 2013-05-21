@@ -40,7 +40,8 @@ public class ConfigMachines
 	public static int mintID = 915;
 	public static boolean mintStorageEnabled = true;
 	public static int mintStorageID = 916;
-	
+
+	public static int enchanterID = 930;
 	
 	public static int coinID = 29002;
 	public static int stackID = 29003;
@@ -57,8 +58,8 @@ public class ConfigMachines
 	public static boolean ladderEnabled = true;
 	public static int ladderID = 919;
 	
-	private static int ironDustID = 29000;
-	private static int goldDustID = 29001;
+	public static int ironDustID = 5100;
+	public static int goldDustID = 5101;
 	public static int[] extractorSpeeds = new int[11];
 	public static double[] xpBonus = new double [11];
 	
@@ -88,12 +89,15 @@ public class ConfigMachines
 		lanternID = config.get("Block IDs", "Lanterns", lanternID).getInt();
 		ladderID = config.get("Block IDs", "Ladders", ladderID).getInt();
 		
+		enchanterID = config.get("Block IDs", "Enchanter", enchanterID).getInt();
+		
 		ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
-		goldDustID = config.get("Item IDs", "Iron Dust", goldDustID).getInt();
+		goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();
 		coinID = config.get("Item IDs", "Coin", coinID).getInt();
 		stackID = config.get("Item IDs", "Stack", stackID).getInt();
 		coinBagID = config.get("Item IDs", "Coin Bag", coinBagID).getInt();
 		bullionID = config.get("Item IDs", "Bullion", bullionID).getInt();
+		goldCogID = config.get("Item IDs", "Gog Cog", goldCogID).getInt();
 		glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
 		
 		tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);

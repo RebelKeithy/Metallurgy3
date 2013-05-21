@@ -126,6 +126,7 @@ public class MetalInfoDatabase
 			readItemData(config, in, tab);
 		} catch (IOException e) {
 			e.printStackTrace();
+			readItemDataFromFile (config, jarpath+"/"+filename, tab);
 		}
 	}
 	
@@ -151,6 +152,7 @@ public class MetalInfoDatabase
 			readOreData(in);
 		} catch (IOException e) {
 			e.printStackTrace();
+			readMetalDataFromFile (jarpath+"/"+filename);
 		}
 	}
 	

@@ -52,8 +52,8 @@ public class MetaBlock extends Block {
 	{
 		super(id, Material.rock);
 		System.out.println("test");
-		subBlocks = new SubBlock[16];
-		//for(int i = 0; i > 16; i++)
+		subBlocks = new SubBlock[17];
+		//for(int i = 0; i > 17; i++)
 		//	subBlocks[i] = air;
 		
 		tickList = new ArrayList();
@@ -84,7 +84,7 @@ public class MetaBlock extends Block {
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) 
 	{
-		for (int n = 0; n < 16; n++) 
+		for (int n = 0; n < 17; n++) 
 		{
 			if(subBlocks[n] != null && par2CreativeTabs == subBlocks[n].getCreativeTab())
 			{
@@ -142,7 +142,7 @@ public class MetaBlock extends Block {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-        for (int i = 0; i < 16; ++i)
+        for (int i = 0; i < 17; ++i)
         {
             if(subBlocks[i] != null)
             {
