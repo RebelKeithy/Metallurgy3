@@ -37,7 +37,7 @@ public class MetallurgyVanilla
 		
 		VanillaAddons.init();
 
-		MinecraftForge.ORE_GEN_BUS.register(new VanillaTextureReplacer());
+		//MinecraftForge.ORE_GEN_BUS.register(new VanillaTextureReplacer());
 		//MinecraftForge.ORE_GEN_BUS.register(new VanillaOreInhibitor());
 		
 	}
@@ -52,10 +52,5 @@ public class MetallurgyVanilla
 	@PostInit
 	public void PostInit(FMLPostInitializationEvent event)
 	{
-
-		//Icon icon = event.map.registerIcon("Metallurgy:HelmetDiamond");
-		Icon icon = Minecraft.getMinecraft().renderEngine.textureMapItems.registerIcon("Metallurgy:HelmetDiamond");
-		//ReflectionHelper.setPrivateValue(ItemArmor.class, Item.helmetDiamond, icon, "field_94604_cx");
-		Item.helmetDiamond.field_94604_cx = icon;
 	}
 }
