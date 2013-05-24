@@ -88,7 +88,10 @@ public class MetalSet implements IMetalSet
 	
 	public OreInfo getOreInfo(String name)
 	{
-		return (OreInfo)metals.get(name);
+		if(metals.containsKey(name))
+			return (OreInfo)metals.get(name);
+		else
+			return new OreInfo();
 	}
 
 	public OreInfo getOreInfo(int meta) 

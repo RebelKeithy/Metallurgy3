@@ -122,7 +122,7 @@ public class MetallurgyMetals {
         if(!isRelease)
         {
         	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
-        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/eclipse/Metallurgy 3/mods/Metallurgy.jar";
+        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/mods/Metallurgy.jar";
         	//filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
         	
         }
@@ -158,20 +158,33 @@ public class MetallurgyMetals {
 		createUtilityItems();
 		utilityConfig.save();
 
-		fantasySet.getOreInfo("Astral Silver").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.8, 0.95));
-		fantasySet.getOreInfo("Carmot").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.4));
-		fantasySet.getOreInfo("Mithril").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.9, 0.95));
-		fantasySet.getOreInfo("Orichalcum").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.3, 0.5, 0.15));
-		fantasySet.getOreInfo("Adamantine").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.5, 0.2, 0.2));
-		fantasySet.getOreInfo("Atlarus").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.2));
-		
-		netherSet.getOreInfo("Midasium").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 1.0, 0.8, 0.25));
-		netherSet.getOreInfo("Vyroxeres").ore.addDisplayListener(new DisplayListenerVyroxeresOreParticles());
-		netherSet.getOreInfo("Ceruclase").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.35, 0.6, 0.9));
-		netherSet.getOreInfo("Kalendrite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.8, 0.4, 0.8));
-		netherSet.getOreInfo("Vulcanite").ore.addDisplayListener(new DisplayListenerVulcaniteOreParticles());
-		netherSet.getOreInfo("Sanguinite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.85, 0.0, 0.0));
-		
+		if(fantasySet.getOreInfo("Atral Silver").ore != null)
+			fantasySet.getOreInfo("Astral Silver").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.8, 0.95));
+		if(fantasySet.getOreInfo("Carmot").ore != null)
+			fantasySet.getOreInfo("Carmot").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.4));
+		if(fantasySet.getOreInfo("Mithril").ore != null)
+			fantasySet.getOreInfo("Mithril").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.9, 0.95));
+		if(fantasySet.getOreInfo("Orichalcum").ore != null)
+			fantasySet.getOreInfo("Orichalcum").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.3, 0.5, 0.15));
+		if(fantasySet.getOreInfo("Adamantine").ore != null)
+			fantasySet.getOreInfo("Adamantine").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.5, 0.2, 0.2));
+		if(fantasySet.getOreInfo("Atlarus").ore != null)
+			fantasySet.getOreInfo("Atlarus").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.8, 0.8, 0.2));
+
+		if(netherSet.getOreInfo("Midasium").ore != null)
+			netherSet.getOreInfo("Midasium").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 1.0, 0.8, 0.25));
+		if(netherSet.getOreInfo("Vyroxeres").ore != null)
+			netherSet.getOreInfo("Vyroxeres").ore.addDisplayListener(new DisplayListenerVyroxeresOreParticles());
+		if(netherSet.getOreInfo("Ceruclase").ore != null)
+			netherSet.getOreInfo("Ceruclase").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.35, 0.6, 0.9));
+		if(netherSet.getOreInfo("Kalendrite").ore != null)
+			netherSet.getOreInfo("Kalendrite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.8, 0.4, 0.8));
+		if(netherSet.getOreInfo("Vulcanite").ore != null)
+			netherSet.getOreInfo("Vulcanite").ore.addDisplayListener(new DisplayListenerVulcaniteOreParticles());
+		if(netherSet.getOreInfo("Sanguinite").ore != null)
+			netherSet.getOreInfo("Sanguinite").ore.addDisplayListener(new DisplayListenerOreParticles("NetherOre", 0.85, 0.0, 0.0));
+
+		if(netherSet.getOreInfo("Sanguinite").ore != null)
 		netherSet.getOreInfo("Vyroxeres").ore.addCollisionListener(new VyroxeresCollisionListener());
 		
 		addRailRecipes();
@@ -183,11 +196,16 @@ public class MetallurgyMetals {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		baseTab.setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
-		preciousTab.setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
-		netherTab.setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
-		fantasyTab.setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
-		enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
+		if(baseSet.getOreInfo("Steel").helmet != null)
+			baseTab.setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
+		if(preciousSet.getOreInfo("Platinum").helmet != null)
+			preciousTab.setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
+		if(netherSet.getOreInfo("Sanguinite").helmet != null)
+			netherTab.setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
+		if(fantasySet.getOreInfo("Tartarite").helmet != null)
+			fantasyTab.setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
+		if(enderSet.getOreInfo("Desichalkos").helmet != null)
+			enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
 		
 		createMidasiumRecipes();
 		ThaumcraftIntegration.init();
@@ -296,56 +314,129 @@ public class MetallurgyMetals {
 	{
 		ISwordHitListener swordEffects = new NetherSwordHitListener();
 		MinecraftForge.EVENT_BUS.register(swordEffects); // Registers the on death event needed by Midasium's looting effect
-		netherSet.getOreInfo("Ignatius").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Ignatius").sword.setSubText("cIgnite I");
-		netherSet.getOreInfo("Shadow Iron").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Shadow Iron").sword.setSubText("cWeakness I");
-		netherSet.getOreInfo("Shadow Steel").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Shadow Steel").sword.setSubText("7Weakness II");
-		// Midsium'ss effect comes from the onDeath event, not the onHit method
-		netherSet.getOreInfo("Midasium").sword.setSubText("7Looting I");
-		netherSet.getOreInfo("Vyroxeres").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Vyroxeres").sword.setSubText("cPoison I");
-		netherSet.getOreInfo("Ceruclase").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Ceruclase").sword.setSubText("cSlowness");
-		netherSet.getOreInfo("Inolashite").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Inolashite").sword.setSubText("7Poison, Slowness");
-		netherSet.getOreInfo("Kalendrite").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Kalendrite").sword.setSubText("7Regen");
-		netherSet.getOreInfo("Amordrine").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Amordrine").sword.setSubText("7Healing");
-		netherSet.getOreInfo("Vulcanite").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Vulcanite").sword.setSubText("cIgnite II");
-		netherSet.getOreInfo("Sanguinite").sword.addHitListener(swordEffects);
-		netherSet.getOreInfo("Sanguinite").sword.setSubText("cWither I");
+		if(netherSet.getOreInfo("Ignatius").sword != null)
+		{
+			netherSet.getOreInfo("Ignatius").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Ignatius").sword.setSubText("cIgnite I");
+		}
+		if(netherSet.getOreInfo("Shadow Iron").sword != null)
+		{
+			netherSet.getOreInfo("Shadow Iron").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Shadow Iron").sword.setSubText("cWeakness I");
+		}
+		if(netherSet.getOreInfo("Shadow Steel").sword != null)
+		{
+			netherSet.getOreInfo("Shadow Steel").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Shadow Steel").sword.setSubText("7Weakness II");
+		}
+		if(netherSet.getOreInfo("Midasium").sword != null)
+		{
+			// Midsium'ss effect comes from the onDeath event, not the onHit method
+			netherSet.getOreInfo("Midasium").sword.setSubText("7Looting I");
+		}
+		if(netherSet.getOreInfo("Vyroxeres").sword != null)
+		{
+			netherSet.getOreInfo("Vyroxeres").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Vyroxeres").sword.setSubText("cPoison I");
+		}
+		if(netherSet.getOreInfo("Ceruclase").sword != null)
+		{
+			netherSet.getOreInfo("Ceruclase").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Ceruclase").sword.setSubText("cSlowness");
+		}
+		if(netherSet.getOreInfo("Inolashite").sword != null)
+		{
+			netherSet.getOreInfo("Inolashite").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Inolashite").sword.setSubText("7Poison, Slowness");
+		}
+		if(netherSet.getOreInfo("Kalendrite").sword != null)
+		{
+			netherSet.getOreInfo("Kalendrite").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Kalendrite").sword.setSubText("7Regen");
+		}
+		if(netherSet.getOreInfo("Amordrine").sword != null)
+		{
+			netherSet.getOreInfo("Amordrine").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Amordrine").sword.setSubText("7Healing");
+		}
+		if(netherSet.getOreInfo("Vulcanite").sword != null)
+		{
+			netherSet.getOreInfo("Vulcanite").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Vulcanite").sword.setSubText("cIgnite II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			netherSet.getOreInfo("Sanguinite").sword.addHitListener(swordEffects);
+			netherSet.getOreInfo("Sanguinite").sword.setSubText("cWither I");
+		}
 		
 		swordEffects = new FantasySwordHitListener();
 		MinecraftForge.EVENT_BUS.register(swordEffects); // Registers the on death event needed by Astral Silver's and Carmot's looting effect
-		fantasySet.getOreInfo("Deep Iron").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Deep Iron").sword.setSubText("cBlindness I");
-		fantasySet.getOreInfo("Black Steel").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Black Steel").sword.setSubText("cBlindness II");
-		fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
-		//fantasySet.getOreInfo("Astral Silver").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Astral Silver").sword.setSubText("7Looting I");
-		//fantasySet.getOreInfo("Carmot").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Carmot").sword.setSubText("7Looting II");
-		fantasySet.getOreInfo("Mithril").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Mithril").sword.setSubText("7Haste I");
-		fantasySet.getOreInfo("Quicksilver").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Quicksilver").sword.setSubText("7Speed I");
-		fantasySet.getOreInfo("Haderoth").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Haderoth").sword.setSubText("cHaste I, Ignite II");
-		fantasySet.getOreInfo("Orichalcum").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Orichalcum").sword.setSubText("cResistance II");
-		fantasySet.getOreInfo("Celenegil").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Celenegil").sword.setSubText("7Resistance III");
-		fantasySet.getOreInfo("Adamantine").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Adamantine").sword.setSubText("7Fire Resist I, Ignite II");
-		fantasySet.getOreInfo("Atlarus").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Atlarus").sword.setSubText("7Strength II");
-		fantasySet.getOreInfo("Tartarite").sword.addHitListener(swordEffects);
-		fantasySet.getOreInfo("Tartarite").sword.setSubText("cWither, Igntite II");
+		
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Deep Iron").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Deep Iron").sword.setSubText("cBlindness I");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Black Steel").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Black Steel").sword.setSubText("cBlindness II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			//fantasySet.getOreInfo("Astral Silver").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Astral Silver").sword.setSubText("7Looting I");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			//fantasySet.getOreInfo("Carmot").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Carmot").sword.setSubText("7Looting II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Mithril").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Mithril").sword.setSubText("7Haste I");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Quicksilver").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Quicksilver").sword.setSubText("7Speed I");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Haderoth").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Haderoth").sword.setSubText("cHaste I, Ignite II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Orichalcum").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Orichalcum").sword.setSubText("cResistance II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Celenegil").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Celenegil").sword.setSubText("7Resistance III");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Adamantine").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Adamantine").sword.setSubText("7Fire Resist I, Ignite II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Atlarus").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Atlarus").sword.setSubText("7Strength II");
+		}
+		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		{
+			fantasySet.getOreInfo("Tartarite").sword.addHitListener(swordEffects);
+			fantasySet.getOreInfo("Tartarite").sword.setSubText("cWither, Igntite II");
+		}
 	}
 }

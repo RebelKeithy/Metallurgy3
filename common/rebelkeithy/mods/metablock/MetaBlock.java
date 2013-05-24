@@ -108,7 +108,10 @@ public class MetaBlock extends Block {
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
 		int meta = par1World.getBlockMetadata(par2, par3, par4);
-    	AxisAlignedBB ret = subBlocks[meta].getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
+		
+		AxisAlignedBB ret = null;
+		if(subBlocks[meta] != null)
+			ret = subBlocks[meta].getCollisionBoundingBoxFromPool(par1World, par2, par3, par4);
     	
     	if(ret != null)
     		return ret;
@@ -125,7 +128,11 @@ public class MetaBlock extends Block {
     public void randomDisplayTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
         int meta = par1World.getBlockMetadata(par2, par3, par4);
-        subBlocks[meta].randomDisplayTick(par1World, par2, par3, par4, par5Random);
+        
+        if(subBlocks[meta] != null)
+        	subBlocks[meta].randomDisplayTick(par1World, par2, par3, par4, par5Random);
+        else
+        	super.randomDisplayTick(par1World, par2, par3, par4, par5Random);
     }
 	
 	//--Block Redirect Methods--//
@@ -135,7 +142,11 @@ public class MetaBlock extends Block {
     public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
     {
 		int meta = par1IBlockAccess.getBlockMetadata(x, y, z);
-		return subBlocks[meta].getBlockTexture(par1IBlockAccess, x, y, z, side);
+		
+        if(subBlocks[meta] != null)
+        	return subBlocks[meta].getBlockTexture(par1IBlockAccess, x, y, z, side);
+        else
+        	return super.getBlockTexture(par1IBlockAccess, x, y, z, side);
     }
 
     @Override

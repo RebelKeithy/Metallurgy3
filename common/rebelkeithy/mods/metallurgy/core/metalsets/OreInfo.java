@@ -120,8 +120,9 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		else if(info.get("Type").equals("Drop"))
 			type = DROP;
 		
+		System.out.println(name + " is type " + type.name());
 		alloyRecipe = info.get("Alloy Recipe").split("\" \"");
-		System.out.println("alloy recipe: " + Arrays.toString(alloyRecipe));
+		//System.out.println("alloy recipe: " + Arrays.toString(alloyRecipe));
 		for(int n = 0; n < alloyRecipe.length; n++)
 			alloyRecipe[n] = "dust" + alloyRecipe[n].replace("\"", "");
 		
@@ -160,8 +161,8 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 		abstractorXP = Integer.parseInt(info.get("Abstractor XP"));
 		blockLvl = Integer.parseInt(info.get("Block lvl"));
-		System.out.println("Block level default: " + info.get("Block lvl"));
-		System.out.println("Block level set to : " + blockLvl);
+		//System.out.println("Block level default: " + info.get("Block lvl"));
+		//System.out.println("Block level set to : " + blockLvl);
 		
 		if(type != CATALYST && type != DROP)
 		{
@@ -194,8 +195,15 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 	}
 
+	// NULL Constructor
+	public OreInfo() 
+	{
+	}
+
 	public void initConfig(Configuration config) 
 	{
+		enabled = config.get(name, "Enabled", true).getBoolean(true);
+		
 		if(!type.equals(RESPAWN))
 		{
 			String id;
@@ -217,8 +225,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 				brickID = Integer.parseInt(id.split(":")[0]);
 				brickMeta = Integer.parseInt(id.split(":")[1]);
 			}
-
-			enabled = config.get(name, "Enabled", true).getBoolean(true);
 			
 			if(type != DROP)
 			{
@@ -283,7 +289,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 				ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + setName + "/" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(tab);
 				if(type == DROP)
 				{
-					System.out.println("getting block drop " + dropName);
+					//System.out.println("getting block drop " + dropName);
 					ore.setBlockDrops(MetalInfoDatabase.getItem(dropName), dropMin, dropMax);
 				}
 			}
@@ -306,7 +312,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 			{
 				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				toolEnum.customCraftingMaterial = ingot;
-				System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
+				//System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
 				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(tab);
 				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(tab);
 				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Axe").setCreativeTab(tab);
@@ -326,6 +332,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 		if(type.generates())
 		{
+			//System.out.println(registering g);
 			GameRegistry.registerWorldGenerator(this);
 		}
 	}
@@ -430,7 +437,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 		if(type == ALLOY)
 		{
-			System.out.println("Adding alloy recipe " + alloyRecipe[0] + " + " + alloyRecipe[1] + " for " + name);
+			//System.out.println("Adding alloy recipe " + alloyRecipe[0] + " + " + alloyRecipe[1] + " for " + name);
 			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dust, 2), alloyRecipe));
 		}
 	}
@@ -517,9 +524,11 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) 
 	{
+		System.out.println("spawning " + veinCount + " ores of " + this.name);
 		if(!type.generates() || (ore == null && type != RESPAWN) || !spawnsInDim(world.provider.dimensionId))
 			return;
 		
+		System.out.println("spawning " + veinCount + " ores of " + this.name);
 		for(int n = 0; n < veinCount; n++)
 		{
 			int randPosX = chunkX*16 + random.nextInt(16);

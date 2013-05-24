@@ -37,14 +37,17 @@ public class MetallurgyVanilla
 		
 		VanillaAddons.init();
 
+		vanillaSet.initConfig();
 		//MinecraftForge.ORE_GEN_BUS.register(new VanillaTextureReplacer());
-		//MinecraftForge.ORE_GEN_BUS.register(new VanillaOreInhibitor());
+		MinecraftForge.ORE_GEN_BUS.register(new VanillaOreInhibitor());
 		
 	}
 	
 	@Init
 	public void Init(FMLInitializationEvent event)
 	{		
+		
+		vanillaSet.init();
 		VanillaAddons.load();
 		proxy.registerNames();
 	}
