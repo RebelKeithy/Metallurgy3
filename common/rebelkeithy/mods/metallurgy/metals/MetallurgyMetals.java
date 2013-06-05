@@ -23,6 +23,7 @@ import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import rebelkeithy.mods.metallurgy.core.metalsets.OreInfo;
 import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
+import rebelkeithy.mods.metallurgy.integration.TreeCapitatorIntegration;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
@@ -232,6 +233,8 @@ public class MetallurgyMetals {
 		addSwordEffects();
 		
 		proxy.registerParticles();
+		
+		TreeCapitatorIntegration.init();
 	}
 	
 	@PostInit
