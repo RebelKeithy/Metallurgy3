@@ -143,7 +143,7 @@ public class MetallurgyMachines
 	
 	public void initEnchanter()
 	{
-		enchanter = new BlockMetallurgyEnchantmentTable(930).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setHardness(2.0F).setCreativeTab(machineTab);
+		enchanter = new BlockMetallurgyEnchantmentTable(ConfigMachines.enchanterID).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setHardness(2.0F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(enchanter, "M3Enchanter");
 		GameRegistry.registerTileEntity(TileEntityMetallurgyEnchantmentTable.class, "TileEntityM3Enchanter");
 	}
@@ -226,7 +226,7 @@ public class MetallurgyMachines
 	
 	public void initLantern()
 	{
-		lantern = new BlockLantern(ConfigMachines.lanternID).setUnlocalizedName("M3Lantern").setLightValue(0.5F).setCreativeTab(machineTab);
+		lantern = new BlockLantern(ConfigMachines.lanternID).setHardness(0.1F).setUnlocalizedName("M3Lantern").setLightValue(1F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(lantern, ItemBlockLantern.class, "M3Lantern");
 		GameRegistry.registerTileEntity(TileEntityLantern.class, "TileEntityLantern");
 		LanguageRegistry.addName(new ItemStack(lantern, 1, 0), "Red Lantern");

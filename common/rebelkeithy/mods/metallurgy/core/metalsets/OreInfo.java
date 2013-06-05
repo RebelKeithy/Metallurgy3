@@ -202,33 +202,33 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
 	public void initConfig(Configuration config) 
 	{
-		enabled = config.get(name, "Enabled", true).getBoolean(true);
+		enabled = config.get("!Enable.Enable Metals", "Enable " + name, true).getBoolean(true);
 		
 		if(!type.equals(RESPAWN))
 		{
 			String id;
 			if((type == ORE || type == CATALYST || type == DROP) && oreID != 0)
 			{
-				id = config.get(name + ".IDs", "Ore", oreID + ":" + oreMeta).getString();
+				id = config.get("#Block IDs", name + " Ore", oreID + ":" + oreMeta).getString();
 				oreID = Integer.parseInt(id.split(":")[0]);
 				oreMeta = Integer.parseInt(id.split(":")[1]);
 			}
 			if(type != DROP && blockID != 0)
 			{
-				id = config.get(name + ".IDs", "Block", blockID + ":" + blockMeta).getString();
+				id = config.get("#Block IDs", name + " Block", blockID + ":" + blockMeta).getString();
 				blockID = Integer.parseInt(id.split(":")[0]);
 				blockMeta = Integer.parseInt(id.split(":")[1]);
 			}
 			if(type != DROP && brickID != 0)
 			{
-				id = config.get(name + ".IDs", "Brick", brickID + ":" + brickMeta).getString();
+				id = config.get("#Block IDs", name + " Brick", brickID + ":" + brickMeta).getString();
 				brickID = Integer.parseInt(id.split(":")[0]);
 				brickMeta = Integer.parseInt(id.split(":")[1]);
 			}
 			
 			if(type != DROP)
 			{
-				itemIDs = config.get(name + ".IDs", "Item IDs (reserves 50)", itemIDs).getInt();
+				itemIDs = config.get("#Item IDs", name + " Item IDs (reserves 50)", itemIDs).getInt();
 			
 				abstractorXP = config.get(name + ".misc", "abstractor xp", abstractorXP).getInt();
 			}
@@ -374,10 +374,12 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		if(block != null)
 		{
 			MinecraftForge.setBlockHarvestLevel(block.getBlock(), blockMeta, "pickaxe", blockLvl);
+			block.setHardness(5F).setResistance(10F);
 		}
 		if(brick != null)
 		{
 			MinecraftForge.setBlockHarvestLevel(brick.getBlock(), brickMeta, "pickaxe", blockLvl);
+			brick.setHardness(5F).setResistance(10F);
 		}
 	}
 	
@@ -524,11 +526,18 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) 
 	{
-		System.out.println("spawning " + veinCount + " ores of " + this.name);
-		if(!type.generates() || (ore == null && type != RESPAWN) || !spawnsInDim(world.provider.dimensionId))
+		if(!type.generates() || (ore == null && type != RESPAWN))
 			return;
 		
-		System.out.println("spawning " + veinCount + " ores of " + this.name);
+		if(!spawnsInDim(world.provider.dimensionId))
+			return;
+		
+		if(oreID == Block.oreNetherQuartz.blockID)
+		{
+			System.out.println("generating quartz");
+			System.out.println(Arrays.toString(this.diminsions));
+		}
+		
 		for(int n = 0; n < veinCount; n++)
 		{
 			int randPosX = chunkX*16 + random.nextInt(16);

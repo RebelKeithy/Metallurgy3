@@ -15,11 +15,13 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
+import rebelkeithy.mods.metallurgy.core.metalsets.OreInfo;
 import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
@@ -56,12 +58,12 @@ public class MetallurgyMetals {
 	public static MetalSet enderSet;
 	public static MetalSet utilitySet;
 	
-	public static MetallurgyTabs baseTab;
-	public static MetallurgyTabs preciousTab;
-	public static MetallurgyTabs netherTab;
-	public static MetallurgyTabs fantasyTab;
-	public static MetallurgyTabs enderTab;
-	public static MetallurgyTabs utilityTab;
+	public static CreativeTabs baseTab;
+	public static CreativeTabs preciousTab;
+	public static CreativeTabs netherTab;
+	public static CreativeTabs fantasyTab;
+	public static CreativeTabs enderTab;
+	public static CreativeTabs utilityTab;
 	
 	public static Configuration baseConfig;
 	public static Configuration utilityConfig;
@@ -87,7 +89,7 @@ public class MetallurgyMetals {
 	public static MetallurgyMetals instance;
 
 
-	public static Potion potion;
+	//public static Potion potion;
 
 	
 	@PreInit
@@ -101,14 +103,22 @@ public class MetallurgyMetals {
         
         fantasyConfig = initConfig("Fantasy");
         
-        potion = new MetallurgyPotion(21, false, 8356754).setPotionName("Low Gravity");
+        //potion = new MetallurgyPotion(21, false, 8356754).setPotionName("Low Gravity");
         
-		baseTab = new MetallurgyTabs("Metallurgy: Base");
-		preciousTab = new MetallurgyTabs("Metallurgy: Precious");
-		netherTab = new MetallurgyTabs("Metallurgy: Nether");
-		fantasyTab = new MetallurgyTabs("Metallurgy: Fantasy");
-		enderTab = new MetallurgyTabs("Metallurgy: Ender");
-        utilityTab = new MetallurgyTabs("Metallurgy: Utility");
+        if(isSetEnabled("Base"))
+        	baseTab = new MetallurgyTabs("Metallurgy: Base");
+        else
+        	baseTab = CreativeTabs.tabBlock;
+        if(isSetEnabled("Precious"))
+        	preciousTab = new MetallurgyTabs("Metallurgy: Precious");
+        if(isSetEnabled("Nether"))
+        	netherTab = new MetallurgyTabs("Metallurgy: Nether");
+        if(isSetEnabled("Fantasy"))
+        	fantasyTab = new MetallurgyTabs("Metallurgy: Fantasy");
+        if(isSetEnabled("Ender"))
+        	enderTab = new MetallurgyTabs("Metallurgy: Ender");
+        if(isSetEnabled("Utility"))
+        	utilityTab = new MetallurgyTabs("Metallurgy: Utility");
         
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Base", "Metallurgy: Base");
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Precious", "Metallurgy: Precious");
@@ -124,11 +134,15 @@ public class MetallurgyMetals {
         	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
         	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/mods/Metallurgy.jar";
         	//filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
+        	MetalInfoDatabase.readMetalDataFromFile("C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/spreadsheet.csv");
+    		MetalInfoDatabase.readItemDataFromFile(utilityConfig, "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/Items.csv", utilityTab);
         	
-        }
+        } else {
         
-		MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
-		MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
+        	MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
+    		MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
+        
+        }
 		
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
@@ -139,6 +153,33 @@ public class MetallurgyMetals {
 		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), utilityTab);
 	}
 	
+	private boolean isSetEnabled(String setName) 
+	{
+
+		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
+    	fileDir.mkdir();
+    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/Metallurgy" + setName + ".cfg");
+    	
+        try
+        {
+            cfgFile.createNewFile();
+            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3's metal set " + setName);
+        }
+        catch (IOException e)
+        {
+            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set " + setName + ". Reason:");
+            System.out.println(e);
+        }
+        
+        Configuration config = new Configuration(cfgFile);
+		config.load();
+		
+		boolean enabled = config.get("!Enable", "Enable " + setName + " Set", true).getBoolean(true);
+		
+		config.save();
+		return enabled;
+	}
+
 	@Init
 	public void Init(FMLInitializationEvent event)
 	{
@@ -197,15 +238,15 @@ public class MetallurgyMetals {
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		if(baseSet.getOreInfo("Steel").helmet != null)
-			baseTab.setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
+			((MetallurgyTabs)baseTab).setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
 		if(preciousSet.getOreInfo("Platinum").helmet != null)
-			preciousTab.setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
+			((MetallurgyTabs)preciousTab).setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
 		if(netherSet.getOreInfo("Sanguinite").helmet != null)
-			netherTab.setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
+			((MetallurgyTabs)netherTab).setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
 		if(fantasySet.getOreInfo("Tartarite").helmet != null)
-			fantasyTab.setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
+			((MetallurgyTabs)fantasyTab).setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
 		if(enderSet.getOreInfo("Desichalkos").helmet != null)
-			enderTab.setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
+			((MetallurgyTabs)enderTab).setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
 		
 		createMidasiumRecipes();
 		ThaumcraftIntegration.init();
@@ -216,54 +257,74 @@ public class MetallurgyMetals {
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this.dustIron, 2), "dustShadow Iron", "dustIgnatius"));
 
-		
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
-		largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
-		GameRegistry.registerBlock(largeTNT, "M3HETNT");
-		EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
-		LanguageRegistry.addName(largeTNT, "HE TNT");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PMP", "MTM", "PMP", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+		if(id != 0)
+		{
+			largeTNT = new BlockLargeTNT(id).setUnlocalizedName("M3HETNT").setCreativeTab(utilityTab);
+			GameRegistry.registerBlock(largeTNT, "M3HETNT");
+			EntityRegistry.registerModEntity(EntityLargeTNTPrimed.class, "LargeTNTEntity", 113, this, 64, 10, true);
+			LanguageRegistry.addName(largeTNT, "HE TNT");
+			if(utilityConfig.get("Recipes", "Enable HE TNT", true).getBoolean(true))
+			{
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PMP", "MTM", "PMP", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+			}
+		}
 		
 		id = utilityConfig.get("Item IDs", "LE TNT", 921).getInt();
-		minersTNT = new BlockMinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
-		GameRegistry.registerBlock(minersTNT, "M3LETNT");
-		EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
-		LanguageRegistry.addName(minersTNT, "LE TNT");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
+		if(id != 0)
+		{
+			minersTNT = new BlockMinersTNT(id).setUnlocalizedName("M3LETNT").setCreativeTab(utilityTab);
+			GameRegistry.registerBlock(minersTNT, "M3LETNT");
+			EntityRegistry.registerModEntity(EntityMinersTNTPrimed.class, "MinersTNTEntity", 113, this, 64, 10, true);
+			LanguageRegistry.addName(minersTNT, "LE TNT");
+			if(utilityConfig.get("Recipes", "Enable LE TNT", true).getBoolean(true))
+			{
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
+			}
+		}
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
 		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
-
+		if(utilityConfig.get("Recipes", "Enable Magnesium Igniter", true).getBoolean(true))
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
+		}
+		
 		id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
 		match = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(match, "Match");
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(match), "X", "|", 'X', "dustPhosphorus", '|', Item.stick));
+		if(utilityConfig.get("Recipes", "Enable Match", true).getBoolean(true))
+		{
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(match), "X", "|", 'X', "dustPhosphorus", '|', Item.stick));
+		}
 		
 		id = utilityConfig.get("Item IDs", "Fertilizer", 29009).getInt();
 		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:Utility/Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustPotash"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustSaltpeter", "dustPotash"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustSaltpeter", "dustMagnesium", "dustPotash"));
+		if(utilityConfig.get("Recipes", "Enable Fertilizer", true).getBoolean(true))
+		{
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustPotash"));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustMagnesium", "dustSaltpeter"));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustPhosphorus", "dustSaltpeter", "dustPotash"));
+			GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(fertilizer, 8), "dustSaltpeter", "dustMagnesium", "dustPotash"));
+		}
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
 		id = utilityConfig.get("Item IDs", "Tar", 29010).getInt();
 		tar = new Item(id).setUnlocalizedName("Metallurgy:Utility/Tar").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
+		GameRegistry.addSmelting(MetalInfoDatabase.getItem("Bitumen").itemID, new ItemStack(tar), 0.1F);
 		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
 		GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
 		
-		GameRegistry.addSmelting(MetalInfoDatabase.getItem("Bitumen").itemID, new ItemStack(tar), 0.1F);
-		
-		utilityTab.setIconItem(fertilizer.itemID);
+		if(isSetEnabled("Utility"))
+			((MetallurgyTabs)utilityTab).setIconItem(fertilizer.itemID);
 	}
 	
 	  

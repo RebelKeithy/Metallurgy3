@@ -79,6 +79,8 @@ public class ItemOreFinder extends Item
     					name = "oreGold";
     				} else if(id == Block.oreDiamond.blockID) {
     					name = "oreDiamond";
+    				} else if(id == Block.oreNetherQuartz.blockID) {
+    					name = "oreNetherQuartz";
     				}
     				
     				if(name != null)

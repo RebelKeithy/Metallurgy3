@@ -12,8 +12,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -32,6 +34,15 @@ public class BlockLantern extends BlockContainer
     {
         super(par1, Material.wood);
         setBlockBounds(3/16F, 0/16F, 3/16F, 13/16F, 13/16F, 13/16F);
+    }
+
+    @SideOnly(Side.CLIENT)
+    /**
+     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
+     */
+    public Icon getIcon(int par1, int par2)
+    {
+        return Block.stone.getIcon(par1, par2);
     }
     
     @Override
@@ -183,19 +194,23 @@ public class BlockLantern extends BlockContainer
         return 0;
     }
 
-	@Override
-    public void breakBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    /**
+     * Called when the block is attempted to be harvested
+     */
+    public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer) 
     {
-       	spawnItem(par1World, par2, par3, par4);
-        super.breakBlock(par1World, par2, par3, par4, par5, par6);
+    	System.out.println("harvest");
+    	if(!par6EntityPlayer.capabilities.isCreativeMode)
+    		spawnItem(par1World, par2, par3, par4);
     }
     
     public void spawnItem(World par1World, int par2, int par3, int par4) 
     {
     	TileEntity te = par1World.getBlockTileEntity(par2, par3, par4);
     	int id = par1World.getBlockId(par2, par3, par4);
-    	if(te != null && id == 0)
+    	if(te != null && id != 0)
     	{
+        	System.out.println("spawn");
     		int color = ((TileEntityLantern)te).color;
 	    	ItemStack par5ItemStack = new ItemStack(this, 1, color);
 	        float var6 = 0.7F;

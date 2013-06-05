@@ -36,36 +36,45 @@ public class ThaumcraftIntegration {
 
 					case ALLOY: //only need to add ingot and dust..
 
-						if(setName == "base"){
-							ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.DESTRUCTION, 1));
-							ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.CRYSTAL, 2));
+						if(setName == "base")
+						{
+							if(dust != null)
+								ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.DESTRUCTION, 1));
+							if(ingot != null)
+								ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.CRYSTAL, 2));
 							break;
 						}
-						
-						ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.DESTRUCTION, 1));
-						ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.CRYSTAL, 1));
+
+						if(dust != null)
+							ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.DESTRUCTION, 1));
+						if(ingot != null)
+							ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.CRYSTAL, 1));
 						// TODO more special cases
 						break;
 						
 					case CATALYST: // doing all three, ill just add soem CRAFT to all of em
-						ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 5).add(EnumTag.CRAFT, 1).add(EnumTag.ROCK, 2));
-						ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.DESTRUCTION, 1).add(EnumTag.CRAFT, 1));
-						ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.CRAFT, 1));
+						if(ore != null)
+							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 5).add(EnumTag.CRAFT, 1).add(EnumTag.ROCK, 2));
+						if(dust != null)
+							ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.DESTRUCTION, 1).add(EnumTag.CRAFT, 1));
+						if(ingot != null)
+							ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.CRAFT, 1));
 
 						break;
 						
 					case DROP: // redstone ore is 2 earth 1 power 1 mechanish, gunpowder is 2 fire 2 destruction
 						
-						if(oreInfo.getName() == "Sulfur"){ //because used for gunpowder
+						if(oreInfo.getName() == "Sulfur" && ore != null){ //because used for gunpowder
 							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.EARTH, 2).add(EnumTag.FIRE, 1).add(EnumTag.DESTRUCTION, 1));
 							ItemStack drop = oreInfo.getDrop();
-							if(drop != null){
+							if(drop != null)
+							{
 								ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.FIRE, 2).add(EnumTag.DESTRUCTION, 2));
 							}
 							break;
 						}
 						
-						if(oreInfo.getName() == "Saltpeter"){ //used for fertilizer and gunpowder
+						if(oreInfo.getName() == "Saltpeter" && ore != null){ //used for fertilizer and gunpowder
 							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.EARTH, 2).add(EnumTag.CROP, 1).add(EnumTag.DESTRUCTION, 1));
 							ItemStack drop = oreInfo.getDrop();
 							if(drop != null){
@@ -74,19 +83,25 @@ public class ThaumcraftIntegration {
 							break;
 						} 
 						// TODO add more special cases
-						ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.EARTH, 2).add(EnumTag.CROP, 1).add(EnumTag.DESTRUCTION, 1));
-						ItemStack drop = oreInfo.getDrop();
-						if(drop != null){
-							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.CROP, 2).add(EnumTag.DESTRUCTION, 2));
+						if(ore != null)
+						{
+							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.EARTH, 2).add(EnumTag.CROP, 1).add(EnumTag.DESTRUCTION, 1));
+							ItemStack drop = oreInfo.getDrop();
+							if(drop != null && ore != null)
+							{
+								ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.CROP, 2).add(EnumTag.DESTRUCTION, 2));
+							}
 						}
 						break;
 					case ORE:
-						ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 5).add(EnumTag.CRAFT, 1).add(EnumTag.ROCK, 2));
-						ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.DESTRUCTION, 1).add(EnumTag.CRAFT, 1));
-						ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.CRAFT, 1));
+						if(ore != null)
+							ThaumcraftApi.registerObjectTag(ore.itemID ,ore.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 5).add(EnumTag.CRAFT, 1).add(EnumTag.ROCK, 2));
+						if(dust != null)
+							ThaumcraftApi.registerObjectTag(dust.itemID ,dust.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 6).add(EnumTag.DESTRUCTION, 1).add(EnumTag.CRAFT, 1));
+						if(ingot != null)
+							ThaumcraftApi.registerObjectTag(ingot.itemID ,ingot.getItemDamage(), (new ObjectTags()).add(EnumTag.METAL, 7).add(EnumTag.CRAFT, 1));
 						break;
 					case RESPAWN:
-						//i got no idea what to put here
 						break;
 					default:
 						break;		
@@ -94,6 +109,5 @@ public class ThaumcraftIntegration {
 				}
 			}	
 		}
-		
 	}
 }

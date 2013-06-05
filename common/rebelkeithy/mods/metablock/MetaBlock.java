@@ -226,6 +226,18 @@ public class MetaBlock extends Block {
     	
     	return 0;
     }
+    
+    @Override
+    public int getDamageValue(World world, int x, int y, int z)
+    {
+    	int meta = world.getBlockMetadata(x, y, z);
+    	if(subBlocks[meta] != null)
+    	{
+    		System.out.println("returning " + subBlocks[meta].getDamageValue(world, x, y, z));
+    		return subBlocks[meta].getDamageValue(world, x, y, z);
+    	}
+    	return meta;
+    }
 
     /**
      * Sets the CreativeTab to display this block on.

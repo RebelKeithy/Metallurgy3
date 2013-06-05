@@ -41,6 +41,8 @@ public class ConfigMachines
 	public static boolean mintStorageEnabled = true;
 	public static int mintStorageID = 916;
 	
+	public static int enchanterID = 930;
+	
 	
 	public static int coinID = 29002;
 	public static int stackID = 29003;
@@ -87,9 +89,10 @@ public class ConfigMachines
 		coloredGlassID = config.get("Block IDs", "Colored Glass", coloredGlassID).getInt();
 		lanternID = config.get("Block IDs", "Lanterns", lanternID).getInt();
 		ladderID = config.get("Block IDs", "Ladders", ladderID).getInt();
+		enchanterID = config.get("Block IDs", "Enchanter", enchanterID).getInt();
 		
 		ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
-		goldDustID = config.get("Item IDs", "Iron Dust", goldDustID).getInt();
+		goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();
 		coinID = config.get("Item IDs", "Coin", coinID).getInt();
 		stackID = config.get("Item IDs", "Stack", stackID).getInt();
 		coinBagID = config.get("Item IDs", "Coin Bag", coinBagID).getInt();

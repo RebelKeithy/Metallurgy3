@@ -50,6 +50,7 @@ public class SubBlock
 			metaBlock.addSubBlock(this, meta);
 		}
 		
+		this.meta = meta;
 		this.iconName = iconName;
 	}
 	
@@ -197,6 +198,12 @@ public class SubBlock
 			return meta;
 		else
 			return 0;
+	}
+
+	public int getDamageValue(World world, int x, int y, int z) 
+	{
+		System.out.println(meta);
+		return meta;
 	}
 
 }

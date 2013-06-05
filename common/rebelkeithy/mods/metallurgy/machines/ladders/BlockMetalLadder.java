@@ -29,7 +29,7 @@ public class BlockMetalLadder extends Block
 	
     public BlockMetalLadder(int par1)
     {
-        super(par1,Material.wood);
+        super(par1, Material.iron);
     }
 
     /**
