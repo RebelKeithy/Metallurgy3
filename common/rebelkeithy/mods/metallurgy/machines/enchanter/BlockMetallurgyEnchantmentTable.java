@@ -4,7 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
 
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
 import net.minecraft.block.Block;

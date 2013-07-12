@@ -17,12 +17,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
-import buildcraft.api.inventory.ISpecialInventory;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileEntityAbstractor extends TileEntity implements ISpecialInventory, ISidedInventory, net.minecraftforge.common.ISidedInventory
+public class TileEntityAbstractor extends TileEntity implements ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -493,6 +491,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     @Override
     public void closeChest() {}
 
+    /*
     @Override
     public int getStartInventorySide(ForgeDirection side) 
     {
@@ -506,6 +505,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     {
         return 1;
     }
+    */
 
 
 	public int getType() {
@@ -541,6 +541,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 		}
 	}
 
+	/*
 	@Override
 	public int addItem(ItemStack stack, boolean doAdd, ForgeDirection from) {		
 		int slot = 0;
@@ -579,6 +580,7 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
 	public ItemStack[] extractItem(boolean doRemove, ForgeDirection from, int maxItemCount) {
 		return null;
 	}
+	*/
 
 	@Override
 	public boolean isInvNameLocalized() {
@@ -589,7 +591,8 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
+	@Override
+    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
     {
         return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
     }
@@ -600,19 +603,19 @@ public class TileEntityAbstractor extends TileEntity implements ISpecialInventor
     @Override
     public int[] getAccessibleSlotsFromSide(int par1)
     {
-        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0, 1} : new int[] {1});
+        return par1 == 0 ? new int[] {1, 2} : (par1 == 1 ? new int[] {1, 0, 2} : new int[] {1, 2});
     }
 
 
     @Override
     public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
     {
-        return this.isStackValidForSlot(par1, par2ItemStack);
+        return this.isItemValidForSlot(par1, par2ItemStack);
     }
 
     @Override
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(int slot, ItemStack par2ItemStack, int side)
     {
-        return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+        return slot == 2;
     }
 }

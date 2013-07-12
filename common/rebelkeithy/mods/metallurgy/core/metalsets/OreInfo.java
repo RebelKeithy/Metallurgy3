@@ -6,7 +6,6 @@ import static rebelkeithy.mods.metallurgy.api.OreType.DROP;
 import static rebelkeithy.mods.metallurgy.api.OreType.ORE;
 import static rebelkeithy.mods.metallurgy.api.OreType.RESPAWN;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Random;
 
@@ -15,10 +14,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.world.World;
@@ -29,8 +24,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import rebelkeithy.mods.metablock.MetaBlock;
-import rebelkeithy.mods.metablock.SubBlock;
+import rebelkeithy.mods.keithyutils.items.CustomItemAxe;
+import rebelkeithy.mods.keithyutils.items.CustomItemHoe;
+import rebelkeithy.mods.keithyutils.items.CustomItemPickaxe;
+import rebelkeithy.mods.keithyutils.items.CustomItemSpade;
+import rebelkeithy.mods.keithyutils.metablock.MetaBlock;
+import rebelkeithy.mods.keithyutils.metablock.SubBlock;
 import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.api.OreType;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
@@ -92,6 +91,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public Item dust;
 	public Item ingot;
 	
+	public EnumToolMaterial toolEnum;
 	public Item pickaxe;
 	public Item shovel;
 	public Item axe;
@@ -108,7 +108,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		setName = info.get("Metal Set");
 		name = info.get("Name");
 		this.tab = tab;
-		System.out.println("reading " + name);
+		//System.out.println("reading " + name);
 		if(info.get("Type").equals("Ore"))
 			type = ORE;
 		else if(info.get("Type").equals("Catalyst"))
@@ -120,7 +120,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		else if(info.get("Type").equals("Drop"))
 			type = DROP;
 		
-		System.out.println(name + " is type " + type.name());
+		//System.out.println(name + " is type " + type.name());
 		alloyRecipe = info.get("Alloy Recipe").split("\" \"");
 		//System.out.println("alloy recipe: " + Arrays.toString(alloyRecipe));
 		for(int n = 0; n < alloyRecipe.length; n++)
@@ -203,6 +203,10 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	public void initConfig(Configuration config) 
 	{
 		enabled = config.get("!Enable.Enable Metals", "Enable " + name, true).getBoolean(true);
+		
+		boolean setEnabled = config.get("!Enable", "Enable " + setName + " Set", true).getBoolean(true);
+		
+		enabled = enabled && setEnabled;
 		
 		if(!type.equals(RESPAWN))
 		{
@@ -303,30 +307,30 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 			}
 			if(type != DROP)
 			{
-				dust = new Item(itemIDs).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Dust").setCreativeTab(tab);
-				ingot = new ItemMetallurgy(itemIDs+1).setSmeltinExperience(abstractorXP/3f).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Ingot").setCreativeTab(tab);
+				dust = new ItemMetallurgy(itemIDs).setTextureName("Metallurgy:" + setName + "/" + name + "Dust").setUnlocalizedName(name + "Dust").setCreativeTab(tab);
+				ingot = new ItemMetallurgy(itemIDs+1).setTextureName("Metallurgy:" + setName + "/" + name + "Ingot").setSmeltinExperience(abstractorXP/3f).setUnlocalizedName(name + "Ingot").setCreativeTab(tab);
 				AbstractorRecipes.addEssence(ingot.itemID, 0, abstractorXP);
 			}
 			
 			if(type != CATALYST && type != DROP)
 			{
-				EnumToolMaterial toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
+				toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
 				toolEnum.customCraftingMaterial = ingot;
 				//System.out.println(name.toUpperCase() + "TOOL SPEED = " + toolSpeed);
-				pickaxe = new ItemPickaxe(itemIDs + 2, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Pick").setCreativeTab(tab);
-				shovel = new ItemSpade(itemIDs + 3, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Shovel").setCreativeTab(tab);
-				axe = new ItemAxe(itemIDs + 4, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Axe").setCreativeTab(tab);
-				hoe = new ItemHoe(itemIDs + 5, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Hoe").setCreativeTab(tab);
-				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Sword").setCreativeTab(tab);
+				pickaxe = new CustomItemPickaxe(itemIDs + 2, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Pick").setUnlocalizedName(name + "Pick").setCreativeTab(tab);
+				shovel = new CustomItemSpade(itemIDs + 3, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Shovel").setUnlocalizedName(name + "Shovel").setCreativeTab(tab);
+				axe = new CustomItemAxe(itemIDs + 4, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Axe").setUnlocalizedName(name + "Axe").setCreativeTab(tab);
+				hoe = new CustomItemHoe(itemIDs + 5, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Hoe").setUnlocalizedName(name + "Hoe").setCreativeTab(tab);
+				sword = (ItemMetallurgySword) new ItemMetallurgySword(itemIDs + 6, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Sword").setUnlocalizedName(name + "Sword").setCreativeTab(tab);
 				
 				EnumArmorMaterial armorEnum = EnumHelper.addArmorMaterial(name, armorDura, new int[] {helmetArmor, chestArmor, legsArmor, bootsArmor}, toolEnchant);
 				armorEnum.customCraftingMaterial = ingot;
 				String armorTexture = name;
 				armorTexture = armorTexture.replaceAll("\\s","").toLowerCase();
-				helmet = new ItemMetallurgyArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
-				chest = new ItemMetallurgyArmor(itemIDs + 8, armorEnum, 1, 1).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(tab);
-				legs = new ItemMetallurgyArmor(itemIDs + 9, armorEnum, 2, 2).setTextureFile(armorTexture + "_2").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(tab);
-				boots = new ItemMetallurgyArmor(itemIDs + 10, armorEnum, 3, 3).setTextureFile(armorTexture + "_1").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(tab);
+				helmet = new ItemMetallurgyArmor(itemIDs + 7, armorEnum, 0, 0).setTextureFile(armorTexture + "_1").setTextureName("Metallurgy:" + setName + "/" + name + "Helmet").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Helmet").setCreativeTab(tab);
+				chest = new ItemMetallurgyArmor(itemIDs + 8, armorEnum, 1, 1).setTextureFile(armorTexture + "_1").setTextureName("Metallurgy:" + setName + "/" + name + "Chest").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Chest").setCreativeTab(tab);
+				legs = new ItemMetallurgyArmor(itemIDs + 9, armorEnum, 2, 2).setTextureFile(armorTexture + "_2").setTextureName("Metallurgy:" + setName + "/" + name + "Legs").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Legs").setCreativeTab(tab);
+				boots = new ItemMetallurgyArmor(itemIDs + 10, armorEnum, 3, 3).setTextureFile(armorTexture + "_1").setTextureName("Metallurgy:" + setName + "/" + name + "Boots").setUnlocalizedName("Metallurgy:" + setName + "/" + name + "Boots").setCreativeTab(tab);
 			}
 		}
 		
@@ -451,6 +455,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 		if(ore != null)
 		{
+			System.out.println("registering ore" + name);
 			OreDictionary.registerOre("ore" + name, new ItemStack(oreID, 1, oreMeta));
 		}
 		if(block != null)
@@ -532,12 +537,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		if(!spawnsInDim(world.provider.dimensionId))
 			return;
 		
-		if(oreID == Block.oreNetherQuartz.blockID)
-		{
-			System.out.println("generating quartz");
-			System.out.println(Arrays.toString(this.diminsions));
-		}
-		
 		for(int n = 0; n < veinCount; n++)
 		{
 			int randPosX = chunkX*16 + random.nextInt(16);
@@ -559,7 +558,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public ItemStack getOre() 
 	{
-		if(oreID != 0)
+		if(oreID != 0 && ore != null)
 			return new ItemStack(oreID, 1, oreMeta);
 		else
 			return null;
@@ -568,7 +567,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public ItemStack getBlock() 
 	{
-		if(blockID != 0)
+		if(blockID != 0 && block != null)
 			return new ItemStack(blockID, 1, blockMeta);
 		else
 			return null;
@@ -577,7 +576,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 	@Override
 	public ItemStack getBrick() 
 	{
-		if(brickID != 0)
+		if(brickID != 0 && brick != null)
 			return new ItemStack(brickID, 1, brickMeta);
 		else
 			return null;

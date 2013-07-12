@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -18,7 +19,13 @@ public class GuiPreciousChest extends GuiContainer
      */
     private int inventoryRows = 0;
     private int inventoryCols = 0;
-    private String image;
+    
+    private ResourceLocation background = new ResourceLocation("Metallurgy:textures/guis/ironcontainer.png");
+	private ResourceLocation backgroundBrass = new ResourceLocation("Metallurgy:textures/guis/ironcontainer.png");
+	private ResourceLocation backgroundSilver = new ResourceLocation("Metallurgy:textures/guis/silvercontainer.png");
+	private ResourceLocation backgroundGold = new ResourceLocation("Metallurgy:textures/guis/goldcontainer.png");
+	private ResourceLocation backgroundElectrum = new ResourceLocation("Metallurgy:textures/guis/electrumcontainer.png");
+	private ResourceLocation backgroundPlatinum = new ResourceLocation("Metallurgy:textures/guis/diamondcontainer.png");
 
     public GuiPreciousChest(InventoryPlayer playerInv, TileEntity chestInv)
     {
@@ -37,32 +44,32 @@ public class GuiPreciousChest extends GuiContainer
         
         int type = ((TileEntityPreciousChest)chestInv).getType();
         
-        image = "/mods/Metallurgy/textures/guis/ironcontainer.png";
+        background = backgroundBrass;
         switch(type)
         {
 	        case 0:
 	        {
-	        	image = "/mods/Metallurgy/textures/guis/ironcontainer.png";
+	        	background = backgroundBrass;
 	        	break;
 	        }	
 	        case 1:
 	        {
-	        	image = "/mods/Metallurgy/textures/guis/silvercontainer.png";
+	        	background = backgroundSilver;
 	        	break;
 	        }	
 	        case 2:
 	        {
-	        	image = "/mods/Metallurgy/textures/guis/goldcontainer.png";
+	        	background = backgroundGold;
 	        	break;
 	        }	
 	        case 3:
 	        {
-	        	image = "/mods/Metallurgy/textures/guis/electrumcontainer.png";
+	        	background = backgroundElectrum;
 	        	break;
 	        }	
 	        case 4:
 	        {
-	        	image = "/mods/Metallurgy/textures/guis/diamondcontainer.png";
+	        	background = backgroundPlatinum;
 	        	break;
 	        }	
         }
@@ -72,7 +79,7 @@ public class GuiPreciousChest extends GuiContainer
     /**
      * Draw the foreground layer for the GuiContainer (everythin in front of the items)
      */
-    protected void drawGuiContainerForegroundLayer()
+    protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
         //this.fontRenderer.drawString(StatCollector.translateToLocal(this.lowerChestInventory.getInvName()), 8, 6, 4210752);
         //this.fontRenderer.drawString(StatCollector.translateToLocal(this.upperChestInventory.getInvName()), 8, this.ySize - 96 + 2, 4210752);
@@ -84,7 +91,8 @@ public class GuiPreciousChest extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(image); // Calls bindTexture
+        //this.mc.renderEngine.bindTexture(image); // Calls bindTexture
+        this.mc.func_110434_K().func_110577_a(background);
         int imageWidth = (11 + 18 *inventoryCols + 11);
         int imageHeight = (7 + 18 *inventoryRows + 4 + 18 * 3 + 4 + 18 + 7);
         

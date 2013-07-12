@@ -10,7 +10,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,10 +21,9 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
-import rebelkeithy.mods.metallurgy.machines.furnace.TileEntityMetalFurnace;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -202,8 +201,8 @@ public class BlockNetherForge extends BlockContainer
 		
         TileEntityNetherForge var6 = (TileEntityNetherForge)par1World.getBlockTileEntity(par2, par3, par4);
 
-    	par5EntityPlayer.sendChatToPlayer("Fuel: " + var6.fuel);
-    	par5EntityPlayer.sendChatToPlayer("MaxFuel: " + var6.maxFuel);
+    	par5EntityPlayer.addChatMessage("Fuel: " + var6.fuel);
+    	par5EntityPlayer.addChatMessage("MaxFuel: " + var6.maxFuel);
     	
     	if(currentItem != null)
     	{
@@ -222,7 +221,7 @@ public class BlockNetherForge extends BlockContainer
             	if(var6.fuel < 1000)
             		return false;
             	
-    			var6.addTakeBucket();
+    			var6.removeFuelBucket();
     			if(!par5EntityPlayer.capabilities.isCreativeMode)
     				par5EntityPlayer.inventory.setInventorySlotContents(par5EntityPlayer.inventory.currentItem, new ItemStack(Item.bucketLava, 1));
     			return true;
@@ -294,7 +293,7 @@ public class BlockNetherForge extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 

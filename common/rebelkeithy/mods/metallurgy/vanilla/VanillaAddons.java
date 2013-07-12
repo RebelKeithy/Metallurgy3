@@ -1,20 +1,17 @@
 package rebelkeithy.mods.metallurgy.vanilla;
 
+import java.io.File;
+import java.io.IOException;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-
+import rebelkeithy.mods.keithyutils.metablock.MetaBlock;
+import rebelkeithy.mods.keithyutils.metablock.SubBlock;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-
-import java.io.File;
-import java.io.IOException;
-
-import rebelkeithy.mods.metablock.MetaBlock;
-import rebelkeithy.mods.metablock.SubBlock;
-import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 
 public class VanillaAddons {
 	public static SubBlock goldBrick;

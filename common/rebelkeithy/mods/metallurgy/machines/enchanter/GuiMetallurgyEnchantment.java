@@ -1,7 +1,5 @@
 package rebelkeithy.mods.metallurgy.machines.enchanter;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Random;
 
 import net.minecraft.client.gui.FontRenderer;
@@ -15,17 +13,23 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnchantmentNameParts;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.glu.GLU;
 
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMetallurgyEnchantment extends GuiContainer
 {
+    private static final ResourceLocation background = new ResourceLocation("metallurgy:textures/guis/enchant.png");
+    private static final ResourceLocation book = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    
     /** The book model used on the GUI. */
     private static ModelBook bookModel = new ModelBook();
     private Random rand = new Random();
@@ -91,7 +95,8 @@ public class GuiMetallurgyEnchantment extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        this.mc.func_110434_K().func_110577_a(background);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -112,7 +117,8 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         float f2 = 5.0F;
         GL11.glScalef(f2, f2, f2);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
-        this.mc.renderEngine.bindTexture("/item/book.png");
+        //this.mc.renderEngine.bindTexture("/item/book.png");
+        this.mc.func_110434_K().func_110577_a(book);
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
         float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
         GL11.glTranslatef((1.0F - f3) * 0.2F, (1.0F - f3) * 0.1F, (1.0F - f3) * 0.25F);
@@ -154,13 +160,15 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         GL11.glPopMatrix();
         RenderHelper.disableStandardItemLighting();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        this.mc.func_110434_K().func_110577_a(background);
         EnchantmentNameParts.instance.setRandSeed(this.containerEnchantment.nameSeed);
         
         int i1 = 0;
         String s = EnchantmentNameParts.instance.generateRandomEnchantName();
         this.zLevel = 0.0F;
-        this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+        this.mc.func_110434_K().func_110577_a(background);
         int j1 = this.containerEnchantment.enchantLevels;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         

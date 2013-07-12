@@ -4,53 +4,57 @@ import java.io.File;
 import java.io.IOException;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.potion.Potion;
-import net.minecraft.src.ModLoader;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
+import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.metallurgy.core.metalsets.OreInfo;
+import rebelkeithy.mods.metallurgy.integration.ComputerCraftIntegration;
+import rebelkeithy.mods.metallurgy.integration.IndustrialCraftIntegration;
+import rebelkeithy.mods.metallurgy.integration.RailcraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.TreeCapitatorIntegration;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
-import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
-import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockLargeTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockMinersTNT;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
-import cpw.mods.fml.common.FMLCommonHandler;
+import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
+import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="3.0.0.0.10")
+@Mod(modid="Metallurgy3Base", name="Metallurgy 3 Base", version="3.2.2", dependencies = "required-after:Metallurgy3Core")
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
 	public boolean isRelease = true;
+
 	
 	public static MetalSet baseSet;
 	public static MetalSet preciousSet;
@@ -79,6 +83,7 @@ public class MetallurgyMetals {
 	public static Item match;
 	public static Item fertilizer;
 	public static Item tar;
+	public static Item debug;
 	
 	public static Block largeTNT;
 	public static Block minersTNT;
@@ -88,10 +93,6 @@ public class MetallurgyMetals {
 	
 	@Instance(value = "Metallurgy3Base")
 	public static MetallurgyMetals instance;
-
-
-	//public static Potion potion;
-
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
@@ -141,10 +142,11 @@ public class MetallurgyMetals {
         } else {
         
         	MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
+        	//MetalInfoDatabase.readMetalDataFromFile("spreadsheet.csv");
     		MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
         
         }
-		
+		utilityConfig.save();
 		
 		baseSet = new MetalSet("Base", MetalInfoDatabase.getSpreadsheetDataForSet("Base"), baseTab);
 		preciousSet = new MetalSet("Precious", MetalInfoDatabase.getSpreadsheetDataForSet("Precious"), preciousTab);
@@ -152,41 +154,23 @@ public class MetallurgyMetals {
 		fantasySet = new MetalSet("Fantasy", MetalInfoDatabase.getSpreadsheetDataForSet("Fantasy"), fantasyTab);
 		enderSet = new MetalSet("Ender", MetalInfoDatabase.getSpreadsheetDataForSet("Ender"), enderTab);
 		utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), utilityTab);
-	}
-	
-	private boolean isSetEnabled(String setName) 
-	{
 
-		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
-    	fileDir.mkdir();
-    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/Metallurgy" + setName + ".cfg");
-    	
-        try
+		dustIron = new ItemMetallurgy(5100).setTextureName("Metallurgy:Vanilla/IronDust").setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
+		dustGold = new ItemMetallurgy(5101).setTextureName("Metallurgy:Vanilla/GoldDust").setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
+	
+
+        if(isSetEnabled("Utility"))
         {
-            cfgFile.createNewFile();
-            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3's metal set " + setName);
+        	utilityConfig.load();
+			createUtilityItems();
+        	utilityConfig.save();
         }
-        catch (IOException e)
-        {
-            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set " + setName + ". Reason:");
-            System.out.println(e);
-        }
-        
-        Configuration config = new Configuration(cfgFile);
-		config.load();
-		
-		boolean enabled = config.get("!Enable", "Enable " + setName + " Set", true).getBoolean(true);
-		
-		config.save();
-		return enabled;
 	}
 
 	@Init
 	public void Init(FMLInitializationEvent event)
 	{
 		//TODO add config for vanilla dusts
-		dustIron = new Item(5100).setUnlocalizedName("Metallurgy:Vanilla/IronDust").setCreativeTab(CreativeTabs.tabMaterials);
-		dustGold = new Item(5101).setUnlocalizedName("Metallurgy:Vanilla/GoldDust").setCreativeTab(CreativeTabs.tabMaterials);
 		FurnaceRecipes.smelting().addSmelting(dustIron.itemID, 0, new ItemStack(Item.ingotIron), 0.7F);
 		FurnaceRecipes.smelting().addSmelting(dustGold.itemID, 0, new ItemStack(Item.ingotGold), 0.7F);
 		
@@ -195,10 +179,8 @@ public class MetallurgyMetals {
 		OreDictionary.registerOre("dustIron", dustIron);
 		OreDictionary.registerOre("dustGold", dustGold);
 		
-		Item debug = new ItemOreFinder(5102).setUnlocalizedName("stick").setCreativeTab(CreativeTabs.tabTools);
-		
-		createUtilityItems();
-		utilityConfig.save();
+		debug = new ItemOreFinder(5102).setUnlocalizedName("stick").setCreativeTab(CreativeTabs.tabTools);
+
 
 		if(fantasySet.getOreInfo("Atral Silver").ore != null)
 			fantasySet.getOreInfo("Astral Silver").ore.addDisplayListener(new DisplayListenerOreParticles("FantasyOre", 0.6, 0.8, 0.95));
@@ -240,25 +222,61 @@ public class MetallurgyMetals {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		if(baseSet.getOreInfo("Steel").helmet != null)
+		if(isSetEnabled("Base") && baseSet.getOreInfo("Steel").helmet != null)
 			((MetallurgyTabs)baseTab).setIconItem(baseSet.getOreInfo("Steel").helmet.itemID);
-		if(preciousSet.getOreInfo("Platinum").helmet != null)
+		if(isSetEnabled("Precious") && preciousSet.getOreInfo("Platinum").helmet != null)
 			((MetallurgyTabs)preciousTab).setIconItem(preciousSet.getOreInfo("Platinum").helmet.itemID);
-		if(netherSet.getOreInfo("Sanguinite").helmet != null)
+		if(isSetEnabled("Nether") && netherSet.getOreInfo("Sanguinite").helmet != null)
 			((MetallurgyTabs)netherTab).setIconItem(netherSet.getOreInfo("Sanguinite").helmet.itemID);
-		if(fantasySet.getOreInfo("Tartarite").helmet != null)
+		if(isSetEnabled("Fantasy") && fantasySet.getOreInfo("Tartarite").helmet != null)
 			((MetallurgyTabs)fantasyTab).setIconItem(fantasySet.getOreInfo("Tartarite").helmet.itemID);
-		if(enderSet.getOreInfo("Desichalkos").helmet != null)
+		if(isSetEnabled("Ender") && enderSet.getOreInfo("Desichalkos").helmet != null)
 			((MetallurgyTabs)enderTab).setIconItem(enderSet.getOreInfo("Desichalkos").helmet.itemID);
 		
 		createMidasiumRecipes();
 		ThaumcraftIntegration.init();
+		IndustrialCraftIntegration.init();
+		RailcraftIntegration.init();
+
+		try
+		{
+			Class a = Class.forName("dan200.turtle.api.TurtleAPI");
+			Class b = Class.forName("dan200.turtle.shared.TurtleTool");
+			ComputerCraftIntegration.init();
+		} catch(Exception e) {}
+	}
+	
+	private boolean isSetEnabled(String setName) 
+	{
+
+		File fileDir = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3");
+    	fileDir.mkdir();
+    	File cfgFile = new File(MetallurgyCore.proxy.getMinecraftDir() + "/config/Metallurgy3/Metallurgy" + setName + ".cfg");
+    	
+        try
+        {
+            cfgFile.createNewFile();
+            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3's metal set " + setName);
+        }
+        catch (IOException e)
+        {
+            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set " + setName + ". Reason:");
+            System.out.println(e);
+        }
+        
+        Configuration config = new Configuration(cfgFile);
+		config.load();
+		
+		boolean enabled = config.get("!Enable", "Enable " + setName + " Set", true).getBoolean(true);
+		
+		config.save();
+		return enabled;
 	}
 	
 	public void createUtilityItems()
 	{
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
-		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(this.dustIron, 2), "dustShadow Iron", "dustIgnatius"));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustIron, 2), "dustShadow Iron", "dustIgnatius"));
 
 		int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
 		if(id != 0)
@@ -289,7 +307,7 @@ public class MetallurgyMetals {
 		}
 		
 		id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
-		magnesiumIgniter = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
+		magnesiumIgniter = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Igniter").setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
 		if(utilityConfig.get("Recipes", "Enable Magnesium Igniter", true).getBoolean(true))
 		{
@@ -297,7 +315,7 @@ public class MetallurgyMetals {
 		}
 		
 		id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
-		match = new ItemIgniter(id).setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
+		match = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Match").setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(match, "Match");
 		if(utilityConfig.get("Recipes", "Enable Match", true).getBoolean(true))
 		{
@@ -305,7 +323,7 @@ public class MetallurgyMetals {
 		}
 		
 		id = utilityConfig.get("Item IDs", "Fertilizer", 29009).getInt();
-		fertilizer = new ItemFertilizer(id).setUnlocalizedName("Metallurgy:Utility/Fertilizer").setCreativeTab(utilityTab);
+		fertilizer = new ItemFertilizer(id).setTextureName("Metallurgy:Utility/Fertilizer").setUnlocalizedName("Metallurgy:Utility/Fertilizer").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(fertilizer, "Fertilizer");
 		if(utilityConfig.get("Recipes", "Enable Fertilizer", true).getBoolean(true))
 		{
@@ -317,7 +335,7 @@ public class MetallurgyMetals {
 		OreDictionary.registerOre("itemFertilizer", fertilizer);
 		
 		id = utilityConfig.get("Item IDs", "Tar", 29010).getInt();
-		tar = new Item(id).setUnlocalizedName("Metallurgy:Utility/Tar").setCreativeTab(utilityTab);
+		tar = new ItemMetallurgy(id).setTextureName("Metallurgy:Utility/Tar").setUnlocalizedName("Metallurgy:Utility/Tar").setCreativeTab(utilityTab);
 		LanguageRegistry.addName(tar, "Tar");
 		OreDictionary.registerOre("itemTar", tar);
 		GameRegistry.addSmelting(MetalInfoDatabase.getItem("Bitumen").itemID, new ItemStack(tar), 0.1F);
@@ -437,67 +455,67 @@ public class MetallurgyMetals {
 		swordEffects = new FantasySwordHitListener();
 		MinecraftForge.EVENT_BUS.register(swordEffects); // Registers the on death event needed by Astral Silver's and Carmot's looting effect
 		
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Deep Iron").sword != null)
 		{
 			fantasySet.getOreInfo("Deep Iron").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Deep Iron").sword.setSubText("cBlindness I");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Black Steel").sword != null)
 		{
 			fantasySet.getOreInfo("Black Steel").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Black Steel").sword.setSubText("cBlindness II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Oureclase").sword != null)
 		{
 			fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Astral Silver").sword != null)
 		{
 			//fantasySet.getOreInfo("Astral Silver").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Astral Silver").sword.setSubText("7Looting I");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Carmot").sword != null)
 		{
 			//fantasySet.getOreInfo("Carmot").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Carmot").sword.setSubText("7Looting II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Mithril").sword != null)
 		{
 			fantasySet.getOreInfo("Mithril").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Mithril").sword.setSubText("7Haste I");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Quicksilver").sword != null)
 		{
 			fantasySet.getOreInfo("Quicksilver").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Quicksilver").sword.setSubText("7Speed I");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Haderoth").sword != null)
 		{
 			fantasySet.getOreInfo("Haderoth").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Haderoth").sword.setSubText("cHaste I, Ignite II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Orichalcum").sword != null)
 		{
 			fantasySet.getOreInfo("Orichalcum").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Orichalcum").sword.setSubText("cResistance II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Celenegil").sword != null)
 		{
 			fantasySet.getOreInfo("Celenegil").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Celenegil").sword.setSubText("7Resistance III");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Adamantine").sword != null)
 		{
 			fantasySet.getOreInfo("Adamantine").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Adamantine").sword.setSubText("7Fire Resist I, Ignite II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Atlarus").sword != null)
 		{
 			fantasySet.getOreInfo("Atlarus").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Atlarus").sword.setSubText("7Strength II");
 		}
-		if(netherSet.getOreInfo("Sanguinite").sword != null)
+		if(netherSet.getOreInfo("Tartarite").sword != null)
 		{
 			fantasySet.getOreInfo("Tartarite").sword.addHitListener(swordEffects);
 			fantasySet.getOreInfo("Tartarite").sword.setSubText("cWither, Igntite II");

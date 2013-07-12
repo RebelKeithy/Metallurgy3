@@ -3,8 +3,7 @@ package rebelkeithy.mods.metallurgy.metals;
 import java.util.Random;
 
 import net.minecraft.world.World;
-import rebelkeithy.mods.metablock.IDisplayListener;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
+import rebelkeithy.mods.keithyutils.metablock.IDisplayListener;
 
 public class DisplayListenerVyroxeresOreParticles implements IDisplayListener
 {

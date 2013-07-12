@@ -1,12 +1,13 @@
 package rebelkeithy.mods.metallurgy.metals;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.src.ModLoader;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import org.lwjgl.opengl.GL11;
 
 public class EntityNetherOreFX extends EntityFX
 {
@@ -51,7 +52,12 @@ public class EntityNetherOreFX extends EntityFX
 	    float var8 = ((float)this.particleAge + f) / (float)this.particleMaxAge;
 	    this.particleScale = this.flameScale * (1.0F - var8 * var8 * 0.5F);
 
-	    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/mods/Metallurgy/textures/particles/NetherMetalsParticle.png"));
+	    //TODO: Fix this
+	    //GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/mods/Metallurgy/textures/particles/NetherMetalsParticle.png"));
+
+    	ResourceLocation texture = new ResourceLocation("Metallurgy:textures/particles/NetherMetalsParticle.png");   
+    	Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+    	
 	    float f0 = 0;//(float)(getParticleTextureIndex() % 16) / 16F;
 	    float f7 = f0 + 1/16F;
 	    float f8 = 1;//(float)(getParticleTextureIndex() / 16) / 16F;
@@ -70,7 +76,9 @@ public class EntityNetherOreFX extends EntityFX
 	    tessellator1.addVertexWithUV((f11 + f1 * f10) - f4 * f10, f12 - f2 * f10, (f13 + f3 * f10) - f5 * f10, f0, f9);
 
 	    tessellator1.draw();
-	    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/particles.png"));
+
+    	ResourceLocation defaultParticles = new ResourceLocation("textures/particle/particles.png");   
+    	Minecraft.getMinecraft().func_110434_K().func_110577_a(defaultParticles);
 	}
 
     public int getBrightnessForRender(float par1)

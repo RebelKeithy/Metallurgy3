@@ -1,5 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.crusher;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,17 +19,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
-
-import buildcraft.api.inventory.ISpecialInventory;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-public class TileEntityCrusher extends TileEntity implements IInventory, ISidedInventory, net.minecraftforge.common.ISidedInventory, ISpecialInventory
+public class TileEntityCrusher extends TileEntity implements IInventory, ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -429,6 +426,11 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
                 {
                     return 225;
                 }
+
+                if (var3 == Block.field_111034_cE)
+                {
+                    return 16000;
+                }
             }
             if (var2 instanceof ItemTool && ((ItemTool) var2).getToolMaterialName().equals("WOOD")) return 150;
             if (var2 instanceof ItemSword && ((ItemSword) var2).getToolMaterialName().equals("WOOD")) return 150;
@@ -480,6 +482,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 
     public void closeChest() {}
 
+    /*
     @Override
     public int getStartInventorySide(ForgeDirection side)
     {
@@ -493,6 +496,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     {
         return 1;
     }
+    */
 
 	public int getType() {
 		if(worldObj != null)
@@ -538,6 +542,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 		type = metadata;
 	}
 
+	/*
 	@Override
 	public int addItem(ItemStack stack, boolean doAdd, ForgeDirection from) {		
 		int slot = 0;
@@ -571,7 +576,9 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 			}
 		}
 	}
+	*/
 
+	/*
 	@Override
 	public ItemStack[] extractItem(boolean doRemove, ForgeDirection from, int maxItemCount) {
 		if(furnaceItemStacks[2] != null)
@@ -584,17 +591,19 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 		}
 		return null;
 	}
+	*/
 
 	@Override
-	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
+	public boolean isInvNameLocalized() 
+	{
 		return false;
 	}
 	
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
+	@Override
+    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
     {
         return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
     }
@@ -605,20 +614,25 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     @Override
     public int[] getAccessibleSlotsFromSide(int par1)
     {
-        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0, 1} : new int[] {1});
+    	if(par1 == 0)
+    		return new int[] {1, 2};
+    	else if(par1 == 1)
+    		return new int[] {1, 0, 2};
+    	else
+    		return new int[] {1, 2};
     }
 
 
     @Override
     public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
     {
-        return this.isStackValidForSlot(par1, par2ItemStack);
+        return this.isItemValidForSlot(par1, par2ItemStack);
     }
 
     @Override
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(int slot, ItemStack par2ItemStack, int side)
     {
-        return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+        return slot == 2 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
 
 }

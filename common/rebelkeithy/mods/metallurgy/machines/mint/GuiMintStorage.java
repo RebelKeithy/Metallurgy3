@@ -4,6 +4,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -18,7 +19,7 @@ public class GuiMintStorage extends GuiContainer
      */
     private int inventoryRows = 0;
     private int inventoryCols = 0;
-    private String image;
+	private ResourceLocation background = new ResourceLocation("Metallurgy:textures/guis/mintstorage.png");
 
     public GuiMintStorage(InventoryPlayer playerInv, TileEntity chestInv)
     {
@@ -33,8 +34,6 @@ public class GuiMintStorage extends GuiContainer
         this.inventoryRows = 2;
         this.inventoryCols = 3;
         this.ySize = var4 + this.inventoryRows * 18;
-        
-        image = "/mods/Metallurgy/textures/guis/mintstorage.png";
         		
     }
 
@@ -53,7 +52,8 @@ public class GuiMintStorage extends GuiContainer
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3)
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(image); // Calls bindTexture
+        //this.mc.renderEngine.bindTexture(image); // Calls bindTexture
+        this.mc.func_110434_K().func_110577_a(background);
         int imageWidth = 176;
         int imageHeight = 168;
         

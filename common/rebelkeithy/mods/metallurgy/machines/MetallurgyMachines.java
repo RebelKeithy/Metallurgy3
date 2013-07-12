@@ -1,43 +1,31 @@
 package rebelkeithy.mods.metallurgy.machines;
 
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
+import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractorItem;
-import rebelkeithy.mods.metallurgy.machines.abstractor.ContainerAbstractor;
-import rebelkeithy.mods.metallurgy.machines.abstractor.GuiAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.TileEntityAbstractor;
 import rebelkeithy.mods.metallurgy.machines.chests.BlockPreciousChest;
-import rebelkeithy.mods.metallurgy.machines.chests.ContainerPreciousChest;
-import rebelkeithy.mods.metallurgy.machines.chests.GuiPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.chests.ItemBlockPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.chests.TileEntityPreciousChest;
 import rebelkeithy.mods.metallurgy.machines.crusher.BlockCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.BlockCrusherItem;
-import rebelkeithy.mods.metallurgy.machines.crusher.ContainerCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.CrusherRecipes;
-import rebelkeithy.mods.metallurgy.machines.crusher.GuiCrusher;
 import rebelkeithy.mods.metallurgy.machines.crusher.TileEntityCrusher;
 import rebelkeithy.mods.metallurgy.machines.enchanter.BlockMetallurgyEnchantmentTable;
-import rebelkeithy.mods.metallurgy.machines.enchanter.ContainerMetallurgyEnchantment;
-import rebelkeithy.mods.metallurgy.machines.enchanter.GuiMetallurgyEnchantment;
 import rebelkeithy.mods.metallurgy.machines.enchanter.TileEntityMetallurgyEnchantmentTable;
 import rebelkeithy.mods.metallurgy.machines.forge.BlockNetherForge;
 import rebelkeithy.mods.metallurgy.machines.forge.BlockNetherForgeItem;
-import rebelkeithy.mods.metallurgy.machines.forge.ContainerNetherForge;
-import rebelkeithy.mods.metallurgy.machines.forge.GuiNetherForge;
 import rebelkeithy.mods.metallurgy.machines.forge.TileEntityNetherForge;
 import rebelkeithy.mods.metallurgy.machines.furnace.BlockMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.furnace.BlockMetalFurnaceItem;
-import rebelkeithy.mods.metallurgy.machines.furnace.ContainerMetalFurnace;
-import rebelkeithy.mods.metallurgy.machines.furnace.GuiMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.furnace.TileEntityMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.ladders.BlockMetalLadder;
 import rebelkeithy.mods.metallurgy.machines.ladders.ItemBlockMetalLadder;
@@ -49,8 +37,6 @@ import rebelkeithy.mods.metallurgy.machines.lantern.ItemGlassDust;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLantern;
 import rebelkeithy.mods.metallurgy.machines.mint.BlockMint;
 import rebelkeithy.mods.metallurgy.machines.mint.BlockMintStorage;
-import rebelkeithy.mods.metallurgy.machines.mint.ContainerMintStorage;
-import rebelkeithy.mods.metallurgy.machines.mint.GuiMintStorage;
 import rebelkeithy.mods.metallurgy.machines.mint.MetallurgyTradeHandler;
 import rebelkeithy.mods.metallurgy.machines.mint.MintRecipes;
 import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMint;
@@ -72,7 +58,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
-@Mod(modid="Metallurgy3Machines", name="Metallurgy 3 Machines", dependencies = "required-after:Metallurgy3Base", version="3.0.0.0.10")
+@Mod(modid="Metallurgy3Machines", name="Metallurgy 3 Machines", dependencies = "required-after:Metallurgy3Base", version="3.2.2")
 @NetworkMod(channels = {"M3Machines"}, clientSideRequired = true, serverSideRequired = false, packetHandler=PacketHandler.class)
 public class MetallurgyMachines 
 {
@@ -90,6 +76,7 @@ public class MetallurgyMachines
 	public static Item bullion;
 	public static Item glassDust;
 	public static Item goldCog;
+	public static Item debug;
 	
 	public static Block storageAccessor;
 	public static Block storageBlock;
@@ -146,6 +133,8 @@ public class MetallurgyMachines
 		enchanter = new BlockMetallurgyEnchantmentTable(ConfigMachines.enchanterID).setUnlocalizedName("Metallurgy:machines/enchanter/Enchanter").setHardness(2.0F).setCreativeTab(machineTab);
 		GameRegistry.registerBlock(enchanter, "M3Enchanter");
 		GameRegistry.registerTileEntity(TileEntityMetallurgyEnchantmentTable.class, "TileEntityM3Enchanter");
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(enchanter), " B ", "IEI", "III", 'B', Item.enchantedBook, 'E', Block.enchantmentTable, 'I', "ingotTartarite"));
+		LanguageRegistry.addName(enchanter, "Tartarite Enchanter");
 	}
 	
 	public void initStorage()
@@ -173,11 +162,11 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(mint, "Mint");
 		LanguageRegistry.addName(mintStorage, "Mint Storage");
 		
-		coin = new Item(ConfigMachines.coinID).setUnlocalizedName("Metallurgy:Precious/coin").setCreativeTab(machineTab);
-		stack = new Item(ConfigMachines.stackID).setUnlocalizedName("Metallurgy:Precious/ctack").setCreativeTab(machineTab);
-		bag = new Item(ConfigMachines.coinBagID).setUnlocalizedName("Metallurgy:Precious/bag").setCreativeTab(machineTab);
-		bullion = new Item(ConfigMachines.bullionID).setUnlocalizedName("Metallurgy:Precious/bullion").setCreativeTab(machineTab);
-		goldCog = new Item(ConfigMachines.goldCogID).setUnlocalizedName("Metallurgy:Precious/goldCog").setCreativeTab(machineTab);
+		coin = new ItemMetallurgy(ConfigMachines.coinID).setTextureName("Metallurgy:Precious/coin").setUnlocalizedName("Metallurgy:Precious/coin").setCreativeTab(machineTab);
+		stack = new ItemMetallurgy(ConfigMachines.stackID).setTextureName("Metallurgy:Precious/ctack").setUnlocalizedName("Metallurgy:Precious/ctack").setCreativeTab(machineTab);
+		bag = new ItemMetallurgy(ConfigMachines.coinBagID).setTextureName("Metallurgy:Precious/bag").setUnlocalizedName("Metallurgy:Precious/bag").setCreativeTab(machineTab);
+		bullion = new ItemMetallurgy(ConfigMachines.bullionID).setTextureName("Metallurgy:Precious/bullion").setUnlocalizedName("Metallurgy:Precious/bullion").setCreativeTab(machineTab);
+		goldCog = new ItemMetallurgy(ConfigMachines.goldCogID).setTextureName("Metallurgy:Precious/goldCog").setUnlocalizedName("Metallurgy:Precious/goldCog").setCreativeTab(machineTab);
 		LanguageRegistry.addName(coin, "Coin");
 		LanguageRegistry.addName(stack, "Stack");
 		LanguageRegistry.addName(bag, "Bag");

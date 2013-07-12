@@ -1,5 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.furnace;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,16 +20,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
-
-import buildcraft.api.inventory.ISpecialInventory;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-public class TileEntityMetalFurnace extends TileEntity implements ISidedInventory, ISpecialInventory, net.minecraftforge.common.ISidedInventory
+public class TileEntityMetalFurnace extends TileEntity implements ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -401,6 +399,11 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
                 {
                     return 300;
                 }
+
+                if (var3 == Block.field_111034_cE)
+                {
+                    return 16000;
+                }
             }
             if (var2 instanceof ItemTool && ((ItemTool) var2).getToolMaterialName().equals("WOOD")) return 200;
             if (var2 instanceof ItemSword && ((ItemSword) var2).getToolMaterialName().equals("WOOD")) return 200;
@@ -448,6 +451,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 
     public void closeChest() {}
 
+    /*
     @Override
     public int getStartInventorySide(ForgeDirection side)
     {
@@ -460,7 +464,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
     public int getSizeInventorySide(ForgeDirection side)
     {
         return 1;
-    }
+    }*/
 
 	public int getType() {
 		int meta = worldObj.getBlockMetadata(xCoord, yCoord, zCoord);
@@ -497,6 +501,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 		}
 	}
 
+	/*
 	@Override
 	public int addItem(ItemStack stack, boolean doAdd, ForgeDirection from) {		
 		int slot = 0;
@@ -543,18 +548,19 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
 		}
 		return null;
 	}
-
+	 */
 
 	@Override
-	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
+	public boolean isInvNameLocalized() 
+	{
 		return false;
 	}
 	
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
-    public boolean isStackValidForSlot(int par1, ItemStack par2ItemStack)
+	@Override
+    public boolean isItemValidForSlot(int par1, ItemStack par2ItemStack)
     {
         return par1 == 2 ? false : (par1 == 1 ? isItemFuel(par2ItemStack) : true);
     }
@@ -565,19 +571,19 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
     @Override
     public int[] getAccessibleSlotsFromSide(int par1)
     {
-        return par1 == 0 ? new int[] {2, 1} : (par1 == 1 ? new int[] {0, 1} : new int[] {1});
+        return par1 == 0 ? new int[] {1, 2} : (par1 == 1 ? new int[] {0, 1, 2} : new int[] {1, 2});
     }
 
 
     @Override
     public boolean canInsertItem(int par1, ItemStack par2ItemStack, int par3)
     {
-        return this.isStackValidForSlot(par1, par2ItemStack);
+        return this.isItemValidForSlot(par1, par2ItemStack);
     }
 
     @Override
-    public boolean canExtractItem(int par1, ItemStack par2ItemStack, int par3)
+    public boolean canExtractItem(int slot, ItemStack par2ItemStack, int side)
     {
-        return par3 != 0 || par1 != 1 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
+        return slot == 2 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
 }

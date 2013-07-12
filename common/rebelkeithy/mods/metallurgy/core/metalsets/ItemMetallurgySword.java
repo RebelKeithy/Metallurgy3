@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 
@@ -18,6 +20,12 @@ public class ItemMetallurgySword extends ItemSword
 	{
 		super(par1, par2EnumToolMaterial);
 	}
+	
+    public ItemMetallurgySword setTextureName(String par1Str)
+    {
+        super.func_111206_d(par1Str);
+        return this;
+    }
 
     public void addHitListener(ISwordHitListener hl)
     {
@@ -25,13 +33,13 @@ public class ItemMetallurgySword extends ItemSword
     }
     
     @Override
-    public boolean hitEntity(ItemStack itemstack, EntityLiving entityliving, EntityLiving entityliving1)
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase par2EntityLivingBase, EntityLivingBase par3EntityLivingBase)
     {
     	for(ISwordHitListener hl : hlList)
-    		hl.hitEntity(itemstack, entityliving, entityliving1);
+    		hl.hitEntity(par1ItemStack, par2EntityLivingBase, par3EntityLivingBase);
     	
         
-        return super.hitEntity(itemstack, entityliving, entityliving1);
+        return super.hitEntity(par1ItemStack, par2EntityLivingBase, par3EntityLivingBase);
     }
     
     public void setSubText(String text)

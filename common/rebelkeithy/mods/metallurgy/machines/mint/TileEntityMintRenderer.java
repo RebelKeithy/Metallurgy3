@@ -1,7 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -11,6 +13,8 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
 {
     /** The normal small chest model. */
     private ModelMint mintModel = new ModelMint();
+	private ResourceLocation texture = new ResourceLocation("Metallurgy:textures/blocks/machines/mint/Mint.png");
+	private ResourceLocation textureHead = new ResourceLocation("Metallurgy:textures/blocks/machines/mint/MintHead.png");
 
     
     /**
@@ -28,7 +32,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
         
         int var9;
 
-        if (!par1TileEntityMint.func_70309_m())
+        if (!par1TileEntityMint.hasWorldObj())
         {
             var9 = 5;
             offset = 0.1f;
@@ -59,7 +63,8 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
 
         var14 = this.mintModel;
         ModelMintHead mintHead = new ModelMintHead();
-        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/Mint.png");
+        //this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/Mint.png");
+        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
         
 
         GL11.glPushMatrix();
@@ -97,13 +102,16 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
 
         if(ingot)
         {
-            this.bindTextureByName(ingotImage);
+        	ResourceLocation ingotResource = new ResourceLocation(ingotImage);
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(ingotResource);
+            //this.bindTextureByName(ingotImage);
         	(new ModelIngot()).renderAll();
         }
         	
         GL11.glTranslatef(0F, headOffset + offset, 0F);
         
-        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/MintHead.png");
+        //this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/MintHead.png");
+        Minecraft.getMinecraft().func_110434_K().func_110577_a(textureHead);
         mintHead.renderAll();
         
         //GL11.glDisable(GL12.GL_RESCALE_NORMAL);

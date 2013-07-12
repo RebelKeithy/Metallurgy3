@@ -10,9 +10,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import cpw.mods.fml.relauncher.Side;
@@ -46,7 +44,7 @@ public class ItemOreFinder extends Item
     		mode++;
     		mode = mode%3;
     		par1ItemStack.getTagCompound().setInteger("mode", mode);
-    		par2EntityPlayer.sendChatToPlayer("Radius: " + (mode+1) + " chunk" + (mode!=0?"s":""));
+    		par2EntityPlayer.addChatMessage("Radius: " + (mode+1) + " chunk" + (mode!=0?"s":""));
     		return false;
     	}
 
@@ -101,11 +99,11 @@ public class ItemOreFinder extends Item
     	Set<String> names = oreCount.keySet();
     	String[] sort = names.toArray(new String[names.size()]);
     	Arrays.sort(sort);
-    	par2EntityPlayer.sendChatToPlayer("In Area (" + (par4 - par4%16 - 16*mode) + ", " + (par6 - par6%16 - 16*mode) + ") to (" + (par4 - par4%16 + 16*(mode+1)) + ", " + (par6 - par6%16 + 16*(mode+1)) + ")");
+    	par2EntityPlayer.addChatMessage("In Area (" + (par4 - par4%16 - 16*mode) + ", " + (par6 - par6%16 - 16*mode) + ") to (" + (par4 - par4%16 + 16*(mode+1)) + ", " + (par6 - par6%16 + 16*(mode+1)) + ")");
     	for(String name : names)
     	{
     		int amount = oreCount.get(name);
-    		par2EntityPlayer.sendChatToPlayer("Found " + amount + " " + name);
+    		par2EntityPlayer.addChatMessage("Found " + amount + " " + name);
     	}
     			
         return false;

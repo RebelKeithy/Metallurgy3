@@ -1,9 +1,9 @@
 package rebelkeithy.mods.metallurgy.metals;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -35,54 +35,54 @@ public class FantasySwordHitListener implements ISwordHitListener
 	private static int wither = 20;
 
 	@Override
-	public boolean hitEntity(ItemStack itemstack, EntityLiving entityliving, EntityLiving player) {
+	public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase player) {
 
 		if(Math.random() < 0.7)
 			return false;
 		
-		if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Deep Iron").sword.itemID)
+		if(MetallurgyMetals.fantasySet.getOreInfo("Deep Iron").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Deep Iron").sword.itemID)
 		{
 			entityliving.addPotionEffect(new PotionEffect(blindness, 80, 0));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Black Steel").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Black Steel").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Black Steel").sword.itemID)
 		{
 			entityliving.addPotionEffect(new PotionEffect(blindness, 80, 1));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Oureclase").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Oureclase").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Oureclase").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(resistance, 80, 0));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Mithril").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Mithril").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Mithril").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(haste, 80, 0));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Quicksilver").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Quicksilver").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Quicksilver").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(speed, 80, 0));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Haderoth").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Haderoth").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Haderoth").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(haste, 80, 0));
 			entityliving.setFire(4);				
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(resistance, 80, 1));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Celenegil").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Celenegil").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Celenegil").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(resistance, 80, 3));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Adamantine").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Adamantine").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Adamantine").sword.itemID)
 		{
 			player.addPotionEffect(new PotionEffect(fireResist, 80, 0));
 			entityliving.setFire(4);
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Atlarus").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Atlarus").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Atlarus").sword.itemID)
 		{
 			entityliving.addPotionEffect(new PotionEffect(strength, 80, 1));
 		}
-		else if(itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Tartarite").sword.itemID)
+		else if(MetallurgyMetals.fantasySet.getOreInfo("Tartarite").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Tartarite").sword.itemID)
 		{
 			entityliving.addPotionEffect(new PotionEffect(wither, 80, 1));
 			entityliving.setFire(4);
@@ -99,15 +99,20 @@ public class FantasySwordHitListener implements ISwordHitListener
 			EntityPlayer player = (EntityPlayer) event.source.getEntity();
 			if(player.getCurrentEquippedItem() == null)
 				return;
-
-			if(player.getCurrentEquippedItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").sword.itemID ||
-			   player.getCurrentEquippedItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").sword.itemID)
+			
+			int effect = 0;
+			if(MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").isEnabled() && player.getCurrentEquippedItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").sword.itemID)
+				effect = 1;
+			if(MetallurgyMetals.fantasySet.getOreInfo("Carmot").isEnabled() && player.getCurrentEquippedItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").sword.itemID)
+				effect = 2;
+			
+			if(effect > 0)
 			{
 				try {
 					Method m = EntityLiving.class.getDeclaredMethod("dropFewItems", Boolean.TYPE, Integer.TYPE);
 					m.setAccessible(true);
 					m.invoke(event.entityLiving, (Boolean)true, (Integer)0);
-					if(player.getCurrentEquippedItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").sword.itemID)
+					if(effect > 1)
 					{
 						if(Math.random() > 5)
 							m.invoke(event.entityLiving, (Boolean)true, (Integer)0);

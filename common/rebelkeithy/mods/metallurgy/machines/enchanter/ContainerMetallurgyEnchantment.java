@@ -1,14 +1,10 @@
 package rebelkeithy.mods.metallurgy.machines.enchanter;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -19,6 +15,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerMetallurgyEnchantment extends Container
 {
@@ -164,7 +163,7 @@ public class ContainerMetallurgyEnchantment extends Container
                         }
                     }
 
-                    this.enchantLevels = MaxEnchenterHelper.calcItemStackEnchantability(this.rand, i, itemstack);
+                    this.enchantLevels = MaxEnchanterHelper.calcItemStackEnchantability(this.rand, i, itemstack);
                     if(player != null && player.experienceLevel < enchantLevels)
                     {
                     	enchantLevels = player.experienceLevel;
@@ -207,7 +206,7 @@ public class ContainerMetallurgyEnchantment extends Container
             		}
             	}
             	
-                List list = MaxEnchenterHelper.buildEnchantmentList(this.rand, itemstack, this.enchantLevels, catalyst);
+                List list = MaxEnchanterHelper.buildEnchantmentList(this.rand, itemstack, this.enchantLevels, catalyst);
                 boolean flag = itemstack.itemID == Item.book.itemID;
 
                 if (list != null)
@@ -229,7 +228,7 @@ public class ContainerMetallurgyEnchantment extends Container
                         {
                             if (flag)
                             {
-                                Item.enchantedBook.func_92115_a(itemstack, enchantmentdata);
+                                Item.enchantedBook.getEnchantedItemStack_do(itemstack, enchantmentdata);
                             }
                             else
                             {
@@ -253,9 +252,10 @@ public class ContainerMetallurgyEnchantment extends Container
     /**
      * Callback for when the crafting gui is closed.
      */
-    public void onCraftGuiClosed(EntityPlayer par1EntityPlayer)
+    @Override
+    public void onContainerClosed(EntityPlayer par1EntityPlayer)
     {
-        super.onCraftGuiClosed(par1EntityPlayer);
+        super.onContainerClosed(par1EntityPlayer);
 
         if (!this.worldPointer.isRemote)
         {

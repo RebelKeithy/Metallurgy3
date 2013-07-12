@@ -17,9 +17,16 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 public class ItemFertilizer extends Item
 {
-	public ItemFertilizer(int par1) {
+	public ItemFertilizer(int par1) 
+	{
 		super(par1);
 	}
+	
+    public ItemFertilizer setTextureName(String par1Str)
+    {
+        super.func_111206_d(par1Str);
+        return this;
+    }
 
 	@Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)

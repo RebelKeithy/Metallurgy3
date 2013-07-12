@@ -7,7 +7,7 @@ import cpw.mods.fml.common.network.IGuiHandler;
 
 import java.io.File;
 
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.abstractor.ContainerAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.GuiAbstractor;
 import rebelkeithy.mods.metallurgy.machines.chests.ContainerPreciousChest;

@@ -30,7 +30,7 @@ public class ContainerMintStorage extends Container
         {
             for (currCol = 0; currCol < this.numCols; ++currCol)
             {
-                this.addSlotToContainer(new Slot(lowerChestInventory, currCol + currRow * numCols, 62 + currCol * 18, 18 + currRow * 18));
+                this.addSlotToContainer(new SlotMint(lowerChestInventory, currCol + currRow * numCols, 62 + currCol * 18, 18 + currRow * 18));
             }
         }
 
@@ -97,9 +97,9 @@ public class ContainerMintStorage extends Container
      * Callback for when the crafting gui is closed.
      */
     @Override
-    public void onCraftGuiClosed(EntityPlayer par1EntityPlayer)
+    public void onContainerClosed(EntityPlayer par1EntityPlayer)
     {
-        super.onCraftGuiClosed(par1EntityPlayer);
+        super.onContainerClosed(par1EntityPlayer);
         this.lowerChestInventory.closeChest();
     }
 }

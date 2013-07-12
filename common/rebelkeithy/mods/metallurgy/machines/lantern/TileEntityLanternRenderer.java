@@ -1,7 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.lantern;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -12,13 +14,24 @@ public class TileEntityLanternRenderer extends TileEntitySpecialRenderer {
     private ModelLantern lanternModel = new ModelLantern();
     int direction = 0;
     
+    ResourceLocation[] textures = { 
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternRed.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternGreen.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternBlue.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternOrange.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternYellow.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternPurple.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternGrey.png"),
+    		new ResourceLocation("Metallurgy:textures/blocks/machines/lantern/LanternWhite.png"),
+    	};
+    
     /**
      * Renders the TileEntity for the lantern at a position.
      */
     public void renderTileEntityLanternAt(TileEntityLantern par1TileEntityLantern, double x, double y, double z, float par8)
     {
     	int color = par1TileEntityLantern.color;
-    	
+    	/*
     	if(color == 0)
     		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternRed.png");
     	else if(color == 1)
@@ -35,7 +48,9 @@ public class TileEntityLanternRenderer extends TileEntitySpecialRenderer {
     		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternGrey.png");
     	else if(color == 7)
     		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternWhite.png");
-    		
+    	*/
+    	if(color < textures.length)
+    		Minecraft.getMinecraft().func_110434_K().func_110577_a(textures[color]);
         
         if(par1TileEntityLantern.worldObj != null)
         	direction = par1TileEntityLantern.getBlockMetadata();

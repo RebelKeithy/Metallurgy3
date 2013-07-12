@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 
-public class MaxEnchenterHelper 
+public class MaxEnchanterHelper 
 {
 
     /**

@@ -1,7 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.crusher;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -44,10 +46,14 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         else if(par1TileEntityCrusher.getType() == 4)
         	type = "Steel";
         
+        ResourceLocation texture = new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + ".png");
+        
         if(par1TileEntityCrusher.isBurning())
-        	this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
-        else
-            this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + ".png");
+        	texture = new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
+        	//this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
+        
+
+        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
         
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

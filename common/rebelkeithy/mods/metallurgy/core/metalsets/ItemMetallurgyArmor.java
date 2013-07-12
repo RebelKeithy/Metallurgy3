@@ -1,12 +1,13 @@
 package rebelkeithy.mods.metallurgy.core.metalsets;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.IArmorTextureProvider;
 
-public class ItemMetallurgyArmor extends ItemArmor implements IArmorTextureProvider{
+public class ItemMetallurgyArmor extends ItemArmor
+{
 
 	public String textureFile;
 	
@@ -14,16 +15,22 @@ public class ItemMetallurgyArmor extends ItemArmor implements IArmorTextureProvi
 		super(par1, par2EnumArmorMaterial, par3, par4);
 	}
 	
-	public Item setTextureFile(String texture)
+    public ItemMetallurgyArmor setTextureName(String par1Str)
+    {
+        super.func_111206_d(par1Str);
+        return this;
+    }
+	
+	public ItemMetallurgyArmor setTextureFile(String texture)
 	{
 		textureFile = texture;
 		return this;
 	}
 
 	@Override
-	public String getArmorTextureFile(ItemStack itemstack) 
-	{
-		return "/armor/" + textureFile + ".png";
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, int layer)
+    {
+		return "metallurgy:armor/" + textureFile + ".png";
 	}
 
 }

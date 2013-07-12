@@ -7,8 +7,8 @@ import java.io.File;
 
 import cpw.mods.fml.client.FMLClientHandler;
 
+import rebelkeithy.mods.keithyutils.particleregistry.ParticleRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
 
 public class ClientProxy extends CommonProxy
 {
@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy
 
 	public File getMinecraftDir() 
 	{
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 	
 	@Override

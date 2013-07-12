@@ -1,6 +1,7 @@
 package rebelkeithy.mods.metallurgy.metals;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.Potion;
 
 public class MetallurgyPotion extends Potion
@@ -12,7 +13,7 @@ public class MetallurgyPotion extends Potion
 	}
 
     @Override
-	public void performEffect(EntityLiving par1EntityLiving, int par2)
+	public void performEffect(EntityLivingBase par1EntityLiving, int par2)
     {
 		//System.out.println("Metallurgy Potion");
 		double vx = par1EntityLiving.motionX;
@@ -22,7 +23,10 @@ public class MetallurgyPotion extends Potion
 		//if(vy < 0)
 			//vy += 0.02/gravity;
 		//if(vy > 0)
-		if(par1EntityLiving.isJumping || vy < 0)
+		
+		//TODO: access isJumping
+		//if(par1EntityLiving.isJumping || vy < 0)
+		if(false)
 		{
 			//vy += 0.0734000015258789;
 			vy += 0.0734000015258789;
@@ -48,12 +52,6 @@ public class MetallurgyPotion extends Potion
 		}
 		
     	par1EntityLiving.setVelocity(vx, vy, vz);
-    }
-    
-    @Override
-    public void affectEntity(EntityLiving par1EntityLiving, EntityLiving par2EntityLiving, int par3, double par4)
-    {
-    	System.out.println("Metallurg wrong");
     }
     
     public boolean isReady(int par1, int par2)

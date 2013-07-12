@@ -12,6 +12,12 @@ public class ItemMetallurgy extends Item
 		xp = -1;
 	}
 	
+    public ItemMetallurgy setTextureName(String par1Str)
+    {
+        super.func_111206_d(par1Str);
+        return this;
+    }
+	
 	public ItemMetallurgy setSmeltinExperience(float xp)
 	{
 		this.xp = xp;

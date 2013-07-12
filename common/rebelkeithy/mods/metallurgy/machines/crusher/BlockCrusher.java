@@ -1,10 +1,13 @@
 package rebelkeithy.mods.metallurgy.machines.crusher;
 
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,20 +17,12 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import rebelkeithy.mods.guiregistry.GuiRegistry;
-import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
-import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
 
 public class BlockCrusher extends BlockContainer
@@ -106,7 +101,8 @@ public class BlockCrusher extends BlockContainer
     	return (metadata < 8) ? metadata : metadata - 8;
     }
     
-    public Icon getBlockTextureFromSideAndMetadata(int par1, int par2)
+    @Override
+    public Icon getIcon(int par1, int par2)
     {
         return iconArray[par2];
     }
@@ -279,7 +275,7 @@ public class BlockCrusher extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int x, int y, int z, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World par1World, int x, int y, int z, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
     {
         int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 

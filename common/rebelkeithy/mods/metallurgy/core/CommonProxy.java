@@ -6,14 +6,13 @@ import net.minecraft.world.World;
 
 import java.io.File;
 
+import rebelkeithy.mods.keithyutils.particleregistry.ParticleRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import rebelkeithy.mods.metallurgy.machines.storage.ContainerStorage;
 import rebelkeithy.mods.metallurgy.machines.storage.GuiStorage;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
 
 public class CommonProxy
 {
-	
 	public File getMinecraftDir() 
 	{
 		return new File(".");

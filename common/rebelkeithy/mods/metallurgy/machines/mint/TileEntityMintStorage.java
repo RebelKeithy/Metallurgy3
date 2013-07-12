@@ -1,16 +1,14 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
 
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
-import buildcraft.api.inventory.ISpecialInventory;
-
-public class TileEntityMintStorage extends TileEntity implements ISpecialInventory
+public class TileEntityMintStorage extends TileEntity implements IInventory
 {
     private ItemStack[] chestContents = new ItemStack[6];
 
@@ -243,73 +241,16 @@ public class TileEntityMintStorage extends TileEntity implements ISpecialInvento
         this.updateContainingBlockInfo();
         super.invalidate();
     }
-
+    
 	@Override
-	public int addItem(ItemStack stack, boolean doAdd, ForgeDirection from) {	
-		
-		if(MintRecipes.minting().getMintingResult(stack) == 0)
-			return 0;
-		
-		int amount = stack.stackSize;
-		for(int i = 0; i < 6; i++)
-		{
-			if(chestContents[i] == null)
-			{
-				if(doAdd)
-					chestContents[i] = new ItemStack(stack.itemID, stack.stackSize, stack.getItemDamage());
-				return stack.stackSize;
-			}
-			
-			if(chestContents[i].itemID == stack.itemID && chestContents[i].stackSize < chestContents[i].getMaxStackSize())
-			{
-				int leftToFill = chestContents[i].getMaxStackSize() - chestContents[i].stackSize;
-				if(leftToFill < amount)
-				{
-					amount -= leftToFill;
-					if(doAdd)
-						chestContents[i].stackSize = chestContents[i].getMaxStackSize();
-				} else {
-					if(doAdd)
-						chestContents[i].stackSize += amount;
-					return stack.stackSize;
-				}
-			}
-		}
-		return stack.stackSize - amount;
-	}
-
-	@Override
-	public ItemStack[] extractItem(boolean doRemove, ForgeDirection from, int maxItemCount) {
-		
-		for(int i = 0; i < 6; i++)
-		{
-			if(chestContents[i] != null)
-			{
-				if(chestContents[i].stackSize > maxItemCount)
-				{
-					if(doRemove)
-						chestContents[i].stackSize -= maxItemCount;
-					return new ItemStack[] { new ItemStack(chestContents[i].itemID, maxItemCount, chestContents[i].getItemDamage()) };
-				} else {
-					ItemStack ret = new ItemStack(chestContents[i].itemID, chestContents[i].stackSize, chestContents[i].getItemDamage());
-					if(doRemove)
-						chestContents[i] = null;
-					return new ItemStack[] { ret };
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
+	public boolean isInvNameLocalized() 
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isStackValidForSlot(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) 
+	{
+		return MintRecipes.minting().getMintingResult(itemstack) != 0;
 	}
 }

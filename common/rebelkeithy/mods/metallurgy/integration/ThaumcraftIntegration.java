@@ -1,11 +1,6 @@
 package rebelkeithy.mods.metallurgy.integration;
 
 import cpw.mods.fml.common.Loader;
-import net.minecraft.item.ItemStack;
-import rebelkeithy.mods.metallurgy.api.*;
-import thaumcraft.api.EnumTag;
-import thaumcraft.api.ObjectTags;
-import thaumcraft.api.ThaumcraftApi;
 
 public class ThaumcraftIntegration {
 
@@ -15,7 +10,8 @@ public class ThaumcraftIntegration {
 		}
 	}
 
-	private static void addAspects() {
+	private static void addAspects() 
+	{
 		/** This structure iterates through all metals available in the mod and adds some best guess values
 		 *  We only need to give aspects to dusts, ingots and ores as Thaumcraft automaticly calculates aspects for blocks that
 		 *  are make of blocks which all have aspects
@@ -26,7 +22,7 @@ public class ThaumcraftIntegration {
 		 *  	Dusts get 1 destruction and 5-6 metal + 1-2 other aspect to a total of 8
 		 *      Generally easily available stuff gives 8 aspects, but more rare stuff like diamon ore and emerald ore give 20
 		 * */
-		
+	/*	
 		for (String setName : rebelkeithy.mods.metallurgy.api.MetallurgyAPI.getMetalSetNames() ){
 			for (IOreInfo oreInfo : MetallurgyAPI.getMetalSet(setName).getOreList().values()){
 				ItemStack ore = oreInfo.getOre();
@@ -109,5 +105,6 @@ public class ThaumcraftIntegration {
 				}
 			}	
 		}
+		*/
 	}
 }

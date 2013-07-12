@@ -1,15 +1,14 @@
 package rebelkeithy.mods.metallurgy.machines.storage;
 
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import java.util.List;
-
 import rebelkeithy.mods.metallurgy.core.Coord;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
@@ -29,7 +28,7 @@ public class BlockStorage extends BlockContainer
     }
     
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
     {
     	if(par6ItemStack.hasTagCompound())
     	{

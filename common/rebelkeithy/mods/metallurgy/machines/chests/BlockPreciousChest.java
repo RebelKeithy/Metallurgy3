@@ -1,10 +1,15 @@
 package rebelkeithy.mods.metallurgy.machines.chests;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,25 +19,19 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
-
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-
-import rebelkeithy.mods.guiregistry.GuiRegistry;
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
 public class BlockPreciousChest extends BlockContainer
 {
     private Random random = new Random();
     private int renderId = RenderingRegistry.getNextAvailableRenderId();
+    private Icon[] iconArray;
 
     public BlockPreciousChest(int par1)
     {
@@ -78,7 +77,7 @@ public class BlockPreciousChest extends BlockContainer
      * Called when the block is placed in the world.
      */
     @Override
-    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLiving par5EntityLiving, ItemStack par6ItemStack)
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
     {
         byte direction = 0;
         int var11 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
@@ -231,6 +230,24 @@ public class BlockPreciousChest extends BlockContainer
         while (!var6.isSitting());
 
         return true;
+    }
+    
+    @Override
+    public Icon getIcon(int par1, int par2)
+    {
+        return iconArray[par2];
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+    	iconArray = new Icon[5];
+    	iconArray[0] = par1IconRegister.registerIcon("Metallurgy:Precious/BrassBlock");
+    	iconArray[1] = par1IconRegister.registerIcon("Metallurgy:Precious/SilverBlock");
+    	iconArray[2] = par1IconRegister.registerIcon("Metallurgy:Precious/ElectrumBlock");
+    	iconArray[3] = par1IconRegister.registerIcon("Metallurgy:Precious/ElectrumBlock");
+    	iconArray[4] = par1IconRegister.registerIcon("Metallurgy:Precious/PlatinumBlock");
     }
     
 	@Override

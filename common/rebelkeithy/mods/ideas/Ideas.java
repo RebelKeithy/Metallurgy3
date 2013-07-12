@@ -10,7 +10,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid="Ideas", name="Ideas", version="1")
+//@Mod(modid="Ideas", name="Ideas", version="1")
 public class Ideas 
 {
 	Block orenode;
@@ -19,7 +19,6 @@ public class Ideas
 	public void preInit(FMLPreInitializationEvent event) 
 	{
 		orenode = new OreNode(999).setUnlocalizedName("Metallurgy:OreNode").setHardness(3);
-		
 	}
 	
 	@Init

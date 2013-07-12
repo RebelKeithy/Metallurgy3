@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import rebelkeithy.mods.metablock.ICollisionListener;
+import rebelkeithy.mods.keithyutils.metablock.ICollisionListener;
 
 public class VyroxeresCollisionListener implements ICollisionListener
 {

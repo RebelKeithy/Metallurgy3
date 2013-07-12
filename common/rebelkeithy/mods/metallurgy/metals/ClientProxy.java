@@ -5,14 +5,14 @@ import net.minecraft.world.World;
 
 import java.io.File;
 
+import rebelkeithy.mods.keithyutils.particleregistry.ParticleRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.particleregistry.ParticleRegistry;
 
 public class ClientProxy extends CommonProxy
 {
 	public File getMinecraftDir() 
 	{
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 	
 	public void registerParticles()

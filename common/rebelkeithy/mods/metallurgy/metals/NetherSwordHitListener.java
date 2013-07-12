@@ -1,9 +1,9 @@
 package rebelkeithy.mods.metallurgy.metals;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -35,7 +35,7 @@ public class NetherSwordHitListener implements ISwordHitListener
 	private static int wither = 20;
 
 	@Override
-	public boolean hitEntity(ItemStack itemstack, EntityLiving entityliving, EntityLiving player) {
+	public boolean hitEntity(ItemStack itemstack, EntityLivingBase entityliving, EntityLivingBase player) {
 
 		if(Math.random() < 0.7)
 			return false;

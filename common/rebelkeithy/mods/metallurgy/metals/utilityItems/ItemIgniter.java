@@ -1,5 +1,6 @@
 package rebelkeithy.mods.metallurgy.metals.utilityItems;
 
+import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,12 @@ public class ItemIgniter extends ItemFlintAndSteel
         super(par1);
         this.maxStackSize = 1;
         this.setMaxDamage(128);
+    }
+	
+    public ItemIgniter setTextureName(String par1Str)
+    {
+        super.func_111206_d(par1Str);
+        return this;
     }
 
     /**

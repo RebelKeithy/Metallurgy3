@@ -13,13 +13,13 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
+import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class MetalInfoDatabase 
 {
@@ -83,7 +83,7 @@ public class MetalInfoDatabase
 				System.out.println("config for item " + itemMap.get("Item Name") + " = " + id);
 				id = config.get("Item IDs", itemMap.get("Item Name"), id).getInt();
 				
-				Item item = new Item(id).setUnlocalizedName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setCreativeTab(tab);
+				Item item = new ItemMetallurgy(id).setTextureName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setUnlocalizedName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name")).setCreativeTab(tab);
 				LanguageRegistry.addName(item, itemMap.get("Item Name"));
 				
 				items.put(itemMap.get("Item Name"), item);

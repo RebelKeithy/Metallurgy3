@@ -1,9 +1,11 @@
 package rebelkeithy.mods.metallurgy.machines.chests;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -14,6 +16,12 @@ public class TileEntityPreciousChestRenderer extends TileEntitySpecialRenderer
     /** The normal small chest model. */
     private ModelChest chestModel = new ModelChest();
 
+    private ResourceLocation chestBrass = new ResourceLocation("Metallurgy:textures/blocks/machines/chests/brasschest.png");
+    private ResourceLocation chestSilver = new ResourceLocation("Metallurgy:textures/blocks/machines/chests/silverchest.png");
+    private ResourceLocation chestGold = new ResourceLocation("Metallurgy:textures/blocks/machines/chests/goldchest.png");
+    private ResourceLocation chestElectrum = new ResourceLocation("Metallurgy:textures/blocks/machines/chests/electrumchest.png");
+    private ResourceLocation chestPlatinum = new ResourceLocation("Metallurgy:textures/blocks/machines/chests/platinumchest.png");
+    private ResourceLocation[] textures = {chestBrass, chestSilver, chestGold, chestElectrum, chestPlatinum};
     
     /**
      * Renders the TileEntity for the chest at a position.
@@ -25,39 +33,10 @@ public class TileEntityPreciousChestRenderer extends TileEntitySpecialRenderer
         int direction = par1TileEntityChest.getDirection();
         int type = par1TileEntityChest.getType();
         float offset = 0;
-        
-        switch(type)
-        {
-            case 0:
-            {
-            	imageName = "brasschest.png";
-            	break;
-            }
-            case 1:
-            {
-            	imageName = "silverchest.png";
-            	break;
-            }
-            case 2:
-            {
-            	imageName = "goldchest.png";
-            	break;
-            }
-            case 3:
-            {
-            	imageName = "electrumchest.png";
-            	break;
-            }
-            case 4:
-            {
-            	imageName = "platinumchest.png";
-            	break;
-            }
-        }
 
         int var9;
 
-        if (!par1TileEntityChest.func_70309_m())
+        if (!par1TileEntityChest.hasWorldObj())
         {
             var9 = 5;
             offset = 0.1f;
@@ -71,7 +50,9 @@ public class TileEntityPreciousChestRenderer extends TileEntitySpecialRenderer
         ModelChest var14;
 
         var14 = this.chestModel;
-        this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/chests/" + imageName);
+        
+        if(type < textures.length)
+            Minecraft.getMinecraft().func_110434_K().func_110577_a(textures[type]);
 
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

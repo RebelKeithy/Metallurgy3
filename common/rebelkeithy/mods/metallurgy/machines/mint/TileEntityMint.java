@@ -340,19 +340,19 @@ public class TileEntityMint extends TileEntity
 
 	public String getIngotImage() {
 		if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Silver").ingot.itemID)
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintSilver.png";
+			return "metallurgy:textures/blocks/machines/mint/MintSilver.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Brass").ingot.itemID)
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintBrass.png";
+			return "metallurgy:textures/blocks/machines/mint/MintBrass.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Electrum").ingot.itemID)
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintElectrum.png";
+			return "metallurgy:textures/blocks/machines/mint/MintElectrum.png";
 		else if(ingotId == MetallurgyMetals.preciousSet.getOreInfo("Platinum").ingot.itemID)
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintPlatinum.png";
+			return "metallurgy:textures/blocks/machines/mint/MintPlatinum.png";
 		else if(ingotId == Item.ingotGold.itemID)
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintGold.png";
+			return "metallurgy:textures/blocks/machines/mint/MintGold.png";
 		
 		if(!MintRecipes.minting().getImage(ingotId).equals(""))
 			return MintRecipes.minting().getImage(ingotId);
 		else
-			return "/mods/Metallurgy/textures/blocks/machines/mint/MintBrass.png";
+			return "metallurgy:textures/blocks/machines/mint/MintBrass.png";
 	}
 }

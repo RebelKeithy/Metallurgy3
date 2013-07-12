@@ -3,7 +3,7 @@ package rebelkeithy.mods.metallurgy.machines;
 import java.io.File;
 
 import net.minecraft.client.Minecraft;
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.abstractor.ContainerAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.GuiAbstractor;
 import rebelkeithy.mods.metallurgy.machines.chests.ContainerPreciousChest;
@@ -74,6 +74,6 @@ public class ClientProxy extends CommonProxy
 	
 	public File getMinecraftDir() 
 	{
-		return Minecraft.getMinecraftDir();
+		return Minecraft.getMinecraft().mcDataDir;
 	}
 }

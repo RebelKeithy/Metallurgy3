@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
-import rebelkeithy.mods.guiregistry.GuiRegistry;
+import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.0.0.0.10")
+@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.2.2", dependencies = "required-after:KeithyUtils@[1.1,]")
 @NetworkMod(channels = {"MetallurgyCore"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyCore 
 {
