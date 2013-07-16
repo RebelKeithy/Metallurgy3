@@ -30,6 +30,9 @@ import rebelkeithy.mods.metallurgy.machines.ladders.LadderRenderer;
 import rebelkeithy.mods.metallurgy.machines.lantern.LanternRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLantern;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLanternRenderer;
+import rebelkeithy.mods.metallurgy.machines.laser.LaserRenderHelper;
+import rebelkeithy.mods.metallurgy.machines.laser.TileEntityLaser;
+import rebelkeithy.mods.metallurgy.machines.laser.TileEntityLaserRenderer;
 import rebelkeithy.mods.metallurgy.machines.mint.ContainerMintStorage;
 import rebelkeithy.mods.metallurgy.machines.mint.GuiMintStorage;
 import rebelkeithy.mods.metallurgy.machines.mint.MintRenderHelper;
@@ -58,6 +61,10 @@ public class ClientProxy extends CommonProxy
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
 		RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new TileEntityLaserRenderer());
+		RenderingRegistry.registerBlockHandler(new LaserRenderHelper());
+		
 	}
 	
 	public void registerGUIs()

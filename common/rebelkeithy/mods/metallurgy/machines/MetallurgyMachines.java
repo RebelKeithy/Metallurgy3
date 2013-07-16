@@ -35,6 +35,7 @@ import rebelkeithy.mods.metallurgy.machines.lantern.ItemBlockColoredGlass;
 import rebelkeithy.mods.metallurgy.machines.lantern.ItemBlockLantern;
 import rebelkeithy.mods.metallurgy.machines.lantern.ItemGlassDust;
 import rebelkeithy.mods.metallurgy.machines.lantern.TileEntityLantern;
+import rebelkeithy.mods.metallurgy.machines.laser.Laser;
 import rebelkeithy.mods.metallurgy.machines.mint.BlockMint;
 import rebelkeithy.mods.metallurgy.machines.mint.BlockMintStorage;
 import rebelkeithy.mods.metallurgy.machines.mint.MetallurgyTradeHandler;
@@ -92,6 +93,7 @@ public class MetallurgyMachines
 	public static Block lantern;
 	public static Block ladder;
 	public static Block enchanter;
+	public static Block laser;
 
 	
 	@PreInit
@@ -112,6 +114,7 @@ public class MetallurgyMachines
 		initLadders();
 		
 		initEnchanter();
+		Laser.init();
 		
 		proxy.registerGUIs();
 		proxy.registerTileEntitySpecialRenderer();

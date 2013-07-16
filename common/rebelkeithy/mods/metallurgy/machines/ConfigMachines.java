@@ -58,6 +58,8 @@ public class ConfigMachines
 	
 	public static boolean ladderEnabled = true;
 	public static int ladderID = 919;
+
+	public static int laserID = 922;
 	
 	private static int ironDustID = 29000;
 	private static int goldDustID = 29001;
@@ -90,6 +92,7 @@ public class ConfigMachines
 		lanternID = config.get("Block IDs", "Lanterns", lanternID).getInt();
 		ladderID = config.get("Block IDs", "Ladders", ladderID).getInt();
 		enchanterID = config.get("Block IDs", "Enchanter", enchanterID).getInt();
+		laserID = config.get("Block IDs", "Miners Laser", laserID).getInt();
 		
 		ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
 		goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();

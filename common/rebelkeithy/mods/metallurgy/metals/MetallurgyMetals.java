@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.command.ServerCommandManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
@@ -38,12 +35,10 @@ import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.Mod.ServerStarting;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -53,7 +48,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 @NetworkMod(channels = {"MetallurgyBase"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyMetals {
 
-	public boolean isRelease = true;
+	public boolean isRelease = false;
 
 	
 	public static MetalSet baseSet;
@@ -134,7 +129,7 @@ public class MetallurgyMetals {
         if(!isRelease)
         {
         	//TODO: Note: Other users will need to point this to the directory continaning Metallurgy.jar
-        	filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/mods/Metallurgy.jar";
+        	//filepath = "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/mods/Metallurgy.jar";
         	//filepath = "D:\\minecraft\\source\\Metallurgy3\\resources\\mods\\Metallurgy.jar";
         	MetalInfoDatabase.readMetalDataFromFile("C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/spreadsheet.csv");
     		MetalInfoDatabase.readItemDataFromFile(utilityConfig, "C:/Users/Keithy/Documents/Metallurgy 3 1.5/source/Metallurgy 3/resources/Items.csv", utilityTab);
