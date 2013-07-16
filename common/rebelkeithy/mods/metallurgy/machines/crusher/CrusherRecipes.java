@@ -1,12 +1,13 @@
 package rebelkeithy.mods.metallurgy.machines.crusher;
 
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class CrusherRecipes
 {
@@ -87,6 +88,12 @@ public class CrusherRecipes
 			return ret;
 		}
 		
+		if(item.itemID == Item.netherQuartz.itemID)
+		{
+			List<ItemStack> dust = OreDictionary.getOres("dustNetherQuartz");
+			if(dust.size() > 0)
+				return dust.get(0);
+		}
 
 		for(String name : OreDictionary.getOreNames())
 		{
