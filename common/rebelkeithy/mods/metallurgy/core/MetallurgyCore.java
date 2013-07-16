@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.2.2", dependencies = "required-after:KeithyUtils@[1.1,]")
+@Mod(modid="Metallurgy3Core", name="Metallurgy 3 Core", version="3.2.3", dependencies = "required-after:KeithyUtils@[1.2,]")
 @NetworkMod(channels = {"MetallurgyCore"}, clientSideRequired = true, serverSideRequired = false)
 public class MetallurgyCore 
 {
@@ -32,8 +32,6 @@ public class MetallurgyCore
 	@Instance(value = "Metallurgy3Core")
 	public static MetallurgyCore instance;
 
-	public static int gravelsbaneID = 75;
-	
 	public static boolean spawnInAir = false;
 	
 	Configuration config;
@@ -110,7 +108,6 @@ public class MetallurgyCore
 		config.load();
 		
 		spawnInAir = config.get("Cheats", "Spawn Ore In Air", false).getBoolean(false);
-		gravelsbaneID = config.get("Enchantment", "Gravel's Bane ID", gravelsbaneID).getInt();
 		
 		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").getString().split("\\s*,\\s*"));
 		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").getString().split("\\s*,\\s*"));
