@@ -65,6 +65,10 @@ public class ConfigMachines
 	private static int goldDustID = 29001;
 	public static int[] extractorSpeeds = new int[11];
 	public static double[] xpBonus = new double [11];
+	public static int xpTankID = 923;
+	public static int pylonID = 924;
+	
+	public static int orbID = 29018;
 	
 	public static void initConfig()
 	{
@@ -93,6 +97,8 @@ public class ConfigMachines
 		ladderID = config.get("Block IDs", "Ladders", ladderID).getInt();
 		enchanterID = config.get("Block IDs", "Enchanter", enchanterID).getInt();
 		laserID = config.get("Block IDs", "Miners Laser", laserID).getInt();
+		xpTankID = config.get("Block IDs", "Xp Tank", xpTankID).getInt();
+		pylonID = config.get("Block IDs", "Pylon", pylonID).getInt();
 		
 		ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
 		goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();
@@ -101,6 +107,7 @@ public class ConfigMachines
 		coinBagID = config.get("Item IDs", "Coin Bag", coinBagID).getInt();
 		bullionID = config.get("Item IDs", "Bullion", bullionID).getInt();
 		glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
+		orbID = config.get("Item IDs", "Fantasy Orbs", orbID).getInt();
 		
 		tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
 		

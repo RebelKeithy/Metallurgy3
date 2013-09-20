@@ -90,11 +90,9 @@ public class ComputerCraftIntegration
 	
 	public static void createTurtle(int id, String name, Item tool)
 	{
-		
 		System.out.println("Metallurgy: Creating " + name + " Turtle");
 		dan200.turtle.shared.TurtleTool toolTurtle = new dan200.turtle.shared.TurtleTool(id, name, tool, false);
 		dan200.turtle.api.TurtleAPI.registerUpgrade(toolTurtle);
 		System.out.println("Metallurgy: Registered " + toolTurtle);
-		
 	}
 }

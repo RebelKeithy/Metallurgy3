@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderMetallurgyEnchantmentTable extends TileEntitySpecialRenderer
 {
     private ModelBook enchantmentBook = new ModelBook();
-    private static final ResourceLocation book = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    private static final ResourceLocation book = new ResourceLocation("Metallurgy:textures/blocks/machines/enchanter/enchanting_table_book.png");
 
     public void renderTileEntityEnchantmentTableAt(TileEntityMetallurgyEnchantmentTable par1TileEntityEnchantmentTable, double par2, double par4, double par6, float par8)
     {
@@ -39,7 +39,6 @@ public class RenderMetallurgyEnchantmentTable extends TileEntitySpecialRenderer
         float f3 = par1TileEntityEnchantmentTable.bookRotationPrev + f2 * par8;
         GL11.glRotatef(-f3 * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(80.0F, 0.0F, 0.0F, 1.0F);
-        //this.bindTextureByName("/item/book.png");
         this.func_110628_a(book);
         float f4 = par1TileEntityEnchantmentTable.pageFlipPrev + (par1TileEntityEnchantmentTable.pageFlip - par1TileEntityEnchantmentTable.pageFlipPrev) * par8 + 0.25F;
         float f5 = par1TileEntityEnchantmentTable.pageFlipPrev + (par1TileEntityEnchantmentTable.pageFlip - par1TileEntityEnchantmentTable.pageFlipPrev) * par8 + 0.75F;

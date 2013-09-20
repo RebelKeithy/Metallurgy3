@@ -21,29 +21,19 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
+import rebelkeithy.mods.metallurgy.machines.BlockMachineBase;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 
-public class BlockAbstractor extends BlockContainer
+public class BlockAbstractor extends BlockMachineBase
 {
     /**
      * Is the random generator used by furnace to drop the inventory contents in random directions.
      */
     private Random rand = new Random();
-
-    /** True if this is an active furnace, false if idle */
-    private final boolean isActive;
-    
-    private static int front = 0;
-    private static int side = 1;
-    private static int top = 2;
-    private static int bottom = 3;
-    private static int active = 4;
-    
-    private Map<Integer, Icon[]> iconMap;
 
     /**
      * This flag is used to prevent the furnace inventory to be dropped upon block removal, is used internally when the
@@ -54,38 +44,9 @@ public class BlockAbstractor extends BlockContainer
     public BlockAbstractor(int par1, boolean par2)
     {
         super(par1, Material.rock);
-        this.isActive = par2;
-        iconMap = new HashMap<Integer, Icon[]>();
         //setRequiresSelfNotify();
-    }
-    
-    @Override
-	public int damageDropped(int metadata)
-    {
-    	return metadata;
-    }
-    
-    public Icon getAbstractorTexture(int side, int meta, int facing, boolean isBurning)
-    {	    	
-        if (side == 1 || side == 0)
-        {
-            return iconMap.get(meta)[top];
-        }
-        else
-        {
-            if(side != facing)
-            	return iconMap.get(meta)[this.side];
-            else if(isBurning)
-            	return iconMap.get(meta)[active];
-            else
-            	return iconMap.get(meta)[front];
-        }
-    }
-    
-    @Override
-    public Icon getIcon(int par1, int par2)
-    {
-    	return getAbstractorTexture(par1, par2, 3, false);
+        this.setGui("Abstractor");
+        this.setNumSubtypes(10);
     }
     
     @Override
@@ -94,7 +55,7 @@ public class BlockAbstractor extends BlockContainer
     	try
     	{
 	        TileEntityAbstractor tea = (TileEntityAbstractor) world.getBlockTileEntity(x, y, z);
-	        if(tea != null && tea.isBurning())
+	        if(tea != null && tea.isActive())
 	        	return 5;
 		}
 	    catch(ClassCastException e)
@@ -103,20 +64,6 @@ public class BlockAbstractor extends BlockContainer
 	    }
     	
         return 0;
-    }
-
-    /**
-     * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
-     */
-    @Override
-    public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
-    {
-    	TileEntity tileEntity = par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
-    	int meta = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-    	int	dir = (tileEntity instanceof TileEntityAbstractor) ? ((TileEntityAbstractor)tileEntity).getDirection() : 0;
-    	boolean isBurning = (tileEntity instanceof TileEntityAbstractor) ? (((TileEntityAbstractor)tileEntity).isBurning()) : false;
-    		
-    	return getAbstractorTexture(par5, meta, dir, isBurning);
     }
 
     /**
@@ -130,7 +77,7 @@ public class BlockAbstractor extends BlockContainer
     	
     	int meta = par1World.getBlockMetadata(par2, par3, par4);
     	TileEntityAbstractor te = (TileEntityAbstractor)(par1World.getBlockTileEntity(par2, par3, par4));
-        if (te.isBurning())
+        if (te.isActive())
         {
             //int var6 = par1World.getBlockMetadata(par2, par3, par4);
             int var6 = te.getDirection();
@@ -173,34 +120,6 @@ public class BlockAbstractor extends BlockContainer
     }
 
     /**
-     * Called upon block activation (left or right click on the block.). The three integers represent x,y,z of the
-     * block.
-     */
-    @Override
-    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
-    {
-        if (par1World.isRemote)
-        {
-            return true;
-        }
-
-        if(par5EntityPlayer.isSneaking())
-        {
-        	return false;
-        }
-
-        TileEntityAbstractor var6 = (TileEntityAbstractor)par1World.getBlockTileEntity(par2, par3, par4);
-
-        if (var6 != null)
-        {
-        	GuiRegistry.openGui("Abstractor", MetallurgyMachines.instance, par5EntityPlayer, par1World, par2, par3, par4);
-        }
-
-        return true;
-
-    }
-
-    /**
      * Returns the TileEntity used by this block.
      */
     @Override
@@ -215,33 +134,11 @@ public class BlockAbstractor extends BlockContainer
     @Override
     public void onBlockPlacedBy(World par1World, int par2, int par3, int par4, EntityLivingBase par5EntityLiving, ItemStack par6ItemStack)
     {
-        int var6 = MathHelper.floor_double((double)(par5EntityLiving.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-        if (var6 == 0)
-        {
-            ((TileEntityAbstractor)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(2);
-        }
-
-        if (var6 == 1)
-        {
-            ((TileEntityAbstractor)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(5);
-        }
-
-        if (var6 == 2)
-        {
-            ((TileEntityAbstractor)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(3);
-        }
-
-        if (var6 == 3)
-        {
-            ((TileEntityAbstractor)(par1World.getBlockTileEntity(par2, par3, par4))).setDirection(4);
-        }
+        super.onBlockPlacedBy(par1World, par2, par3, par4, par5EntityLiving, par6ItemStack);
         
-        
-        TileEntityAbstractor var5 = (TileEntityAbstractor)par1World.getBlockTileEntity(par2, par3, par4);
+        TileEntityAbstractor tileEntity = (TileEntityAbstractor)par1World.getBlockTileEntity(par2, par3, par4);
         int metadata = par1World.getBlockMetadata(par2, par3, par4);
-        var5.setSpeed((int) (20 * ConfigMachines.extractorSpeeds[metadata]));
-        
+        tileEntity.setSpeed((int) (20 * ConfigMachines.extractorSpeeds[metadata]));
     }
 
     /**s
@@ -303,22 +200,12 @@ public class BlockAbstractor extends BlockContainer
     {
     	for(int i = 0; i < 10; i++)
     	{
-    		Icon[] iArray = new Icon[5];
-    		iArray[front] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Front");
-    		iArray[side] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Side");
-    		iArray[top] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Top");
-    		iArray[bottom] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Bottom");
-    		iArray[active] = par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Active");
-    		iconMap.put(i, iArray);
+    		Icon icon;
+    		this.setFrontIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Front"), i, false);
+    		this.setFrontIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Active"), i, true);
+    		this.setSideIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Side"), i);
+    		this.setTopIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Top"), i);
+    		this.setBottomIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Bottom"), i);
     	}
     }
-
-	@Override
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int n = 0; n < 10; n++) {
-			par3List.add(new ItemStack(this, 1, n));
-		}
-	}
 }

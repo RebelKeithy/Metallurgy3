@@ -9,6 +9,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
+import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractorItem;
 import rebelkeithy.mods.metallurgy.machines.abstractor.TileEntityAbstractor;
@@ -42,10 +43,15 @@ import rebelkeithy.mods.metallurgy.machines.mint.MetallurgyTradeHandler;
 import rebelkeithy.mods.metallurgy.machines.mint.MintRecipes;
 import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMint;
 import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMintStorage;
+import rebelkeithy.mods.metallurgy.machines.orbs.FantasyOrbs;
+import rebelkeithy.mods.metallurgy.machines.pylon.Pylon;
 import rebelkeithy.mods.metallurgy.machines.storage.BlockStorage;
 import rebelkeithy.mods.metallurgy.machines.storage.BlockStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageBlock;
+import rebelkeithy.mods.metallurgy.machines.xptank.BlockXpTank;
+import rebelkeithy.mods.metallurgy.machines.xptank.TileEntityXpTank;
+import rebelkeithy.mods.metallurgy.machines.xptank.orb.EntityXpOrbContainer;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -55,6 +61,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
@@ -87,6 +94,7 @@ public class MetallurgyMachines
 	public static Block furnace;
 	public static Block forge;
 	public static Block abstractor;
+	public static Block xpTank;
 	public static Block mint;
 	public static Block mintStorage;
 	public static Block coloredGlass;
@@ -110,11 +118,15 @@ public class MetallurgyMachines
 		initChests();
 		initMint();
 		initAbstractor();
+		initXpTank();
 		initLantern();
 		initLadders();
 		
 		initEnchanter();
 		Laser.init();
+		
+		FantasyOrbs.init();
+		Pylon.init();
 		
 		proxy.registerGUIs();
 		proxy.registerTileEntitySpecialRenderer();
@@ -278,6 +290,10 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(crusher, 1, 3), "Iron Crusher");
 		LanguageRegistry.addName(new ItemStack(crusher, 1, 4), "Steel Crusher");
 		
+		CrusherRecipes.addCrushing(Block.cobblestone.blockID, 0, new ItemStack(Block.sand));
+		CrusherRecipes.addCrushing(Block.stone.blockID, 0, new ItemStack(Block.sand));
+		CrusherRecipes.addCrushing(Block.netherrack.blockID, 0, new ItemStack(Block.slowSand));
+		CrusherRecipes.addCrushing(Block.glowStone.blockID, 0, new ItemStack(Item.glowstone, 4));
 	}
 	
 	public void loadCrusher()
@@ -335,7 +351,21 @@ public class MetallurgyMachines
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 6), "Orichalcum Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 7), "Adamantine Abstractor");
 		LanguageRegistry.addName(new ItemStack(abstractor, 1, 8), "Atlarus Abstractor");
-		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Tartarite Abstractor");		
+		LanguageRegistry.addName(new ItemStack(abstractor, 1, 9), "Tartarite Abstractor");
+		
+		AbstractorRecipes.addEssence(Item.ingotIron.itemID, 0, 3);
+		AbstractorRecipes.addEssence(Item.ingotGold.itemID, 0, 9);
+	}
+	
+	public void initXpTank()
+	{
+		xpTank = new BlockXpTank(ConfigMachines.xpTankID).setHardness(3.5F).setUnlocalizedName("M3XpTank").setCreativeTab(machineTab);
+		GameRegistry.registerBlock(xpTank, "M3XpTank");
+		GameRegistry.registerTileEntity(TileEntityXpTank.class, "M3TileEntityXpTank");
+		
+		LanguageRegistry.addName(new ItemStack(xpTank, 1, 0), "Xp Tank");
+		
+		EntityRegistry.registerModEntity(EntityXpOrbContainer.class, "XpOrbContainer", 0, this, 60, 1, true);
 	}
 	
 	public void createMachineRecipes()

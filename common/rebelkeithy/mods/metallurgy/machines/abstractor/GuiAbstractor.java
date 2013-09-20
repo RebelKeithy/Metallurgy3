@@ -12,7 +12,7 @@ public class GuiAbstractor extends GuiContainer
 {
     private TileEntityAbstractor abstractorInventory;
 
-    String[] names = {"Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Aredrite", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite"};
+    String[] names = {"Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite"};
     int type;
 
 	private ResourceLocation background = new ResourceLocation("Metallurgy:textures/guis/abstracter.png");
@@ -47,7 +47,7 @@ public class GuiAbstractor extends GuiContainer
         this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
         int var7;
 
-        if (this.abstractorInventory.isBurning())
+        if (this.abstractorInventory.isActive())
         {
             var7 = this.abstractorInventory.getBurnTimeRemainingScaled(12);
             this.drawTexturedModalRect(var5 + 56, var6 + 36 + 12 - var7, 176, 12 - var7, 14, var7 + 2);

@@ -58,8 +58,8 @@ public class GuiMetallurgyEnchantment extends GuiContainer
      */
     protected void drawGuiContainerForegroundLayer(int par1, int par2)
     {
-        this.fontRenderer.drawString(this.field_94079_C == null ? StatCollector.translateToLocal("container.enchant") : this.field_94079_C, 12, 5, 4210752);
-        this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        //this.fontRenderer.drawString(this.field_94079_C == null ? StatCollector.translateToLocal("container.enchant") : this.field_94079_C, 12, 5, 4210752);
+        //this.fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     /**
@@ -118,6 +118,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         GL11.glScalef(f2, f2, f2);
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         //this.mc.renderEngine.bindTexture("/item/book.png");
+        
         this.mc.func_110434_K().func_110577_a(book);
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
         float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
@@ -150,7 +151,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         }
 
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
-        bookModel.render((Entity)null, 0.0F, f4, f5, f3, 0.0F, 0.0625F);
+        //bookModel.render((Entity)null, 0.0F, f4, f5, f3, 0.0F, 0.0625F);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         RenderHelper.disableStandardItemLighting();
         GL11.glMatrixMode(GL11.GL_PROJECTION);
@@ -163,70 +164,89 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
         this.mc.func_110434_K().func_110577_a(background);
         EnchantmentNameParts.instance.setRandSeed(this.containerEnchantment.nameSeed);
+
+
+        for(int i1 = 0; i1 < 6; i1++)
+        {
+	        //int i1 = 0;
+	        String s = EnchantmentNameParts.instance.generateRandomEnchantName();
+	        if(s.length() > 12)
+	        	s = s.substring(0, 12);
+	        
+	        this.zLevel = 0.0F;
+	        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
+	        this.mc.func_110434_K().func_110577_a(background);
+	        int j1 = (int) ((this.containerEnchantment.enchantLevels - 1) * i1/5.0f + 1);
+	        
+	        if(this.containerEnchantment.enchantLevels == 0)
+	        	j1 = 0;
+	        
+	        int xOffset = i1 < 3 ? 5 : 123;
+	        int yOffset = 18 * ((i1 < 3 ? i1 : i1 - 3) - 1);
+	        
+	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	        
+	        int[] offsetArrayX = {64, 80, 96, 64, 80, 96};
+	        int[] offsetArrayY = {19, 9, 19, 51, 61, 51};
+	        for(int i = 1; i < 7; i++)
+	        {
+	        	if(this.containerEnchantment.tableInventory.getStackInSlot(i) != null && MetallurgyMetals.fantasySet != null)
+	        	{
+	                //this.mc.renderEngine.func_98187_b("/mods/metallurgy/textures/guis/enchant.png");
+	        		if(containerEnchantment.tableInventory.getStackInSlot(i).itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").dust.itemID)
+	        		{
+	                    this.drawTexturedModalRect(k + offsetArrayX[i-1], l + offsetArrayY[i-1], 163, 167, 16, 16);
+	        		}
+	        		else if(containerEnchantment.tableInventory.getStackInSlot(i).itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").dust.itemID)
+	        		{
+	                    this.drawTexturedModalRect(k + 69 + 18 * (i - 1), l + 46, 126, 166, 18, 18);
+	        		}
+	        	}
+	        }
+	        
+	        if (j1 == 0)
+	        {
+	            this.drawTexturedModalRect(k + xOffset, l + 15 + 19 * (i1 < 3 ? i1 : i1 - 3), 109, 203, 48, 18);
+	        }
+	        else
+	        {
+	            String s1 = "" + j1;
+	            FontRenderer fontrenderer = this.mc.standardGalacticFontRenderer;
+	            int k1 = 6839882;
+	
+	            if (this.mc.thePlayer.experienceLevel < j1 && !this.mc.thePlayer.capabilities.isCreativeMode)
+	            {
+	                this.drawTexturedModalRect(k + xOffset, l + 15 + 19 * (i1 < 3 ? i1 : i1 - 3), 109, 203, 48, 18);
+	                fontrenderer.drawSplitString(s, k + 62, l + 16 + 19 * (i1 < 3 ? i1 : i1 - 3), 48, (k1 & 16711422) >> 1);
+	                fontrenderer = this.mc.fontRenderer;
+	                k1 = 4226832;
+	                fontrenderer.drawStringWithShadow(s1, k + 62 + 104 - fontrenderer.getStringWidth(s1), l + 16 + 19 * (i1 < 3 ? i1 : i1 - 3) + 7, k1);
+	            }
+	            else
+	            {
+	                int l1 = par2 - (k + xOffset);
+	                int i2 = par3 - (l + 14 + 19 * (i1 < 3 ? i1 : i1 - 3));
+	
+	                if (l1 >= 0 && i2 >= 0 && l1 < 48 && i2 < 19)
+	                {
+	                    this.drawTexturedModalRect(k + xOffset, l + 15 + 19 * (i1 < 3 ? i1 : i1 - 3), 109, 203, 48, 18);
+	                    k1 = 16777088;
+	                }
+	                else
+	                {
+	                    this.drawTexturedModalRect(k + xOffset, l + 15 + 19 * (i1 < 3 ? i1 : i1 - 3), 109, 184, 48, 18);
+	                }
+	
+	                k1 = 0xCE6000;
+	                fontrenderer.drawSplitString(s, k + xOffset, l + 16 + 19 * (i1 < 3 ? i1 : i1 - 3), 48, k1);
+	                fontrenderer = this.mc.fontRenderer;
+	                k1 = 8453920;
+	                fontrenderer.drawStringWithShadow(s1, k + xOffset + 43 - fontrenderer.getStringWidth(s1), l + 16 + 19 * (i1 < 3 ? i1 : i1 - 3) + 7, k1);
+	            }
+	        }
+    	
+        }
         
-        int i1 = 0;
-        String s = EnchantmentNameParts.instance.generateRandomEnchantName();
-        this.zLevel = 0.0F;
-        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
-        this.mc.func_110434_K().func_110577_a(background);
-        int j1 = this.containerEnchantment.enchantLevels;
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        
-        for(int i = 1; i < 6; i++)
-        {
-        	if(this.containerEnchantment.tableInventory.getStackInSlot(i) != null && MetallurgyMetals.fantasySet != null)
-        	{
-                //this.mc.renderEngine.func_98187_b("/mods/metallurgy/textures/guis/enchant.png");
-        		if(containerEnchantment.tableInventory.getStackInSlot(i).itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").dust.itemID)
-        		{
-                    this.drawTexturedModalRect(k + 69 + 18 * (i - 1), l + 46, 108, 166, 18, 18);
-        		}
-        		else if(containerEnchantment.tableInventory.getStackInSlot(i).itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").dust.itemID)
-        		{
-                    this.drawTexturedModalRect(k + 69 + 18 * (i - 1), l + 46, 126, 166, 18, 18);
-        		}
-        	}
-        }
-
-        if (j1 == 0)
-        {
-            this.drawTexturedModalRect(k + 60, l + 14 + 19 * i1, 0, 185, 108, 19);
-        }
-        else
-        {
-            String s1 = "" + j1;
-            FontRenderer fontrenderer = this.mc.standardGalacticFontRenderer;
-            int k1 = 6839882;
-
-            if (this.mc.thePlayer.experienceLevel < j1 && !this.mc.thePlayer.capabilities.isCreativeMode)
-            {
-                this.drawTexturedModalRect(k + 60, l + 14 + 19 * i1, 0, 185, 108, 19);
-                fontrenderer.drawSplitString(s, k + 62, l + 16 + 19 * i1, 104, (k1 & 16711422) >> 1);
-                fontrenderer = this.mc.fontRenderer;
-                k1 = 4226832;
-                fontrenderer.drawStringWithShadow(s1, k + 62 + 104 - fontrenderer.getStringWidth(s1), l + 16 + 19 * i1 + 7, k1);
-            }
-            else
-            {
-                int l1 = par2 - (k + 60);
-                int i2 = par3 - (l + 14 + 19 * i1);
-
-                if (l1 >= 0 && i2 >= 0 && l1 < 108 && i2 < 19)
-                {
-                    this.drawTexturedModalRect(k + 60, l + 14 + 19 * i1, 0, 204, 108, 19);
-                    k1 = 16777088;
-                }
-                else
-                {
-                    this.drawTexturedModalRect(k + 60, l + 14 + 19 * i1, 0, 166, 108, 19);
-                }
-
-                fontrenderer.drawSplitString(s, k + 62, l + 16 + 19 * i1, 104, k1);
-                fontrenderer = this.mc.fontRenderer;
-                k1 = 8453920;
-                fontrenderer.drawStringWithShadow(s1, k + 62 + 104 - fontrenderer.getStringWidth(s1), l + 16 + 19 * i1 + 7, k1);
-            }
-        }
     }
 
     public void func_74205_h()

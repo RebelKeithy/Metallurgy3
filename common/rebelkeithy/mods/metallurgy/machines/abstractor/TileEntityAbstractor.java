@@ -3,6 +3,7 @@ package rebelkeithy.mods.metallurgy.machines.abstractor;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.item.EntityXPOrb;
@@ -13,14 +14,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import rebelkeithy.mods.keithyutils.Coord;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
+import rebelkeithy.mods.metallurgy.machines.TileEntityMachineBase;
+import rebelkeithy.mods.metallurgy.machines.xptank.TileEntityXpTank;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class TileEntityAbstractor extends TileEntity implements ISidedInventory
+public class TileEntityAbstractor extends TileEntityMachineBase implements ISidedInventory
 {
     /**
      * The ItemStacks that hold the items currently being used in the furnace
@@ -39,8 +42,6 @@ public class TileEntityAbstractor extends TileEntity implements ISidedInventory
     public int furnaceCookTime = 0;
     
     public int furnaceTimeBase = 200;
-
-    public int direction = 0;
 
 	private int ticksSinceSync;
     
@@ -63,16 +64,6 @@ public class TileEntityAbstractor extends TileEntity implements ISidedInventory
     public ItemStack getStackInSlot(int par1)
     {
         return this.furnaceItemStacks[par1];
-    }
-    
-    public void setDirection(int par1)
-    {
-    	direction = par1;
-    }
-    
-    public int getDirection()
-    {
-    	return direction;
     }
 
     /**
@@ -237,7 +228,8 @@ public class TileEntityAbstractor extends TileEntity implements ISidedInventory
     /**
      * Returns true if the furnace is currently burning
      */
-    public boolean isBurning()
+    @Override
+    public boolean isActive()
     {
         return this.furnaceBurnTime > 0;
     }
@@ -293,7 +285,7 @@ public class TileEntityAbstractor extends TileEntity implements ISidedInventory
                 }
             }
 
-            if (this.isBurning() && this.canSmelt())
+            if (this.isActive() && this.canSmelt())
             {
                 ++this.furnaceCookTime;
 
@@ -367,63 +359,83 @@ public class TileEntityAbstractor extends TileEntity implements ISidedInventory
                 this.furnaceItemStacks[0] = null;
             }
 
-            int xpPerOrb = 1;
+            List<Coord> coords = Coord.get4AdjacentSides(xCoord, yCoord, zCoord);
             
-            int orbCount = totalXP;
-            
-            if(totalXP > 20) {
-                xpPerOrb = 2;
-                orbCount = (totalXP/2) + 1;
-            } 
-            if(totalXP > 40) {
-                xpPerOrb = 4;
-                orbCount = (totalXP/4) + 1;
-            }
-            if(totalXP > 80) {
-                xpPerOrb = 8;
-                orbCount = (totalXP/8) + 1;
-            }
-                
-            EntityXPOrb orb;
-            for(int n = 0; n < orbCount; n++)
+            for(Coord coord : coords)
             {
-            	double xOffset = 0.5;
-            	double zOffset = 0.5;
-            	double xMotion = 0;
-            	double zMotion = 0;
-            	
-            	if(direction == 2) {
-            		zOffset = 0;
-            		zOffset = -0.1;
-            	} else if(direction == 3) {
-            		zOffset = 1;
-            		zMotion = 0.1;
-            	} else if(direction == 4) {
-            		xOffset = 0;
-            		xMotion = -0.1;
-            	} else if(direction == 5) {
-            		xOffset = 1;
-            		xMotion = 0.1;
+            	if(coord.getBlockID(worldObj) == MetallurgyMachines.xpTank.blockID)
+            	{
+            		TileEntityXpTank tileEntity = (TileEntityXpTank) coord.getTileEntity(worldObj);
+            		totalXP -= tileEntity.addXP(totalXP);
+            		if(totalXP <= 0)
+            			break;
             	}
-            	
-            	Random rand = new Random();
-            	xOffset += (rand.nextInt(21) - 10) / 100.0;
-              	zOffset += (rand.nextInt(21) - 10) / 100.0;
-            	xMotion += (rand.nextInt(11) - 5) / 100.0;
-              	zMotion += (rand.nextInt(11) - 5) / 100.0;
-              	double yMotion  = (rand.nextInt(11) - 5) / 200.0;
-            	
-              	MetallurgyCore.proxy.spawnParticle("abstractorSmall", worldObj, this.xCoord + xOffset, this.yCoord + 0.75, this.zCoord + zOffset, xMotion*0.7f, yMotion, zMotion*0.7f);
-                orb = new EntityXPOrb(this.worldObj, this.xCoord + xOffset, this.yCoord + 0.5f, this.zCoord + zOffset, xpPerOrb);
-                orb.motionX = xMotion;
-                orb.motionZ = zMotion;
-                if(!worldObj.isRemote)
-                {
-                	this.worldObj.spawnEntityInWorld(orb);
-                	this.worldObj.updateEntity(orb);
-                }
             }
+            
+            spawnXP(totalXP);
+            
             sendPacket();
+        }
+    }
+    
+    public void spawnXP(int totalXP)
+    {
+    	int xpPerOrb = 1;
+        
+        int orbCount = totalXP;
+        
+        if(totalXP > 20) {
+            xpPerOrb = 2;
+            orbCount = (totalXP/2) + 1;
+        } 
+        if(totalXP > 40) {
+            xpPerOrb = 4;
+            orbCount = (totalXP/4) + 1;
+        }
+        if(totalXP > 80) {
+            xpPerOrb = 8;
+            orbCount = (totalXP/8) + 1;
+        }
+            
+        EntityXPOrb orb;
+        for(int n = 0; n < orbCount; n++)
+        {
+        	double xOffset = 0.5;
+        	double zOffset = 0.5;
+        	double xMotion = 0;
+        	double zMotion = 0;
+        	
+        	if(direction == 2) {
+        		zOffset = 0;
+        		zOffset = -0.1;
+        	} else if(direction == 3) {
+        		zOffset = 1;
+        		zMotion = 0.1;
+        	} else if(direction == 4) {
+        		xOffset = 0;
+        		xMotion = -0.1;
+        	} else if(direction == 5) {
+        		xOffset = 1;
+        		xMotion = 0.1;
+        	}
+        	
+        	Random rand = new Random();
+        	xOffset += (rand.nextInt(21) - 10) / 100.0;
+          	zOffset += (rand.nextInt(21) - 10) / 100.0;
+        	xMotion += (rand.nextInt(11) - 5) / 100.0;
+          	zMotion += (rand.nextInt(11) - 5) / 100.0;
+          	double yMotion  = (rand.nextInt(11) - 5) / 200.0;
+        	
+          	MetallurgyCore.proxy.spawnParticle("abstractorSmall", worldObj, this.xCoord + xOffset, this.yCoord + 0.75, this.zCoord + zOffset, xMotion*0.7f, yMotion, zMotion*0.7f);
+            orb = new EntityXPOrb(this.worldObj, this.xCoord + xOffset, this.yCoord + 0.5f, this.zCoord + zOffset, xpPerOrb);
+            orb.motionX = xMotion;
+            orb.motionZ = zMotion;
+            if(!worldObj.isRemote)
+            {
+            	this.worldObj.spawnEntityInWorld(orb);
+            	this.worldObj.updateEntity(orb);
+            	this.worldObj.updateEntities();
+            }
         }
     }
 

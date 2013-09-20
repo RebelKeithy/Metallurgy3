@@ -49,6 +49,8 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
 	private boolean needsUpdate;
 
 	private int type;
+	
+	private float crusherAngle = 0;
     
     public void setSpeed(int var1)
     {
@@ -285,6 +287,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
         if (this.furnaceBurnTime > 0)
         {
             --this.furnaceBurnTime;
+            this.crusherAngle += 0.1;
         }
 
         if (!this.worldObj.isRemote)
@@ -634,5 +637,10 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
     {
         return slot == 2 || par2ItemStack.itemID == Item.bucketEmpty.itemID;
     }
+
+	public float getCrusherAngles() 
+	{
+		return crusherAngle;
+	}
 
 }

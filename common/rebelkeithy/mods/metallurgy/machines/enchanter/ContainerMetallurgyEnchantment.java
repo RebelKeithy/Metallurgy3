@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -22,7 +23,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContainerMetallurgyEnchantment extends Container
 {
     /** SlotEnchantmentTable object with ItemStack to be enchanted */
-    public IInventory tableInventory = new SlotMetallurgyEnchantmentTable(this, "Enchant", true, 6);
+    public IInventory tableInventory = new SlotMetallurgyEnchantmentTable(this, "Enchant", true, 7);
     //public IInventory catalystInventory = new Slot()
 
     /** current world (for bookshelf counting) */
@@ -46,12 +47,13 @@ public class ContainerMetallurgyEnchantment extends Container
         this.posX = te.xCoord;
         this.posY = te.yCoord;
         this.posZ = te.zCoord;
-        this.addSlotToContainer(new SlotMetallurgyEnchantment(this, this.tableInventory, 0, 25, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 1, 70, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 2, 88, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 3, 106, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 4, 124, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 5, 142, 47));
+        this.addSlotToContainer(new SlotMetallurgyEnchantment(this, this.tableInventory, 0, 80, 35));
+        this.addSlotToContainer(new Slot(this.tableInventory, 1, 64, 19));
+        this.addSlotToContainer(new Slot(this.tableInventory, 2, 80, 9));
+        this.addSlotToContainer(new Slot(this.tableInventory, 3, 96, 19));
+        this.addSlotToContainer(new Slot(this.tableInventory, 4, 64, 51));
+        this.addSlotToContainer(new Slot(this.tableInventory, 5, 80, 61));
+        this.addSlotToContainer(new Slot(this.tableInventory, 6, 96, 51));
         
         int l;
         
@@ -118,8 +120,8 @@ public class ContainerMetallurgyEnchantment extends Container
 
                 if (!this.worldPointer.isRemote)
                 {
-                    i = 0;
                     int j;
+                    float power = 0;
 
                     for (j = -1; j <= 1; ++j)
                     {
@@ -127,43 +129,21 @@ public class ContainerMetallurgyEnchantment extends Container
                         {
                             if ((j != 0 || k != 0) && this.worldPointer.isAirBlock(this.posX + k, this.posY, this.posZ + j) && this.worldPointer.isAirBlock(this.posX + k, this.posY + 1, this.posZ + j))
                             {
-                                if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                {
-                                    ++i;
-                                }
-
-                                if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY + 1, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                {
-                                    ++i;
-                                }
+                                power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY,     posZ + j * 2);
+                                power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY + 1, posZ + j * 2);
 
                                 if (k != 0 && j != 0)
                                 {
-                                    if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY, this.posZ + j) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY + 1, this.posZ + j) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k, this.posY, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k, this.posY + 1, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY,     posZ + j    );
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY + 1, posZ + j    );
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k,     posY,     posZ + j * 2);
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k,     posY + 1, posZ + j * 2);
                                 }
                             }
                         }
                     }
-
-                    this.enchantLevels = MaxEnchanterHelper.calcItemStackEnchantability(this.rand, i, itemstack);
+                    System.out.println(power);
+                    this.enchantLevels = MaxEnchanterHelper.calcItemStackEnchantability(this.rand, (int) power, itemstack);
                     if(player != null && player.experienceLevel < enchantLevels)
                     {
                     	enchantLevels = player.experienceLevel;

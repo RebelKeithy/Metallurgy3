@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL12;
 public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
 {
     /** The normal small chest model. */
-    private ModelCrusher crusherModel = new ModelCrusher();
+    private ModelCrusherNew crusherModel = new ModelCrusherNew();
 
     /**
      * Renders the TileEntity for the chest at a position.
@@ -30,13 +30,10 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         {
             var9 = par1TileEntityCrusher.direction;
         }
-
-        ModelCrusher var14;
-
-        var14 = this.crusherModel;
+        
+        crusherModel.spin(par1TileEntityCrusher.getCrusherAngles());
         
         String type = "";
-        
         if(par1TileEntityCrusher.getType() == 1)
         	type = "Copper";
         else if(par1TileEntityCrusher.getType() == 2)
@@ -84,10 +81,10 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         }
 
         GL11.glRotatef((float)var11, 0.0F, 1.0F, 0.0F);
-        GL11.glTranslatef(-0.5F, -0.5F + offset, -0.5F);
+        GL11.glTranslatef(0F, -1.0F + offset, 0.0F);
         float var13;
 
-        var14.renderAll();
+        this.crusherModel.renderAll();
         //GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

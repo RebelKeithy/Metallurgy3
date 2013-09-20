@@ -148,8 +148,8 @@ public class BlockMetallurgyEnchantmentTable extends BlockContainer
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-        this.field_94336_cN = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_side");
-        this.field_94461_a = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_top");
-        this.field_94460_b = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchantment_bottom");
+        this.field_94336_cN = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchanting_table_side");
+        this.field_94461_a = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchanting_table_top");
+        this.field_94460_b = par1IconRegister.registerIcon("Metallurgy:machines/enchanter/enchanting_table_bottom");
     }
 }
