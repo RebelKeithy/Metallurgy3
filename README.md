@@ -7,7 +7,8 @@ If you'd like to do such, please visit Issues (found at the top right) and make 
 * Bug - This is an issue caused by the mod.
 * Conflict - This is a conflict with another mod.
 * Compatibility - This is a feature that would make working with another mod easier.
-* Suggestion - An idea or something you want to see in the mod.
+* Suggestion - An idea or something you want to see in the mod (tag this in ADDITION to other tags!)
+* Balance - This is a change to stats of something in the mod.
 * Upcoming - This is a feature in the works, this label is NOT for public use.
 
 As an open source project now, we're allowing guest coders. If you see a bug and want to try to address it feel free to take a shot at it. We're welcoming anyone to assist on the future of Metallurgy.
