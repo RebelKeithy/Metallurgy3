@@ -7,7 +7,7 @@ If you'd like to do such, please visit Issues (found at the top right) and make 
 * Bug - This is an issue caused by the mod.
 * Conflict - This is a conflict with another mod.
 * Compatibility - This is a feature that would make working with another mod easier.
-* Suggestion - An idea or something you want to see in the mod (tag this in ADDITION to other tags!)
+* Suggestion - An idea or change you want to see in the mod (use this label in addition to other labels)
 * Balance - This is a change to stats of something in the mod.
 * Upcoming - This is a feature in the works, this label is NOT for public use.
 
