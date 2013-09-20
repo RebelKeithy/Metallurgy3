@@ -1,5 +1,3 @@
-Metallurgy3
-===========
 Welcome to the Metallurgy Github! Here you can find all of our code and see what we're working on, as well as reporting bugs.
 
 If you'd like to report a bug, please visit issues and make sure it hasn't previously been reported, then post the bug with the appropriate Label.
