@@ -2,7 +2,7 @@ Welcome to the Metallurgy Github!
 
 Here you can find all of our code and see what we're working on, as well as report bugs, discuss issues, and suggest features/changes!
 
-If you'd like to do such, please visit Issues (found at the top) and make sure it hasn't previously been reported/suggested, then post the bug with the appropriate Label. If it has been reported, please reply to the Issue already posted and throw your known information related to it.
+If you'd like to do such, please visit Issues (found at the top right) and make sure it hasn't previously been reported/suggested, then post the bug with the appropriate Label. If it has been reported, please reply to the Issue already posted and throw your known information related to it.
 
 * Bug - This is an issue caused by the mod.
 * Conflict - This is a conflict with another mod.
