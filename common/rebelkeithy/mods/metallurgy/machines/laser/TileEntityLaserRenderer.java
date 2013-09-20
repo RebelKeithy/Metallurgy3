@@ -27,7 +27,7 @@ public class TileEntityLaserRenderer extends TileEntitySpecialRenderer
         GL11.glTranslatef(-0.25F, -0.25F, -0.25F);
 
         ResourceLocation texture = new ResourceLocation("Metallurgy:textures/blocks/machines/laser/Laser.png");
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
     	model.renderAll();
     	
     	//System.out.println(x + " " + y + " " + z);
@@ -42,7 +42,7 @@ public class TileEntityLaserRenderer extends TileEntitySpecialRenderer
 	        int k = c0 / 65536;
 	        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j / 1.0F, (float)k / 1.0F);
 	        texture = new ResourceLocation("Metallurgy:textures/blocks/machines/laser/Beam.png");
-	        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+	        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 	        for(int i = 0; i < 6; i++)
 	        {
 	        	if(i == 0 || i == 1)

@@ -50,7 +50,7 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         	//this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
         
 
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
         
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

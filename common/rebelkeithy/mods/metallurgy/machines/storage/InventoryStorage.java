@@ -146,7 +146,7 @@ public class InventoryStorage implements IInventory
         if (tileEntity.worldObj != null)
         {
             int blockMetadata = tileEntity.worldObj.getBlockMetadata(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord);
-            tileEntity.worldObj.updateTileEntityChunkAndDoNothing(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity);
+            tileEntity.worldObj.markTileEntityChunkModified(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity);
         }
 	}
 

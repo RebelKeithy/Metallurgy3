@@ -96,7 +96,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
-        this.mc.func_110434_K().func_110577_a(background);
+        this.mc.getTextureManager().bindTexture(background);
         int k = (this.width - this.xSize) / 2;
         int l = (this.height - this.ySize) / 2;
         this.drawTexturedModalRect(k, l, 0, 0, this.xSize, this.ySize);
@@ -119,7 +119,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
         //this.mc.renderEngine.bindTexture("/item/book.png");
         
-        this.mc.func_110434_K().func_110577_a(book);
+        this.mc.getTextureManager().bindTexture(book);
         GL11.glRotatef(20.0F, 1.0F, 0.0F, 0.0F);
         float f3 = this.field_74208_u + (this.field_74209_t - this.field_74208_u) * par1;
         GL11.glTranslatef((1.0F - f3) * 0.2F, (1.0F - f3) * 0.1F, (1.0F - f3) * 0.25F);
@@ -162,7 +162,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
         RenderHelper.disableStandardItemLighting();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
-        this.mc.func_110434_K().func_110577_a(background);
+        this.mc.getTextureManager().bindTexture(background);
         EnchantmentNameParts.instance.setRandSeed(this.containerEnchantment.nameSeed);
 
 
@@ -175,7 +175,7 @@ public class GuiMetallurgyEnchantment extends GuiContainer
 	        
 	        this.zLevel = 0.0F;
 	        //this.mc.renderEngine.bindTexture("/mods/Metallurgy/textures/guis/enchant.png");
-	        this.mc.func_110434_K().func_110577_a(background);
+	        this.mc.getTextureManager().bindTexture(background);
 	        int j1 = (int) ((this.containerEnchantment.enchantLevels - 1) * i1/5.0f + 1);
 	        
 	        if(this.containerEnchantment.enchantLevels == 0)

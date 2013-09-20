@@ -34,6 +34,8 @@ public class MetallurgyCore
 
 	public static boolean spawnInAir = false;
 	
+	public static boolean DEBUG = false;
+	
 	Configuration config;
 	
 	List<String> csvFiles;

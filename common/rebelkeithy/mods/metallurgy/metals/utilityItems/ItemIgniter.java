@@ -20,7 +20,7 @@ public class ItemIgniter extends ItemFlintAndSteel
 	
     public ItemIgniter setTextureName(String par1Str)
     {
-        super.func_111206_d(par1Str);
+        super.setTextureName(par1Str);
         return this;
     }
 

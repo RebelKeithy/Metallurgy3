@@ -24,7 +24,7 @@ public class ItemFertilizer extends Item
 	
     public ItemFertilizer setTextureName(String par1Str)
     {
-        super.func_111206_d(par1Str);
+        super.setTextureName(par1Str);
         return this;
     }
 

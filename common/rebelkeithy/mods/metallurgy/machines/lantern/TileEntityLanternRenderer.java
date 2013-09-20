@@ -50,7 +50,7 @@ public class TileEntityLanternRenderer extends TileEntitySpecialRenderer {
     		this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/lantern/LanternWhite.png");
     	*/
     	if(color < textures.length)
-    		Minecraft.getMinecraft().func_110434_K().func_110577_a(textures[color]);
+    		Minecraft.getMinecraft().getTextureManager().bindTexture(textures[color]);
         
         if(par1TileEntityLantern.worldObj != null)
         	direction = par1TileEntityLantern.getBlockMetadata();

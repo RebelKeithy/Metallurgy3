@@ -52,7 +52,7 @@ public class TileEntityPreciousChestRenderer extends TileEntitySpecialRenderer
         var14 = this.chestModel;
         
         if(type < textures.length)
-            Minecraft.getMinecraft().func_110434_K().func_110577_a(textures[type]);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(textures[type]);
 
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);

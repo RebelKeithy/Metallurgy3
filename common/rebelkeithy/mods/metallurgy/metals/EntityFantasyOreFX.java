@@ -56,7 +56,7 @@ public class EntityFantasyOreFX extends EntityFX
 	    //GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, FMLClientHandler.instance().getClient().renderEngine.getTexture("/mods/Metallurgy/textures/particles/FantasyMetalsParticle.png"));
 
     	ResourceLocation texture = new ResourceLocation("Metallurgy:textures/particles/FantasyMetalsParticle.png");   
-    	Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+    	Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 	    
 	    float f0 = 0;//(float)(getParticleTextureIndex() % 16) / 16F;
 	    float f7 = f0 + 1/16F;
@@ -79,7 +79,7 @@ public class EntityFantasyOreFX extends EntityFX
 
 	    //TODO: Fix this
     	ResourceLocation defaultParticles = new ResourceLocation("textures/particle/particles.png");   
-    	Minecraft.getMinecraft().func_110434_K().func_110577_a(defaultParticles);
+    	Minecraft.getMinecraft().getTextureManager().bindTexture(defaultParticles);
 	    //GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, ModLoader.getMinecraftInstance().renderEngine.getTexture("/particles.png"));
 	}
 

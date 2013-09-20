@@ -31,7 +31,7 @@ public class TileEntityPylonRenderer extends TileEntitySpecialRenderer
         
         String name = BlockPylon.names[meta];
         ResourceLocation texture = new ResourceLocation("Metallurgy:textures/blocks/machines/pylon/" + name + "Pylon.png");
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
         model.setCubeRotation(te.rotationX, te.rotationY, te.rotationZ);
     	model.renderAll();
         GL11.glPopMatrix();

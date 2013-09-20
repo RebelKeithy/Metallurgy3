@@ -400,7 +400,7 @@ public class TileEntityMetalFurnace extends TileEntity implements ISidedInventor
                     return 300;
                 }
 
-                if (var3 == Block.field_111034_cE)
+                if (var3 == Block.coalBlock)
                 {
                     return 16000;
                 }

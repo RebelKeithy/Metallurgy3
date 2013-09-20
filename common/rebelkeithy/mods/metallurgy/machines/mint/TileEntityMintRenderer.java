@@ -64,7 +64,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
         var14 = this.mintModel;
         ModelMintHead mintHead = new ModelMintHead();
         //this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/Mint.png");
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(texture);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
         
 
         GL11.glPushMatrix();
@@ -103,7 +103,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
         if(ingot)
         {
         	ResourceLocation ingotResource = new ResourceLocation(ingotImage);
-            Minecraft.getMinecraft().func_110434_K().func_110577_a(ingotResource);
+            Minecraft.getMinecraft().getTextureManager().bindTexture(ingotResource);
             //this.bindTextureByName(ingotImage);
         	(new ModelIngot()).renderAll();
         }
@@ -111,7 +111,7 @@ public class TileEntityMintRenderer extends TileEntitySpecialRenderer
         GL11.glTranslatef(0F, headOffset + offset, 0F);
         
         //this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/mint/MintHead.png");
-        Minecraft.getMinecraft().func_110434_K().func_110577_a(textureHead);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(textureHead);
         mintHead.renderAll();
         
         //GL11.glDisable(GL12.GL_RESCALE_NORMAL);

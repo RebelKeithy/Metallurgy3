@@ -208,7 +208,7 @@ public class ContainerMetallurgyEnchantment extends Container
                         {
                             if (flag)
                             {
-                                Item.enchantedBook.getEnchantedItemStack_do(itemstack, enchantmentdata);
+                                Item.enchantedBook.addEnchantment(itemstack, enchantmentdata);
                             }
                             else
                             {

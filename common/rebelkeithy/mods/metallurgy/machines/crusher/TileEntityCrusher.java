@@ -430,7 +430,7 @@ public class TileEntityCrusher extends TileEntity implements IInventory, ISidedI
                     return 225;
                 }
 
-                if (var3 == Block.field_111034_cE)
+                if (var3 == Block.coalBlock)
                 {
                     return 16000;
                 }

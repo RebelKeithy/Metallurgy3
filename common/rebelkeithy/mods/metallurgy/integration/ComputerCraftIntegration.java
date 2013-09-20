@@ -1,6 +1,15 @@
 package rebelkeithy.mods.metallurgy.integration;
 
+import dan200.computer.api.IHostedPeripheral;
+import dan200.turtle.api.ITurtleAccess;
+import dan200.turtle.api.ITurtleUpgrade;
+import dan200.turtle.api.TurtleSide;
+import dan200.turtle.api.TurtleUpgradeType;
+import dan200.turtle.api.TurtleVerb;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.metalsets.OreInfo;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 
@@ -90,9 +99,71 @@ public class ComputerCraftIntegration
 	
 	public static void createTurtle(int id, String name, Item tool)
 	{
-		System.out.println("Metallurgy: Creating " + name + " Turtle");
-		dan200.turtle.shared.TurtleTool toolTurtle = new dan200.turtle.shared.TurtleTool(id, name, tool, false);
-		dan200.turtle.api.TurtleAPI.registerUpgrade(toolTurtle);
-		System.out.println("Metallurgy: Registered " + toolTurtle);
+	    // TODO Fix compatibility later
+	    if (MetallurgyCore.DEBUG) {
+	        System.out.println("Metallurgy: Creating " + name + " Turtle");
+	    }
+	    
+		//dan200.turtle.shared.TurtleTool toolTurtle = new dan200.turtle.shared.TurtleTool(id, name, tool, false);
+		//dan200.turtle.api.TurtleAPI.registerUpgrade(toolTurtle);
+		
+		if(MetallurgyCore.DEBUG) {
+		    //System.out.println("Metallurgy: Registered " + toolTurtle);
+		}
+	}
+	
+	public class metallurgyTurtleUpgrade implements dan200.turtle.api.ITurtleUpgrade
+	{
+        private int upgradeID;
+        private ItemStack craftingItem;
+
+        @Override
+        public int getUpgradeID()
+        {
+            return this.upgradeID;
+        }
+
+        @Override
+        public String getAdjective()
+        {
+            return null;
+        }
+
+        @Override
+        public TurtleUpgradeType getType()
+        {
+            return TurtleUpgradeType.Tool;
+        }
+
+        @Override
+        public ItemStack getCraftingItem()
+        {
+            return this.craftingItem;
+        }
+
+        @Override
+        public boolean isSecret()
+        {
+            return false;
+        }
+
+        @Override
+        public IHostedPeripheral createPeripheral(ITurtleAccess turtle, TurtleSide side)
+        {
+            return null;
+        }
+
+        @Override
+        public boolean useTool(ITurtleAccess turtle, TurtleSide side, TurtleVerb verb, int direction)
+        {
+            return false;
+        }
+
+        @Override
+        public Icon getIcon(ITurtleAccess turtle, TurtleSide side)
+        {
+            return this.craftingItem.getIconIndex();
+        }
+	    
 	}
 }

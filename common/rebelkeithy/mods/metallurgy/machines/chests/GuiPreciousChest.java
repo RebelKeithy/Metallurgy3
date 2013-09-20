@@ -92,7 +92,7 @@ public class GuiPreciousChest extends GuiContainer
     {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         //this.mc.renderEngine.bindTexture(image); // Calls bindTexture
-        this.mc.func_110434_K().func_110577_a(background);
+        this.mc.getTextureManager().bindTexture(background);
         int imageWidth = (11 + 18 *inventoryCols + 11);
         int imageHeight = (7 + 18 *inventoryRows + 4 + 18 * 3 + 4 + 18 + 7);
         

@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeDirection;
-import rebelkeithy.mods.keithyutils.rendering.SimpleBox;
+//import rebelkeithy.mods.keithyutils.rendering.SimpleBox;
 
 public class ModelLaser extends ModelBase 
 {
@@ -37,27 +37,27 @@ public class ModelLaser extends ModelBase
 	
 	public void renderBeam(float length, ForgeDirection direction) 
 	{
-		if(length == 0)
-			return;
-		
-		int ilength = (int) (length * 16);
-        Tessellator t = Tessellator.instance;
-        SimpleBox beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 1, 1, 1, 0.0F);
-        if(direction == ForgeDirection.UP)
-        	beam = new SimpleBox(0, 0, 1, 1, 11.5F, 6F - ilength, 11.5F, 1, 6 + ilength, 1, 0.0F);
-        else if(direction == ForgeDirection.DOWN)
-        	beam = new SimpleBox(0, 0, 1, 1, 11.5F, 11.5F, 11.5F, 1, 6 + ilength, 1, 0.0F);
-        else if(direction == ForgeDirection.EAST)
-        	beam = new SimpleBox(0, 0, 10, 10, 7F - ilength, 11.5F, 11.5F, 2 + ilength, 1, 1, 0.0F);
-        else if(direction == ForgeDirection.WEST)
-        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 6 + ilength, 1, 1, 0.0F);
-        else if(direction == ForgeDirection.NORTH)
-        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 7F - ilength, 1, 1, 2 + ilength, 0.0F);
-        else if(direction == ForgeDirection.SOUTH)
-        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 1, 1, 6 + ilength, 0.0F);
-
-    	//beam = new SimpleBox(0, 0, 10, 10, 11F, 11F, 11F, 6 + ilength, 2, 2, 0.0F);
-        beam.render(t, 1/16F);
+//		if(length == 0)
+//			return;
+//		
+//		int ilength = (int) (length * 16);
+//        Tessellator t = Tessellator.instance;
+//        SimpleBox beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 1, 1, 1, 0.0F);
+//        if(direction == ForgeDirection.UP)
+//        	beam = new SimpleBox(0, 0, 1, 1, 11.5F, 6F - ilength, 11.5F, 1, 6 + ilength, 1, 0.0F);
+//        else if(direction == ForgeDirection.DOWN)
+//        	beam = new SimpleBox(0, 0, 1, 1, 11.5F, 11.5F, 11.5F, 1, 6 + ilength, 1, 0.0F);
+//        else if(direction == ForgeDirection.EAST)
+//        	beam = new SimpleBox(0, 0, 10, 10, 7F - ilength, 11.5F, 11.5F, 2 + ilength, 1, 1, 0.0F);
+//        else if(direction == ForgeDirection.WEST)
+//        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 6 + ilength, 1, 1, 0.0F);
+//        else if(direction == ForgeDirection.NORTH)
+//        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 7F - ilength, 1, 1, 2 + ilength, 0.0F);
+//        else if(direction == ForgeDirection.SOUTH)
+//        	beam = new SimpleBox(0, 0, 10, 10, 11.5F, 11.5F, 11.5F, 1, 1, 6 + ilength, 0.0F);
+//
+//    	//beam = new SimpleBox(0, 0, 10, 10, 11F, 11F, 11F, 6 + ilength, 2, 2, 0.0F);
+//        beam.render(t, 1/16F);
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) 

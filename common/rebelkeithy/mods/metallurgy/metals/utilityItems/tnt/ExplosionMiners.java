@@ -94,7 +94,7 @@ public class ExplosionMiners extends Explosion {
                             if (var25 > 0)
                             {
                                 Block var26 = Block.blocksList[var25];
-                                float var27 = this.exploder != null ? this.exploder.func_82146_a(this, this.worldObj, var22, var23, var24, var26) : var26.getExplosionResistance(this.exploder, worldObj, var22, var23, var24, explosionX, explosionY, explosionZ);
+                                float var27 = this.exploder != null ? this.exploder.getBlockExplosionResistance(this, this.worldObj, var22, var23, var24, var26) : var26.getExplosionResistance(this.exploder, worldObj, var22, var23, var24, explosionX, explosionY, explosionZ);
                                 if(isOre(var25))
                                 	var27 = 2000;
                                 var14 -= (var27 + 0.3F) * var21;
