@@ -116,17 +116,15 @@ public class MetalInfoDatabase
 		}
 	}
 
-	public static void readItemDataFromJar(Configuration config, String filename, String jarpath, CreativeTabs tab) 
+	public static void readItemDataFromJar(Configuration config, String filename, String jarpath, CreativeTabs tab) throws IOException
 	{
-		ZipFile zip;
-		try {
-			zip = new ZipFile(jarpath);
-			ZipEntry entry = zip.getEntry(filename);
-			BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
-			readItemData(config, in, tab);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ZipFile zip = new ZipFile(jarpath);
+		ZipEntry entry = zip.getEntry(filename);
+		BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
+		readItemData(config, in, tab);
+		
+		zip.close();
+
 	}
 	
 	public static void readMetalDataFromFile(String filepath)
@@ -140,18 +138,15 @@ public class MetalInfoDatabase
 		}
 	}
 	
-	public static void readMetalDataFromJar(String filename, String jarpath)
+	public static void readMetalDataFromJar(String filename, String jarpath) throws IOException
 	{
-		System.out.println("reading file " + filename + "  from file " + jarpath);
-		ZipFile zip;
-		try {
-			zip = new ZipFile(jarpath);
-			ZipEntry entry = zip.getEntry(filename);
-			BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
-			readOreData(in);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		MetallurgyCore.log.info("reading file " + filename + "  from file " + jarpath);
+		ZipFile zip = new ZipFile(jarpath);
+		ZipEntry entry = zip.getEntry(filename);
+		BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
+		readOreData(in);
+		
+		zip.close();
 	}
 	
 	public static Map<String, Map<String, String>> getSpreadsheetDataForSet(String name)

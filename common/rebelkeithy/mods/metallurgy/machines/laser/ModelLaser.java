@@ -37,6 +37,7 @@ public class ModelLaser extends ModelBase
 	
 	public void renderBeam(float length, ForgeDirection direction) 
 	{
+	    // TODO fix eventually
 //		if(length == 0)
 //			return;
 //		

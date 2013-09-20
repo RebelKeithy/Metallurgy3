@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -41,13 +43,18 @@ public class MetallurgyCore
 	List<String> csvFiles;
 	List<String> setsToRead;
 	
+	public static Logger log;
+	
 	
 	private static List<MetalSet> metalSets;
 	
 	MetalSet baseSet;
-	@PreInit
+	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{		
+	    
+	    log = event.getModLog();
+	    
 		for(MetalSet set : getMetalSetList())
 		{
 			//set.initConfig();
@@ -73,7 +80,7 @@ public class MetallurgyCore
 		NetworkRegistry.instance().registerGuiHandler(this, GuiRegistry.instance());
 	}
 	
-	@Init
+	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		for(MetalSet set : getMetalSetList())
@@ -84,7 +91,7 @@ public class MetallurgyCore
 		MetalInfoDatabase.registerItemsWithOreDict();
 	}
 	
-	@PostInit
+	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
 	}
@@ -98,12 +105,12 @@ public class MetallurgyCore
         try
         {
             cfgFile.createNewFile();
-            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3 Core");
+            log.info("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3 Core");
         }
         catch (IOException e)
         {
-            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 Core, Reason:");
-            System.out.println(e);
+            log.warning("[Metallurgy3] Could not create configuration file for Metallurgy 3 Core, Reason:");
+            e.printStackTrace();
         }
         
 		config = new Configuration(cfgFile);
@@ -113,8 +120,11 @@ public class MetallurgyCore
 		
 		csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").getString().split("\\s*,\\s*"));
 		setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").getString().split("\\s*,\\s*"));
-		System.out.println("reading sets " + setsToRead.size());
-		config.save();
+		log.info("reading sets " + setsToRead.size());
+		
+		if(config.hasChanged()){ 
+		    config.save();
+		}
 	}
 	
 	public static List<MetalSet> getMetalSetList()
