@@ -2,6 +2,7 @@ package rebelkeithy.mods.metallurgy.vanilla;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 import net.minecraft.client.Minecraft;
@@ -15,6 +16,7 @@ import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -34,7 +36,15 @@ public class MetallurgyVanilla
 	public static MetalSet vanillaSet;
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) {
-		
+	
+	    ModMetadata metadata = event.getModMetadata();
+        
+        metadata.name = "Metallurgy 3 Vanilla";
+        metadata.description = "Stuffs";
+        metadata.authorList = Arrays.asList(new String[] {"Team Metallurgy"});
+        metadata.parent = "Metallurgy3Core";
+	    
+	    
 		Map<String, Map<String, String>> vanillaList = MetalInfoDatabase.getSpreadsheetDataForSet("Vanilla");
 		vanillaList.remove("Wood/Leather");
 		vanillaList.remove("Stone/Chainmail");

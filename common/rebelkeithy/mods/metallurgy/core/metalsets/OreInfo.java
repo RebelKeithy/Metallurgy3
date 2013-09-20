@@ -521,8 +521,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 					return true;
 			} else {
 				int check = Integer.parseInt(string);
-				if(dim == check)
-					return true;
+				return dim == check;
 			}
 		}
 		return false;
@@ -536,6 +535,10 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 		
 		if(!spawnsInDim(world.provider.dimensionId))
 			return;
+		
+		
+		if(random.nextInt(100) > veinChance) 
+		    return;
 		
 		for(int n = 0; n < veinCount; n++)
 		{

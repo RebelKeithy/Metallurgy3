@@ -1,5 +1,7 @@
 package rebelkeithy.mods.metallurgy.machines;
 
+import java.util.Arrays;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,6 +56,7 @@ import rebelkeithy.mods.metallurgy.machines.xptank.TileEntityXpTank;
 import rebelkeithy.mods.metallurgy.machines.xptank.orb.EntityXpOrbContainer;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
@@ -107,6 +110,13 @@ public class MetallurgyMachines
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{	
+	    ModMetadata metadata = event.getModMetadata();
+        
+        metadata.name = "Metallurgy 3 Machines";
+        metadata.description = "Stuffs";
+        metadata.authorList = Arrays.asList(new String[] {"Team Metallurgy"});
+        metadata.parent = "Metallurgy3Core";
+	    
 		machineTab = new MetallurgyTabs("Metallurgy: Machines");
 		//initStorage();
 		

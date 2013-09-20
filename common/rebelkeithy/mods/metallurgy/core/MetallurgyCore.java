@@ -11,12 +11,15 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.Configuration;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -36,7 +39,7 @@ public class MetallurgyCore
 
 	public static boolean spawnInAir = false;
 	
-	public static boolean DEBUG = false;
+	public static boolean DEBUG = true;
 	
 	Configuration config;
 	
@@ -52,6 +55,11 @@ public class MetallurgyCore
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{		
+        ModMetadata metadata = event.getModMetadata();
+        
+        metadata.name = "Metallurgy 3 Core";
+        metadata.description = "Stuffs";
+        metadata.authorList = Arrays.asList(new String[] {"Team Metallurgy"});
 	    
 	    log = event.getModLog();
 	    
