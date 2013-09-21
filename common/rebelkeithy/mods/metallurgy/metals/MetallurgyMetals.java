@@ -36,6 +36,7 @@ import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -514,6 +515,25 @@ public class MetallurgyMetals
         utilityConfig.load();
 
         fantasyConfig = initConfig("Fantasy");
+        
+        
+        GameRegistry.registerFuelHandler(new IFuelHandler()
+        {
+            
+            @Override
+            public int getBurnTime(ItemStack fuel)
+            {
+                if(fuel.getItem() == netherSet.getOreInfo("Ignatius").dust) {
+                        return 3200;
+                }
+
+                if(fuel.getItem() == netherSet.getOreInfo("Vulcanite").dust) {
+                    return 32000;
+                }
+                
+                return 0;
+            }
+        });
 
         // potion = new MetallurgyPotion(21, false,
         // 8356754).setPotionName("Low Gravity");
