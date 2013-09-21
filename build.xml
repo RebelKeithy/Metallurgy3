@@ -94,7 +94,9 @@
 	</target>
 
 	<!-- Download necessary files -->
-	<target name="download-files" depends="download-forge"/>
+	<target name="download-files" depends="download-forge">
+		<get src="https://github.com/TeamMetallurgy/KeithyUtils/archive/master.zip" dest="${download.dir}"/>
+	</target>
 
 	<!-- Download forge (if it doesn't exist) -->
 	<target name="download-forge" unless="forge-exists">
@@ -102,10 +104,16 @@
 	</target>
 
 	<!-- Setup mcp and forge -->
-	<target name="setup" depends="download-files" if="out-of-date">
-
+	<target name="setup" depends="download-files,setup-forge">
+		
+		<delete dir="keithyutils" failonerror="false"/>
+		<unzip dest="keithyutils" src="${download.dir}/master.zip"/>
+		
+	</target>
+	
+	<target name="setup-forge" if="out-of-date">
 		<delete dir="${forge.dir}" failonerror="false"/>
-
+				
 		<unzip dest="${forge.dir}/.." src="${download.dir}/${forge.name}"/>
 
 		<!-- Fix executable permissions -->
@@ -120,13 +128,16 @@
 		<exec dir="${forge.dir}" executable="python" osfamily="unix">
 			<arg line="install.py --no-assets"/>
 		</exec>
-
 	</target>
 
 	<target name="copy-src">
 		<!-- Copy sources -->
 		<copy todir="${mcpsrc.dir}/minecraft">
 			<fileset dir="${src.dir}"/>
+		</copy>
+		
+		<copy todir="${mcpsrc.dir}/minecraft">
+			<fileset dir="keithyutils/KeithyUtils-master/common"/>
 		</copy>
 	</target>
 
@@ -176,7 +187,8 @@
 
 		<!-- Reset src dir to post-forge-install state -->
 		<delete dir="${mcpsrc.dir}/minecraft/rebelkeithy"/>
-
+		<delete dir="${classes.dir}/rebelkeithy/mods/keithyutils"/>
+		
 	</target>
 
 	<!-- Package the compiled files -->
