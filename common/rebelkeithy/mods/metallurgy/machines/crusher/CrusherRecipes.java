@@ -18,6 +18,21 @@ public class CrusherRecipes
     private static Map metaSmeltingList = new HashMap();
 
     /**
+     * Add a metadata-sensitive furnace recipe
+     * 
+     * @param itemID
+     *            The Item ID
+     * @param metadata
+     *            The Item Metadata
+     * @param itemstack
+     *            The ItemStack for the result
+     */
+    public static void addCrushing(int itemID, int metadata, ItemStack itemstack)
+    {
+        metaSmeltingList.put(Arrays.asList(itemID, metadata), itemstack);
+    }
+
+    /**
      * Used to call methods addSmelting and getSmeltingResult.
      */
     public static final CrusherRecipes smelting()
@@ -34,101 +49,100 @@ public class CrusherRecipes
      */
     public void addCrushing(int par1, ItemStack par2ItemStack)
     {
-        this.smeltingList.put(Integer.valueOf(par1), par2ItemStack);
-    }
-
-    /**
-     * Returns the smelting result of an item.
-     * Deprecated in favor of a metadata sensitive version
-     */
-    @Deprecated
-    public ItemStack getCrushingResult(int par1)
-    {
-        return (ItemStack)this.smeltingList.get(Integer.valueOf(par1));
+        smeltingList.put(Integer.valueOf(par1), par2ItemStack);
     }
 
     public Map getCrushingList()
     {
-        return this.smeltingList;
+        return smeltingList;
     }
-    
+
     /**
-     * Add a metadata-sensitive furnace recipe
-     * @param itemID The Item ID
-     * @param metadata The Item Metadata
-     * @param itemstack The ItemStack for the result
+     * Returns the smelting result of an item. Deprecated in favor of a metadata
+     * sensitive version
      */
-    public static void addCrushing(int itemID, int metadata, ItemStack itemstack)
+    @Deprecated
+    public ItemStack getCrushingResult(int par1)
     {
-        metaSmeltingList.put(Arrays.asList(itemID, metadata), itemstack);
+        return (ItemStack) smeltingList.get(Integer.valueOf(par1));
     }
-    
+
     /**
      * Used to get the resulting ItemStack form a source ItemStack
-     * @param item The Source ItemStack
+     * 
+     * @param item
+     *            The Source ItemStack
      * @return The result ItemStack
      */
-    public ItemStack getCrushingResult(ItemStack item) 
+    public ItemStack getCrushingResult(ItemStack item)
     {
         if (item == null)
         {
             return null;
         }
-        
-        ItemStack ret = (ItemStack)metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
-        
-        if (ret != null) 
+
+        ItemStack ret = (ItemStack) metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
+
+        if (ret != null)
         {
             return ret;
         }
-		
-		ret = (ItemStack)smeltingList.get(Integer.valueOf(item.itemID));
-		if(ret != null)
-		{
-			return ret;
-		}
-		
-		if(item.itemID == Item.netherQuartz.itemID)
-		{
-			List<ItemStack> dust = OreDictionary.getOres("dustNetherQuartz");
-			if(dust.size() > 0)
-				return dust.get(0);
-		}
 
-		for(String name : OreDictionary.getOreNames())
-		{
-			for(ItemStack oreItem : OreDictionary.getOres(name))
-			{
-				if(oreItem.itemID == item.itemID && oreItem.getItemDamage() == item.getItemDamage())
-				{
-					String replacement = "";
-					replacement = name.contains("ore") ? "ore" : replacement;
-					replacement = name.contains("ingot") ? "ingot" : replacement;
-					replacement = name.contains("item") ? "item" : replacement;
-					if(name.contains("dust"))
-						return null;
-					name = name.replace(replacement, "dust");
+        ret = (ItemStack) smeltingList.get(Integer.valueOf(item.itemID));
+        if (ret != null)
+        {
+            return ret;
+        }
 
-					//ret = MetallurgyItems.getItem(name);
-					if(ret != null)
-					{
-						if(replacement.equals("ore"))
-							ret.stackSize = 2;
-						return ret;
-					}
-					
-					List<ItemStack> retList = OreDictionary.getOres(name);
-					if(retList.size() > 0)
-					{
-						ret = retList.get(0).copy();
-						if(replacement.equals("ore"))
-							ret.stackSize = 2;
-						return ret;
-					}
-				}
-			}
-		}
-		
-		return null;
+        if (item.itemID == Item.netherQuartz.itemID)
+        {
+            final List<ItemStack> dust = OreDictionary.getOres("dustNetherQuartz");
+            if (dust.size() > 0)
+            {
+                return dust.get(0);
+            }
+        }
+
+        for (String name : OreDictionary.getOreNames())
+        {
+            for (final ItemStack oreItem : OreDictionary.getOres(name))
+            {
+                if (oreItem.itemID == item.itemID && oreItem.getItemDamage() == item.getItemDamage())
+                {
+                    String replacement = "";
+                    replacement = name.contains("ore") ? "ore" : replacement;
+                    replacement = name.contains("ingot") ? "ingot" : replacement;
+                    replacement = name.contains("item") ? "item" : replacement;
+                    if (name.contains("dust"))
+                    {
+                        return null;
+                    }
+                    name = name.replace(replacement, "dust");
+
+                    // ret = MetallurgyItems.getItem(name);
+                    if (ret != null)
+                    {
+                        if (replacement.equals("ore"))
+                        {
+                            ret.stackSize = 2;
+                        }
+                        return ret;
+                    }
+
+                    final List<ItemStack> retList = OreDictionary.getOres(name);
+                    if (retList.size() > 0)
+                    {
+                        ret = retList.get(0).copy();
+                        if (replacement.equals("ore"))
+                        {
+                            ret.stackSize = 2;
+                        }
+                        return ret;
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }

@@ -1,13 +1,13 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-
 
 public class ModelIngot extends ModelBase
 {
 
     ModelRenderer Shape1;
-    
+
     public ModelIngot()
     {
         textureWidth = 32;
@@ -28,11 +28,11 @@ public class ModelIngot extends ModelBase
     {
         Shape1.render(0.0625F);
     }
-    
+
     private void setRotation(ModelRenderer model, float x, float y, float z)
     {
-      model.rotateAngleX = x;
-      model.rotateAngleY = y;
-      model.rotateAngleZ = z;
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
     }
 }

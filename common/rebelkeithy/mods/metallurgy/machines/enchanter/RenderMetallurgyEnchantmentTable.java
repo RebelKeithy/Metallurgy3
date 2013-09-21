@@ -15,35 +15,41 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderMetallurgyEnchantmentTable extends TileEntitySpecialRenderer
 {
-    private ModelBook enchantmentBook = new ModelBook();
+    private final ModelBook enchantmentBook = new ModelBook();
     private static final ResourceLocation book = new ResourceLocation("Metallurgy:textures/blocks/machines/enchanter/enchanting_table_book.png");
+
+    @Override
+    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
+    {
+        renderTileEntityEnchantmentTableAt((TileEntityMetallurgyEnchantmentTable) par1TileEntity, par2, par4, par6, par8);
+    }
 
     public void renderTileEntityEnchantmentTableAt(TileEntityMetallurgyEnchantmentTable par1TileEntityEnchantmentTable, double par2, double par4, double par6, float par8)
     {
         GL11.glPushMatrix();
-        GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.75F, (float)par6 + 0.5F);
-        float f1 = (float)par1TileEntityEnchantmentTable.tickCount + par8;
+        GL11.glTranslatef((float) par2 + 0.5F, (float) par4 + 0.75F, (float) par6 + 0.5F);
+        final float f1 = par1TileEntityEnchantmentTable.tickCount + par8;
         GL11.glTranslatef(0.0F, 0.1F + MathHelper.sin(f1 * 0.1F) * 0.01F, 0.0F);
         float f2;
 
-        for (f2 = par1TileEntityEnchantmentTable.bookRotation2 - par1TileEntityEnchantmentTable.bookRotationPrev; f2 >= (float)Math.PI; f2 -= ((float)Math.PI * 2F))
+        for (f2 = par1TileEntityEnchantmentTable.bookRotation2 - par1TileEntityEnchantmentTable.bookRotationPrev; f2 >= (float) Math.PI; f2 -= (float) Math.PI * 2F)
         {
             ;
         }
 
-        while (f2 < -(float)Math.PI)
+        while (f2 < -(float) Math.PI)
         {
-            f2 += ((float)Math.PI * 2F);
+            f2 += (float) Math.PI * 2F;
         }
 
-        float f3 = par1TileEntityEnchantmentTable.bookRotationPrev + f2 * par8;
-        GL11.glRotatef(-f3 * 180.0F / (float)Math.PI, 0.0F, 1.0F, 0.0F);
+        final float f3 = par1TileEntityEnchantmentTable.bookRotationPrev + f2 * par8;
+        GL11.glRotatef(-f3 * 180.0F / (float) Math.PI, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(80.0F, 0.0F, 0.0F, 1.0F);
-        this.bindTexture(book);
+        bindTexture(book);
         float f4 = par1TileEntityEnchantmentTable.pageFlipPrev + (par1TileEntityEnchantmentTable.pageFlip - par1TileEntityEnchantmentTable.pageFlipPrev) * par8 + 0.25F;
         float f5 = par1TileEntityEnchantmentTable.pageFlipPrev + (par1TileEntityEnchantmentTable.pageFlip - par1TileEntityEnchantmentTable.pageFlipPrev) * par8 + 0.75F;
-        f4 = (f4 - (float)MathHelper.truncateDoubleToInt((double)f4)) * 1.6F - 0.3F;
-        f5 = (f5 - (float)MathHelper.truncateDoubleToInt((double)f5)) * 1.6F - 0.3F;
+        f4 = (f4 - MathHelper.truncateDoubleToInt(f4)) * 1.6F - 0.3F;
+        f5 = (f5 - MathHelper.truncateDoubleToInt(f5)) * 1.6F - 0.3F;
 
         if (f4 < 0.0F)
         {
@@ -65,14 +71,9 @@ public class RenderMetallurgyEnchantmentTable extends TileEntitySpecialRenderer
             f5 = 1.0F;
         }
 
-        float f6 = par1TileEntityEnchantmentTable.bookSpreadPrev + (par1TileEntityEnchantmentTable.bookSpread - par1TileEntityEnchantmentTable.bookSpreadPrev) * par8;
+        final float f6 = par1TileEntityEnchantmentTable.bookSpreadPrev + (par1TileEntityEnchantmentTable.bookSpread - par1TileEntityEnchantmentTable.bookSpreadPrev) * par8;
         GL11.glEnable(GL11.GL_CULL_FACE);
-        this.enchantmentBook.render((Entity)null, f1, f4, f5, f6, 0.0F, 0.0625F);
+        enchantmentBook.render((Entity) null, f1, f4, f5, f6, 0.0F, 0.0625F);
         GL11.glPopMatrix();
-    }
-
-    public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
-    {
-        this.renderTileEntityEnchantmentTableAt((TileEntityMetallurgyEnchantmentTable)par1TileEntity, par2, par4, par6, par8);
     }
 }

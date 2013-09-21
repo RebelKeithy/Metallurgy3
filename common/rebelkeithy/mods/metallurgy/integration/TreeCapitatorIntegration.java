@@ -15,16 +15,22 @@ public class TreeCapitatorIntegration
         if (Loader.isModLoaded("TreeCapitator"))
         {
             String axeList = "";
-            
-            for (MetalSet ms : MetallurgyCore.getMetalSetList())
-                for (IOreInfo oi : ms.getOreList().values())
+
+            for (final MetalSet ms : MetallurgyCore.getMetalSetList())
+            {
+                for (final IOreInfo oi : ms.getOreList().values())
+                {
                     if (oi.isEnabled() && ((OreInfo) oi).axe != null)
+                    {
                         axeList += "; " + ((OreInfo) oi).axe.itemID;
-            
-            NBTTagCompound tpModCfg = new NBTTagCompound();
+                    }
+                }
+            }
+
+            final NBTTagCompound tpModCfg = new NBTTagCompound();
             tpModCfg.setString("modID", "Metallurgy3Base");
             tpModCfg.setString("axeIDList", axeList);
-            
+
             FMLInterModComms.sendMessage("TreeCapitator", "ThirdPartyModConfig", tpModCfg);
         }
     }

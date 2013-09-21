@@ -1,10 +1,8 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
 
 //Referenced classes of package net.minecraft.src:
 //                   Slot, EntityPlayer, ItemStack, Item, 
@@ -13,14 +11,14 @@ import net.minecraft.item.ItemStack;
 public class SlotMint extends Slot
 {
 
-     public SlotMint(IInventory iinventory, int i, int j, int k)
-     {
-    	 super(iinventory, i, j, k);
-     }
+    public SlotMint(IInventory iinventory, int i, int j, int k)
+    {
+        super(iinventory, i, j, k);
+    }
 
-     @Override
-     public boolean isItemValid(ItemStack itemstack)
-     {
-    	 return MintRecipes.minting().getMintingResult(itemstack) != 0;
-     }
+    @Override
+    public boolean isItemValid(ItemStack itemstack)
+    {
+        return MintRecipes.minting().getMintingResult(itemstack) != 0;
+    }
 }

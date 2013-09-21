@@ -10,37 +10,36 @@ import net.minecraft.tileentity.TileEntity;
 
 public class ContainerPreciousChest extends Container
 {
-    private IInventory lowerChestInventory;
-    private int numRows;
-    private int numCols;
+    private final IInventory lowerChestInventory;
+    private final int numRows;
+    private final int numCols;
 
     public ContainerPreciousChest(InventoryPlayer playerInv, TileEntity chestInv)
     {
-        this.lowerChestInventory = (IInventory) chestInv;
-        this.numRows = ((TileEntityPreciousChest)chestInv).getNumRows();
-        this.numCols = ((TileEntityPreciousChest)chestInv).getNumCols();
+        lowerChestInventory = (IInventory) chestInv;
+        numRows = ((TileEntityPreciousChest) chestInv).getNumRows();
+        numCols = ((TileEntityPreciousChest) chestInv).getNumCols();
         lowerChestInventory.openChest();
-        int var3 = (this.numRows - 4) * 18;
+        final int var3 = (numRows - 4) * 18;
         int currRow;
         int currCol;
 
         int modifier = 0;
-        
-        if(numCols == 12)
+
+        if (numCols == 12)
         {
-        	modifier = 27;
+            modifier = 27;
         }
-        if(numCols == 10)
+        if (numCols == 10)
         {
-        	modifier = 9;
+            modifier = 9;
         }
-        
-        int i = 0;
-        for (currRow = 0; currRow < this.numRows; ++currRow)
+
+        for (currRow = 0; currRow < numRows; ++currRow)
         {
-            for (currCol = 0; currCol < this.numCols; ++currCol)
+            for (currCol = 0; currCol < numCols; ++currCol)
             {
-                this.addSlotToContainer(new Slot(lowerChestInventory, currCol + currRow * numCols, 11 + currCol * 18, 18 + currRow * 18));
+                addSlotToContainer(new Slot(lowerChestInventory, currCol + currRow * numCols, 11 + currCol * 18, 18 + currRow * 18));
             }
         }
 
@@ -48,58 +47,20 @@ public class ContainerPreciousChest extends Container
         {
             for (currCol = 0; currCol < 9; ++currCol)
             {
-                this.addSlotToContainer(new Slot(playerInv, currCol + currRow * 9 + 9, 11 + currCol * 18 + modifier, 94 + currRow * 18 + var3));
+                addSlotToContainer(new Slot(playerInv, currCol + currRow * 9 + 9, 11 + currCol * 18 + modifier, 94 + currRow * 18 + var3));
             }
         }
 
         for (currRow = 0; currRow < 9; ++currRow)
         {
-            this.addSlotToContainer(new Slot(playerInv, currRow, 11 + currRow * 18 + modifier, 152 + var3));
+            addSlotToContainer(new Slot(playerInv, currRow, 11 + currRow * 18 + modifier, 152 + var3));
         }
     }
 
+    @Override
     public boolean canInteractWith(EntityPlayer par1EntityPlayer)
     {
-        return this.lowerChestInventory.isUseableByPlayer(par1EntityPlayer);
-    }
-
-    /**
-     * Called to transfer a stack from one inventory to the other eg. when shift clicking.
-     */
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
-    {
-        ItemStack var2 = null;
-        Slot var3 = (Slot)this.inventorySlots.get(par1);
-
-        if (var3 != null && var3.getHasStack())
-        {
-            ItemStack var4 = var3.getStack();
-            var2 = var4.copy();
-
-            if (par1 < this.numRows * this.numCols)
-            {
-                if (!this.mergeItemStack(var4, this.numRows * this.numCols, this.inventorySlots.size(), true))
-                {
-                    return null;
-                }
-            }
-            else if (!this.mergeItemStack(var4, 0, this.numRows * this.numCols, false))
-            {
-                return null;
-            }
-
-            if (var4.stackSize == 0)
-            {
-                var3.putStack((ItemStack)null);
-            }
-            else
-            {
-                var3.onSlotChanged();
-            }
-        }
-
-        return var2;
+        return lowerChestInventory.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**
@@ -109,6 +70,46 @@ public class ContainerPreciousChest extends Container
     public void onContainerClosed(EntityPlayer par1EntityPlayer)
     {
         super.onContainerClosed(par1EntityPlayer);
-        this.lowerChestInventory.closeChest();
+        lowerChestInventory.closeChest();
+    }
+
+    /**
+     * Called to transfer a stack from one inventory to the other eg. when shift
+     * clicking.
+     */
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
+    {
+        ItemStack var2 = null;
+        final Slot var3 = (Slot) inventorySlots.get(par1);
+
+        if (var3 != null && var3.getHasStack())
+        {
+            final ItemStack var4 = var3.getStack();
+            var2 = var4.copy();
+
+            if (par1 < numRows * numCols)
+            {
+                if (!mergeItemStack(var4, numRows * numCols, inventorySlots.size(), true))
+                {
+                    return null;
+                }
+            }
+            else if (!mergeItemStack(var4, 0, numRows * numCols, false))
+            {
+                return null;
+            }
+
+            if (var4.stackSize == 0)
+            {
+                var3.putStack((ItemStack) null);
+            }
+            else
+            {
+                var3.onSlotChanged();
+            }
+        }
+
+        return var2;
     }
 }

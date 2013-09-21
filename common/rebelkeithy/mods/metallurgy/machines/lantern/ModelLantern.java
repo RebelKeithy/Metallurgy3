@@ -10,214 +10,218 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelLantern extends ModelBase {
-	// fields
-	ModelRenderer Base;
-	ModelRenderer Top;
-	ModelRenderer Body;
-	ModelRenderer AtTop;
-	ModelRenderer AtSide11;
-	ModelRenderer AtSide12;
-	ModelRenderer AtSide13;
-	ModelRenderer AtSide14;
-	ModelRenderer AtSide21;
-	ModelRenderer AtSide22;
-	ModelRenderer AtSide23;
-	ModelRenderer AtSide24;
-	ModelRenderer AtSide31;
-	ModelRenderer AtSide32;
-	ModelRenderer AtSide33;
-	ModelRenderer AtSide34;
-	ModelRenderer AtSide41;
-	ModelRenderer AtSide42;
-	ModelRenderer AtSide43;
-	ModelRenderer AtSide44;
+public class ModelLantern extends ModelBase
+{
+    // fields
+    ModelRenderer Base;
+    ModelRenderer Top;
+    ModelRenderer Body;
+    ModelRenderer AtTop;
+    ModelRenderer AtSide11;
+    ModelRenderer AtSide12;
+    ModelRenderer AtSide13;
+    ModelRenderer AtSide14;
+    ModelRenderer AtSide21;
+    ModelRenderer AtSide22;
+    ModelRenderer AtSide23;
+    ModelRenderer AtSide24;
+    ModelRenderer AtSide31;
+    ModelRenderer AtSide32;
+    ModelRenderer AtSide33;
+    ModelRenderer AtSide34;
+    ModelRenderer AtSide41;
+    ModelRenderer AtSide42;
+    ModelRenderer AtSide43;
+    ModelRenderer AtSide44;
 
-	public ModelLantern() {
-		textureWidth = 64;
-		textureHeight = 32;
+    public ModelLantern()
+    {
+        textureWidth = 64;
+        textureHeight = 32;
 
-		Base = new ModelRenderer(this, 0, 0);
-		Base.addBox(3F, 14F, 3F, 10, 2, 10);
-		Base.setRotationPoint(0F, 0F, 0F);
-		Base.setTextureSize(64, 32);
-		Base.mirror = true;
-		setRotation(Base, 0F, 0F, 0F);
-		Top = new ModelRenderer(this, 0, 12);
-		Top.addBox(4F, 5F, 4F, 8, 9, 8);
-		Top.setRotationPoint(0F, 0F, 0F);
-		Top.setTextureSize(64, 32);
-		Top.mirror = true;
-		setRotation(Top, 0F, 0F, 0F);
-		Body = new ModelRenderer(this, 0, 0);
-		Body.addBox(3F, 3F, 3F, 10, 2, 10);
-		Body.setRotationPoint(0F, 0F, 0F);
-		Body.setTextureSize(64, 32);
-		Body.mirror = true;
-		setRotation(Body, 0F, 0F, 0F);
-		AtTop = new ModelRenderer(this, 40, 9);
-		AtTop.addBox(7F, 0F, 7F, 2, 3, 2);
-		AtTop.setRotationPoint(0F, 0F, 0F);
-		AtTop.setTextureSize(64, 32);
-		AtTop.mirror = true;
-		setRotation(AtTop, 0F, 0F, 0F);
-		AtSide11 = new ModelRenderer(this, 40, 5);
-		AtSide11.addBox(13F, 3F, 4F, 3, 2, 2);
-		AtSide11.setRotationPoint(0F, 0F, 0F);
-		AtSide11.setTextureSize(64, 32);
-		AtSide11.mirror = true;
-		setRotation(AtSide11, 0F, 0F, 0F);
-		AtSide12 = new ModelRenderer(this, 40, 5);
-		AtSide12.addBox(13F, 3F, 10F, 3, 2, 2);
-		AtSide12.setRotationPoint(0F, 0F, 0F);
-		AtSide12.setTextureSize(64, 32);
-		AtSide12.mirror = true;
-		setRotation(AtSide12, 0F, 0F, 0F);
-		AtSide13 = new ModelRenderer(this, 40, 5);
-		AtSide13.addBox(13F, 14F, 4F, 3, 2, 2);
-		AtSide13.setRotationPoint(0F, 0F, 0F);
-		AtSide13.setTextureSize(64, 32);
-		AtSide13.mirror = true;
-		setRotation(AtSide13, 0F, 0F, 0F);
-		AtSide14 = new ModelRenderer(this, 40, 5);
-		AtSide14.addBox(13F, 14F, 10F, 3, 2, 2);
-		AtSide14.setRotationPoint(0F, 0F, 0F);
-		AtSide14.setTextureSize(64, 32);
-		AtSide14.mirror = true;
-		setRotation(AtSide14, 0F, 0F, 0F);
-		AtSide21 = new ModelRenderer(this, 40, 0);
-		AtSide21.addBox(4F, 3F, 0F, 2, 2, 3);
-		AtSide21.setRotationPoint(0F, 0F, 0F);
-		AtSide21.setTextureSize(64, 32);
-		AtSide21.mirror = true;
-		setRotation(AtSide21, 0F, 0F, 0F);
-		AtSide22 = new ModelRenderer(this, 40, 0);
-		AtSide22.addBox(10F, 3F, 0F, 2, 2, 3);
-		AtSide22.setRotationPoint(0F, 0F, 0F);
-		AtSide22.setTextureSize(64, 32);
-		AtSide22.mirror = true;
-		setRotation(AtSide22, 0F, 0F, 0F);
-		AtSide23 = new ModelRenderer(this, 40, 0);
-		AtSide23.addBox(4F, 14F, 0F, 2, 2, 3);
-		AtSide23.setRotationPoint(0F, 0F, 0F);
-		AtSide23.setTextureSize(64, 32);
-		AtSide23.mirror = true;
-		setRotation(AtSide23, 0F, 0F, 0F);
-		AtSide24 = new ModelRenderer(this, 40, 0);
-		AtSide24.addBox(10F, 14F, 0F, 2, 2, 3);
-		AtSide24.setRotationPoint(0F, 0F, 0F);
-		AtSide24.setTextureSize(64, 32);
-		AtSide24.mirror = true;
-		setRotation(AtSide24, 0F, 0F, 0F);
-		AtSide31 = new ModelRenderer(this, 40, 5);
-		AtSide31.addBox(0F, 3F, 4F, 3, 2, 2);
-		AtSide31.setRotationPoint(0F, 0F, 0F);
-		AtSide31.setTextureSize(64, 32);
-		AtSide31.mirror = true;
-		setRotation(AtSide31, 0F, 0F, 0F);
-		AtSide32 = new ModelRenderer(this, 40, 5);
-		AtSide32.addBox(0F, 3F, 10F, 3, 2, 2);
-		AtSide32.setRotationPoint(0F, 0F, 0F);
-		AtSide32.setTextureSize(64, 32);
-		AtSide32.mirror = true;
-		setRotation(AtSide32, 0F, 0F, 0F);
-		AtSide33 = new ModelRenderer(this, 40, 5);
-		AtSide33.addBox(0F, 14F, 4F, 3, 2, 2);
-		AtSide33.setRotationPoint(0F, 0F, 0F);
-		AtSide33.setTextureSize(64, 32);
-		AtSide33.mirror = true;
-		setRotation(AtSide33, 0F, 0F, 0F);
-		AtSide34 = new ModelRenderer(this, 40, 5);
-		AtSide34.addBox(0F, 14F, 10F, 3, 2, 2);
-		AtSide34.setRotationPoint(0F, 0F, 0F);
-		AtSide34.setTextureSize(64, 32);
-		AtSide34.mirror = true;
-		setRotation(AtSide34, 0F, 0F, 0F);
-		AtSide41 = new ModelRenderer(this, 40, 0);
-		AtSide41.addBox(4F, 3F, 13F, 2, 2, 3);
-		AtSide41.setRotationPoint(0F, 0F, 0F);
-		AtSide41.setTextureSize(64, 32);
-		AtSide41.mirror = true;
-		setRotation(AtSide41, 0F, 0F, 0F);
-		AtSide42 = new ModelRenderer(this, 40, 0);
-		AtSide42.addBox(10F, 3F, 13F, 2, 2, 3);
-		AtSide42.setRotationPoint(0F, 0F, 0F);
-		AtSide42.setTextureSize(64, 32);
-		AtSide42.mirror = true;
-		setRotation(AtSide42, 0F, 0F, 0F);
-		AtSide43 = new ModelRenderer(this, 40, 0);
-		AtSide43.addBox(10F, 14F, 13F, 2, 2, 3);
-		AtSide43.setRotationPoint(0F, 0F, 0F);
-		AtSide43.setTextureSize(64, 32);
-		AtSide43.mirror = true;
-		setRotation(AtSide43, 0F, 0F, 0F);
-		AtSide44 = new ModelRenderer(this, 40, 0);
-		AtSide44.addBox(4F, 14F, 13F, 2, 2, 3);
-		AtSide44.setRotationPoint(0F, 0F, 0F);
-		AtSide44.setTextureSize(64, 32);
-		AtSide44.mirror = true;
-		setRotation(AtSide44, 0F, 0F, 0F);
-	}
-	
-	public void renderAll(int direction)
-	{
-		this.render(direction, 0.0625F);
-	}
-	
-	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float scale) 
-	{
-		render(-1, 0.0625F);
-	}
+        Base = new ModelRenderer(this, 0, 0);
+        Base.addBox(3F, 14F, 3F, 10, 2, 10);
+        Base.setRotationPoint(0F, 0F, 0F);
+        Base.setTextureSize(64, 32);
+        Base.mirror = true;
+        setRotation(Base, 0F, 0F, 0F);
+        Top = new ModelRenderer(this, 0, 12);
+        Top.addBox(4F, 5F, 4F, 8, 9, 8);
+        Top.setRotationPoint(0F, 0F, 0F);
+        Top.setTextureSize(64, 32);
+        Top.mirror = true;
+        setRotation(Top, 0F, 0F, 0F);
+        Body = new ModelRenderer(this, 0, 0);
+        Body.addBox(3F, 3F, 3F, 10, 2, 10);
+        Body.setRotationPoint(0F, 0F, 0F);
+        Body.setTextureSize(64, 32);
+        Body.mirror = true;
+        setRotation(Body, 0F, 0F, 0F);
+        AtTop = new ModelRenderer(this, 40, 9);
+        AtTop.addBox(7F, 0F, 7F, 2, 3, 2);
+        AtTop.setRotationPoint(0F, 0F, 0F);
+        AtTop.setTextureSize(64, 32);
+        AtTop.mirror = true;
+        setRotation(AtTop, 0F, 0F, 0F);
+        AtSide11 = new ModelRenderer(this, 40, 5);
+        AtSide11.addBox(13F, 3F, 4F, 3, 2, 2);
+        AtSide11.setRotationPoint(0F, 0F, 0F);
+        AtSide11.setTextureSize(64, 32);
+        AtSide11.mirror = true;
+        setRotation(AtSide11, 0F, 0F, 0F);
+        AtSide12 = new ModelRenderer(this, 40, 5);
+        AtSide12.addBox(13F, 3F, 10F, 3, 2, 2);
+        AtSide12.setRotationPoint(0F, 0F, 0F);
+        AtSide12.setTextureSize(64, 32);
+        AtSide12.mirror = true;
+        setRotation(AtSide12, 0F, 0F, 0F);
+        AtSide13 = new ModelRenderer(this, 40, 5);
+        AtSide13.addBox(13F, 14F, 4F, 3, 2, 2);
+        AtSide13.setRotationPoint(0F, 0F, 0F);
+        AtSide13.setTextureSize(64, 32);
+        AtSide13.mirror = true;
+        setRotation(AtSide13, 0F, 0F, 0F);
+        AtSide14 = new ModelRenderer(this, 40, 5);
+        AtSide14.addBox(13F, 14F, 10F, 3, 2, 2);
+        AtSide14.setRotationPoint(0F, 0F, 0F);
+        AtSide14.setTextureSize(64, 32);
+        AtSide14.mirror = true;
+        setRotation(AtSide14, 0F, 0F, 0F);
+        AtSide21 = new ModelRenderer(this, 40, 0);
+        AtSide21.addBox(4F, 3F, 0F, 2, 2, 3);
+        AtSide21.setRotationPoint(0F, 0F, 0F);
+        AtSide21.setTextureSize(64, 32);
+        AtSide21.mirror = true;
+        setRotation(AtSide21, 0F, 0F, 0F);
+        AtSide22 = new ModelRenderer(this, 40, 0);
+        AtSide22.addBox(10F, 3F, 0F, 2, 2, 3);
+        AtSide22.setRotationPoint(0F, 0F, 0F);
+        AtSide22.setTextureSize(64, 32);
+        AtSide22.mirror = true;
+        setRotation(AtSide22, 0F, 0F, 0F);
+        AtSide23 = new ModelRenderer(this, 40, 0);
+        AtSide23.addBox(4F, 14F, 0F, 2, 2, 3);
+        AtSide23.setRotationPoint(0F, 0F, 0F);
+        AtSide23.setTextureSize(64, 32);
+        AtSide23.mirror = true;
+        setRotation(AtSide23, 0F, 0F, 0F);
+        AtSide24 = new ModelRenderer(this, 40, 0);
+        AtSide24.addBox(10F, 14F, 0F, 2, 2, 3);
+        AtSide24.setRotationPoint(0F, 0F, 0F);
+        AtSide24.setTextureSize(64, 32);
+        AtSide24.mirror = true;
+        setRotation(AtSide24, 0F, 0F, 0F);
+        AtSide31 = new ModelRenderer(this, 40, 5);
+        AtSide31.addBox(0F, 3F, 4F, 3, 2, 2);
+        AtSide31.setRotationPoint(0F, 0F, 0F);
+        AtSide31.setTextureSize(64, 32);
+        AtSide31.mirror = true;
+        setRotation(AtSide31, 0F, 0F, 0F);
+        AtSide32 = new ModelRenderer(this, 40, 5);
+        AtSide32.addBox(0F, 3F, 10F, 3, 2, 2);
+        AtSide32.setRotationPoint(0F, 0F, 0F);
+        AtSide32.setTextureSize(64, 32);
+        AtSide32.mirror = true;
+        setRotation(AtSide32, 0F, 0F, 0F);
+        AtSide33 = new ModelRenderer(this, 40, 5);
+        AtSide33.addBox(0F, 14F, 4F, 3, 2, 2);
+        AtSide33.setRotationPoint(0F, 0F, 0F);
+        AtSide33.setTextureSize(64, 32);
+        AtSide33.mirror = true;
+        setRotation(AtSide33, 0F, 0F, 0F);
+        AtSide34 = new ModelRenderer(this, 40, 5);
+        AtSide34.addBox(0F, 14F, 10F, 3, 2, 2);
+        AtSide34.setRotationPoint(0F, 0F, 0F);
+        AtSide34.setTextureSize(64, 32);
+        AtSide34.mirror = true;
+        setRotation(AtSide34, 0F, 0F, 0F);
+        AtSide41 = new ModelRenderer(this, 40, 0);
+        AtSide41.addBox(4F, 3F, 13F, 2, 2, 3);
+        AtSide41.setRotationPoint(0F, 0F, 0F);
+        AtSide41.setTextureSize(64, 32);
+        AtSide41.mirror = true;
+        setRotation(AtSide41, 0F, 0F, 0F);
+        AtSide42 = new ModelRenderer(this, 40, 0);
+        AtSide42.addBox(10F, 3F, 13F, 2, 2, 3);
+        AtSide42.setRotationPoint(0F, 0F, 0F);
+        AtSide42.setTextureSize(64, 32);
+        AtSide42.mirror = true;
+        setRotation(AtSide42, 0F, 0F, 0F);
+        AtSide43 = new ModelRenderer(this, 40, 0);
+        AtSide43.addBox(10F, 14F, 13F, 2, 2, 3);
+        AtSide43.setRotationPoint(0F, 0F, 0F);
+        AtSide43.setTextureSize(64, 32);
+        AtSide43.mirror = true;
+        setRotation(AtSide43, 0F, 0F, 0F);
+        AtSide44 = new ModelRenderer(this, 40, 0);
+        AtSide44.addBox(4F, 14F, 13F, 2, 2, 3);
+        AtSide44.setRotationPoint(0F, 0F, 0F);
+        AtSide44.setTextureSize(64, 32);
+        AtSide44.mirror = true;
+        setRotation(AtSide44, 0F, 0F, 0F);
+    }
 
-	public void render(int direction, float scale) 
-	{
-		Base.render(scale);
-		Top.render(scale);
-		Body.render(scale);
-		if(direction == 5)
-		{
-			AtTop.render(scale);
-		}
-		else if(direction == 1)
-		{
-			AtSide11.render(scale);
-			AtSide12.render(scale);
-			AtSide13.render(scale);
-			AtSide14.render(scale);
-		}
-		else if(direction == 2)
-		{
-			AtSide21.render(scale);
-			AtSide22.render(scale);
-			AtSide23.render(scale);
-			AtSide24.render(scale);
-		}
-		else if(direction == 3)
-		{
-			AtSide31.render(scale);
-			AtSide32.render(scale);
-			AtSide33.render(scale);
-			AtSide34.render(scale);
-		}
-		else if(direction == 4)
-		{
-			AtSide41.render(scale);
-			AtSide42.render(scale);
-			AtSide43.render(scale);
-			AtSide44.render(scale);
-		}
-	}
+    @Override
+    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float scale)
+    {
+        render(-1, 0.0625F);
+    }
 
-	private void setRotation(ModelRenderer model, float x, float y, float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
-	}
+    public void render(int direction, float scale)
+    {
+        Base.render(scale);
+        Top.render(scale);
+        Body.render(scale);
+        if (direction == 5)
+        {
+            AtTop.render(scale);
+        }
+        else if (direction == 1)
+        {
+            AtSide11.render(scale);
+            AtSide12.render(scale);
+            AtSide13.render(scale);
+            AtSide14.render(scale);
+        }
+        else if (direction == 2)
+        {
+            AtSide21.render(scale);
+            AtSide22.render(scale);
+            AtSide23.render(scale);
+            AtSide24.render(scale);
+        }
+        else if (direction == 3)
+        {
+            AtSide31.render(scale);
+            AtSide32.render(scale);
+            AtSide33.render(scale);
+            AtSide34.render(scale);
+        }
+        else if (direction == 4)
+        {
+            AtSide41.render(scale);
+            AtSide42.render(scale);
+            AtSide43.render(scale);
+            AtSide44.render(scale);
+        }
+    }
 
-	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-	}
+    public void renderAll(int direction)
+    {
+        this.render(direction, 0.0625F);
+    }
+
+    private void setRotation(ModelRenderer model, float x, float y, float z)
+    {
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
+
+    @Override
+    public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
+    {
+        super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    }
 
 }

@@ -50,50 +50,53 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
 {
-	@Override
-	public void registerTileEntitySpecialRenderer() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrusher.class, new TileEntityCrusherRenderer());
-		RenderingRegistry.registerBlockHandler(new CrusherRenderHelper());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPreciousChest.class, new TileEntityPreciousChestRenderer());
-		RenderingRegistry.registerBlockHandler(new RenderHelperPreciousChest());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMint.class, new TileEntityMintRenderer());
-		RenderingRegistry.registerBlockHandler(new MintRenderHelper());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLantern.class, new TileEntityLanternRenderer());
-		RenderingRegistry.registerBlockHandler(new LanternRenderHelper());
+    @Override
+    public File getMinecraftDir()
+    {
+        return Minecraft.getMinecraft().mcDataDir;
+    }
 
-		RenderingRegistry.registerBlockHandler(BlockMetalLadder.renderType, new LadderRenderer());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
-		RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new TileEntityLaserRenderer());
-		RenderingRegistry.registerBlockHandler(new LaserRenderHelper());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPylon.class, new TileEntityPylonRenderer());
-		RenderingRegistry.registerBlockHandler(new PylonRenderHelper());
-		
-		RenderingRegistry.registerEntityRenderingHandler(EntityXpOrbContainer.class, new renderXPOrbContainer());
-		
-	}
-	
-	public void registerGUIs()
-	{
-		GuiRegistry.registerGuiClient(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, MetallurgyMachines.instance, "Enchanter");
-		GuiRegistry.registerGuiClient(GuiMintStorage.class, ContainerMintStorage.class, MetallurgyMachines.instance, "MintStorage");
-		GuiRegistry.registerGuiClient(GuiPreciousChest.class, ContainerPreciousChest.class, MetallurgyMachines.instance, "PreciousChest");
-		GuiRegistry.registerGuiClient(GuiCrusher.class, ContainerCrusher.class, MetallurgyMachines.instance, "Crusher");
-		GuiRegistry.registerGuiClient(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
-		GuiRegistry.registerGuiClient(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
-		GuiRegistry.registerGuiClient(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
-		GuiRegistry.registerGuiClient(GuiXpTank.class, ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
-		
-	}
-	
-	public File getMinecraftDir() 
-	{
-		return Minecraft.getMinecraft().mcDataDir;
-	}
+    @Override
+    public void registerGUIs()
+    {
+        GuiRegistry.registerGuiClient(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, MetallurgyMachines.instance, "Enchanter");
+        GuiRegistry.registerGuiClient(GuiMintStorage.class, ContainerMintStorage.class, MetallurgyMachines.instance, "MintStorage");
+        GuiRegistry.registerGuiClient(GuiPreciousChest.class, ContainerPreciousChest.class, MetallurgyMachines.instance, "PreciousChest");
+        GuiRegistry.registerGuiClient(GuiCrusher.class, ContainerCrusher.class, MetallurgyMachines.instance, "Crusher");
+        GuiRegistry.registerGuiClient(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
+        GuiRegistry.registerGuiClient(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
+        GuiRegistry.registerGuiClient(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
+        GuiRegistry.registerGuiClient(GuiXpTank.class, ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
+
+    }
+
+    @Override
+    public void registerTileEntitySpecialRenderer()
+    {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrusher.class, new TileEntityCrusherRenderer());
+        RenderingRegistry.registerBlockHandler(new CrusherRenderHelper());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPreciousChest.class, new TileEntityPreciousChestRenderer());
+        RenderingRegistry.registerBlockHandler(new RenderHelperPreciousChest());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMint.class, new TileEntityMintRenderer());
+        RenderingRegistry.registerBlockHandler(new MintRenderHelper());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLantern.class, new TileEntityLanternRenderer());
+        RenderingRegistry.registerBlockHandler(new LanternRenderHelper());
+
+        RenderingRegistry.registerBlockHandler(BlockMetalLadder.renderType, new LadderRenderer());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
+        RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new TileEntityLaserRenderer());
+        RenderingRegistry.registerBlockHandler(new LaserRenderHelper());
+
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPylon.class, new TileEntityPylonRenderer());
+        RenderingRegistry.registerBlockHandler(new PylonRenderHelper());
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityXpOrbContainer.class, new renderXPOrbContainer());
+
+    }
 }

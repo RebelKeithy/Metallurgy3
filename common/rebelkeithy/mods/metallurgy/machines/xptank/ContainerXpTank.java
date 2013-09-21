@@ -3,7 +3,6 @@ package rebelkeithy.mods.metallurgy.machines.xptank;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -12,49 +11,50 @@ import net.minecraft.tileentity.TileEntityFurnace;
 
 public class ContainerXpTank extends Container
 {
-    private TileEntityXpTank furnace;
+    private final TileEntityXpTank furnace;
 
     public ContainerXpTank(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityNetherForge)
     {
-        this.furnace = (TileEntityXpTank) par2TileEntityNetherForge;
+        furnace = (TileEntityXpTank) par2TileEntityNetherForge;
 
         for (int var3 = 0; var3 < 3; ++var3)
         {
             for (int var4 = 0; var4 < 9; ++var4)
             {
-                this.addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
+                addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
             }
         }
 
         for (int var3 = 0; var3 < 9; ++var3)
         {
-            this.addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
+            addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
         }
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer par1EntityPlayer)
     {
-        return this.furnace.isUseableByPlayer(par1EntityPlayer);
+        return furnace.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**
-     * Called to transfer a stack from one inventory to the other eg. when shift clicking.
+     * Called to transfer a stack from one inventory to the other eg. when shift
+     * clicking.
      */
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = null;
-        Slot var3 = (Slot)this.inventorySlots.get(par1);
+        final Slot var3 = (Slot) inventorySlots.get(par1);
 
         if (var3 != null && var3.getHasStack())
         {
-            ItemStack var4 = var3.getStack();
+            final ItemStack var4 = var3.getStack();
             var2 = var4.copy();
 
             if (par1 == 1)
             {
-                if (!this.mergeItemStack(var4, 2, 38, true))
+                if (!mergeItemStack(var4, 2, 38, true))
                 {
                     return null;
                 }
@@ -65,38 +65,38 @@ public class ContainerXpTank extends Container
             {
                 if (FurnaceRecipes.smelting().getSmeltingResult(var4) != null)
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
                 else if (TileEntityFurnace.isItemFuel(var4))
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
                 else if (par1 >= 2 && par1 < 29)
                 {
-                    if (!this.mergeItemStack(var4, 29, 38, false))
+                    if (!mergeItemStack(var4, 29, 38, false))
                     {
                         return null;
                     }
                 }
-                else if (par1 >= 29 && par1 < 38 && !this.mergeItemStack(var4, 2, 29, false))
+                else if (par1 >= 29 && par1 < 38 && !mergeItemStack(var4, 2, 29, false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(var4, 2, 38, false))
+            else if (!mergeItemStack(var4, 2, 38, false))
             {
                 return null;
             }
 
             if (var4.stackSize == 0)
             {
-                var3.putStack((ItemStack)null);
+                var3.putStack((ItemStack) null);
             }
             else
             {
