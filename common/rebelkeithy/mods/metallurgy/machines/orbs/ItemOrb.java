@@ -52,7 +52,7 @@ public class ItemOrb extends Item
 	
 	public int getTypeFromDamage(int damage)
 	{
-		return damage & 0b0000000000001111;
+		return damage & 15;
 	}
 	
 	public int getXpFromDamage(int damage)
