@@ -16,3 +16,5 @@ As an open source project now, we're allowing guest coders. If you see a bug and
 Thanks for your time,
 
 Shadowclaimer
+
+[![Build Status](http://vps.aesireanempire.com:8080/job/Metallurgy/badge/icon)](http://vps.aesireanempire.com:8080/job/Metallurgy/)
