@@ -69,6 +69,7 @@ public class ConfigMachines
     public static int pylonID = 924;
 
     public static int orbID = 29018;
+	public static int sawDustID = 29019;
 
     public static void initConfig()
     {
@@ -109,6 +110,7 @@ public class ConfigMachines
         bullionID = config.get("Item IDs", "Bullion", bullionID).getInt();
         glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
         orbID = config.get("Item IDs", "Fantasy Orbs", orbID).getInt();
+        sawDustID = config.get("Item IDs", "Saw Dust", sawDustID).getInt();
 
         tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
 

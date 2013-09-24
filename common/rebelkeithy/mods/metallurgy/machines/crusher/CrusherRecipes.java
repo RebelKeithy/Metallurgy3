@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -139,6 +140,12 @@ public class CrusherRecipes
                         }
                         return ret;
                     }
+                }
+                
+                if(oreItem.itemID == item.itemID) {
+                	if(name == "logWood") {
+                		return new ItemStack(MetallurgyMachines.sawDust, 2);
+                	}
                 }
             }
         }

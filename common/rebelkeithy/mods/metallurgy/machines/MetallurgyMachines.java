@@ -89,6 +89,7 @@ public class MetallurgyMachines
     public static Item glassDust;
     public static Item goldCog;
     public static Item debug;
+    public static Item sawDust;
 
     public static Block storageAccessor;
     public static Block storageBlock;
@@ -263,10 +264,13 @@ public class MetallurgyMachines
         LanguageRegistry.addName(new ItemStack(crusher, 1, 3), "Iron Crusher");
         LanguageRegistry.addName(new ItemStack(crusher, 1, 4), "Steel Crusher");
 
-        CrusherRecipes.addCrushing(Block.cobblestone.blockID, 0, new ItemStack(Block.sand));
-        CrusherRecipes.addCrushing(Block.stone.blockID, 0, new ItemStack(Block.sand));
+        CrusherRecipes.addCrushing(Block.cobblestone.blockID, 0, new ItemStack(Block.gravel));
+        CrusherRecipes.addCrushing(Block.stone.blockID, 0, new ItemStack(Block.gravel));
         CrusherRecipes.addCrushing(Block.netherrack.blockID, 0, new ItemStack(Block.slowSand));
         CrusherRecipes.addCrushing(Block.glowStone.blockID, 0, new ItemStack(Item.glowstone, 4));
+        CrusherRecipes.addCrushing(Block.gravel.blockID, 0, new ItemStack(Block.sand));
+        CrusherRecipes.addCrushing(Block.sandStone.blockID, 0, new ItemStack(Block.sand, 4));
+
     }
 
     public void initEnchanter()
@@ -355,9 +359,12 @@ public class MetallurgyMachines
         LanguageRegistry.addName(new ItemStack(glassDust, 1, 6), "Purple Glass Dust");
         LanguageRegistry.addName(new ItemStack(glassDust, 1, 7), "Grey Glass Dust");
         LanguageRegistry.addName(new ItemStack(glassDust, 1, 8), "White Glass Dust");
-
+        
+        sawDust = new ItemMetallurgy(ConfigMachines.sawDustID).setTextureName("Metallurgy:machines/SawDust").setUnlocalizedName("Metallurgy:machines/SawDust").setCreativeTab(machineTab);
+        LanguageRegistry.addName(new ItemStack(sawDust), "Saw Dust");
+        GameRegistry.addSmelting(sawDust.itemID, new ItemStack(Item.coal, 1,1), 0.15F);
     }
-
+    
     public void initMint()
     {
         mint = new BlockMint(ConfigMachines.mintID).setHardness(2.0F).setUnlocalizedName("M3Mint").setHardness(2.0F).setCreativeTab(machineTab);
