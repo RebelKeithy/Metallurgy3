@@ -2,7 +2,10 @@ package rebelkeithy.mods.metallurgy.metals.utilityItems.tnt;
 
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraft.util.Icon;
 import net.minecraft.world.Explosion;
@@ -73,6 +76,21 @@ public class BlockLargeTNT extends BlockTNT
             final EntityLargeTNTPrimed var5 = new EntityLargeTNTPrimed(par1World, par2 + 0.5F, par3 + 0.5F, par4 + 0.5F);
             var5.fuse = par1World.rand.nextInt(var5.fuse / 4) + var5.fuse / 8;
             par1World.spawnEntityInWorld(var5);
+        }
+    }
+    
+    @Override
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    {
+        if (par5Entity instanceof EntityArrow && !par1World.isRemote)
+        {
+            EntityArrow entityarrow = (EntityArrow)par5Entity;
+
+            if (entityarrow.isBurning())
+            {
+            	onBlockDestroyedByPlayer(par1World, par2, par3, par4, 1);
+                par1World.setBlockToAir(par2, par3, par4);
+            }
         }
     }
 
