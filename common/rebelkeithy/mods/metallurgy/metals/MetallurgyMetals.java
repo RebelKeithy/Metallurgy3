@@ -270,8 +270,8 @@ public class MetallurgyMetals
             LanguageRegistry.addName(largeTNT, "HE TNT");
             if (utilityConfig.get("Recipes", "Enable HE TNT", true).getBoolean(true))
             {
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "PMP", "MTM", "PMP", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(largeTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));    
             }
         }
 
@@ -284,8 +284,8 @@ public class MetallurgyMetals
             LanguageRegistry.addName(minersTNT, "LE TNT");
             if (utilityConfig.get("Recipes", "Enable LE TNT", true).getBoolean(true))
             {
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'M', "dustSaltpeter", 'P', "dustSulfur", 'T', Block.tnt));
-                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'P', "dustSaltpeter", 'M', "dustSulfur", 'T', Block.tnt));
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "MPM", "PTP", "MPM", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
+                GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(minersTNT, 4), "PMP", "MTM", "PMP", 'M', "dustMagnesium", 'P', "dustPhosphorus", 'T', Block.tnt));
             }
         }
 
