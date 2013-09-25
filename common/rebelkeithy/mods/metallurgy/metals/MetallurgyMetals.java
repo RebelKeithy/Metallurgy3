@@ -294,7 +294,7 @@ public class MetallurgyMetals
         LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
         if (utilityConfig.get("Recipes", "Enable Magnesium Igniter", true).getBoolean(true))
         {
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flintAndSteel));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(magnesiumIgniter), "X ", " F", 'X', "dustMagnesium", 'F', Item.flint));
         }
 
         id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
