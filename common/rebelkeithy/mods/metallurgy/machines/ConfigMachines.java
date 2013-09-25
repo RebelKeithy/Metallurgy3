@@ -126,17 +126,17 @@ public class ConfigMachines
         ironFurnaceSpeed = config.get("Furnace Speeds", "Iron", (int) (ironFurnaceSpeed * 1000)).getInt() / 1000F;
         steelFurnaceSpeed = config.get("Furnace Speeds", "Steel", (int) (steelFurnaceSpeed * 1000)).getInt() / 1000F;
 
-        extractorSpeeds[0] = config.get("Abstractor", "Speed Prometheum", 22).getInt();
-        extractorSpeeds[1] = config.get("Abstractor", "Speed Deep Iron", 20).getInt();
-        extractorSpeeds[2] = config.get("Abstractor", "Speed Block Steel", 18).getInt();
-        extractorSpeeds[3] = config.get("Abstractor", "Speed Oureclase", 16).getInt();
-        extractorSpeeds[4] = config.get("Abstractor", "Speed Aredrite", 14).getInt();
-        extractorSpeeds[5] = config.get("Abstractor", "Speed Mithril", 12).getInt();
-        extractorSpeeds[6] = config.get("Abstractor", "Speed Haderoth", 10).getInt();
-        extractorSpeeds[7] = config.get("Abstractor", "Speed Orichalcum", 8).getInt();
-        extractorSpeeds[8] = config.get("Abstractor", "Speed Adamantine", 6).getInt();
+        extractorSpeeds[0] = config.get("Abstractor", "Speed Prometheum", 8).getInt();
+        extractorSpeeds[1] = config.get("Abstractor", "Speed Deep Iron", 8).getInt();
+        extractorSpeeds[2] = config.get("Abstractor", "Speed Block Steel", 7).getInt();
+        extractorSpeeds[3] = config.get("Abstractor", "Speed Oureclase", 7).getInt();
+        extractorSpeeds[4] = config.get("Abstractor", "Speed Aredrite", 6).getInt();
+        extractorSpeeds[5] = config.get("Abstractor", "Speed Mithril", 6).getInt();
+        extractorSpeeds[6] = config.get("Abstractor", "Speed Haderoth", 6).getInt();
+        extractorSpeeds[7] = config.get("Abstractor", "Speed Orichalcum", 5).getInt();
+        extractorSpeeds[8] = config.get("Abstractor", "Speed Adamantine", 5).getInt();
         extractorSpeeds[9] = config.get("Abstractor", "Speed Atlarus", 4).getInt();
-        extractorSpeeds[10] = config.get("Abstractor", "Speed Tartarite", 2).getInt();
+        extractorSpeeds[10] = config.get("Abstractor", "Speed Tartarite", 4).getInt();
 
         xpBonus[0] = config.get("Abstractor", "Bonus Prometheum", 1.0).getDouble(1.0);
         xpBonus[1] = config.get("Abstractor", "Bonus Deep Iron", 1.1).getDouble(1.1);
