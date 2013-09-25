@@ -139,16 +139,16 @@ public class ConfigMachines
         extractorSpeeds[10] = config.get("Abstractor", "Speed Tartarite", 2).getInt();
 
         xpBonus[0] = config.get("Abstractor", "Bonus Prometheum", 1.0).getDouble(1.0);
-        xpBonus[1] = config.get("Abstractor", "Bonus Deep Iron", 1.2).getDouble(1.2);
-        xpBonus[2] = config.get("Abstractor", "Bonus Black Steel", 1.4).getDouble(1.4);
-        xpBonus[3] = config.get("Abstractor", "Bonus Oureclase", 1.6).getDouble(1.6);
-        xpBonus[4] = config.get("Abstractor", "Bonus Aredrite", 1.8).getDouble(1.8);
-        xpBonus[5] = config.get("Abstractor", "Bonus Mithril", 2.0).getDouble(2.0);
-        xpBonus[6] = config.get("Abstractor", "Bonus Haderoth", 2.4).getDouble(2.4);
-        xpBonus[7] = config.get("Abstractor", "Bonus Oreichalcum", 2.8).getDouble(2.8);
-        xpBonus[8] = config.get("Abstractor", "Bonus Admantine", 3.2).getDouble(3.2);
-        xpBonus[9] = config.get("Abstractor", "Bonus Atlarus", 3.6).getDouble(3.6);
-        xpBonus[10] = config.get("Abstractor", "Bonus Tartarite", 4.0).getDouble(4.0);
+        xpBonus[1] = config.get("Abstractor", "Bonus Deep Iron", 1.1).getDouble(1.1);
+        xpBonus[2] = config.get("Abstractor", "Bonus Black Steel", 1.2).getDouble(1.2);
+        xpBonus[3] = config.get("Abstractor", "Bonus Oureclase", 1.3).getDouble(1.3);
+        xpBonus[4] = config.get("Abstractor", "Bonus Aredrite", 1.4).getDouble(1.4);
+        xpBonus[5] = config.get("Abstractor", "Bonus Mithril", 1.4).getDouble(1.4);
+        xpBonus[6] = config.get("Abstractor", "Bonus Haderoth", 1.5).getDouble(1.5);
+        xpBonus[7] = config.get("Abstractor", "Bonus Oreichalcum", 1.6).getDouble(1.6);
+        xpBonus[8] = config.get("Abstractor", "Bonus Admantine", 1.7).getDouble(1.7);
+        xpBonus[9] = config.get("Abstractor", "Bonus Atlarus", 1.8).getDouble(1.8);
+        xpBonus[10] = config.get("Abstractor", "Bonus Tartarite", 2.0).getDouble(2.0);
 
         final String[] forgeNames =
         { "Ignatius", "Shadow Iron", "Shadow Steel", "Vyroxeres", "Inolashite", "Kalendrite", "Vulcanite", "Sanguinite" };
