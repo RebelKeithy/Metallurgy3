@@ -41,15 +41,15 @@ public class TileEntityAbstractor extends TileEntityMachineBase implements ISide
 
             if (var1 == MetallurgyMetals.fantasySet.getOreInfo("Prometheum").dust.itemID)
             {
-                return 1760;
+                return 1200;
             }
             if (var1 == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").dust.itemID)
             {
-                return 7040;
+                return 2400;
             }
             if (var1 == MetallurgyMetals.fantasySet.getOreInfo("Carmot").dust.itemID)
             {
-                return 14080;
+                return 4800;
             }
             return AbstractorRecipes.getFuelAmount(par0ItemStack);
         }
