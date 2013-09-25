@@ -326,7 +326,8 @@ public class MetallurgyMetals
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
         GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
-
+        GameRegistry.addRecipe(new ShapedOreRecipe(Item.lead, "SS", "ST", "  S" 'T', "itemTar", 'S', Item.string));
+        
         if (isSetEnabled("Utility"))
         {
             ((MetallurgyTabs) utilityTab).setIconItem(fertilizer.itemID);
