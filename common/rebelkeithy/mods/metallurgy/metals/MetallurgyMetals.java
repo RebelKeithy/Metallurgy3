@@ -104,6 +104,12 @@ public class MetallurgyMetals
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Block.rail, 32), "X X", "XSX", "X X", 'X', "ingotAngmallen", 'S', Item.stick));
 
     }
+    
+    private void addEnderRecipes()
+    {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.enderPearl, 4), " E ", "E E", " E ", 'E', "ingotMeutoite"));
+       
+    }
 
     public void addSwordEffects()
     {
