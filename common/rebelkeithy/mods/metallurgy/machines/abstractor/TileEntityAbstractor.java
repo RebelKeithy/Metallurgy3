@@ -16,9 +16,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import rebelkeithy.mods.keithyutils.Coord;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import rebelkeithy.mods.metallurgy.machines.TileEntityMachineBase;
-import rebelkeithy.mods.metallurgy.machines.xptank.TileEntityXpTank;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
@@ -461,18 +459,18 @@ public class TileEntityAbstractor extends TileEntityMachineBase implements ISide
 
             final List<Coord> coords = Coord.get4AdjacentSides(xCoord, yCoord, zCoord);
 
-            for (final Coord coord : coords)
-            {
-                if (coord.getBlockID(worldObj) == MetallurgyMachines.xpTank.blockID)
-                {
-                    final TileEntityXpTank tileEntity = (TileEntityXpTank) coord.getTileEntity(worldObj);
-                    totalXP -= tileEntity.addXP(totalXP);
-                    if (totalXP <= 0)
-                    {
-                        break;
-                    }
-                }
-            }
+//            for (final Coord coord : coords)
+//            {
+//                if (coord.getBlockID(worldObj) == MetallurgyMachines.xpTank.blockID)
+//                {
+//                    final TileEntityXpTank tileEntity = (TileEntityXpTank) coord.getTileEntity(worldObj);
+//                    totalXP -= tileEntity.addXP(totalXP);
+//                    if (totalXP <= 0)
+//                    {
+//                        break;
+//                    }
+//                }
+//            }
 
             spawnXP(totalXP);
 

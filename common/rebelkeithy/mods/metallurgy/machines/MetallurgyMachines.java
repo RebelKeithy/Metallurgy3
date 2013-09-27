@@ -11,6 +11,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
+import rebelkeithy.mods.metallurgy.integration.AppliedEnergestics;
 import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.BlockAbstractorItem;
@@ -51,20 +52,18 @@ import rebelkeithy.mods.metallurgy.machines.storage.BlockStorage;
 import rebelkeithy.mods.metallurgy.machines.storage.BlockStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageAccessor;
 import rebelkeithy.mods.metallurgy.machines.storage.TileEntityStorageBlock;
-import rebelkeithy.mods.metallurgy.machines.xptank.BlockXpTank;
-import rebelkeithy.mods.metallurgy.machines.xptank.TileEntityXpTank;
-import rebelkeithy.mods.metallurgy.machines.xptank.orb.EntityXpOrbContainer;
 import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
@@ -213,6 +212,12 @@ public class MetallurgyMachines
         }
     }
 
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        AppliedEnergestics.init();
+    }
+    
     @cpw.mods.fml.common.Mod.Init
     public void Init(FMLInitializationEvent event)
     {
@@ -270,7 +275,6 @@ public class MetallurgyMachines
         CrusherRecipes.addCrushing(Block.glowStone.blockID, 0, new ItemStack(Item.glowstone, 4));
         CrusherRecipes.addCrushing(Block.gravel.blockID, 0, new ItemStack(Block.sand));
         CrusherRecipes.addCrushing(Block.sandStone.blockID, 0, new ItemStack(Block.sand, 4));
-
     }
 
     public void initEnchanter()
@@ -445,13 +449,13 @@ public class MetallurgyMachines
 
     public void initXpTank()
     {
-        xpTank = new BlockXpTank(ConfigMachines.xpTankID).setHardness(3.5F).setUnlocalizedName("M3XpTank").setCreativeTab(machineTab);
-        GameRegistry.registerBlock(xpTank, "M3XpTank");
-        GameRegistry.registerTileEntity(TileEntityXpTank.class, "M3TileEntityXpTank");
-
-        LanguageRegistry.addName(new ItemStack(xpTank, 1, 0), "Xp Tank");
-
-        EntityRegistry.registerModEntity(EntityXpOrbContainer.class, "XpOrbContainer", 0, this, 60, 1, true);
+//        xpTank = new BlockXpTank(ConfigMachines.xpTankID).setHardness(3.5F).setUnlocalizedName("M3XpTank").setCreativeTab(machineTab);
+//        GameRegistry.registerBlock(xpTank, "M3XpTank");
+//        GameRegistry.registerTileEntity(TileEntityXpTank.class, "M3TileEntityXpTank");
+//
+//        LanguageRegistry.addName(new ItemStack(xpTank, 1, 0), "Xp Tank");
+//
+//        EntityRegistry.registerModEntity(EntityXpOrbContainer.class, "XpOrbContainer", 0, this, 60, 1, true);
     }
 
     public void loadCrusher()

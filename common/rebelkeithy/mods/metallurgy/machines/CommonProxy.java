@@ -10,7 +10,6 @@ import rebelkeithy.mods.metallurgy.machines.enchanter.ContainerMetallurgyEnchant
 import rebelkeithy.mods.metallurgy.machines.forge.ContainerNetherForge;
 import rebelkeithy.mods.metallurgy.machines.furnace.ContainerMetalFurnace;
 import rebelkeithy.mods.metallurgy.machines.mint.ContainerMintStorage;
-import rebelkeithy.mods.metallurgy.machines.xptank.ContainerXpTank;
 
 public class CommonProxy
 {
@@ -29,7 +28,7 @@ public class CommonProxy
         GuiRegistry.registerGuiServer(ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
         GuiRegistry.registerGuiServer(ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
         GuiRegistry.registerGuiServer(ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
-        GuiRegistry.registerGuiServer(ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
+//        GuiRegistry.registerGuiServer(ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
     }
 
     public void registerTileEntitySpecialRenderer()

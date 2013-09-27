@@ -20,6 +20,7 @@ import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
+import rebelkeithy.mods.metallurgy.integration.AppliedEnergestics;
 import rebelkeithy.mods.metallurgy.integration.ComputerCraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.IndustrialCraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.RailcraftIntegration;
@@ -245,12 +246,12 @@ public class MetallurgyMetals
     public void createMidasiumRecipes()
     {
         final String[] ores = OreDictionary.getOreNames();
-        System.out.println("Searching for dust for midsasium recipes");
+        MetallurgyCore.log.info("Searching for dust for midsasium recipes");
         for (final String name : ores)
         {
             if (name.contains("dust") && !name.toLowerCase().contains("tiny") && !name.toLowerCase().contains("clay") && !name.toLowerCase().contains("quartz"))
             {
-                System.out.println("Adding recipe for " + name + " midasium = gold");
+                MetallurgyCore.log.info("Adding recipe for " + name + " midasium = gold");
                 GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustGold), "dustMidasium", name));
             }
         }
@@ -326,7 +327,7 @@ public class MetallurgyMetals
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
         GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
-        GameRegistry.addRecipe(new ShapedOreRecipe(Item.leash, "SS", "ST", "  S", 'T', "itemTar", 'S', Item.silk));
+        GameRegistry.addRecipe(new ShapedOreRecipe(Item.leash, "SS ", "ST ", "  S", 'T', "itemTar", 'S', Item.silk));
         
         if (isSetEnabled("Utility"))
         {

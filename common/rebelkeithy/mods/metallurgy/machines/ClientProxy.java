@@ -41,10 +41,6 @@ import rebelkeithy.mods.metallurgy.machines.mint.TileEntityMintRenderer;
 import rebelkeithy.mods.metallurgy.machines.pylon.PylonRenderHelper;
 import rebelkeithy.mods.metallurgy.machines.pylon.TileEntityPylon;
 import rebelkeithy.mods.metallurgy.machines.pylon.TileEntityPylonRenderer;
-import rebelkeithy.mods.metallurgy.machines.xptank.ContainerXpTank;
-import rebelkeithy.mods.metallurgy.machines.xptank.GuiXpTank;
-import rebelkeithy.mods.metallurgy.machines.xptank.orb.EntityXpOrbContainer;
-import rebelkeithy.mods.metallurgy.machines.xptank.orb.renderXPOrbContainer;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -66,7 +62,7 @@ public class ClientProxy extends CommonProxy
         GuiRegistry.registerGuiClient(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
         GuiRegistry.registerGuiClient(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
         GuiRegistry.registerGuiClient(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
-        GuiRegistry.registerGuiClient(GuiXpTank.class, ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
+//        GuiRegistry.registerGuiClient(GuiXpTank.class, ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
 
     }
 
@@ -96,7 +92,7 @@ public class ClientProxy extends CommonProxy
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPylon.class, new TileEntityPylonRenderer());
         RenderingRegistry.registerBlockHandler(new PylonRenderHelper());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityXpOrbContainer.class, new renderXPOrbContainer());
+//        RenderingRegistry.registerEntityRenderingHandler(EntityXpOrbContainer.class, new renderXPOrbContainer());
 
     }
 }
