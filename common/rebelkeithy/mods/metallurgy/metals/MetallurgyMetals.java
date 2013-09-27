@@ -261,6 +261,7 @@ public class MetallurgyMetals
     {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.blazeRod), "I", "I", 'I', "ingotVulcanite"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustIron, 2), "dustShadow Iron", "dustIgnatius"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dustIron, 2), "dustDeep Iron", "dustPrometheum"));
 
         int id = utilityConfig.get("Item IDs", "HE TNT", 920).getInt();
         if (id != 0)
