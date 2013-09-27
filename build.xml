@@ -5,6 +5,9 @@
 
 	<property name="build.dir" value="build"/>
 	<property name="src.dir" value="common"/>
+	<property name="libs.dir" value="libs"/>
+
+	
 	<property name="resources.dir" value="resources"/>
 
 	<property name="download.dir" value="download"/>
@@ -134,8 +137,9 @@
 		<!-- Copy sources -->
 		<copy todir="${mcpsrc.dir}/minecraft">
 			<fileset dir="${src.dir}"/>
+			<fileset dir="${libs.dir}"/>
 		</copy>
-		
+
 		<copy todir="${mcpsrc.dir}/minecraft">
 			<fileset dir="keithyutils/KeithyUtils-master/common"/>
 		</copy>
