@@ -330,7 +330,7 @@ public class MetallurgyMetals
         OreDictionary.registerOre("itemTar", tar);
         GameRegistry.addSmelting(MetalInfoDatabase.getItem("Bitumen").itemID, new ItemStack(tar), 0.1F);
 
-        GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(Item.gunpowder, 4), new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
         GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.leash, 2), "SS ", "ST ", "  S", 'T', "itemTar", 'S', Item.silk));
