@@ -334,7 +334,7 @@ public class MetallurgyMetals
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.gunpowder, new ItemStack(Item.coal, 1, 1), "dustSulfur", "dustSaltpeter"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(Item.magmaCream, "itemTar", Item.blazePowder));
         GameRegistry.addRecipe(new ShapedOreRecipe(Block.pistonStickyBase, "T", "P", 'T', "itemTar", 'P', Block.pistonBase));
-        GameRegistry.addRecipe(new ShapedOreRecipe(Item.leash, "SS ", "ST ", "  S", 'T', "itemTar", 'S', Item.silk));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.leash, 2), "SS ", "ST ", "  S", 'T', "itemTar", 'S', Item.silk));
         
         if (isSetEnabled("Utility"))
         {
