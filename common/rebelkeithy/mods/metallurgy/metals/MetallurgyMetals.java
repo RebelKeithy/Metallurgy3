@@ -298,7 +298,7 @@ public class MetallurgyMetals
         }
 
         id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
-        magnesiumIgniter = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Igniter").setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
+        magnesiumIgniter = new ItemIgniter(id).setMaxDamage(128).setMaxStackSize(1).setTextureName("Metallurgy:Utility/Igniter").setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
         LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
         if (utilityConfig.get("Recipes", "Enable Magnesium Igniter", true).getBoolean(true))
         {
@@ -306,7 +306,7 @@ public class MetallurgyMetals
         }
 
         id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
-        match = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Match").setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
+        match = new ItemIgniter(id).setMaxDamage(1).setMaxStackSize(64).setTextureName("Metallurgy:Utility/Match").setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
         LanguageRegistry.addName(match, "Match");
         if (utilityConfig.get("Recipes", "Enable Match", true).getBoolean(true))
         {
