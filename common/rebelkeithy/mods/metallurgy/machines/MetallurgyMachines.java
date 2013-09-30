@@ -189,7 +189,7 @@ public class MetallurgyMachines
 
         for (int n = 0; n < 8; n++)
         {
-            GameRegistry.addRecipe(new ItemStack(lantern, 4, n), "SSS", "GTG", "SSS", 'S', Block.cobblestone, 'T', Block.torchWood, 'G', new ItemStack(coloredGlass, 1, n));
+            GameRegistry.addRecipe(new ItemStack(lantern, 1, n), "SSS", "GTG", "SSS", 'S', Block.cobblestone, 'T', Block.torchWood, 'G', new ItemStack(coloredGlass, 1, n));
         }
 
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(glassDust, 2, 1), new ItemStack(glassDust, 1, 0), "dustIron"));
@@ -218,7 +218,7 @@ public class MetallurgyMachines
         AppliedEnergestics.init();
     }
     
-    @cpw.mods.fml.common.Mod.Init
+    @EventHandler
     public void Init(FMLInitializationEvent event)
     {
         loadCrusher();
@@ -469,7 +469,7 @@ public class MetallurgyMachines
         CrusherRecipes.addCrushing(Item.ingotGold.itemID, 0, new ItemStack(MetallurgyMetals.dustGold));
     }
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         final ModMetadata metadata = event.getModMetadata();

@@ -11,8 +11,8 @@ public class ItemIgniter extends ItemFlintAndSteel
     public ItemIgniter(int par1)
     {
         super(par1);
-        maxStackSize = 1;
-        setMaxDamage(128);
+        maxStackSize = 64;
+        setMaxDamage(1);
     }
 
     /**
