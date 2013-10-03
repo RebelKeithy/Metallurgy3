@@ -14,6 +14,7 @@ import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -34,7 +35,7 @@ public class MetallurgyVanilla
 
     public static MetalSet vanillaSet;
 
-    @Init
+    @EventHandler
     public void Init(FMLInitializationEvent event)
     {
 
@@ -43,12 +44,12 @@ public class MetallurgyVanilla
         proxy.registerNames();
     }
 
-    @PostInit
+    @EventHandler
     public void PostInit(FMLPostInitializationEvent event)
     {
     }
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
 

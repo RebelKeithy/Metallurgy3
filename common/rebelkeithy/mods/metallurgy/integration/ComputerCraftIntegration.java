@@ -1,5 +1,7 @@
 package rebelkeithy.mods.metallurgy.integration;
 
+import dan200.turtle.api.ITurtleUpgrade;
+import dan200.turtle.api.TurtleAPI;
 import net.minecraft.item.Item;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.metalsets.OreInfo;
@@ -114,19 +116,17 @@ public class ComputerCraftIntegration
 
     public static void createTurtle(int id, String name, Item tool)
     {
-        // TODO Fix compatibility later
         if (MetallurgyCore.DEBUG)
         {
             System.out.println("Metallurgy: Creating " + name + " Turtle");
         }
 
-        // dan200.turtle.shared.TurtleTool toolTurtle = new
-        // dan200.turtle.shared.TurtleTool(id, name, tool, false);
-        // dan200.turtle.api.TurtleAPI.registerUpgrade(toolTurtle);
+        ITurtleUpgrade toolTurtle = new ComputerCraftTurtle(id, name, tool);
+        TurtleAPI.registerUpgrade(toolTurtle);
 
         if (MetallurgyCore.DEBUG)
         {
-            // System.out.println("Metallurgy: Registered " + toolTurtle);
+            System.out.println("Metallurgy: Registered " + toolTurtle);
         }
     }
 

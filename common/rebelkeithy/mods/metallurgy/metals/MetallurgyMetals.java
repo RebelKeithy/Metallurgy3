@@ -33,6 +33,7 @@ import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockMinersTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
@@ -297,7 +298,7 @@ public class MetallurgyMetals
         }
 
         id = utilityConfig.get("Item IDs", "Magnesium Igniter", 29007).getInt();
-        magnesiumIgniter = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Igniter").setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
+        magnesiumIgniter = new ItemIgniter(id).setMaxDamage(128).setMaxStackSize(1).setTextureName("Metallurgy:Utility/Igniter").setUnlocalizedName("Metallurgy:Utility/Igniter").setCreativeTab(utilityTab);
         LanguageRegistry.addName(magnesiumIgniter, "Magnesium Igniter");
         if (utilityConfig.get("Recipes", "Enable Magnesium Igniter", true).getBoolean(true))
         {
@@ -305,7 +306,7 @@ public class MetallurgyMetals
         }
 
         id = utilityConfig.get("Item IDs", "Match", 29008).getInt();
-        match = new ItemIgniter(id).setTextureName("Metallurgy:Utility/Match").setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
+        match = new ItemIgniter(id).setMaxDamage(1).setMaxStackSize(64).setTextureName("Metallurgy:Utility/Match").setUnlocalizedName("Metallurgy:Utility/Match").setCreativeTab(utilityTab);
         LanguageRegistry.addName(match, "Match");
         if (utilityConfig.get("Recipes", "Enable Match", true).getBoolean(true))
         {
@@ -341,7 +342,7 @@ public class MetallurgyMetals
         }
     }
 
-    @Init
+    @EventHandler
     public void Init(FMLInitializationEvent event)
     {
         // TODO add config for vanilla dusts
@@ -464,7 +465,7 @@ public class MetallurgyMetals
         return enabled;
     }
 
-    @PostInit
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
         if (isSetEnabled("Base") && baseSet.getOreInfo("Steel").helmet != null)
@@ -496,14 +497,13 @@ public class MetallurgyMetals
         try
         {
             Class.forName("dan200.turtle.api.TurtleAPI");
-            Class.forName("dan200.turtle.shared.TurtleTool");
             ComputerCraftIntegration.init();
         } catch (final Exception e)
         {
         }
     }
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         final ModMetadata metadata = event.getModMetadata();
