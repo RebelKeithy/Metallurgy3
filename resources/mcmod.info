@@ -1,0 +1,78 @@
+[
+{
+  "modid": "Metallurgy3Core",
+  "name": "Metallurgy 3 Core",
+  "description": "The Metallurgy core",
+  "credits": "",
+  "logoFile": "",
+  "version": "3.2.3",
+  "mcversion": "1.6.2",
+  "url": "http://www.minecraftforum.net/topic/744918-",
+  "updateUrl": "",
+  "authors": [
+    "Team Metallurgy"
+  ],
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+},
+{
+  "modid": "Metallurgy3Machines",
+  "name": "Metallurgy 3 Machines",
+  "description": "The Metallurgy machines",
+  "credits": "",
+  "logoFile": "",
+  "version": "3.2.3",
+  "mcversion": "1.6.2",
+  "url": "http://www.minecraftforum.net/topic/744918-",
+  "updateUrl": "",
+  "authors": [
+    "Team Metallurgy"
+  ],
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+},
+{
+  "modid": "Metallurgy3Base",
+  "name": "Metallurgy 3 Base",
+  "description": "The Metallurgy metals",
+  "credits": "",
+  "logoFile": "",
+  "version": "3.2.3",
+  "mcversion": "1.6.2",
+  "url": "http://www.minecraftforum.net/topic/744918-",
+  "updateUrl": "",
+  "authors": [
+    "Team Metallurgy"
+  ],
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+},
+{
+  "modid": "Metallurgy3Vanilla",
+  "name": "Metallurgy 3 Vanilla",
+  "description": "Metallurgy changes to vanilla Minecraft",
+  "credits": "",
+  "logoFile": "",
+  "version": "3.2.3",
+  "mcversion": "1.6.2",
+  "url": "http://www.minecraftforum.net/topic/744918-",
+  "updateUrl": "",
+  "authors": [
+    "Team Metallurgy"
+  ],
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
