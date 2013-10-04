@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +19,7 @@ public class CrusherRecipes
 
     /** The list of smelting results. */
     private static Map smeltingList = new HashMap();
-    private static Map metaSmeltingList = new HashMap();
+    private static Table<Integer, Integer, ItemStack> metaSmeltingList = HashBasedTable.create();
 
     /**
      * Add a metadata-sensitive furnace recipe
@@ -30,7 +33,7 @@ public class CrusherRecipes
      */
     public static void addCrushing(int itemID, int metadata, ItemStack itemstack)
     {
-        metaSmeltingList.put(Arrays.asList(itemID, metadata), itemstack);
+        metaSmeltingList.put(itemID, metadata, itemstack);
     }
 
     /**
@@ -82,7 +85,7 @@ public class CrusherRecipes
             return null;
         }
 
-        ItemStack ret = (ItemStack) metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
+        ItemStack ret = (ItemStack) metaSmeltingList.get(item.itemID, item.getItemDamage());
 
         if (ret != null)
         {
