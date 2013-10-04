@@ -9,7 +9,6 @@ import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Keyboard;
@@ -281,7 +280,6 @@ public class GuiStorage extends GuiContainer
         {
             final int var4 = par1 - guiLeft;
             final int var5 = par2 - guiTop;
-            final CreativeTabs[] var6 = CreativeTabs.creativeTabArray;
             if (var5 < 0 && var5 > -32)
             {
                 if (var4 >= 0 && var4 < 29 * Math.min(6, tabList.size()) && var4 % 29 < 28)

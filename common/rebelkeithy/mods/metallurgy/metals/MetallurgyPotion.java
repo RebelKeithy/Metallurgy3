@@ -33,17 +33,17 @@ public class MetallurgyPotion extends Potion
         final double vz = par1EntityLiving.motionZ;
         // TODO: access isJumping
         // if(par1EntityLiving.isJumping || vy < 0)
-        if (false)
-        {
+        // if (false)
+        // {
             // vy += 0.0734000015258789;
-            vy += 0.0734000015258789;
+            // vy += 0.0734000015258789;
             // vy *= 1.260504;
-            System.out.println(vy);
-        }
-        else
-        {
+            // System.out.println(vy);
+        // }
+        // else
+        // {
             vy += 0.0734000015258789 / 1.5;
-        }
+        // }
 
         if (par1EntityLiving.isSprinting() && par1EntityLiving.onGround)
         {

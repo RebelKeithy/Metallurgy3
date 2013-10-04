@@ -84,7 +84,7 @@ public class EntityMinersTNTPrimed extends Entity
 
         if (!worldObj.isRemote)
         {
-            final Iterator var12 = worldObj.playerEntities.iterator();
+            final Iterator<?> var12 = worldObj.playerEntities.iterator();
 
             while (var12.hasNext())
             {
@@ -153,7 +153,7 @@ public class EntityMinersTNTPrimed extends Entity
         fuse = par1NBTTagCompound.getByte("Fuse");
     }
 
-    public void sendPacket(double posX, double posY, double posZ, float strength, List list, Vec3 vec3)
+    public void sendPacket(double posX, double posY, double posZ, float strength, List<ChunkPosition> list, Vec3 vec3)
     {
         if (worldObj.isRemote)
         {
@@ -174,11 +174,9 @@ public class EntityMinersTNTPrimed extends Entity
             final int var2 = (int) posX;
             final int var3 = (int) posY;
             final int var4 = (int) posZ;
-            final Iterator var5 = list.iterator();
 
-            while (var5.hasNext())
+            for (final ChunkPosition var6 : list)
             {
-                final ChunkPosition var6 = (ChunkPosition) var5.next();
                 final int var7 = var6.x - var2;
                 final int var8 = var6.y - var3;
                 final int var9 = var6.z - var4;

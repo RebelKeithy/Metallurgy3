@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,11 +26,11 @@ import net.minecraftforge.oredict.OreDictionary;
 public class ExplosionMiners extends Explosion
 {
 
-    private static ArrayList oreBlockIDs;
+    private static ArrayList<Integer> oreBlockIDs;
 
     public static void initializeOreList()
     {
-        oreBlockIDs = new ArrayList();
+        oreBlockIDs = Lists.newArrayList();
         oreBlockIDs.add(Block.oreCoal.blockID);
         oreBlockIDs.add(Block.oreIron.blockID);
         oreBlockIDs.add(Block.oreGold.blockID);
@@ -64,9 +66,9 @@ public class ExplosionMiners extends Explosion
     public double explosionZ;
     public Entity exploder;
     public float explosionSize;
-    public List affectedBlockPositions = new ArrayList();
+    public List<ChunkPosition> affectedBlockPositions = new ArrayList<ChunkPosition>();
 
-    private final Map field_77288_k = new HashMap();
+    private final Map<Entity, Vec3> field_77288_k = new HashMap<Entity, Vec3>();
 
     public ExplosionMiners(World par1World, Entity par2Entity, double par3, double par5, double par7, float par9)
     {
@@ -86,7 +88,7 @@ public class ExplosionMiners extends Explosion
     public void doExplosionA()
     {
         final float var1 = explosionSize;
-        final HashSet var2 = new HashSet();
+        final HashSet<ChunkPosition> var2 = new HashSet<ChunkPosition>();
         int var3;
         int var4;
         int var5;
@@ -155,7 +157,7 @@ public class ExplosionMiners extends Explosion
         final int var28 = MathHelper.floor_double(explosionY + explosionSize + 1.0D);
         final int var7 = MathHelper.floor_double(explosionZ - explosionSize - 1.0D);
         final int var29 = MathHelper.floor_double(explosionZ + explosionSize + 1.0D);
-        final List var9 = worldObj.getEntitiesWithinAABBExcludingEntity(exploder, AxisAlignedBB.getAABBPool().getAABB(var3, var5, var7, var4, var28, var29));
+        final List<?> var9 = worldObj.getEntitiesWithinAABBExcludingEntity(exploder, AxisAlignedBB.getAABBPool().getAABB(var3, var5, var7, var4, var28, var29));
         final Vec3 var30 = worldObj.getWorldVec3Pool().getVecFromPool(explosionX, explosionY, explosionZ);
 
         for (int var11 = 0; var11 < var9.size(); ++var11)
@@ -210,7 +212,7 @@ public class ExplosionMiners extends Explosion
             worldObj.spawnParticle("largeexplode", explosionX, explosionY, explosionZ, 1.0D, 0.0D, 0.0D);
         }
 
-        Iterator var2;
+        Iterator<ChunkPosition> var2;
         ChunkPosition var3;
         int var4;
         int var5;
@@ -223,7 +225,7 @@ public class ExplosionMiners extends Explosion
 
             while (var2.hasNext())
             {
-                var3 = (ChunkPosition) var2.next();
+                var3 = var2.next();
                 var4 = var3.x;
                 var5 = var3.y;
                 var6 = var3.z;
@@ -271,7 +273,7 @@ public class ExplosionMiners extends Explosion
 
             while (var2.hasNext())
             {
-                var3 = (ChunkPosition) var2.next();
+                var3 = var2.next();
                 var4 = var3.x;
                 var5 = var3.y;
                 var6 = var3.z;
@@ -287,7 +289,7 @@ public class ExplosionMiners extends Explosion
     }
 
     @Override
-    public Map func_77277_b()
+    public Map<Entity, Vec3> func_77277_b()
     {
         return field_77288_k;
     }

@@ -11,7 +11,7 @@ public class MetallurgyAPI
     {
         try
         {
-            final Class metallurgyMetals = Class.forName("rebelkeithy.mods.metallurgy.metals.MetallurgyMetals");
+            final Class<?> metallurgyMetals = Class.forName("rebelkeithy.mods.metallurgy.metals.MetallurgyMetals");
             final Field set = metallurgyMetals.getField(name + "Set");
             return (IMetalSet) set.get(null);
         } catch (final NoSuchFieldException e)

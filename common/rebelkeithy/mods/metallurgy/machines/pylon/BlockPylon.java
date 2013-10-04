@@ -49,6 +49,7 @@ public class BlockPylon extends BlockContainer
         return renderId;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {

@@ -3,7 +3,6 @@ package rebelkeithy.mods.metallurgy.machines.abstractor;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.item.EntityXPOrb;
@@ -13,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import rebelkeithy.mods.keithyutils.Coord;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.machines.TileEntityMachineBase;
@@ -457,7 +455,7 @@ public class TileEntityAbstractor extends TileEntityMachineBase implements ISide
                 furnaceItemStacks[0] = null;
             }
 
-            final List<Coord> coords = Coord.get4AdjacentSides(xCoord, yCoord, zCoord);
+//            final List<Coord> coords = Coord.get4AdjacentSides(xCoord, yCoord, zCoord);
 
 //            for (final Coord coord : coords)
 //            {

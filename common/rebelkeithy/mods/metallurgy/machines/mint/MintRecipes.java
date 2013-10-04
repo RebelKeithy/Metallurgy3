@@ -1,17 +1,18 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
+
+import com.google.common.collect.Maps;
 
 public class MintRecipes
 {
     private static final MintRecipes smeltingBase = new MintRecipes();
 
     /** The list of smelting results. */
-    private static Map metaMintingList = new HashMap();
-    private static Map mintingImage = new HashMap();
+    private static Map<Integer, Integer> metaMintingList = Maps.newHashMap();
+    private static Map<Integer, String> mintingImage = Maps.newHashMap();
 
     /**
      * Add a metadata-sensitive furnace recipe
@@ -56,7 +57,7 @@ public class MintRecipes
     {
         if (mintingImage.containsKey(ingotID))
         {
-            return (String) mintingImage.get(ingotID);
+            return mintingImage.get(ingotID);
         }
         return "";
     }
@@ -74,7 +75,7 @@ public class MintRecipes
         {
             return 0;
         }
-        final Integer ret = (Integer) metaMintingList.get(item.itemID);
+        final Integer ret = metaMintingList.get(item.itemID);
         if (ret == null)
         {
             return 0;

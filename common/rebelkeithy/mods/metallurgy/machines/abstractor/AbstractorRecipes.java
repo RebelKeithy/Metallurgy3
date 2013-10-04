@@ -1,19 +1,21 @@
 package rebelkeithy.mods.metallurgy.machines.abstractor;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
+
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Table;
 
 public class AbstractorRecipes
 {
     private static final AbstractorRecipes smeltingBase = new AbstractorRecipes();
 
     /** The list of smelting results. */
-    private static Map smeltingList = new HashMap();
-    private static Map metaSmeltingList = new HashMap();
-    private static Map fuelList = new HashMap();
+    private static Map<Integer, Integer> smeltingList = Maps.newHashMap();
+    private static Table<Integer, Integer, Integer> metaSmeltingList = HashBasedTable.create();
+    private static Table<Integer, Integer, Integer> fuelList = HashBasedTable.create();
 
     /**
      * Add a metadata-sensitive furnace recipe
@@ -27,12 +29,12 @@ public class AbstractorRecipes
      */
     public static void addEssence(int itemID, int metadata, int amount)
     {
-        metaSmeltingList.put(Arrays.asList(itemID, metadata), amount);
+        metaSmeltingList.put(itemID, metadata, amount);
     }
 
     public static void addFuel(int itemID, int metadata, int amount)
     {
-        fuelList.put(Arrays.asList(itemID, metadata), amount);
+        fuelList.put(itemID, metadata, amount);
     }
 
     /**
@@ -45,9 +47,9 @@ public class AbstractorRecipes
 
     public static int getFuelAmount(ItemStack itemStack)
     {
-        if (fuelList.containsKey(Arrays.asList(itemStack.itemID, itemStack.getItemDamage())))
+        if (fuelList.contains(itemStack.itemID, itemStack.getItemDamage()))
         {
-            return (Integer) fuelList.get(Arrays.asList(itemStack.itemID, itemStack.getItemDamage()));
+            return (Integer) fuelList.get(itemStack.itemID, itemStack.getItemDamage());
         }
         else
         {
@@ -67,7 +69,7 @@ public class AbstractorRecipes
         smeltingList.put(Integer.valueOf(itemID), amount);
     }
 
-    public Map getEssenceList()
+    public Map<Integer, Integer> getEssenceList()
     {
         return smeltingList;
     }
@@ -85,7 +87,7 @@ public class AbstractorRecipes
         {
             return 0;
         }
-        Integer ret = (Integer) metaSmeltingList.get(Arrays.asList(item.itemID, item.getItemDamage()));
+        Integer ret = (Integer) metaSmeltingList.get(item.itemID, item.getItemDamage());
         if (ret != null)
         {
             return ret;

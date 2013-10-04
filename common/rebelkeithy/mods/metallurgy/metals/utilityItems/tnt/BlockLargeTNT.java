@@ -3,7 +3,6 @@ package rebelkeithy.mods.metallurgy.metals.utilityItems.tnt;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;

@@ -20,7 +20,6 @@ import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ISwordHitListener;
 import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.core.metalsets.MetalSet;
-import rebelkeithy.mods.metallurgy.integration.AppliedEnergestics;
 import rebelkeithy.mods.metallurgy.integration.ComputerCraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.IndustrialCraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.RailcraftIntegration;
@@ -32,13 +31,10 @@ import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockLargeTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockMinersTNT;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityLargeTNTPrimed;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.EntityMinersTNTPrimed;
+import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -105,11 +101,11 @@ public class MetallurgyMetals
 
     }
     
-    private void addEnderRecipes()
-    {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.enderPearl, 4), " E ", "E E", " E ", 'E', "ingotMeutoite"));
-       
-    }
+//    private void addEnderRecipes()
+//    {
+//        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Item.enderPearl, 4), " E ", "E E", " E ", 'E', "ingotMeutoite"));
+//       
+//    }
 
     public void addSwordEffects()
     {

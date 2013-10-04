@@ -135,7 +135,7 @@ public class ContainerMetallurgyEnchantment extends Container
                     }
                 }
 
-                final List list = MaxEnchanterHelper.buildEnchantmentList(rand, itemstack, enchantLevels, catalyst);
+                final List<EnchantmentData> list = MaxEnchanterHelper.buildEnchantmentList(rand, itemstack, enchantLevels, catalyst);
                 final boolean flag = itemstack.itemID == Item.book.itemID;
 
                 if (list != null)
