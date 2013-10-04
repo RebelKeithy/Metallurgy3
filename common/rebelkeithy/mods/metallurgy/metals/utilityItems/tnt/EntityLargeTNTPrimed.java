@@ -85,7 +85,7 @@ public class EntityLargeTNTPrimed extends Entity
 
         if (!worldObj.isRemote)
         {
-            final Iterator var12 = worldObj.playerEntities.iterator();
+            final Iterator<?> var12 = worldObj.playerEntities.iterator();
 
             while (var12.hasNext())
             {
@@ -175,7 +175,7 @@ public class EntityLargeTNTPrimed extends Entity
             final int var2 = (int) posX;
             final int var3 = (int) posY;
             final int var4 = (int) posZ;
-            final Iterator var5 = list.iterator();
+            final Iterator<?> var5 = list.iterator();
 
             while (var5.hasNext())
             {

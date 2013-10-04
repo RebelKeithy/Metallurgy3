@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
 
 import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
@@ -18,7 +19,7 @@ public class CrusherRecipes
     private static final CrusherRecipes smeltingBase = new CrusherRecipes();
 
     /** The list of smelting results. */
-    private static Map smeltingList = new HashMap();
+    private static Map<Integer, ItemStack> smeltingList = Maps.newHashMap();
     private static Table<Integer, Integer, ItemStack> metaSmeltingList = HashBasedTable.create();
 
     /**
@@ -56,7 +57,7 @@ public class CrusherRecipes
         smeltingList.put(Integer.valueOf(par1), par2ItemStack);
     }
 
-    public Map getCrushingList()
+    public Map<Integer, ItemStack> getCrushingList()
     {
         return smeltingList;
     }
@@ -68,7 +69,7 @@ public class CrusherRecipes
     @Deprecated
     public ItemStack getCrushingResult(int par1)
     {
-        return (ItemStack) smeltingList.get(Integer.valueOf(par1));
+        return smeltingList.get(Integer.valueOf(par1));
     }
 
     /**
@@ -85,14 +86,14 @@ public class CrusherRecipes
             return null;
         }
 
-        ItemStack ret = (ItemStack) metaSmeltingList.get(item.itemID, item.getItemDamage());
+        ItemStack ret = metaSmeltingList.get(item.itemID, item.getItemDamage());
 
         if (ret != null)
         {
             return ret;
         }
 
-        ret = (ItemStack) smeltingList.get(Integer.valueOf(item.itemID));
+        ret = smeltingList.get(Integer.valueOf(item.itemID));
         if (ret != null)
         {
             return ret;
