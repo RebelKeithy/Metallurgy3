@@ -1,18 +1,16 @@
 package rebelkeithy.mods.metallurgy.machines.crusher;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
-
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 public class CrusherRecipes
 {

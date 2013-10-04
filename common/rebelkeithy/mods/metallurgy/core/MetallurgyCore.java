@@ -117,11 +117,11 @@ public class MetallurgyCore
 
         log = event.getModLog();
 
-        for (final MetalSet set : getMetalSetList())
-        {
-            // set.initConfig();
-            // set.init();
-        }
+//        for (final MetalSet set : getMetalSetList())
+//        {
+//            // set.initConfig();
+//            // set.init();
+//        }
 
         initConfig();
 

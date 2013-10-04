@@ -14,6 +14,7 @@ public class ItemBlockPreciousChest extends ItemBlock
         setHasSubtypes(true);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {

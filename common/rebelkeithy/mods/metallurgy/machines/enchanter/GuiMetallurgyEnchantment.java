@@ -5,7 +5,6 @@ import java.util.Random;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.model.ModelBook;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,8 +27,6 @@ public class GuiMetallurgyEnchantment extends GuiContainer
     private static final ResourceLocation background = new ResourceLocation("metallurgy:textures/guis/enchant.png");
     private static final ResourceLocation book = new ResourceLocation("textures/entity/enchanting_table_book.png");
 
-    /** The book model used on the GUI. */
-    private static ModelBook bookModel = new ModelBook();
     private final Random rand = new Random();
 
     /** ContainerEnchantment object associated with this gui */

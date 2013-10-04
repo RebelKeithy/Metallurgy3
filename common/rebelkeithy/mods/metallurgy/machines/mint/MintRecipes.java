@@ -1,11 +1,10 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.collect.Maps;
-
 import net.minecraft.item.ItemStack;
+
+import com.google.common.collect.Maps;
 
 public class MintRecipes
 {

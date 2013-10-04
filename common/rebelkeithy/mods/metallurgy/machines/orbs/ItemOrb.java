@@ -31,6 +31,7 @@ public class ItemOrb extends Item
         setMaxStackSize(1);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
@@ -104,6 +105,7 @@ public class ItemOrb extends Item
         return 72000;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)

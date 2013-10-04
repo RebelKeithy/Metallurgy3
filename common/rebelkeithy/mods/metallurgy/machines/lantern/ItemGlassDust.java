@@ -40,6 +40,7 @@ public class ItemGlassDust extends Item
         return i;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)

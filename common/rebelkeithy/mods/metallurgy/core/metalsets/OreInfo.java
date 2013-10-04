@@ -275,7 +275,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
         {
             // System.out.println("Adding alloy recipe " + alloyRecipe[0] +
             // " + " + alloyRecipe[1] + " for " + name);
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dust, 2), alloyRecipe));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dust, 2), (Object[])alloyRecipe));
         }
     }
 

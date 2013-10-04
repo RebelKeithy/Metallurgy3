@@ -1,15 +1,12 @@
 package rebelkeithy.mods.metallurgy.machines.abstractor;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.item.ItemStack;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
-import com.google.common.collect.Tables;
-
-import net.minecraft.item.ItemStack;
 
 public class AbstractorRecipes
 {
@@ -72,7 +69,7 @@ public class AbstractorRecipes
         smeltingList.put(Integer.valueOf(itemID), amount);
     }
 
-    public Map getEssenceList()
+    public Map<Integer, Integer> getEssenceList()
     {
         return smeltingList;
     }
