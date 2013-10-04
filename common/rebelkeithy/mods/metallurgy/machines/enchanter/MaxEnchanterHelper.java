@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.google.common.collect.Lists;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.Item;
@@ -23,7 +25,7 @@ public class MaxEnchanterHelper
      * 
      * @param catalyst
      */
-    public static List buildEnchantmentList(Random par0Random, ItemStack par1ItemStack, int par2, int catalyst)
+    public static List<EnchantmentData> buildEnchantmentList(Random par0Random, ItemStack par1ItemStack, int par2, int catalyst)
     {
         final Item item = par1ItemStack.getItem();
         int j = item.getItemEnchantability();
@@ -45,8 +47,8 @@ public class MaxEnchanterHelper
                 l = 1;
             }
 
-            ArrayList arraylist = null;
-            final Map map = mapEnchantmentData(l, par1ItemStack);
+            ArrayList<EnchantmentData> arraylist = null;
+            final Map<Integer, EnchantmentData> map = mapEnchantmentData(l, par1ItemStack);
 
             if (map != null && !map.isEmpty())
             {
@@ -54,24 +56,24 @@ public class MaxEnchanterHelper
 
                 if (enchantmentdata != null)
                 {
-                    arraylist = new ArrayList();
+                    arraylist = Lists.newArrayList();
                     arraylist.add(enchantmentdata);
 
                     for (int i1 = l; par0Random.nextInt(50) <= i1; i1 >>= 1)
                     {
-                        final Iterator iterator = map.keySet().iterator();
+                        final Iterator<Integer> iterator = map.keySet().iterator();
 
                         while (iterator.hasNext())
                         {
-                            final Integer integer = (Integer) iterator.next();
+                            final Integer integer = iterator.next();
                             boolean flag = true;
-                            final Iterator iterator1 = arraylist.iterator();
+                            final Iterator<EnchantmentData> iterator1 = arraylist.iterator();
 
                             while (true)
                             {
                                 if (iterator1.hasNext())
                                 {
-                                    final EnchantmentData enchantmentdata1 = (EnchantmentData) iterator1.next();
+                                    final EnchantmentData enchantmentdata1 = iterator1.next();
 
                                     if (enchantmentdata1.enchantmentobj.canApplyTogether(Enchantment.enchantmentsList[integer.intValue()]))
                                     {
@@ -132,10 +134,10 @@ public class MaxEnchanterHelper
      * Creates a 'Map' of EnchantmentData (enchantments) possible to add on the
      * ItemStack and the enchantability level passed.
      */
-    public static Map mapEnchantmentData(int par0, ItemStack par1ItemStack)
+    public static Map<Integer, EnchantmentData> mapEnchantmentData(int par0, ItemStack par1ItemStack)
     {
         par1ItemStack.getItem();
-        HashMap hashmap = null;
+        HashMap<Integer, EnchantmentData> hashmap = null;
         final boolean flag = par1ItemStack.itemID == Item.book.itemID;
         final Enchantment[] aenchantment = Enchantment.enchantmentsList;
         final int j = aenchantment.length;
@@ -154,7 +156,7 @@ public class MaxEnchanterHelper
                     {
                         if (hashmap == null)
                         {
-                            hashmap = new HashMap();
+                            hashmap = new HashMap<Integer, EnchantmentData>();
                         }
 
                         hashmap.put(Integer.valueOf(enchantment.effectId), new EnchantmentData(enchantment, l));

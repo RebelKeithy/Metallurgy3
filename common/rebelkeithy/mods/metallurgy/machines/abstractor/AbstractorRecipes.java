@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 import net.minecraft.item.ItemStack;
 
 public class AbstractorRecipes
@@ -11,7 +13,7 @@ public class AbstractorRecipes
     private static final AbstractorRecipes smeltingBase = new AbstractorRecipes();
 
     /** The list of smelting results. */
-    private static Map smeltingList = new HashMap();
+    private static Map<Integer, Integer> smeltingList = Maps.newHashMap();
     private static Map metaSmeltingList = new HashMap();
     private static Map fuelList = new HashMap();
 
