@@ -615,6 +615,8 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             if (type != DROP)
             {
                 addRecipes();
+            } else {
+            	FurnaceRecipes.smelting().addSmelting(oreID, oreMeta, getDrop(), 0);
             }
             registerMetal();
         }
