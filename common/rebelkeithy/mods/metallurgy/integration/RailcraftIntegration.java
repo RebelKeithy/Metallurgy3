@@ -3,6 +3,7 @@ package rebelkeithy.mods.metallurgy.integration;
 import net.minecraft.item.ItemStack;
 import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.api.MetallurgyAPI;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 
 public class RailcraftIntegration
 {
@@ -40,11 +41,11 @@ public class RailcraftIntegration
         {
             Class.forName("mods.railcraft.api.crafting.RailcraftCraftingManager");
 
-            System.out.println("Metallurgy: Adding Railcraft Integration");
+            MetallurgyCore.log.info("Metallurgy: Adding Railcraft Integration");
             addCompatability();
         } catch (final Exception e)
         {
-            System.out.println("Metlalurgy: Skipping Railcraft Integration");
+        	 MetallurgyCore.log.info("Metlalurgy: Skipping Railcraft Integration");
         }
     }
 }

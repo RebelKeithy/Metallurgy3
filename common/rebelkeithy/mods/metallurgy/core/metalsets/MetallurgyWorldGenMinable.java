@@ -126,13 +126,9 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
                                     }
                                     else if (block != null)
                                     {
-                                        // System.out.println("Generationg in" +
-                                        // block.blockID);
                                         if (block.blockID == Block.stone.blockID || block.isGenMineableReplaceable(par1World, k2, l2, i3, Block.stone.blockID)
                                                 || block.blockID == Block.netherrack.blockID || block.blockID == Block.whiteStone.blockID)
                                         {
-                                            // System.out.println("not null" +
-                                            // this.minableBlockId);
                                             par1World.setBlock(k2, l2, i3, minableBlockId, metadata, 2);
                                         }
                                     }
@@ -193,7 +189,6 @@ public class MetallurgyWorldGenMinable extends WorldGenerator
             spawnedCoords.add(finalCoords);
         }
 
-        // System.out.println("Ore vein size = " + trueSize);
         return true;
     }
 

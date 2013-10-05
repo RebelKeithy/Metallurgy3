@@ -85,7 +85,6 @@ public class TileEntityLaser extends TileEntity
          * if(clip != null) { int blockID = worldObj.getBlockId(clip.blockX,
          * clip.blockY, clip.blockZ); int meta =
          * worldObj.getBlockMetadata(clip.blockX, clip.blockY, clip.blockZ);
-         * System.out.println(blockID);
          * if(Block.blocksList[blockID].isOpaqueCube()) return (int) (zCoord -
          * clip.hitVec.zCoord + 1); } } }
          */

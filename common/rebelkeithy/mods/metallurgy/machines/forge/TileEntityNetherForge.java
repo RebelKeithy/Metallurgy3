@@ -206,7 +206,6 @@ public class TileEntityNetherForge extends TileEntity implements ISidedInventory
      */
     public int getCookProgressScaled(int par1)
     {
-        // System.out.println(furnaceTimeBase);
         return furnaceCookTime * par1 / furnaceTimeBase;
     }
 

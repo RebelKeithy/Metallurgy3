@@ -59,7 +59,6 @@ public class GuiStorage extends GuiContainer
         {
             currentScroll = container.inventory.scroll;
         }
-        System.out.println("Tab Index Set Too " + selectedTabIndex);
 
         x = ste.xCoord;
         y = ste.yCoord;
@@ -94,7 +93,6 @@ public class GuiStorage extends GuiContainer
         }
         else if (par1GuiButton.id == 102)
         {
-            System.out.println("maxPages " + maxPages);
             if (tabPage == maxPages)
             {
                 return;
@@ -288,7 +286,6 @@ public class GuiStorage extends GuiContainer
                 }
             }
 
-            System.out.println(var4 + " " + var5);
         }
 
         super.mouseClicked(par1, par2, par3);
@@ -344,7 +341,6 @@ public class GuiStorage extends GuiContainer
 
     private void setSelectedTab(int i)
     {
-        System.out.println("selected tab = " + i);
         final int selectedTabIndex = tabPage * 6 + i;
         final int itemID = tabList.get(selectedTabIndex).icon.itemID;
         PacketDispatcher.sendPacketToServer(PacketHandler.getChangeTabPacket(x, y, z, itemID));

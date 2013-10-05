@@ -15,18 +15,12 @@ public class InventoryStorage implements IInventory
 
     public InventoryStorage(TileEntity te, int size)
     {
-        System.out.println("CREATING STORAGE INVENTORY ONCE");
         items = new ItemStack[size];
         tileEntity = te;
     }
 
     public void addSlots(int i)
     {
-        /*
-         * if(tileEntity.worldObj.isRemote) System.out.println("On client");
-         * else System.out.println("On server");
-         */
-        // System.out.println("Adding " + i + " to tab size " + items.length);
         final ItemStack[] newArray = new ItemStack[items.length + i];
         for (int n = 0; n < items.length; n++)
         {

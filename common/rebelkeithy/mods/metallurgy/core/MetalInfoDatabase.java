@@ -83,13 +83,11 @@ public class MetalInfoDatabase
                     {
                         inputArray[n] = "0";
                     }
-                    System.out.println("reading property " + header[n] + " as " + inputArray[n]);
                     itemMap.put(header[n], inputArray[n]);
                 }
 
                 int id = Integer.parseInt(itemMap.get("Item ID"));
 
-                System.out.println("config for item " + itemMap.get("Item Name") + " = " + id);
                 id = config.get("Item IDs", itemMap.get("Item Name"), id).getInt();
 
                 final Item item = new ItemMetallurgy(id).setTextureName("Metallurgy:" + itemMap.get("Set Name") + "/" + itemMap.get("Item Name"))
@@ -149,7 +147,6 @@ public class MetalInfoDatabase
 
     public static void readMetalDataFromJar(String filename, String jarpath) throws IOException
     {
-        MetallurgyCore.log.info("reading file " + filename + "  from file " + jarpath);
         final ZipFile zip = new ZipFile(jarpath);
         final ZipEntry entry = zip.getEntry(filename);
         final BufferedReader in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));

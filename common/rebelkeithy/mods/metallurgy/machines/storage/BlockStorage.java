@@ -58,7 +58,6 @@ public class BlockStorage extends BlockContainer
             {
                 final int tabID = tag.getInteger("tabID");
                 tesb.setTabID(tabID);
-                System.out.println("Block setting tab ID " + tabID);
             }
         }
     }
@@ -89,7 +88,6 @@ public class BlockStorage extends BlockContainer
 
             if (foundIt)
             {
-                System.out.println("connecting");
                 break;
             }
         }

@@ -82,7 +82,7 @@ public class ConfigMachines
             cfgFile.createNewFile();
         } catch (final IOException e)
         {
-            System.out.println(e);
+        	 MetallurgyCore.log.info(e.getLocalizedMessage());
         }
 
         final Configuration config = new Configuration(cfgFile);
@@ -115,7 +115,6 @@ public class ConfigMachines
         tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
 
         stoneCrusherSpeed = config.get("Crusher Speeds", "Stone", (int) (stoneCrusherSpeed * 1000)).getInt() / 1000F;
-        System.out.println("config " + stoneCrusherSpeed);
         copperCrusherSpeed = config.get("Crusher Speeds", "Copper", (int) (copperCrusherSpeed * 1000)).getInt() / 1000F;
         bronzeCrusherSpeed = config.get("Crusher Speeds", "Bronze", (int) (bronzeCrusherSpeed * 1000)).getInt() / 1000F;
         ironCrusherSpeed = config.get("Crusher Speeds", "Iron", (int) (ironCrusherSpeed * 1000)).getInt() / 1000F;

@@ -46,11 +46,11 @@ public class VanillaAddons
         try
         {
             cfgFile.createNewFile();
-            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3's metal set Vanilla");
+            
         } catch (final IOException e)
         {
-            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set Vanilla. Reason:");
-            System.out.println(e);
+        	MetallurgyCore.log.info("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set Vanilla. Reason:");
+        	MetallurgyCore.log.info(e.getLocalizedMessage());
         }
 
         final Configuration config = new Configuration(cfgFile);

@@ -116,18 +116,10 @@ public class ComputerCraftIntegration
 
     public static void createTurtle(int id, String name, Item tool)
     {
-        if (MetallurgyCore.DEBUG)
-        {
-            System.out.println("Metallurgy: Creating " + name + " Turtle");
-        }
 
         ITurtleUpgrade toolTurtle = new ComputerCraftTurtle(id, name, tool);
         TurtleAPI.registerUpgrade(toolTurtle);
 
-        if (MetallurgyCore.DEBUG)
-        {
-            System.out.println("Metallurgy: Registered " + toolTurtle);
-        }
     }
 
     public static void init()
@@ -136,11 +128,11 @@ public class ComputerCraftIntegration
         {
             Class.forName("dan200.turtle.api.TurtleAPI");
 
-            System.out.println("Metallurgy: Adding ComputerCraft Turtles");
+            MetallurgyCore.log.info("Metallurgy: Adding ComputerCraft Turtles");
             addTurtles();
         } catch (final Exception e)
         {
-            System.out.println("Metlalurgy: Skipping ComputerCraft Turtles");
+        	 MetallurgyCore.log.info("Metlalurgy: Skipping ComputerCraft Turtles");
         }
     }
 }

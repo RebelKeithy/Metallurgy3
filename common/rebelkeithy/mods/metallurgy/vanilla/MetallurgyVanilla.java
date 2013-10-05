@@ -68,7 +68,7 @@ public class MetallurgyVanilla
             cfgFile.createNewFile();
         } catch (final IOException e)
         {
-            System.out.println(e);
+        	 MetallurgyCore.log.info(e.getLocalizedMessage());
         }
 
         final Configuration config = new Configuration(cfgFile);

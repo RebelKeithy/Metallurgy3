@@ -34,7 +34,6 @@ public class TileEntityLaserRenderer extends TileEntitySpecialRenderer
         Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
         model.renderAll();
 
-        // System.out.println(x + " " + y + " " + z);
         if (te.worldObj != null && te.worldObj.getBlockPowerInput(te.xCoord, te.yCoord, te.zCoord) == 0)
         {
             GL11.glDisable(GL11.GL_LIGHTING);

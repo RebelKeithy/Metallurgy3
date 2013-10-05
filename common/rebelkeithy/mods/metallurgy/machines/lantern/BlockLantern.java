@@ -165,7 +165,6 @@ public class BlockLantern extends BlockContainer
     @Override
     public void onBlockHarvested(World par1World, int par2, int par3, int par4, int par5, EntityPlayer par6EntityPlayer)
     {
-        System.out.println("harvest");
         if (!par6EntityPlayer.capabilities.isCreativeMode)
         {
             spawnItem(par1World, par2, par3, par4);
@@ -264,7 +263,6 @@ public class BlockLantern extends BlockContainer
         final int id = par1World.getBlockId(par2, par3, par4);
         if (te != null && id != 0)
         {
-            System.out.println("spawn");
             final int color = ((TileEntityLantern) te).color;
             final ItemStack par5ItemStack = new ItemStack(this, 1, color);
             final float var6 = 0.7F;

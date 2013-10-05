@@ -41,7 +41,6 @@ public class TileEntityStorageAccessor extends TileEntity
         if (worldObj.getBlockId(c.x, c.y, c.z) == MetallurgyMachines.storageBlock.blockID)
         {
             final int itemID = ((TileEntityStorageBlock) worldObj.getBlockTileEntity(c.x, c.y, c.z)).itemID;
-            System.out.println("Activating block and adding tab " + itemID);
             addTab(new ItemStack(itemID, 1, 0), 3 * 9);
         }
     }
@@ -65,18 +64,7 @@ public class TileEntityStorageAccessor extends TileEntity
         // /
         // PacketDispatcher.sendPacketToAllPlayers(PacketHandler.getAddTabPacket(itemstack.itemID,
         // amount, xCoord, yCoord, zCoord));
-        if (worldObj == null)
-        {
-            System.out.println("[NULL] adding tab " + itemstack.itemID + " size " + amount);
-        }
-        else if (worldObj.isRemote)
-        {
-            System.out.println("[CLIENT] adding tab " + itemstack.itemID + " size " + amount);
-        }
-        else if (worldObj.isRemote)
-        {
-            System.out.println("[SERVER] adding tab " + itemstack.itemID + " size " + amount);
-        }
+
         if (inventories.containsKey(itemstack.itemID))
         {
             inventories.get(itemstack.itemID).addSlots(amount);
@@ -90,16 +78,7 @@ public class TileEntityStorageAccessor extends TileEntity
     private boolean checkNewBlock(int x, int y, int z)
     {
         final int id = worldObj.getBlockId(x, y, z);
-        if (id == MetallurgyMachines.storageAccessor.blockID || id == MetallurgyMachines.storageBlock.blockID)
-        {
-            System.out.println("Checking bock id " + id + " at " + x + " " + y + " " + z + "... True");
-            return true;
-        }
-        else
-        {
-            System.out.println("Checking bock " + id + " at " + x + " " + y + " " + z + "... False");
-            return false;
-        }
+        return (id == MetallurgyMachines.storageAccessor.blockID || id == MetallurgyMachines.storageBlock.blockID);
     }
 
     private void expandXAxis()
@@ -151,15 +130,6 @@ public class TileEntityStorageAccessor extends TileEntity
             return new InventoryStorage(this, 0);
         }
 
-        /*
-         * for(InventoryStorage si : inventories.values()) {
-         * System.out.println("getting default inventory ");
-         * System.out.println("number of invenotries = " + inventories.size());
-         * System.out.println("inventory " + si);
-         * System.out.println("inventory items " + si.items);
-         * System.out.println("inventory size " + si.getSizeInventory()); return
-         * si; }
-         */
         return null;
     }
 
@@ -171,7 +141,6 @@ public class TileEntityStorageAccessor extends TileEntity
         }
         else
         {
-            // System.out.println("getting inventory " + id);
             return inventories.get(id);
         }
     }
@@ -183,11 +152,9 @@ public class TileEntityStorageAccessor extends TileEntity
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
-        System.out.println("Reading from NBT");
         final NBTTagList tagTabList = par1NBTTagCompound.getTagList("TabList");
         for (int n = 0; n < tagTabList.tagCount(); n++)
         {
-            System.out.println("reading ID from NBT");
             final NBTTagCompound tag = (NBTTagCompound) tagTabList.tagAt(n);
             final int id = tag.getInteger("ID");
             final int size = tag.getInteger("Size");
@@ -213,8 +180,7 @@ public class TileEntityStorageAccessor extends TileEntity
             if (inventories.containsKey(itemStack.itemID))
             {
                 final int change = size - inventories.get(itemStack.itemID).items.length;
-                // System.out.println("[CLIENT] Adding " + change +
-                // " to inventory "+ itemStack.itemID);
+
                 addTab(itemStack, change);
             }
             else

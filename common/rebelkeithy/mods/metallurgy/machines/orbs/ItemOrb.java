@@ -150,13 +150,10 @@ public class ItemOrb extends Item
 
         final int type = getTypeFromDamage(par1ItemStack.getItemDamage());
         final int currXP = getXpFromDamage(par1ItemStack.getItemDamage());
-        System.out.println(par3EntityPlayer.experienceTotal);
         if (currXP < maxXP[type] && par3EntityPlayer.experienceTotal > 0)
         {
             addXP(par1ItemStack, 1);
             par3EntityPlayer.addExperience(-1);
-
-            System.out.println(par3EntityPlayer.experience);
 
             if (par3EntityPlayer.experience < 0 && par3EntityPlayer.experienceTotal > 0)
             {

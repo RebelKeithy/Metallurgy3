@@ -237,7 +237,6 @@ public class ContainerMetallurgyEnchantment extends Container
                             }
                         }
                     }
-                    System.out.println(power);
                     enchantLevels = MaxEnchanterHelper.calcItemStackEnchantability(rand, (int) power, itemstack);
                     if (player != null && player.experienceLevel < enchantLevels)
                     {

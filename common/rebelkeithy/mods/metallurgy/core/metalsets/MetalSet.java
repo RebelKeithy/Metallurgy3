@@ -83,11 +83,10 @@ public class MetalSet implements IMetalSet
         try
         {
             cfgFile.createNewFile();
-            System.out.println("[Metallurgy3] Successfully created/read configuration file for Metallurgy 3's metal set " + setName);
         } catch (final IOException e)
         {
-            System.out.println("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set " + setName + ". Reason:");
-            System.out.println(e);
+            MetallurgyCore.log.warning("[Metallurgy3] Could not create configuration file for Metallurgy 3 metal set " + setName + ". Reason:");
+            MetallurgyCore.log.warning(e.getLocalizedMessage());
         }
 
         config = new Configuration(cfgFile);

@@ -31,7 +31,6 @@ public class StorageBlock extends Block
 
             // if (var10 != null)
             {
-                System.out.println("openning gui");
                 par5EntityPlayer.openGui(MetallurgyMachines.instance, 0, world, x, y, z);
             }
 

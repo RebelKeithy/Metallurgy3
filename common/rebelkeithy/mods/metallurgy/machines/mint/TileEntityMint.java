@@ -169,7 +169,6 @@ public class TileEntityMint extends TileEntity
                 }
             }
 
-            System.out.println("mint");
             final float var8 = rand.nextFloat() * 0.8F + 0.1F;
             final float var9 = rand.nextFloat() * 0.8F + 0.1F;
             final float var10 = rand.nextFloat() * 0.8F + 0.1F;

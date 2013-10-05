@@ -40,7 +40,6 @@ public class ItemOreFinder extends Item
             par1ItemStack.getTagCompound().setInteger("mode", mode);
         }
 
-        System.out.println("Mode " + mode);
 
         if (par2EntityPlayer.isSneaking())
         {
@@ -57,9 +56,6 @@ public class ItemOreFinder extends Item
         }
 
         final Map<String, Integer> oreCount = new HashMap<String, Integer>();
-        System.out.println("Checking");
-
-        // System.out.println(OreDictionary.getOres(OreDictionary.getOreID("orePlatinum")).get(0).itemID);
 
         for (int y = 0; y < 128; y++)
         {

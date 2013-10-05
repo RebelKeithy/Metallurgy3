@@ -113,7 +113,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
         setName = info.get("Metal Set");
         name = info.get("Name");
         this.tab = tab;
-        // System.out.println("reading " + name);
         if (info.get("Type").equals("Ore"))
         {
             type = ORE;
@@ -135,9 +134,8 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             type = DROP;
         }
 
-        // System.out.println(name + " is type " + type.name());
+
         alloyRecipe = info.get("Alloy Recipe").split("\" \"");
-        // System.out.println("alloy recipe: " + Arrays.toString(alloyRecipe));
         for (int n = 0; n < alloyRecipe.length; n++)
         {
             alloyRecipe[n] = "dust" + alloyRecipe[n].replace("\"", "");
@@ -182,8 +180,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
         abstractorXP = Integer.parseInt(info.get("Abstractor XP"));
         blockLvl = Integer.parseInt(info.get("Block lvl"));
-        // System.out.println("Block level default: " + info.get("Block lvl"));
-        // System.out.println("Block level set to : " + blockLvl);
 
         if (type != CATALYST && type != DROP)
         {
@@ -280,8 +276,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
         if (type == ALLOY)
         {
-            // System.out.println("Adding alloy recipe " + alloyRecipe[0] +
-            // " + " + alloyRecipe[1] + " for " + name);
             GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(dust, 2), (Object[])alloyRecipe));
         }
     }
@@ -433,9 +427,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             return;
         }
         
-        if(MetallurgyCore.DEBUG) {
-        	System.out.println("Initializeing Ore " + name);
-        }
         if (!type.equals(RESPAWN))
         {
             if (type.generates() && oreID != 0)
@@ -443,7 +434,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
                 ore = new SubBlock(oreID, oreMeta, "Metallurgy:" + setName + "/" + name + "Ore").setUnlocalizedName(setName + oreID).setCreativeTab(tab);
                 if (type == DROP)
                 {
-                    // System.out.println("getting block drop " + dropName);
                     ore.setBlockDrops(MetalInfoDatabase.getItem(dropName), dropMin, dropMax);
                 }
             }
@@ -467,8 +457,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             {
                 toolEnum = EnumHelper.addToolMaterial(name, pickLvl, toolDura, toolSpeed, toolDamage, toolEnchant);
                 toolEnum.customCraftingMaterial = ingot;
-                // System.out.println(name.toUpperCase() + "TOOL SPEED = " +
-                // toolSpeed);
+
                 pickaxe = new CustomItemPickaxe(itemIDs + 2, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Pick").setUnlocalizedName(name + "Pick")
                         .setCreativeTab(tab);
                 shovel = new CustomItemSpade(itemIDs + 3, toolEnum).setTextureName("Metallurgy:" + setName + "/" + name + "Shovel").setUnlocalizedName(name + "Shovel")
@@ -496,7 +485,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
         if (type.generates())
         {
-            // System.out.println(registering g);
             GameRegistry.registerWorldGenerator(this);
         }
     }
@@ -714,8 +702,7 @@ public class OreInfo implements IOreInfo, IWorldGenerator
     {
         for (final String string : diminsions)
         {
-            // System.out.println("checking dim '" + string + "' against" +
-            // dim);
+
             if (string.contains("-") && !string.startsWith("-"))
             {
                 int min = Integer.parseInt(string.split("-")[0]);

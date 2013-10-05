@@ -103,7 +103,6 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         }
 
         GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
-        //System.out.println(var11);
         crusherModel.renderAll();
         GL11.glPopMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
