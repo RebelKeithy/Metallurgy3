@@ -115,7 +115,7 @@ public class MetalInfoDatabase
         }
     }
 
-    public static void readItemDataFromJar(Configuration config, String resourcePath, CreativeTabs tab)
+    public static void readItemDataFromClassPath(Configuration config, String resourcePath, CreativeTabs tab)
     {
         final BufferedReader in = bufferedReaderFromClassPathResource(resourcePath);
         readItemData(config, in, tab);

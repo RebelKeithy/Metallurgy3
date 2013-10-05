@@ -567,7 +567,7 @@ public class MetallurgyMetals
 
         String filepath = "assets/metallurgy/data";
         MetalInfoDatabase.readMetalDataFromClassPath(filepath + "/spreadsheet.csv");
-        MetalInfoDatabase.readItemDataFromJar(utilityConfig, filepath + "/Items.csv", utilityTab);
+        MetalInfoDatabase.readItemDataFromClassPath(utilityConfig, filepath + "/Items.csv", utilityTab);
 
         utilityConfig.save();
 
