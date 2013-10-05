@@ -12,30 +12,26 @@ public class CrusherRenderHelper implements ISimpleBlockRenderingHandler
     @Override
     public int getRenderId()
     {
-        // TODO Auto-generated method stub
         return MetallurgyMachines.crusher.getRenderType();
     }
 
     @Override
     public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
     {
-        // TODO Auto-generated method stub
         final TileEntityCrusher tec = new TileEntityCrusher();
         tec.setType(metadata);
-        TileEntityRenderer.instance.renderTileEntityAt(tec, 0.0D, 0.0D, 0.0D, 0.0F);
+        TileEntityRenderer.instance.renderTileEntityAt(tec, 1D, 0D, 0D, 0F);
     }
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
     {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean shouldRender3DInInventory()
     {
-        // TODO Auto-generated method stub
         return true;
     }
 }

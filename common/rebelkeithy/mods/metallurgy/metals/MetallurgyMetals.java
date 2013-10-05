@@ -586,7 +586,7 @@ public class MetallurgyMetals
             MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
         } catch (final IOException ex)
         {
-            filepath += "/../resources";
+            //filepath += "/../resources";
 
             MetalInfoDatabase.readMetalDataFromFile(filepath + "/spreadsheet.csv");
             MetalInfoDatabase.readItemDataFromFile(utilityConfig, filepath + "/Items.csv", utilityTab);
