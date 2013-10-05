@@ -33,6 +33,7 @@ import rebelkeithy.mods.keithyutils.metablock.SubBlock;
 import rebelkeithy.mods.metallurgy.api.IOreInfo;
 import rebelkeithy.mods.metallurgy.api.OreType;
 import rebelkeithy.mods.metallurgy.core.MetalInfoDatabase;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.machines.abstractor.AbstractorRecipes;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -265,8 +266,11 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             recipe = new ShapedOreRecipe(new ItemStack(boots), "X X", "X X", 'X', "ingot" + name);
             GameRegistry.addRecipe(recipe);
 
-            recipe = new ShapedOreRecipe(new ItemStack(Item.bucketEmpty), "X X", " X ", 'X', "ingot" + name);
-            GameRegistry.addRecipe(recipe);
+            if(MetallurgyCore.getConfigSettingBoolean("Features", "Buckets", true)) {
+		        recipe = new ShapedOreRecipe(new ItemStack(Item.bucketEmpty), "X X", " X ", 'X', "ingot" + name);
+		        GameRegistry.addRecipe(recipe);
+            }
+            
             recipe = new ShapedOreRecipe(new ItemStack(Item.shears), "X ", " X", 'X', "ingot" + name);
             GameRegistry.addRecipe(recipe);
         }
@@ -425,8 +429,10 @@ public class OreInfo implements IOreInfo, IWorldGenerator
         {
             return;
         }
-
-        System.out.println("Initializeing Ore " + name);
+        
+        if(MetallurgyCore.DEBUG) {
+        	System.out.println("Initializeing Ore " + name);
+        }
         if (!type.equals(RESPAWN))
         {
             if (type.generates() && oreID != 0)
@@ -620,7 +626,6 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
         if (ore != null)
         {
-            System.out.println("registering ore" + name);
             OreDictionary.registerOre("ore" + name, new ItemStack(oreID, 1, oreMeta));
         }
         if (block != null)
