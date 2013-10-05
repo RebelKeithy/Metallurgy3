@@ -123,12 +123,6 @@ public class MetallurgyCore
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        final ModMetadata metadata = event.getModMetadata();
-
-        metadata.name = "Metallurgy 3 Core";
-        metadata.description = "Stuffs";
-        metadata.authorList = Arrays.asList(new String[]
-        { "Team Metallurgy" });
 
         log = event.getModLog();
 

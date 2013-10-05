@@ -471,14 +471,6 @@ public class MetallurgyMachines
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        final ModMetadata metadata = event.getModMetadata();
-
-        metadata.name = "Metallurgy 3 Machines";
-        metadata.description = "Stuffs";
-        metadata.authorList = Arrays.asList(new String[]
-        { "Team Metallurgy" });
-        metadata.parent = "Metallurgy3Core";
-
         machineTab = new MetallurgyTabs("Metallurgy: Machines");
         // initStorage();
 

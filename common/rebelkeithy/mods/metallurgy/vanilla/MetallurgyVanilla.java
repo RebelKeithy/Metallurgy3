@@ -50,14 +50,6 @@ public class MetallurgyVanilla
     public void preInit(FMLPreInitializationEvent event)
     {
 
-        final ModMetadata metadata = event.getModMetadata();
-
-        metadata.name = "Metallurgy 3 Vanilla";
-        metadata.description = "Stuffs";
-        metadata.authorList = Arrays.asList(new String[]
-        { "Team Metallurgy" });
-        metadata.parent = "Metallurgy3Core";
-
         final Map<String, Map<String, String>> vanillaList = MetalInfoDatabase.getSpreadsheetDataForSet("Vanilla");
         vanillaList.remove("Wood/Leather");
         vanillaList.remove("Stone/Chainmail");
