@@ -20,7 +20,7 @@ public class CrusherRenderHelper implements ISimpleBlockRenderingHandler
     {
         final TileEntityCrusher tec = new TileEntityCrusher();
         tec.setType(metadata);
-        TileEntityRenderer.instance.renderTileEntityAt(tec, 1D, 0D, 0D, 0F);
+        TileEntityRenderer.instance.renderTileEntityAt(tec, 0D, -0.1D, 0D, 0F);
     }
 
     @Override
