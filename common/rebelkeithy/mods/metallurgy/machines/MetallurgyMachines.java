@@ -1,7 +1,5 @@
 package rebelkeithy.mods.metallurgy.machines;
 
-import java.util.Arrays;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -56,7 +54,6 @@ import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -477,7 +474,7 @@ public class MetallurgyMachines
         ConfigMachines.initConfig();
 
         initCrusher();
-        initFurnace();
+        initFurnace(); 
         initForge();
         initChests();
         initMint();
