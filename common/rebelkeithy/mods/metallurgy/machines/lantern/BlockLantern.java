@@ -30,7 +30,7 @@ public class BlockLantern extends BlockContainer
 
     public BlockLantern(int par1)
     {
-        super(par1, Material.wood);
+        super(par1, Material.rock);
         setBlockBounds(3 / 16F, 0 / 16F, 3 / 16F, 13 / 16F, 13 / 16F, 13 / 16F);
     }
 

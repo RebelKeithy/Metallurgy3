@@ -60,7 +60,7 @@ public class BlockPreciousChest extends BlockContainer
 
     public BlockPreciousChest(int par1)
     {
-        super(par1, Material.wood);
+        super(par1, Material.rock);
     }
 
     /**

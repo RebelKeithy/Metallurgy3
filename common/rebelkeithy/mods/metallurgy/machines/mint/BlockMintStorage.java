@@ -31,7 +31,7 @@ public class BlockMintStorage extends BlockContainer
 
     public BlockMintStorage(int par1)
     {
-        super(par1, Material.wood);
+        super(par1, Material.rock);
     }
 
     /**
