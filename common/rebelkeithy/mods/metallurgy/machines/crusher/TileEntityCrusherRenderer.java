@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL12;
 public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
 {
     /** The normal small chest model. */
-    private final ModelCrusherNew crusherModel = new ModelCrusherNew();
+    private final ModelCrusher crusherModel = new ModelCrusher();
 
     @Override
     public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
@@ -37,7 +37,7 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
             var9 = par1TileEntityCrusher.direction;
         }
 
-        crusherModel.spin(par1TileEntityCrusher.getCrusherAngles());
+        //crusherModel.spin(par1TileEntityCrusher.getCrusherAngles());
 
         String type = "";
         if (par1TileEntityCrusher.getType() == 0)
@@ -65,7 +65,7 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
 
         if (par1TileEntityCrusher.isBurning())
         {
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png"));
+        	texture = new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
             // this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher"
             // + type + "Burning.png");
         }
@@ -75,9 +75,9 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         GL11.glPushMatrix();
         GL11.glEnable(GL12.GL_RESCALE_NORMAL);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glTranslatef((float) par2, (float) par4 + 1.0F, (float) par6 + 1.0F);
+        GL11.glTranslatef((float) par2, (float) par4, (float) par6 + 1.0F);
         GL11.glScalef(1.0F, -1.0F, -1.0F);
-        GL11.glTranslatef(0.5F, 0.5F, 0.5F);
+       // GL11.glTranslatef(0.5F, 0.5F, 0.5F);
         short var11 = 0;
 
         if (var9 == 2)
