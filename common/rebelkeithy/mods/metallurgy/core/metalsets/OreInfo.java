@@ -246,27 +246,30 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 
         if (type != CATALYST)
         {
-            recipe = new ShapedOreRecipe(new ItemStack(pickaxe), "XXX", " S ", " S ", 'X', "ingot" + name, 'S', Item.stick);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(shovel), "X", "S", "S", 'X', "ingot" + name, 'S', Item.stick);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(axe), "XX", "SX", "S ", 'X', "ingot" + name, 'S', Item.stick);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(hoe), "XX", "S ", "S ", 'X', "ingot" + name, 'S', Item.stick);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(sword), "X", "X", "S", 'X', "ingot" + name, 'S', Item.stick);
-            GameRegistry.addRecipe(recipe);
-
-            recipe = new ShapedOreRecipe(new ItemStack(helmet), "XXX", "X X", 'X', "ingot" + name);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(chest), "X X", "XXX", "XXX", 'X', "ingot" + name);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(legs), "XXX", "X X", "X X", 'X', "ingot" + name);
-            GameRegistry.addRecipe(recipe);
-            recipe = new ShapedOreRecipe(new ItemStack(boots), "X X", "X X", 'X', "ingot" + name);
-            GameRegistry.addRecipe(recipe);
-
-            if(MetallurgyCore.getConfigSettingBoolean("Features", "Buckets", true)) {
+        	if(MetallurgyCore.getConfigSettingBoolean("Tool Recipes", name, true)) {
+	            recipe = new ShapedOreRecipe(new ItemStack(pickaxe), "XXX", " S ", " S ", 'X', "ingot" + name, 'S', Item.stick);
+	            GameRegistry.addRecipe(recipe);
+	            recipe = new ShapedOreRecipe(new ItemStack(shovel), "X", "S", "S", 'X', "ingot" + name, 'S', Item.stick);
+	            GameRegistry.addRecipe(recipe);
+	            recipe = new ShapedOreRecipe(new ItemStack(axe), "XX", "SX", "S ", 'X', "ingot" + name, 'S', Item.stick);
+	            GameRegistry.addRecipe(recipe);
+	            recipe = new ShapedOreRecipe(new ItemStack(hoe), "XX", "S ", "S ", 'X', "ingot" + name, 'S', Item.stick);
+	            GameRegistry.addRecipe(recipe);
+	            recipe = new ShapedOreRecipe(new ItemStack(sword), "X", "X", "S", 'X', "ingot" + name, 'S', Item.stick);
+	            GameRegistry.addRecipe(recipe);
+        	}
+        	
+            if(MetallurgyCore.getConfigSettingBoolean("Armour Recipes", name, true)) {
+		        recipe = new ShapedOreRecipe(new ItemStack(helmet), "XXX", "X X", 'X', "ingot" + name);
+		        GameRegistry.addRecipe(recipe);
+		        recipe = new ShapedOreRecipe(new ItemStack(chest), "X X", "XXX", "XXX", 'X', "ingot" + name);
+		        GameRegistry.addRecipe(recipe);
+		        recipe = new ShapedOreRecipe(new ItemStack(legs), "XXX", "X X", "X X", 'X', "ingot" + name);
+		        GameRegistry.addRecipe(recipe);
+		        recipe = new ShapedOreRecipe(new ItemStack(boots), "X X", "X X", 'X', "ingot" + name);
+		        GameRegistry.addRecipe(recipe);
+            }
+            if(MetallurgyCore.getConfigSettingBoolean("Features", "Bucket Recipes", true)) {
 		        recipe = new ShapedOreRecipe(new ItemStack(Item.bucketEmpty), "X X", " X ", 'X', "ingot" + name);
 		        GameRegistry.addRecipe(recipe);
             }
