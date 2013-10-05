@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -122,29 +123,25 @@ public class MetalInfoDatabase
 
     public static void readMetalDataFromFile(String filepath)
     {
-        final BufferedReader in = bufferedReaderFromFile(filepath);
-        readOreData(in);
+        try
+        {
+            readOreData(bufferedReaderFromFile(filepath));
+        }
+        catch (FileNotFoundException e)
+        {
+            MetallurgyCore.log.log(Level.WARNING, String.format(
+                    "User supplied file (%s) not found. Check config file.", filepath), e);
+        }
     }
 
     public static void readMetalDataFromClassPath(String resourcePath)
     {
-        BufferedReader in = bufferedReaderFromClassPathResource(resourcePath);
-        readOreData(in);
+        readOreData(bufferedReaderFromClassPathResource(resourcePath));
     }
 
-    private static BufferedReader bufferedReaderFromFile(String filePath)
+    private static BufferedReader bufferedReaderFromFile(String filePath) throws FileNotFoundException
     {
-        final File file = new File(filePath);
-        BufferedReader in;
-        try
-        {
-            in = Files.newReader(file, Charsets.UTF_8);
-        }
-        catch (FileNotFoundException e)
-        {
-            throw new RuntimeException(e);
-       }
-       return in;
+        return Files.newReader(new File(filePath), Charsets.UTF_8);
     }
     
     private static BufferedReader bufferedReaderFromClassPathResource(String resourcePath)
