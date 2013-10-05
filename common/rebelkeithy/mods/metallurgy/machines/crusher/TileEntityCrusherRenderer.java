@@ -40,7 +40,11 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         crusherModel.spin(par1TileEntityCrusher.getCrusherAngles());
 
         String type = "";
-        if (par1TileEntityCrusher.getType() == 1)
+        if (par1TileEntityCrusher.getType() == 0)
+        {
+            type = "Stone";
+        }
+        else if (par1TileEntityCrusher.getType() == 1)
         {
             type = "Copper";
         }
@@ -61,7 +65,7 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
 
         if (par1TileEntityCrusher.isBurning())
         {
-            texture = new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png");
+        	Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("Metallurgy:textures/blocks/machines/crusher/ModelCrusher" + type + "Burning.png"));
             // this.bindTextureByName("/mods/Metallurgy/textures/blocks/machines/crusher/ModelCrusher"
             // + type + "Burning.png");
         }
