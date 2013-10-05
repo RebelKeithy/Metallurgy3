@@ -77,33 +77,34 @@ public class TileEntityCrusherRenderer extends TileEntitySpecialRenderer
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glTranslatef((float) par2, (float) par4, (float) par6 + 1.0F);
         GL11.glScalef(1.0F, -1.0F, -1.0F);
-       // GL11.glTranslatef(0.5F, 0.5F, 0.5F);
         short var11 = 0;
-
         if (var9 == 2)
         {
             var11 = 180;
+            GL11.glTranslatef(1F, -1.0F, 1F);
         }
 
         if (var9 == 3)
         {
             var11 = 0;
+            GL11.glTranslatef(0F, -1.0F, 0.0F);
         }
 
         if (var9 == 4)
         {
             var11 = 90;
+            GL11.glTranslatef(0F, -1.0F, 1F);
         }
 
         if (var9 == 5)
         {
             var11 = -90;
+            GL11.glTranslatef(1F, -1.0F, 0.0F);
         }
 
         GL11.glRotatef(var11, 0.0F, 1.0F, 0.0F);
-        GL11.glTranslatef(0F, -1.0F + offset, 0.0F);
+        System.out.println(var11);
         crusherModel.renderAll();
-        // GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
