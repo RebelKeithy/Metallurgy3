@@ -56,7 +56,7 @@ public class BlockMetalLadder extends Block
     @Override
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
-        final int var5 = par1World.getBlockMetadata(par2, par3, par4);
+        final int var5 = par1World.getBlockMetadata(par2, par3, par4) % 4;
         final float var6 = 0.125F;
 
         if (var5 == 0)
@@ -190,23 +190,6 @@ public class BlockMetalLadder extends Block
 
         par1World.setBlockMetadataWithNotify(par2, par3, par4, type * 4 + direction, 2);
         return type * 4 + direction;
-    }
-
-    /**
-     * Triggered whenever an entity collides with this block (enters into the
-     * block). Args: world, x, y, z, entity
-     */
-    @Override
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
-    {
-        final int meta = par1World.getBlockMetadata(par2, par3, par4) / 4;
-        final float movement = meta * 0.015F + 0.015F;
-
-        if (par5Entity.motionY >= 0.1)
-        {
-            par5Entity.setPosition(par5Entity.posX, par5Entity.posY + movement, par5Entity.posZ);
-            // par5Entity.moveEntity(0, 0.1, 0);
-        }
     }
 
     /**
