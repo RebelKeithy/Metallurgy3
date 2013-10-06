@@ -192,6 +192,19 @@ public class BlockMetalLadder extends Block
         return type * 4 + direction;
     }
 
+    @Override
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    {
+        final int meta = par1World.getBlockMetadata(par2, par3, par4) / 4;
+        final float movement = meta * 0.015F + 0.015F;
+
+        if (par5Entity.motionY >= 0.1)
+        {
+            par5Entity.setPosition(par5Entity.posX, par5Entity.posY + movement, par5Entity.posZ);
+            // par5Entity.moveEntity(0, 0.1, 0);
+        }
+    }
+
     /**
      * Lets the block know when one of its neighbor changes. Doesn't know which
      * neighbor changed (coordinates passed are their own) Args: x, y, z,
