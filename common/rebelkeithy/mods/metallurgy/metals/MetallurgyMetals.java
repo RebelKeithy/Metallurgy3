@@ -2,7 +2,6 @@ package rebelkeithy.mods.metallurgy.metals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -35,7 +34,6 @@ import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -567,20 +565,9 @@ public class MetallurgyMetals
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Utility", "Metallurgy: Utility");
         LanguageRegistry.instance().addStringLocalization("itemGroup.Metallurgy: Ender", "Metallurgy: Ender");
 
-        String filepath = event.getSourceFile().getAbsolutePath();
-
-        try
-        {
-            MetalInfoDatabase.readMetalDataFromJar("spreadsheet.csv", filepath);
-            MetalInfoDatabase.readItemDataFromJar(utilityConfig, "Items.csv", filepath, utilityTab);
-        } catch (final IOException ex)
-        {
-            //filepath += "/../resources";
-
-            MetalInfoDatabase.readMetalDataFromFile(filepath + "/spreadsheet.csv");
-            MetalInfoDatabase.readItemDataFromFile(utilityConfig, filepath + "/Items.csv", utilityTab);
-
-        }
+        String filepath = "assets/metallurgy/data";
+        MetalInfoDatabase.readMetalDataFromClassPath(filepath + "/spreadsheet.csv");
+        MetalInfoDatabase.readItemDataFromClassPath(utilityConfig, filepath + "/Items.csv", utilityTab);
 
         utilityConfig.save();
 
