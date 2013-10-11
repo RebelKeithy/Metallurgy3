@@ -1,9 +1,16 @@
 package rebelkeithy.mods.metallurgy.metals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -17,9 +24,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemOreFinder extends Item
-{
+{	
+    private ExecutorService exec = Executors.newCachedThreadPool();
 
-    public ItemOreFinder(int par1)
+
+	public ItemOreFinder(int par1)
     {
         super(par1);
         setMaxDamage(64);
@@ -27,7 +36,7 @@ public class ItemOreFinder extends Item
     }
 
     @Override
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
     {
         int mode = 0;
         if (par1ItemStack.hasTagCompound())
@@ -50,80 +59,132 @@ public class ItemOreFinder extends Item
             return false;
         }
 
-        if (par3World.isRemote)
+        if (world.isRemote)
         {
             return false;
         }
-
-        final Map<String, Integer> oreCount = new HashMap<String, Integer>();
-
-        for (int y = 0; y < 128; y++)
-        {
-            for (int x = par4 - par4 % 16 - 16 * mode; x < par4 - par4 % 16 + 16 * (mode + 1); x++)
-            {
-                for (int z = par6 - par6 % 16 - 16 * mode; z < par6 - par6 % 16 + 16 * (mode + 1); z++)
-                {
-                    final int id = par3World.getBlockId(x, y, z);
-                    final int meta = par3World.getBlockMetadata(x, y, z);
-                    final ItemStack stack = new ItemStack(id, 1, meta);
-                    String name = null;
-                    final int oreID = OreDictionary.getOreID(stack);
-                    if (oreID != -1)
-                    {
-                        name = OreDictionary.getOreName(oreID);
-                    }
-                    if (id == Block.oreIron.blockID)
-                    {
-                        name = "oreIron";
-                    }
-                    else if (id == Block.oreGold.blockID)
-                    {
-                        name = "oreGold";
-                    }
-                    else if (id == Block.oreDiamond.blockID)
-                    {
-                        name = "oreDiamond";
-                    }
-                    else if (id == Block.oreNetherQuartz.blockID)
-                    {
-                        name = "oreNetherQuartz";
-                    }
-
-                    if (name != null)
-                    {
-                        if (oreCount.containsKey(name))
-                        {
-                            final int count = oreCount.get(name);
-                            oreCount.put(name, count + 1);
-                        }
-                        else
-                        {
-                            oreCount.put(name, 1);
-                        }
-                    }
-
-                }
-            }
-        }
-
-        final Set<String> names = oreCount.keySet();
-        final String[] sort = names.toArray(new String[names.size()]);
-        Arrays.sort(sort);
-        par2EntityPlayer.addChatMessage("In Area (" + (par4 - par4 % 16 - 16 * mode) + ", " + (par6 - par6 % 16 - 16 * mode) + ") to (" + (par4 - par4 % 16 + 16 * (mode + 1))
-                + ", " + (par6 - par6 % 16 + 16 * (mode + 1)) + ")");
-        for (final String name : names)
-        {
-            final int amount = oreCount.get(name);
-            par2EntityPlayer.addChatMessage("Found " + amount + " " + name);
-        }
-
+        
+        int minX = x - x % 16 - 16 * mode;
+        int minZ = z - z % 16 - 16 * mode;
+        int minY = 0;
+        
+        int maxX = x - x % 16 + 16 * (mode + 1);
+        int maxZ = z - z % 16 + 16 * (mode + 1);
+        int maxY = 128;
+        
+        try {
+			getOresInArea(world, par2EntityPlayer, minX, minY, minZ, maxX, maxY, maxZ);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+        
         return false;
     }
+    
+    public class OreGeneratorm implements Callable<Map<String, Integer>> 
+    {
+    	private final World world;
+    	private final int minX, minY, minZ;
+    	private final int maxX, maxY, maxZ;
+		private EntityPlayer player;
+    	
+    	public OreGeneratorm(World world, EntityPlayer player, int minX, int minY, int minZ, int maxX, int maxY, int maxZ)
+    	{
+    		this.world = world;
+    		this.player = player;
+    		
+    		this.minX = minX;
+    		this.minY = minY;
+    		this.minZ = minZ;
+    		
+    		this.maxX = maxX;
+    		this.maxY = maxY;
+    		this.maxZ = maxZ;
 
+    	}
+
+		@Override
+		public Map<String, Integer> call() throws Exception {
+			Map<String, Integer> oreCount = new HashMap<String, Integer>();
+
+	        for (int y = minY; y < maxY; y++)
+	        {
+	            for (int x = minX; x <= maxX; x++)
+	            {
+	                for (int z = minZ; z <= maxZ; z++)
+	                {
+	                    final int id = world.getBlockId(x, y, z);
+	                    final int meta = world.getBlockMetadata(x, y, z);
+	                    final ItemStack stack = new ItemStack(id, 1, meta);
+	                    String name = null;
+	                    final int oreID = OreDictionary.getOreID(stack);
+	                    if (oreID != -1)
+	                    {
+	                        name = OreDictionary.getOreName(oreID);
+	                    }
+	                    if (id == Block.oreIron.blockID)
+	                    {
+	                        name = "oreIron";
+	                    }
+	                    else if (id == Block.oreGold.blockID)
+	                    {
+	                        name = "oreGold";
+	                    }
+	                    else if (id == Block.oreDiamond.blockID)
+	                    {
+	                        name = "oreDiamond";
+	                    }
+	                    else if (id == Block.oreNetherQuartz.blockID)
+	                    {
+	                        name = "oreNetherQuartz";
+	                    }
+
+	                    if (name != null)
+	                    {
+	                        if (oreCount.containsKey(name))
+	                        {
+	                            final int count = oreCount.get(name);
+	                            oreCount.put(name, count + 1);
+	                        }
+	                        else
+	                        {
+	                            oreCount.put(name, 1);
+	                        }
+	                    }
+
+	                }
+	            }
+	        }
+	        
+	        final Set<String> names = oreCount.keySet();
+	        final String[] sort = names.toArray(new String[names.size()]);
+	        Arrays.sort(sort);
+	        player.addChatMessage("In Area (" + minX + ", " + minZ + ") to (" + maxX + ", " + maxZ + ")");
+	        for (final String name : sort)
+	        {
+	            final int amount = oreCount.get(name);
+	            player.addChatMessage("Found " + amount + " " + name);
+	        }
+	        	        
+			return oreCount;
+		}
+    	
+    }
+    
+    public synchronized void getOresInArea(World world, EntityPlayer player,int minX, int minY, int minZ, int maxX, int maxY, int maxZ) throws InterruptedException, ExecutionException
+    {    
+    	OreGeneratorm ore = new OreGeneratorm(world,player, minX, minY, minZ, maxX, maxY, maxZ);
+    	exec.submit(ore);
+    }
+    
+    
     @Override
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
         itemIcon = par1IconRegister.registerIcon("Metallurgy:machines/OreFinder");
     }
+
 }
