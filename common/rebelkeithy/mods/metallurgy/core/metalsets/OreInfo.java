@@ -293,10 +293,11 @@ public class OreInfo implements IOreInfo, IWorldGenerator
             return;
         }
 
-        if (random.nextInt(100) > veinChance)
-        {
-            return;
-        }
+        //TODO Make this actually work
+//        if (random.nextInt(100) > veinChance)
+//        {
+//            return;
+//        }
 
         for (int n = 0; n < veinCount; n++)
         {
