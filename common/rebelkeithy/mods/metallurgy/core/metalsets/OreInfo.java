@@ -293,6 +293,15 @@ public class OreInfo implements IOreInfo, IWorldGenerator
         {
             return;
         }
+        
+        long worldSeed = world.getSeed();
+        Random fmlRandom = new Random(worldSeed);
+        long xSeed = fmlRandom.nextLong() >> 2 + 1L;
+        long zSeed = fmlRandom.nextLong() >> 2 + 1L;
+        
+        long chunkSeed = (xSeed * chunkX + zSeed * chunkZ + oreID + oreMeta) ^ worldSeed;
+        
+        random.setSeed(chunkSeed);
 
         //TODO Make this actually work
 //        if (random.nextInt(100) < veinChance)
