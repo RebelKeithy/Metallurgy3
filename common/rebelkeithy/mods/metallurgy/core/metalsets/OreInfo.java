@@ -299,11 +299,22 @@ public class OreInfo implements IOreInfo, IWorldGenerator
 //        {
 //            return;
 //        }
-
+        
         chunkX = chunkX << 4;
         chunkZ = chunkZ << 4;
-        
+
         WorldGenMinable worldGenMinable = new WorldGenMinable(oreID, oreMeta, oreCount + 1, Block.stone.blockID);
+        
+        if(world.provider.dimensionId == -1)
+        {
+        	worldGenMinable = new WorldGenMinable(oreID, oreMeta, oreCount + 1, Block.netherrack.blockID);
+        }
+        
+        if(world.provider.dimensionId == 1)
+        {
+        	worldGenMinable = new WorldGenMinable(oreID, oreMeta, oreCount + 1, Block.whiteStone.blockID);
+        }
+        
         
         for (int i = 0; i < veinCount + 1; i ++)
         {
