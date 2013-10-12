@@ -303,11 +303,10 @@ public class OreInfo implements IOreInfo, IWorldGenerator
         
         random.setSeed(chunkSeed);
 
-        //TODO Make this actually work
-//        if (random.nextInt(100) < veinChance)
-//        {
-//            return;
-//        }
+        if (random.nextInt(100) > veinChance)
+        {
+            return;
+        }
         
         chunkX = chunkX << 4;
         chunkZ = chunkZ << 4;
