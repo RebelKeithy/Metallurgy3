@@ -3,6 +3,7 @@ package rebelkeithy.mods.metallurgy.machines;
 import java.io.File;
 
 import net.minecraft.client.Minecraft;
+import rebelkeithy.mods.keithyutils.Config;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.machines.abstractor.ContainerAbstractor;
 import rebelkeithy.mods.metallurgy.machines.abstractor.GuiAbstractor;
@@ -55,13 +56,40 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerGUIs()
     {
-        GuiRegistry.registerGuiClient(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, MetallurgyMachines.instance, "Enchanter");
-        GuiRegistry.registerGuiClient(GuiMintStorage.class, ContainerMintStorage.class, MetallurgyMachines.instance, "MintStorage");
-        GuiRegistry.registerGuiClient(GuiPreciousChest.class, ContainerPreciousChest.class, MetallurgyMachines.instance, "PreciousChest");
-        GuiRegistry.registerGuiClient(GuiCrusher.class, ContainerCrusher.class, MetallurgyMachines.instance, "Crusher");
-        GuiRegistry.registerGuiClient(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");
-        GuiRegistry.registerGuiClient(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
-        GuiRegistry.registerGuiClient(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
+    	if(ConfigMachines.enchanterEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiMetallurgyEnchantment.class, ContainerMetallurgyEnchantment.class, MetallurgyMachines.instance, "Enchanter");
+    	}
+    	
+    	if(ConfigMachines.mintEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiMintStorage.class, ContainerMintStorage.class, MetallurgyMachines.instance, "MintStorage");
+    	}
+    	
+    	if(ConfigMachines.chestEnabled)
+    	{
+            GuiRegistry.registerGuiClient(GuiPreciousChest.class, ContainerPreciousChest.class, MetallurgyMachines.instance, "PreciousChest");	
+    	}
+
+    	if(ConfigMachines.crusherEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiCrusher.class, ContainerCrusher.class, MetallurgyMachines.instance, "Crusher");
+    	}
+    	
+    	if(ConfigMachines.furnaceEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiMetalFurnace.class, ContainerMetalFurnace.class, MetallurgyMachines.instance, "MetalFurnace");		
+    	}
+    	
+    	if(ConfigMachines.forgeEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiNetherForge.class, ContainerNetherForge.class, MetallurgyMachines.instance, "NetherForge");
+    	}
+    	
+    	if(ConfigMachines.abstractorEnabled)
+    	{
+    		GuiRegistry.registerGuiClient(GuiAbstractor.class, ContainerAbstractor.class, MetallurgyMachines.instance, "Abstractor");
+    	}
 //        GuiRegistry.registerGuiClient(GuiXpTank.class, ContainerXpTank.class, MetallurgyMachines.instance, "XpTank");
 
     }
@@ -69,22 +97,37 @@ public class ClientProxy extends CommonProxy
     @Override
     public void registerTileEntitySpecialRenderer()
     {
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrusher.class, new TileEntityCrusherRenderer());
-        RenderingRegistry.registerBlockHandler(new CrusherRenderHelper());
+    	if(ConfigMachines.crusherEnabled)
+	    {
+	        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrusher.class, new TileEntityCrusherRenderer());
+	        RenderingRegistry.registerBlockHandler(new CrusherRenderHelper());
+	    }
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPreciousChest.class, new TileEntityPreciousChestRenderer());
-        RenderingRegistry.registerBlockHandler(new RenderHelperPreciousChest());
+    	if(ConfigMachines.chestEnabled)
+    	{
+	        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPreciousChest.class, new TileEntityPreciousChestRenderer());
+	        RenderingRegistry.registerBlockHandler(new RenderHelperPreciousChest());
+    	}
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMint.class, new TileEntityMintRenderer());
-        RenderingRegistry.registerBlockHandler(new MintRenderHelper());
+    	if(ConfigMachines.mintEnabled)
+    	{
+	        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMint.class, new TileEntityMintRenderer());
+	        RenderingRegistry.registerBlockHandler(new MintRenderHelper());
+    	}
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLantern.class, new TileEntityLanternRenderer());
         RenderingRegistry.registerBlockHandler(new LanternRenderHelper());
 
-        RenderingRegistry.registerBlockHandler(BlockMetalLadder.renderType, new LadderRenderer());
+        if(ConfigMachines.ladderEnabled)
+        {
+        	RenderingRegistry.registerBlockHandler(BlockMetalLadder.renderType, new LadderRenderer());
+        }
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
-        RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
+    	if(ConfigMachines.enchanterEnabled)
+    	{
+	        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMetallurgyEnchantmentTable.class, new RenderMetallurgyEnchantmentTable());
+	        RenderingRegistry.registerBlockHandler(new MetallurgyEnchantmentTableRenderHelper());
+    	}
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaser.class, new TileEntityLaserRenderer());
         RenderingRegistry.registerBlockHandler(new LaserRenderHelper());

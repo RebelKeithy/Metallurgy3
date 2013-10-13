@@ -168,15 +168,16 @@ public class MetallurgyMachines
             GameRegistry.addRecipe(new ItemStack(goldCog), " G ", "GIG", " G ", 'G', Item.ingotGold, 'I', Item.ingotIron);
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(mint), "III", "SRS", "IPI", 'I', Item.ingotIron, 'S', Item.stick, 'R', Item.redstone, 'P', Block.pistonBase));
             GameRegistry.addRecipe(new ItemStack(mintStorage), "GIG", "PCP", "GIG", 'G', goldCog, 'P', Block.pistonBase, 'C', Block.chest, 'I', Item.ingotIron);
+        
+
+	        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stack), "CCC", "CCC", "CCC", 'C', coin));
+	        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bag), "CCC", "CCC", "CCC", 'C', stack));
+	        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bullion), "CCC", "CCC", "CCC", 'C', bag));
+	
+	        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(coin, 9), stack));
+	        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(stack, 9), bag));
+	        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bag, 9), bullion));
         }
-
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(stack), "CCC", "CCC", "CCC", 'C', coin));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bag), "CCC", "CCC", "CCC", 'C', stack));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bullion), "CCC", "CCC", "CCC", 'C', bag));
-
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(coin, 9), stack));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(stack, 9), bag));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bag, 9), bullion));
 
         for (int n = 0; n < 8; n++)
         {
@@ -218,7 +219,9 @@ public class MetallurgyMachines
     public void Init(FMLInitializationEvent event)
     {
         loadCrusher();
-        machineTab.setIconItem(crusher.blockID);
+        if(ConfigMachines.crusherEnabled){
+        	machineTab.setIconItem(crusher.blockID);
+        }
     }
 
     public void initAbstractor()
@@ -473,17 +476,50 @@ public class MetallurgyMachines
 
         ConfigMachines.initConfig();
 
-        initCrusher();
-        initFurnace(); 
-        initForge();
-        initChests();
-        initMint();
-        initAbstractor();
+        if(ConfigMachines.crusherEnabled)
+        {
+        	initCrusher();
+        }
+        
+        if(ConfigMachines.furnaceEnabled)
+        {
+        	initFurnace();
+        }
+        
+        if(ConfigMachines.forgeEnabled)
+        {
+        	initForge();	
+        }
+        
+        if(ConfigMachines.chestEnabled)
+        {
+        	initChests();
+        }
+        
+        if(ConfigMachines.mintEnabled)
+        {
+        	initMint();
+        }
+        
+        if(ConfigMachines.abstractorEnabled)
+        {
+        	initAbstractor();
+        }
+        
         initXpTank();
         initLantern();
-        initLadders();
-
-        initEnchanter();
+        
+        if(ConfigMachines.ladderEnabled)
+        {
+        	initLadders();
+        }
+        
+        
+        if(ConfigMachines.enchanterEnabled)
+        {
+        	initEnchanter();
+        }
+        
         Laser.init();
 
         FantasyOrbs.init();

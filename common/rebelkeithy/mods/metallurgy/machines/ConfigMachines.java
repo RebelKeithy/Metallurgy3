@@ -42,6 +42,7 @@ public class ConfigMachines
     public static boolean mintStorageEnabled = true;
     public static int mintStorageID = 916;
 
+    public static boolean enchanterEnabled = true;
     public static int enchanterID = 930;
 
     public static int coinID = 29002;
@@ -87,6 +88,15 @@ public class ConfigMachines
 
         final Configuration config = new Configuration(cfgFile);
 
+        crusherEnabled = config.get("Machines", "CrusherEnabled", crusherEnabled).getBoolean(crusherEnabled);
+        furnaceEnabled = config.get("Machines", "FurnanceEnabled", furnaceEnabled).getBoolean(furnaceEnabled);
+        forgeEnabled = config.get("Machines", "SmelterEnabled", forgeEnabled).getBoolean(forgeEnabled);
+        abstractorEnabled = config.get("Machines", "AbstractorEnabled", abstractorEnabled).getBoolean(abstractorEnabled);
+        chestEnabled = config.get("Machines", "ChestEnabled", chestEnabled).getBoolean(chestEnabled);
+        mintEnabled = config.get("Machines", "mintEnabled", mintEnabled).getBoolean(mintEnabled);
+        enchanterEnabled = config.get("Machines", "enchanterEnabled", enchanterEnabled).getBoolean(enchanterEnabled);
+        ladderEnabled = config.get("Machines", "ladderEnabled", ladderEnabled).getBoolean(ladderEnabled);
+        
         crusherID = config.get("Block IDs", "Crusher", crusherID).getInt();
         furnaceID = config.get("Block IDs", "Metal Furnace", furnaceID).getInt();
         forgeID = config.get("Block IDs", "Smelter", forgeID).getInt();
