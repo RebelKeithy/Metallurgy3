@@ -3,6 +3,7 @@ package rebelkeithy.mods.metallurgy.metals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,7 +54,7 @@ public class ItemOreFinder extends Item
         if (par2EntityPlayer.isSneaking())
         {
             mode++;
-            mode = mode % 3;
+            mode = mode % 10;
             par1ItemStack.getTagCompound().setInteger("mode", mode);
             par2EntityPlayer.addChatMessage("Radius: " + (mode + 1) + " chunk" + (mode != 0 ? "s" : ""));
             return false;
