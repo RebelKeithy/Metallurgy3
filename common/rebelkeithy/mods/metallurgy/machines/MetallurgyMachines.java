@@ -153,8 +153,8 @@ public class MetallurgyMachines
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 0), "XXX", "X X", "XXX", 'X', "ingotPrometheum"));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 1), "XXX", "XOX", "XXX", 'X', "ingotDeep Iron", 'O', new ItemStack(abstractor, 1, 0)));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 2), "XXX", "XOX", "XXX", 'X', "ingotBlack Steel", 'O', new ItemStack(abstractor, 1, 1)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotAredrite", 'O', new ItemStack(abstractor, 1, 2)));
-            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotOureclase", 'O', new ItemStack(abstractor, 1, 3)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 3), "XXX", "XOX", "XXX", 'X', "ingotOureclase", 'O', new ItemStack(abstractor, 1, 2)));
+            GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 4), "XXX", "XOX", "XXX", 'X', "ingotAredrite", 'O', new ItemStack(abstractor, 1, 3)));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 5), "XXX", "XOX", "XXX", 'X', "ingotMithril", 'O', new ItemStack(abstractor, 1, 4)));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 6), "XXX", "XOX", "XXX", 'X', "ingotHaderoth", 'O', new ItemStack(abstractor, 1, 5)));
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(abstractor, 1, 7), "XXX", "XOX", "XXX", 'X', "ingotOrichalcum", 'O', new ItemStack(abstractor, 1, 6)));

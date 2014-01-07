@@ -65,22 +65,17 @@ public class BlockAbstractorItem extends ItemBlock
         }
         case 8:
         {
-        	name = "AredriteFurnace";
+        	name = "AdamantineFurnace";
             break;
         }
         case 9:
         {
-            name = "AdamantineFurnace";
+            name = "AtlarusFurnace";
             break;
         }
         case 10:
         {
             name = "AtlarusFurnace";
-            break;
-        }
-        case 11:
-        {
-            name = "TartariteFurnace";
             break;
         }
         default:
