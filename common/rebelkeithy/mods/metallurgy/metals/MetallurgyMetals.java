@@ -194,6 +194,11 @@ public class MetallurgyMetals
             fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
             fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
         }
+        if (netherSet.getOreInfo("Aredrite").sword != null)
+        {
+            fantasySet.getOreInfo("Aredrite").sword.addHitListener(swordEffects);
+            fantasySet.getOreInfo("Aredrite").sword.setSubText("7Resistance I");
+        }
         if (netherSet.getOreInfo("Astral Silver").sword != null)
         {
             // fantasySet.getOreInfo("Astral Silver").sword.addHitListener(swordEffects);

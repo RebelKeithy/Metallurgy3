@@ -75,7 +75,7 @@ public class BlockAbstractorItem extends ItemBlock
         }
         case 10:
         {
-            name = "AtlarusFurnace";
+            name = "TartariteFurnace";
             break;
         }
         default:

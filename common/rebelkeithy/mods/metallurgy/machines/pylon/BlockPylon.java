@@ -13,7 +13,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class BlockPylon extends BlockContainer
 {
     public static String[] names =
-    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
+    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Aredrite", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
     public static float[] enchantability =
     { 0.5f, 1f, 2f, 3f, 4f, 5f, 7.5f, 10f, 12.5f, 15f };
 

@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemOrb extends Item
 {
     public static String[] names =
-    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
+    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Aredrite", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
     private Icon[] icons;
     private Icon[] iconsFull;
 
