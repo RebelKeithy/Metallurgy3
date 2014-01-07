@@ -37,7 +37,7 @@ public class BlockAbstractor extends BlockMachineBase
         super(par1, Material.rock);
         // setRequiresSelfNotify();
         setGui("Abstractor");
-        setNumSubtypes(10);
+        setNumSubtypes(11);
     }
 
     /**

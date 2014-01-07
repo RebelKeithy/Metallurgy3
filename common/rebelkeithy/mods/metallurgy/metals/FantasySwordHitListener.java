@@ -57,10 +57,13 @@ public class FantasySwordHitListener implements ISwordHitListener
             player.addPotionEffect(new PotionEffect(haste, 80, 0));
             entityliving.setFire(4);
         }
-        else if (MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").isEnabled()
-                && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").sword.itemID)
+        else if (MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Orichalcum").sword.itemID)
         {
             player.addPotionEffect(new PotionEffect(resistance, 80, 1));
+        }
+        else if (MetallurgyMetals.fantasySet.getOreInfo("Aredrite").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Aredrite").sword.itemID)
+        {
+        	player.addPotionEffect(new PotionEffect(haste, 80, 1));
         }
         else if (MetallurgyMetals.fantasySet.getOreInfo("Celenegil").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Celenegil").sword.itemID)
         {
