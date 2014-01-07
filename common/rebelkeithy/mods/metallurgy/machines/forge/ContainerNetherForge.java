@@ -10,32 +10,46 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 
+import invtweaks.api.container.InventoryContainer;
+import invtweaks.api.container.ContainerSectionCallback;
+import invtweaks.api.container.ContainerSection;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@InventoryContainer
 public class ContainerNetherForge extends Container
 {
-    private TileEntityNetherForge furnace;
+    private final TileEntityNetherForge furnace;
     private int lastCookTime = 0;
-    private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
 
     public ContainerNetherForge(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityNetherForge)
     {
-        this.furnace = (TileEntityNetherForge) par2TileEntityNetherForge;
-        this.addSlotToContainer(new Slot(furnace, 0, 36, 34));
-        this.addSlotToContainer(new SlotNetherForge(par1InventoryPlayer.player, furnace, 1, 96, 34));
+        furnace = (TileEntityNetherForge) par2TileEntityNetherForge;
+        addSlotToContainer(new Slot(furnace, 0, 36, 34));
+        addSlotToContainer(new SlotNetherForge(par1InventoryPlayer.player, furnace, 1, 96, 34));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3)
         {
             for (int var4 = 0; var4 < 9; ++var4)
             {
-                this.addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
+                addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
             }
         }
 
         for (var3 = 0; var3 < 9; ++var3)
         {
-            this.addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
+            addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
         }
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    {
+        return furnace.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**
@@ -46,63 +60,43 @@ public class ContainerNetherForge extends Container
     {
         super.detectAndSendChanges();
 
-        for (int var1 = 0; var1 < this.crafters.size(); ++var1)
+        for (int var1 = 0; var1 < crafters.size(); ++var1)
         {
-            ICrafting var2 = (ICrafting)this.crafters.get(var1);
+            final ICrafting var2 = (ICrafting) crafters.get(var1);
 
-            if (this.lastCookTime != this.furnace.furnaceCookTime)
+            if (lastCookTime != furnace.furnaceCookTime)
             {
-                var2.sendProgressBarUpdate(this, 0, this.furnace.furnaceCookTime);
+                var2.sendProgressBarUpdate(this, 0, furnace.furnaceCookTime);
             }
 
-            if (this.lastItemBurnTime != this.furnace.currentItemBurnTime)
+            if (lastItemBurnTime != furnace.currentItemBurnTime)
             {
-                var2.sendProgressBarUpdate(this, 1, this.furnace.currentItemBurnTime);
+                var2.sendProgressBarUpdate(this, 1, furnace.currentItemBurnTime);
             }
         }
 
-        this.lastCookTime = this.furnace.furnaceCookTime;
-        this.lastBurnTime = this.furnace.furnaceBurnTime;
-        this.lastItemBurnTime = this.furnace.currentItemBurnTime;
-    }
-
-    @Override
-    public void updateProgressBar(int par1, int par2)
-    {
-        if (par1 == 0)
-        {
-            this.furnace.furnaceCookTime = par2;
-        }
-
-        if (par1 == 1)
-        {
-            this.furnace.currentItemBurnTime = par2;
-        }
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
-    {
-        return this.furnace.isUseableByPlayer(par1EntityPlayer);
+        lastCookTime = furnace.furnaceCookTime;
+        lastItemBurnTime = furnace.currentItemBurnTime;
     }
 
     /**
-     * Called to transfer a stack from one inventory to the other eg. when shift clicking.
+     * Called to transfer a stack from one inventory to the other eg. when shift
+     * clicking.
      */
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = null;
-        Slot var3 = (Slot)this.inventorySlots.get(par1);
+        final Slot var3 = (Slot) inventorySlots.get(par1);
 
         if (var3 != null && var3.getHasStack())
         {
-            ItemStack var4 = var3.getStack();
+            final ItemStack var4 = var3.getStack();
             var2 = var4.copy();
 
             if (par1 == 1)
             {
-                if (!this.mergeItemStack(var4, 2, 38, true))
+                if (!mergeItemStack(var4, 2, 38, true))
                 {
                     return null;
                 }
@@ -113,38 +107,38 @@ public class ContainerNetherForge extends Container
             {
                 if (FurnaceRecipes.smelting().getSmeltingResult(var4) != null)
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
                 else if (TileEntityFurnace.isItemFuel(var4))
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
                 else if (par1 >= 2 && par1 < 29)
                 {
-                    if (!this.mergeItemStack(var4, 29, 38, false))
+                    if (!mergeItemStack(var4, 29, 38, false))
                     {
                         return null;
                     }
                 }
-                else if (par1 >= 29 && par1 < 38 && !this.mergeItemStack(var4, 2, 29, false))
+                else if (par1 >= 29 && par1 < 38 && !mergeItemStack(var4, 2, 29, false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(var4, 2, 38, false))
+            else if (!mergeItemStack(var4, 2, 38, false))
             {
                 return null;
             }
 
             if (var4.stackSize == 0)
             {
-                var3.putStack((ItemStack)null);
+                var3.putStack((ItemStack) null);
             }
             else
             {
@@ -161,4 +155,27 @@ public class ContainerNetherForge extends Container
 
         return var2;
     }
+
+    @Override
+    public void updateProgressBar(int par1, int par2)
+    {
+        if (par1 == 0)
+        {
+            furnace.furnaceCookTime = par2;
+        }
+
+        if (par1 == 1)
+        {
+            furnace.currentItemBurnTime = par2;
+        }
+    }
+
+	@ContainerSectionCallback
+	public Map<ContainerSection, List<Slot>> getSections() {
+        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<ContainerSection, List<Slot>>();
+
+        slotRefs.put(ContainerSection.FURNACE_IN, inventorySlots.subList(0, 1));
+        slotRefs.put(ContainerSection.FURNACE_OUT, inventorySlots.subList(1, 2));
+        return slotRefs;
+	}
 }

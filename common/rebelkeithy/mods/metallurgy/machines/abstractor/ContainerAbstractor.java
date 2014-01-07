@@ -8,33 +8,48 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
+import invtweaks.api.container.InventoryContainer;
+import invtweaks.api.container.ContainerSectionCallback;
+import invtweaks.api.container.ContainerSection;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@InventoryContainer
 public class ContainerAbstractor extends Container
 {
-    private TileEntityAbstractor abstractor;
+    private final TileEntityAbstractor abstractor;
     private int lastCookTime = 0;
     private int lastBurnTime = 0;
     private int lastItemBurnTime = 0;
 
     public ContainerAbstractor(InventoryPlayer par1InventoryPlayer, TileEntity par2TileEntityMetalFurnace)
     {
-        this.abstractor = (TileEntityAbstractor) par2TileEntityMetalFurnace;
-        this.addSlotToContainer(new Slot(abstractor, 0, 56, 17));
-        this.addSlotToContainer(new Slot(abstractor, 1, 56, 53));
-        this.addSlotToContainer(new SlotAbstractor(par1InventoryPlayer.player, abstractor, 2, 116, 35));
+        abstractor = (TileEntityAbstractor) par2TileEntityMetalFurnace;
+        addSlotToContainer(new Slot(abstractor, 0, 56, 17));
+        addSlotToContainer(new Slot(abstractor, 1, 56, 53));
+        addSlotToContainer(new SlotAbstractor(par1InventoryPlayer.player, abstractor, 2, 116, 35));
         int var3;
 
         for (var3 = 0; var3 < 3; ++var3)
         {
             for (int var4 = 0; var4 < 9; ++var4)
             {
-                this.addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
+                addSlotToContainer(new Slot(par1InventoryPlayer, var4 + var3 * 9 + 9, 8 + var4 * 18, 84 + var3 * 18));
             }
         }
 
         for (var3 = 0; var3 < 9; ++var3)
         {
-            this.addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
+            addSlotToContainer(new Slot(par1InventoryPlayer, var3, 8 + var3 * 18, 142));
         }
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    {
+        return abstractor.isUseableByPlayer(par1EntityPlayer);
     }
 
     /**
@@ -45,73 +60,49 @@ public class ContainerAbstractor extends Container
     {
         super.detectAndSendChanges();
 
-        for (int var1 = 0; var1 < this.crafters.size(); ++var1)
+        for (int var1 = 0; var1 < crafters.size(); ++var1)
         {
-            ICrafting var2 = (ICrafting)this.crafters.get(var1);
+            final ICrafting var2 = (ICrafting) crafters.get(var1);
 
-            if (this.lastCookTime != this.abstractor.furnaceCookTime)
+            if (lastCookTime != abstractor.furnaceCookTime)
             {
-                var2.sendProgressBarUpdate(this, 0, this.abstractor.furnaceCookTime);
+                var2.sendProgressBarUpdate(this, 0, abstractor.furnaceCookTime);
             }
 
-            if (this.lastBurnTime != this.abstractor.furnaceBurnTime)
+            if (lastBurnTime != abstractor.furnaceBurnTime)
             {
-                var2.sendProgressBarUpdate(this, 1, this.abstractor.furnaceBurnTime);
+                var2.sendProgressBarUpdate(this, 1, abstractor.furnaceBurnTime);
             }
 
-            if (this.lastItemBurnTime != this.abstractor.currentItemBurnTime)
+            if (lastItemBurnTime != abstractor.currentItemBurnTime)
             {
-                var2.sendProgressBarUpdate(this, 2, this.abstractor.currentItemBurnTime);
+                var2.sendProgressBarUpdate(this, 2, abstractor.currentItemBurnTime);
             }
         }
 
-        this.lastCookTime = this.abstractor.furnaceCookTime;
-        this.lastBurnTime = this.abstractor.furnaceBurnTime;
-        this.lastItemBurnTime = this.abstractor.currentItemBurnTime;
-    }
-
-    @Override
-    public void updateProgressBar(int par1, int par2)
-    {
-        if (par1 == 0)
-        {
-            this.abstractor.furnaceCookTime = par2;
-        }
-
-        if (par1 == 1)
-        {
-            this.abstractor.furnaceBurnTime = par2;
-        }
-
-        if (par1 == 2)
-        {
-            this.abstractor.currentItemBurnTime = par2;
-        }
-    }
-
-    @Override
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
-    {
-        return this.abstractor.isUseableByPlayer(par1EntityPlayer);
+        lastCookTime = abstractor.furnaceCookTime;
+        lastBurnTime = abstractor.furnaceBurnTime;
+        lastItemBurnTime = abstractor.currentItemBurnTime;
     }
 
     /**
-     * Called to transfer a stack from one inventory to the other eg. when shift clicking.
+     * Called to transfer a stack from one inventory to the other eg. when shift
+     * clicking.
      */
     @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
     {
         ItemStack var2 = null;
-        Slot var3 = (Slot)this.inventorySlots.get(par1);
+        final Slot var3 = (Slot) inventorySlots.get(par1);
 
         if (var3 != null && var3.getHasStack())
         {
-            ItemStack var4 = var3.getStack();
+            final ItemStack var4 = var3.getStack();
             var2 = var4.copy();
 
             if (par1 == 2)
             {
-                if (!this.mergeItemStack(var4, 3, 39, true))
+                if (!mergeItemStack(var4, 3, 39, true))
                 {
                     return null;
                 }
@@ -122,38 +113,38 @@ public class ContainerAbstractor extends Container
             {
                 if (AbstractorRecipes.essence().getEssenceResult(var4) != 0)
                 {
-                    if (!this.mergeItemStack(var4, 0, 1, false))
+                    if (!mergeItemStack(var4, 0, 1, false))
                     {
                         return null;
                     }
                 }
                 else if (TileEntityAbstractor.isItemFuel(var4))
                 {
-                    if (!this.mergeItemStack(var4, 1, 2, false))
+                    if (!mergeItemStack(var4, 1, 2, false))
                     {
                         return null;
                     }
                 }
                 else if (par1 >= 3 && par1 < 30)
                 {
-                    if (!this.mergeItemStack(var4, 30, 39, false))
+                    if (!mergeItemStack(var4, 30, 39, false))
                     {
                         return null;
                     }
                 }
-                else if (par1 >= 30 && par1 < 39 && !this.mergeItemStack(var4, 3, 30, false))
+                else if (par1 >= 30 && par1 < 39 && !mergeItemStack(var4, 3, 30, false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(var4, 3, 39, false))
+            else if (!mergeItemStack(var4, 3, 39, false))
             {
                 return null;
             }
 
             if (var4.stackSize == 0)
             {
-                var3.putStack((ItemStack)null);
+                var3.putStack((ItemStack) null);
             }
             else
             {
@@ -170,4 +161,34 @@ public class ContainerAbstractor extends Container
 
         return var2;
     }
+
+    @Override
+    public void updateProgressBar(int par1, int par2)
+    {
+        if (par1 == 0)
+        {
+            abstractor.furnaceCookTime = par2;
+        }
+
+        if (par1 == 1)
+        {
+            abstractor.furnaceBurnTime = par2;
+        }
+
+        if (par1 == 2)
+        {
+            abstractor.currentItemBurnTime = par2;
+        }
+    }
+
+	@ContainerSectionCallback
+	public Map<ContainerSection, List<Slot>> getSections() {
+        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<ContainerSection, List<Slot>>();
+
+		// Furnace is the best match for this, and will let the extra invtweaks shortcuts target the input correctly.
+        slotRefs.put(ContainerSection.FURNACE_IN, inventorySlots.subList(0, 1));
+        slotRefs.put(ContainerSection.FURNACE_FUEL, inventorySlots.subList(1, 2));
+        slotRefs.put(ContainerSection.FURNACE_OUT, inventorySlots.subList(2, 3));
+        return slotRefs;
+	}
 }

@@ -1,44 +1,54 @@
 package rebelkeithy.mods.metallurgy.machines.lantern;
 
-import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.world.IBlockAccess;
-
+import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
-public class LanternRenderHelper implements ISimpleBlockRenderingHandler {
+import java.util.HashMap;
 
-	@Override
-	public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer) 
-	{
-		// TODO Auto-generated method stub
-		TileEntityLantern tec = new TileEntityLantern(metadata);
-		TileEntityRenderer.instance.renderTileEntityAt(tec, 0.0D, 0.0D, 0.0D, 0.0F);
-	}
+public class LanternRenderHelper implements ISimpleBlockRenderingHandler
+{
+    private static HashMap<Integer, TileEntityLantern> tileEntity;
 
-	@Override
-	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) 
-	{
-		/*
-		// TODO Auto-generated method stub
-		TileEntityLantern tec = new TileEntityLantern();
-		//tec.setType(metadata);
-		TileEntityRenderer.instance.renderTileEntityAt(tec, x, y, z, 0.0F);
-		*/
-		return false;
-	}
+    @Override
+    public int getRenderId()
+    {
+        return MetallurgyMachines.lantern.getRenderType();
+    }
 
-	@Override
-	public boolean shouldRender3DInInventory() {
-		return true;
-	}
+    @Override
+    public void renderInventoryBlock(Block block, int metadata, int modelID, RenderBlocks renderer)
+    {
+        if(tileEntity == null)
+        {
+            tileEntity = new HashMap<Integer, TileEntityLantern>();
+        }
 
-	@Override
-	public int getRenderId() {
-		// TODO Auto-generated method stub
-		return MetallurgyMachines.lantern.getRenderType();
-	}
+        TileEntityLantern lantern = tileEntity.get(metadata);
+
+        if(lantern == null)
+        {
+            lantern = new TileEntityLantern(metadata);
+            tileEntity.put(metadata, lantern);
+
+        }
+
+        TileEntityRenderer.instance.renderTileEntityAt(lantern, 0.0D, 0.0D, 0.0D, 0.0F);
+    }
+
+    @Override
+    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRender3DInInventory()
+    {
+        return true;
+    }
 
 }

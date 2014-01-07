@@ -1,22 +1,22 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-
 
 public class ModelMint extends ModelBase
 {
 
-    private ModelRenderer Body;
-    private ModelRenderer Shape2;
-    private ModelRenderer Shape3;
-    private ModelRenderer Shape4;
-    private ModelRenderer Shape5;
-    private ModelRenderer Bar0;
-    private ModelRenderer Bar1;
-    private ModelRenderer Bar2;
-    private ModelRenderer Bar3;
-    private ModelRenderer Head;
-    
+    private final ModelRenderer Body;
+    private final ModelRenderer Shape2;
+    private final ModelRenderer Shape3;
+    private final ModelRenderer Shape4;
+    private final ModelRenderer Shape5;
+    private final ModelRenderer Bar0;
+    private final ModelRenderer Bar1;
+    private final ModelRenderer Bar2;
+    private final ModelRenderer Bar3;
+    private final ModelRenderer Head;
+
     public ModelMint()
     {
         textureWidth = 64;
@@ -98,13 +98,13 @@ public class ModelMint extends ModelBase
         Bar1.render(0.0625F);
         Bar2.render(0.0625F);
         Bar3.render(0.0625F);
-        //Head.render(0.0625F);
+        // Head.render(0.0625F);
     }
-    
+
     private void setRotation(ModelRenderer model, float x, float y, float z)
     {
-      model.rotateAngleX = x;
-      model.rotateAngleY = y;
-      model.rotateAngleZ = z;
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
     }
 }

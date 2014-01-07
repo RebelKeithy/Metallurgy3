@@ -1,14 +1,9 @@
 package rebelkeithy.mods.metallurgy.machines.enchanter;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import java.util.List;
 import java.util.Random;
 
-import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.EnchantmentData;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -19,217 +14,159 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+import rebelkeithy.mods.metallurgy.metals.MetallurgyMetals;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+import invtweaks.api.container.InventoryContainer;
+import invtweaks.api.container.ContainerSectionCallback;
+import invtweaks.api.container.ContainerSection;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@InventoryContainer(showOptions = false)
 public class ContainerMetallurgyEnchantment extends Container
 {
     /** SlotEnchantmentTable object with ItemStack to be enchanted */
-    public IInventory tableInventory = new SlotMetallurgyEnchantmentTable(this, "Enchant", true, 6);
-    //public IInventory catalystInventory = new Slot()
+    public IInventory tableInventory = new SlotMetallurgyEnchantmentTable(this, "Enchant", true, 7);
+    // public IInventory catalystInventory = new Slot()
 
     /** current world (for bookshelf counting) */
-    private World worldPointer;
-    private int posX;
-    private int posY;
-    private int posZ;
-    private Random rand = new Random();
+    private final World worldPointer;
+    private final int posX;
+    private final int posY;
+    private final int posZ;
+    private final Random rand = new Random();
 
     /** used as seed for EnchantmentNameParts (see GuiEnchantment) */
     public long nameSeed;
 
     /** 3-member array storing the enchantment levels of each slot */
     public int enchantLevels;
-    
+
     public EntityPlayer player;
 
     public ContainerMetallurgyEnchantment(InventoryPlayer par1InventoryPlayer, TileEntity te)
     {
-        this.worldPointer = te.worldObj;
-        this.posX = te.xCoord;
-        this.posY = te.yCoord;
-        this.posZ = te.zCoord;
-        this.addSlotToContainer(new SlotMetallurgyEnchantment(this, this.tableInventory, 0, 25, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 1, 70, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 2, 88, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 3, 106, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 4, 124, 47));
-        this.addSlotToContainer(new Slot(this.tableInventory, 5, 142, 47));
-        
+        worldPointer = te.worldObj;
+        posX = te.xCoord;
+        posY = te.yCoord;
+        posZ = te.zCoord;
+        addSlotToContainer(new SlotMetallurgyEnchantment(this, tableInventory, 0, 80, 35));
+        addSlotToContainer(new Slot(tableInventory, 1, 64, 19));
+        addSlotToContainer(new Slot(tableInventory, 2, 80, 9));
+        addSlotToContainer(new Slot(tableInventory, 3, 96, 19));
+        addSlotToContainer(new Slot(tableInventory, 4, 64, 51));
+        addSlotToContainer(new Slot(tableInventory, 5, 80, 61));
+        addSlotToContainer(new Slot(tableInventory, 6, 96, 51));
+
         int l;
-        
+
         for (l = 0; l < 3; ++l)
         {
             for (int i1 = 0; i1 < 9; ++i1)
             {
-                this.addSlotToContainer(new Slot(par1InventoryPlayer, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
+                addSlotToContainer(new Slot(par1InventoryPlayer, i1 + l * 9 + 9, 8 + i1 * 18, 84 + l * 18));
             }
         }
 
         for (l = 0; l < 9; ++l)
         {
-            this.addSlotToContainer(new Slot(par1InventoryPlayer, l, 8 + l * 18, 142));
+            addSlotToContainer(new Slot(par1InventoryPlayer, l, 8 + l * 18, 142));
         }
     }
 
+    @Override
     public void addCraftingToCrafters(ICrafting par1ICrafting)
     {
         super.addCraftingToCrafters(par1ICrafting);
-        par1ICrafting.sendProgressBarUpdate(this, 0, this.enchantLevels);
+        par1ICrafting.sendProgressBarUpdate(this, 0, enchantLevels);
+    }
+
+    @Override
+    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    {
+        player = par1EntityPlayer;
+        return true;
+        // return this.worldPointer.getBlockId(this.posX, this.posY, this.posZ)
+        // != Block.enchantmentTable.blockID ? false :
+        // par1EntityPlayer.getDistanceSq((double)this.posX + 0.5D,
+        // (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
     }
 
     /**
      * Looks for changes made in the container, sends them to every listener.
      */
+    @Override
     public void detectAndSendChanges()
     {
         super.detectAndSendChanges();
 
-        for (int i = 0; i < this.crafters.size(); ++i)
+        for (int i = 0; i < crafters.size(); ++i)
         {
-            ICrafting icrafting = (ICrafting)this.crafters.get(i);
-            icrafting.sendProgressBarUpdate(this, 0, this.enchantLevels);
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2)
-    {
-        if (par1 == 0)
-        {
-            this.enchantLevels = par2;
-        }
-        else
-        {
-            super.updateProgressBar(par1, par2);
+            final ICrafting icrafting = (ICrafting) crafters.get(i);
+            icrafting.sendProgressBarUpdate(this, 0, enchantLevels);
         }
     }
 
     /**
-     * Callback for when the crafting matrix is changed.
+     * enchants the item on the table using the specified slot; also deducts XP
+     * from player
      */
-    public void onCraftMatrixChanged(IInventory par1IInventory)
-    {
-        if (par1IInventory == this.tableInventory)
-        {
-            ItemStack itemstack = par1IInventory.getStackInSlot(0);
-            int i;
-
-            if (itemstack != null && itemstack.isItemEnchantable())
-            {
-                this.nameSeed = this.rand.nextLong();
-
-                if (!this.worldPointer.isRemote)
-                {
-                    i = 0;
-                    int j;
-
-                    for (j = -1; j <= 1; ++j)
-                    {
-                        for (int k = -1; k <= 1; ++k)
-                        {
-                            if ((j != 0 || k != 0) && this.worldPointer.isAirBlock(this.posX + k, this.posY, this.posZ + j) && this.worldPointer.isAirBlock(this.posX + k, this.posY + 1, this.posZ + j))
-                            {
-                                if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                {
-                                    ++i;
-                                }
-
-                                if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY + 1, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                {
-                                    ++i;
-                                }
-
-                                if (k != 0 && j != 0)
-                                {
-                                    if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY, this.posZ + j) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k * 2, this.posY + 1, this.posZ + j) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k, this.posY, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-
-                                    if (this.worldPointer.getBlockId(this.posX + k, this.posY + 1, this.posZ + j * 2) == Block.bookShelf.blockID)
-                                    {
-                                        ++i;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    this.enchantLevels = MaxEnchenterHelper.calcItemStackEnchantability(this.rand, i, itemstack);
-                    if(player != null && player.experienceLevel < enchantLevels)
-                    {
-                    	enchantLevels = player.experienceLevel;
-                    }
-                    this.detectAndSendChanges();
-                }
-            }
-            else
-            {
-                this.enchantLevels = 0;
-            }
-        }
-    }
-
-    /**
-     * enchants the item on the table using the specified slot; also deducts XP from player
-     */
+    @Override
     public boolean enchantItem(EntityPlayer par1EntityPlayer, int slot)
     {
-        ItemStack itemstack = this.tableInventory.getStackInSlot(0);
+        final ItemStack itemstack = tableInventory.getStackInSlot(0);
 
-        if (this.enchantLevels > 0 && itemstack != null && (par1EntityPlayer.experienceLevel >= this.enchantLevels || par1EntityPlayer.capabilities.isCreativeMode))
+        if (enchantLevels > 0 && itemstack != null && (par1EntityPlayer.experienceLevel >= enchantLevels || par1EntityPlayer.capabilities.isCreativeMode))
         {
-            if (!this.worldPointer.isRemote)
+            if (!worldPointer.isRemote)
             {
-            	int catalyst = 0;
-            	for(int i = 1; i < 6; i++)
-            	{
-            		ItemStack item = tableInventory.getStackInSlot(i);
-            		if(item != null && MetallurgyMetals.fantasySet != null)
-            		{
-            			if(item.itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").dust.itemID)
-            			{
-            				catalyst++;
-            				tableInventory.setInventorySlotContents(i, null);
-            			} else if(item.itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").dust.itemID) {
-            				catalyst += 2;
-            				tableInventory.setInventorySlotContents(i, null);
-            			}
-            		}
-            	}
-            	
-                List list = MaxEnchenterHelper.buildEnchantmentList(this.rand, itemstack, this.enchantLevels, catalyst);
-                boolean flag = itemstack.itemID == Item.book.itemID;
+                int catalyst = 0;
+                for (int i = 1; i < 6; i++)
+                {
+                    final ItemStack item = tableInventory.getStackInSlot(i);
+                    if (item != null && MetallurgyMetals.fantasySet != null)
+                    {
+                        if (item.itemID == MetallurgyMetals.fantasySet.getOreInfo("Astral Silver").dust.itemID)
+                        {
+                            catalyst++;
+                            tableInventory.setInventorySlotContents(i, null);
+                        }
+                        else if (item.itemID == MetallurgyMetals.fantasySet.getOreInfo("Carmot").dust.itemID)
+                        {
+                            catalyst += 2;
+                            tableInventory.setInventorySlotContents(i, null);
+                        }
+                    }
+                }
+
+                final List<EnchantmentData> list = MaxEnchanterHelper.buildEnchantmentList(rand, itemstack, enchantLevels, catalyst);
+                final boolean flag = itemstack.itemID == Item.book.itemID;
 
                 if (list != null)
                 {
-                    par1EntityPlayer.addExperienceLevel(-this.enchantLevels);
+                    par1EntityPlayer.addExperienceLevel(-enchantLevels);
 
                     if (flag)
                     {
                         itemstack.itemID = Item.enchantedBook.itemID;
                     }
 
-                    int j = flag ? this.rand.nextInt(list.size()) : -1;
+                    final int j = flag ? rand.nextInt(list.size()) : -1;
 
                     for (int k = 0; k < list.size(); ++k)
                     {
-                        EnchantmentData enchantmentdata = (EnchantmentData)list.get(k);
+                        final EnchantmentData enchantmentdata = (EnchantmentData) list.get(k);
 
                         if (!flag || k == j)
                         {
                             if (flag)
                             {
-                                Item.enchantedBook.func_92115_a(itemstack, enchantmentdata);
+                                Item.enchantedBook.addEnchantment(itemstack, enchantmentdata);
                             }
                             else
                             {
@@ -238,7 +175,7 @@ public class ContainerMetallurgyEnchantment extends Container
                         }
                     }
 
-                    this.onCraftMatrixChanged(this.tableInventory);
+                    onCraftMatrixChanged(tableInventory);
                 }
             }
 
@@ -253,73 +190,121 @@ public class ContainerMetallurgyEnchantment extends Container
     /**
      * Callback for when the crafting gui is closed.
      */
-    public void onCraftGuiClosed(EntityPlayer par1EntityPlayer)
+    @Override
+    public void onContainerClosed(EntityPlayer par1EntityPlayer)
     {
-        super.onCraftGuiClosed(par1EntityPlayer);
+        super.onContainerClosed(par1EntityPlayer);
 
-        if (!this.worldPointer.isRemote)
+        if (!worldPointer.isRemote)
         {
-        	for(int i = 0; i < 6; i++)
-        	{
-        		ItemStack itemstack = this.tableInventory.getStackInSlotOnClosing(i);
+            for (int i = 0; i < 6; i++)
+            {
+                final ItemStack itemstack = tableInventory.getStackInSlotOnClosing(i);
 
-            	if (itemstack != null)
-            	{
-            	par1EntityPlayer.dropPlayerItem(itemstack);
-            	}
-        	}
+                if (itemstack != null)
+                {
+                    par1EntityPlayer.dropPlayerItem(itemstack);
+                }
+            }
         }
     }
 
-    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    /**
+     * Callback for when the crafting matrix is changed.
+     */
+    @Override
+    public void onCraftMatrixChanged(IInventory par1IInventory)
     {
-    	player = par1EntityPlayer;
-    	return true;
-        //return this.worldPointer.getBlockId(this.posX, this.posY, this.posZ) != Block.enchantmentTable.blockID ? false : par1EntityPlayer.getDistanceSq((double)this.posX + 0.5D, (double)this.posY + 0.5D, (double)this.posZ + 0.5D) <= 64.0D;
+        if (par1IInventory == tableInventory)
+        {
+            final ItemStack itemstack = par1IInventory.getStackInSlot(0);
+            if (itemstack != null && itemstack.isItemEnchantable())
+            {
+                nameSeed = rand.nextLong();
+
+                if (!worldPointer.isRemote)
+                {
+                    int j;
+                    float power = 0;
+
+                    for (j = -1; j <= 1; ++j)
+                    {
+                        for (int k = -1; k <= 1; ++k)
+                        {
+                            if ((j != 0 || k != 0) && worldPointer.isAirBlock(posX + k, posY, posZ + j) && worldPointer.isAirBlock(posX + k, posY + 1, posZ + j))
+                            {
+                                power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY, posZ + j * 2);
+                                power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY + 1, posZ + j * 2);
+
+                                if (k != 0 && j != 0)
+                                {
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY, posZ + j);
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k * 2, posY + 1, posZ + j);
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k, posY, posZ + j * 2);
+                                    power += ForgeHooks.getEnchantPower(worldPointer, posX + k, posY + 1, posZ + j * 2);
+                                }
+                            }
+                        }
+                    }
+                    enchantLevels = MaxEnchanterHelper.calcItemStackEnchantability(rand, (int) power, itemstack);
+                    if (player != null && player.experienceLevel < enchantLevels)
+                    {
+                        enchantLevels = player.experienceLevel;
+                    }
+                    detectAndSendChanges();
+                }
+            }
+            else
+            {
+                enchantLevels = 0;
+            }
+        }
     }
 
     /**
-     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
+     * Called when a player shift-clicks on a slot. You must override this or
+     * you will crash when someone does that.
      */
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2)
     {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(par2);
+        final Slot slot = (Slot) inventorySlots.get(par2);
 
         if (slot != null && slot.getHasStack())
         {
-            ItemStack itemstack1 = slot.getStack();
+            final ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
             if (par2 <= 5)
             {
-                if (!this.mergeItemStack(itemstack1, 6, 42, true))
+                if (!mergeItemStack(itemstack1, 6, 42, true))
                 {
                     return null;
                 }
             }
             else
             {
-                if (((Slot)this.inventorySlots.get(0)).getHasStack() || !((Slot)this.inventorySlots.get(0)).isItemValid(itemstack1))
+                if (((Slot) inventorySlots.get(0)).getHasStack() || !((Slot) inventorySlots.get(0)).isItemValid(itemstack1))
                 {
                     return null;
                 }
 
                 if (itemstack1.hasTagCompound() && itemstack1.stackSize == 1)
                 {
-                    ((Slot)this.inventorySlots.get(0)).putStack(itemstack1.copy());
+                    ((Slot) inventorySlots.get(0)).putStack(itemstack1.copy());
                     itemstack1.stackSize = 0;
                 }
                 else if (itemstack1.stackSize >= 1)
                 {
-                    ((Slot)this.inventorySlots.get(0)).putStack(new ItemStack(itemstack1.itemID, 1, itemstack1.getItemDamage()));
+                    ((Slot) inventorySlots.get(0)).putStack(new ItemStack(itemstack1.itemID, 1, itemstack1.getItemDamage()));
                     --itemstack1.stackSize;
                 }
             }
 
             if (itemstack1.stackSize == 0)
             {
-                slot.putStack((ItemStack)null);
+                slot.putStack((ItemStack) null);
             }
             else
             {
@@ -336,4 +321,27 @@ public class ContainerMetallurgyEnchantment extends Container
 
         return itemstack;
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void updateProgressBar(int par1, int par2)
+    {
+        if (par1 == 0)
+        {
+            enchantLevels = par2;
+        }
+        else
+        {
+            super.updateProgressBar(par1, par2);
+        }
+    }
+
+	@ContainerSectionCallback
+	public Map<ContainerSection, List<Slot>> getSections() {
+        Map<ContainerSection, List<Slot>> slotRefs = new HashMap<ContainerSection, List<Slot>>();
+
+        slotRefs.put(ContainerSection.ENCHANTMENT, inventorySlots.subList(0, 1));
+        slotRefs.put(ContainerSection.CHEST, inventorySlots.subList(1, 7));
+        return slotRefs;
+	}
 }
