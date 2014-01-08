@@ -7,6 +7,8 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityPreciousChestCompatibility;
+import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
 import rebelkeithy.mods.metallurgy.core.metalsets.ItemMetallurgy;
 import rebelkeithy.mods.metallurgy.integration.AppliedEnergestics;
@@ -252,6 +254,9 @@ public class MetallurgyMachines
         chest = new BlockPreciousChest(ConfigMachines.chestID).setUnlocalizedName("M3PreciousChest").setHardness(1.0F).setCreativeTab(machineTab);
         GameRegistry.registerBlock(chest, ItemBlockPreciousChest.class, "PreciousChest");
         GameRegistry.registerTileEntity(TileEntityPreciousChest.class, "TileEntityPreciousChest");
+        if (MetallurgyCore.metallurgy2Compatibility) {
+        	GameRegistry.registerTileEntity(TileEntityPreciousChestCompatibility.class, "PreciousChest");
+        }
         LanguageRegistry.addName(new ItemStack(chest, 1, 0), "Brass Chest");
         LanguageRegistry.addName(new ItemStack(chest, 1, 1), "Silver Chest");
         LanguageRegistry.addName(new ItemStack(chest, 1, 2), "Gold Chest");
@@ -438,7 +443,6 @@ public class MetallurgyMachines
 
     public void initStorage()
     {
-    	//TODO
     	storageAccessor = new BlockStorageAccessor(ConfigMachines.storageAccessorID).setUnlocalizedName("StorageAccessorBlock").setHardness(2.0F).setCreativeTab(machineTab);
         storageBlock = new BlockStorage(ConfigMachines.storageBlockID).setUnlocalizedName("StorageBlock").setHardness(2.0F).setCreativeTab(machineTab);
         // storageAccessor.blockIndexInTexture = 32;

@@ -90,7 +90,7 @@ public class ConfigMachines
         }
 
         final Configuration config = new Configuration(cfgFile);
-
+        
         crusherEnabled = config.get("Machines", "CrusherEnabled", crusherEnabled).getBoolean(crusherEnabled);
         furnaceEnabled = config.get("Machines", "FurnanceEnabled", furnaceEnabled).getBoolean(furnaceEnabled);
         forgeEnabled = config.get("Machines", "SmelterEnabled", forgeEnabled).getBoolean(forgeEnabled);
