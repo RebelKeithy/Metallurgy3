@@ -18,6 +18,8 @@ public class FantasyOrbs
 
         for (int i = 0; i < ItemOrb.names.length; i++)
         {
+        	System.out.println("i = "+i);
+        	System.out.println("i = "+ItemOrb.names[i]);
             LanguageRegistry.addName(new ItemStack(orb, 1, i), ItemOrb.names[i] + " Orb");
         }
 

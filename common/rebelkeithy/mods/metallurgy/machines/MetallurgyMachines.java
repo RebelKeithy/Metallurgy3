@@ -438,8 +438,9 @@ public class MetallurgyMachines
 
     public void initStorage()
     {
-        storageAccessor = new BlockStorageAccessor(919).setUnlocalizedName("StorageAccessorBlock").setHardness(2.0F).setCreativeTab(machineTab);
-        storageBlock = new BlockStorage(920).setUnlocalizedName("StorageBlock").setHardness(2.0F).setCreativeTab(machineTab);
+    	//TODO
+    	storageAccessor = new BlockStorageAccessor(ConfigMachines.storageAccessorID).setUnlocalizedName("StorageAccessorBlock").setHardness(2.0F).setCreativeTab(machineTab);
+        storageBlock = new BlockStorage(ConfigMachines.storageBlockID).setUnlocalizedName("StorageBlock").setHardness(2.0F).setCreativeTab(machineTab);
         // storageAccessor.blockIndexInTexture = 32;
         // storageBlock.blockIndexInTexture = 33;
         GameRegistry.registerTileEntity(TileEntityStorageAccessor.class, "TileEntityStorage");

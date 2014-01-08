@@ -69,6 +69,9 @@ public class ConfigMachines
     public static int xpTankID = 923;
     public static int pylonID = 924;
 
+    public static int storageAccessorID = 919;
+	public static int storageBlockID = 920;
+	
     public static int orbID = 29018;
 	public static int sawDustID = 29019;
 
@@ -112,6 +115,9 @@ public class ConfigMachines
         xpTankID = config.get("Block IDs", "Xp Tank", xpTankID).getInt();
         pylonID = config.get("Block IDs", "Pylon", pylonID).getInt();
 
+        storageBlockID = config.get("Block IDs", "Storage", storageBlockID).getInt();
+        storageAccessorID = config.get("Block IDs", "Storage", storageAccessorID).getInt();
+
         ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
         goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();
         coinID = config.get("Item IDs", "Coin", coinID).getInt();
@@ -121,7 +127,7 @@ public class ConfigMachines
         glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
         orbID = config.get("Item IDs", "Fantasy Orbs", orbID).getInt();
         sawDustID = config.get("Item IDs", "Saw Dust", sawDustID).getInt();
-
+        
         tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
 
         stoneCrusherSpeed = config.get("Crusher Speeds", "Stone", (int) (stoneCrusherSpeed * 1000)).getInt() / 1000F;
@@ -152,11 +158,11 @@ public class ConfigMachines
         xpBonus[2] = config.get("Abstractor", "Bonus Black Steel", 1.2).getDouble(1.2);
         xpBonus[3] = config.get("Abstractor", "Bonus Oureclase", 1.3).getDouble(1.3);
         xpBonus[4] = config.get("Abstractor", "Bonus Aredrite", 1.4).getDouble(1.4);
-        xpBonus[5] = config.get("Abstractor", "Bonus Mithril", 1.4).getDouble(1.4);
-        xpBonus[6] = config.get("Abstractor", "Bonus Haderoth", 1.5).getDouble(1.5);
-        xpBonus[7] = config.get("Abstractor", "Bonus Oreichalcum", 1.6).getDouble(1.6);
-        xpBonus[8] = config.get("Abstractor", "Bonus Admantine", 1.7).getDouble(1.7);
-        xpBonus[9] = config.get("Abstractor", "Bonus Atlarus", 1.8).getDouble(1.8);
+        xpBonus[5] = config.get("Abstractor", "Bonus Mithril", 1.5).getDouble(1.5);
+        xpBonus[6] = config.get("Abstractor", "Bonus Haderoth", 1.6).getDouble(1.6);
+        xpBonus[7] = config.get("Abstractor", "Bonus Oreichalcum", 1.7).getDouble(1.7);
+        xpBonus[8] = config.get("Abstractor", "Bonus Admantine", 1.8).getDouble(1.8);
+        xpBonus[9] = config.get("Abstractor", "Bonus Atlarus", 1.9).getDouble(1.9);
         xpBonus[10] = config.get("Abstractor", "Bonus Tartarite", 2.0).getDouble(2.0);
 
         final String[] forgeNames =
