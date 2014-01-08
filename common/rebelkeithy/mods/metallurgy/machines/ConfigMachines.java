@@ -116,7 +116,7 @@ public class ConfigMachines
         pylonID = config.get("Block IDs", "Pylon", pylonID).getInt();
 
         storageBlockID = config.get("Block IDs", "Storage", storageBlockID).getInt();
-        storageAccessorID = config.get("Block IDs", "Storage", storageAccessorID).getInt();
+        storageAccessorID = config.get("Block IDs", "Storage Accessor", storageAccessorID).getInt();
 
         ironDustID = config.get("Item IDs", "Iron Dust", ironDustID).getInt();
         goldDustID = config.get("Item IDs", "Gold Dust", goldDustID).getInt();
