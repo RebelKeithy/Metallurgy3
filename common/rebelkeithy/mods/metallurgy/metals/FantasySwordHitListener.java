@@ -43,6 +43,10 @@ public class FantasySwordHitListener implements ISwordHitListener
         {
             player.addPotionEffect(new PotionEffect(resistance, 80, 0));
         }
+        else if (MetallurgyMetals.fantasySet.getOreInfo("Aredrite").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Aredrite").sword.itemID)
+        {
+            player.addPotionEffect(new PotionEffect(haste, 70, 0));
+        }
         else if (MetallurgyMetals.fantasySet.getOreInfo("Mithril").isEnabled() && itemstack.getItem().itemID == MetallurgyMetals.fantasySet.getOreInfo("Mithril").sword.itemID)
         {
             player.addPotionEffect(new PotionEffect(haste, 80, 0));

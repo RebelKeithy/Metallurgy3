@@ -37,7 +37,7 @@ public class BlockAbstractor extends BlockMachineBase
         super(par1, Material.rock);
         // setRequiresSelfNotify();
         setGui("Abstractor");
-        setNumSubtypes(10);
+        setNumSubtypes(11);
     }
 
     /**
@@ -192,7 +192,7 @@ public class BlockAbstractor extends BlockMachineBase
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 11; i++)
         {
             setFrontIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Front"), i, false);
             setFrontIcon(par1IconRegister.registerIcon("Metallurgy:machines/abstractor/Abstractor" + i + "Active"), i, true);

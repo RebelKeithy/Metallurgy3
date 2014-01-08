@@ -17,12 +17,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemOrb extends Item
 {
     public static String[] names =
-    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
+    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Aredrite", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
     private Icon[] icons;
     private Icon[] iconsFull;
 
     private static int[] maxXP =
-    { 50, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500 };
+    { 50, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750 };
 
     public ItemOrb(int par1)
     {
@@ -110,7 +110,7 @@ public class ItemOrb extends Item
     @Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (int j = 0; j < 10; ++j)
+        for (int j = 0; j < names.length; ++j)
         {
             par3List.add(new ItemStack(par1, 1, j));
         }
