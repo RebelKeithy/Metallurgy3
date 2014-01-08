@@ -7,6 +7,11 @@ import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityAbstractorCompatibility;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityLanternCompatibility;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityMetalFurnaceCompatibility;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityMintStorageCompatibility;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityNetherForgeCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityPreciousChestCompatibility;
 import rebelkeithy.mods.metallurgy.core.MetallurgyCore;
 import rebelkeithy.mods.metallurgy.core.MetallurgyTabs;
@@ -232,7 +237,10 @@ public class MetallurgyMachines
         abstractor = new BlockAbstractor(ConfigMachines.abstractorID, false).setHardness(3.5F).setUnlocalizedName("M3Abstractor").setHardness(2.0F).setCreativeTab(machineTab);
         GameRegistry.registerBlock(abstractor, BlockAbstractorItem.class, "BlockM3Abstractor");
         GameRegistry.registerTileEntity(TileEntityAbstractor.class, "TileEntityAbstractor");
-
+        if (MetallurgyCore.metallurgy2Compatibility) {
+            GameRegistry.registerTileEntity(TileEntityAbstractorCompatibility.class, "metalFantasyFurnace");
+        }
+        
         LanguageRegistry.addName(new ItemStack(abstractor, 1, 0), "Prometheum Abstractor");
         LanguageRegistry.addName(new ItemStack(abstractor, 1, 1), "Deep Iron Abstractor");
         LanguageRegistry.addName(new ItemStack(abstractor, 1, 2), "Black Steel Abstractor");
@@ -298,7 +306,10 @@ public class MetallurgyMachines
         forge = new BlockNetherForge(ConfigMachines.forgeID, false).setHardness(3.5F).setUnlocalizedName("NetherForge").setHardness(2.0F).setCreativeTab(machineTab);
         GameRegistry.registerBlock(forge, BlockNetherForgeItem.class, "BlockNetherForge");
         GameRegistry.registerTileEntity(TileEntityNetherForge.class, "TileEntityNetherForge");
-
+        if (MetallurgyCore.metallurgy2Compatibility) {
+        	GameRegistry.registerTileEntity(TileEntityNetherForgeCompatibility.class, "netherFurnace");
+        }
+        
         LanguageRegistry.addName(new ItemStack(forge, 1, 0), "Ignatius Smelter");
         LanguageRegistry.addName(new ItemStack(forge, 1, 1), "Shadow Iron Smelter");
         LanguageRegistry.addName(new ItemStack(forge, 1, 2), "Shadow Steel Smelter");
@@ -315,6 +326,10 @@ public class MetallurgyMachines
         furnace = new BlockMetalFurnace(ConfigMachines.furnaceID, false).setHardness(3.5F).setUnlocalizedName("MetallurgyFurnace").setHardness(2.0F).setCreativeTab(machineTab);
         GameRegistry.registerBlock(furnace, BlockMetalFurnaceItem.class, "BlockMetalFurnace");
         GameRegistry.registerTileEntity(TileEntityMetalFurnace.class, "TileEntityMetalFurnace");
+        if (MetallurgyCore.metallurgy2Compatibility) {
+        	GameRegistry.registerTileEntity(TileEntityMetalFurnaceCompatibility.class, "metalFurnace");
+        }
+        
         LanguageRegistry.addName(new ItemStack(furnace, 1, 0), "Copper Furnace");
         LanguageRegistry.addName(new ItemStack(furnace, 1, 1), "Bronze Furnace");
         LanguageRegistry.addName(new ItemStack(furnace, 1, 2), "Iron Furnace");
@@ -339,6 +354,9 @@ public class MetallurgyMachines
         lantern = new BlockLantern(ConfigMachines.lanternID).setHardness(0.1F).setUnlocalizedName("M3Lantern").setLightValue(1F).setCreativeTab(machineTab);
         GameRegistry.registerBlock(lantern, ItemBlockLantern.class, "M3Lantern");
         GameRegistry.registerTileEntity(TileEntityLantern.class, "TileEntityLantern");
+        if (MetallurgyCore.metallurgy2Compatibility) {
+        	GameRegistry.registerTileEntity(TileEntityLanternCompatibility.class, "Lantern");
+        }
         LanguageRegistry.addName(new ItemStack(lantern, 1, 0), "Red Lantern");
         LanguageRegistry.addName(new ItemStack(lantern, 1, 1), "Green Lantern");
         LanguageRegistry.addName(new ItemStack(lantern, 1, 2), "Blue Lantern");
@@ -384,6 +402,10 @@ public class MetallurgyMachines
         GameRegistry.registerBlock(mintStorage, "M3MintStorage");
         GameRegistry.registerTileEntity(TileEntityMint.class, "TileEntityMint");
         GameRegistry.registerTileEntity(TileEntityMintStorage.class, "TileEntityMintStorage");
+        if (MetallurgyCore.metallurgy2Compatibility) {
+        	GameRegistry.registerTileEntity(TileEntityMintStorageCompatibility.class, "Mint");
+        	GameRegistry.registerTileEntity(TileEntityMintStorageCompatibility.class, "MintStorage");
+        }
 
         LanguageRegistry.addName(mint, "Mint");
         LanguageRegistry.addName(mintStorage, "Mint Storage");
