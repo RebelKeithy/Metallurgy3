@@ -127,6 +127,7 @@ public class ConfigMachines
         glassDustID = config.get("Item IDs", "Glass Dusts", glassDustID).getInt();
         orbID = config.get("Item IDs", "Fantasy Orbs", orbID).getInt();
         sawDustID = config.get("Item IDs", "Saw Dust", sawDustID).getInt();
+        goldCogID = config.get("Item IDs", "Gold Cog", goldCogID).getInt();
         
         tradesEnabled = config.get("Mint", "Enable Trades", true).getBoolean(true);
 

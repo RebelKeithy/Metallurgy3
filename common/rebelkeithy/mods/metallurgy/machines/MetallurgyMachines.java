@@ -10,6 +10,7 @@ import rebelkeithy.mods.keithyutils.guiregistry.GuiRegistry;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityAbstractorCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityLanternCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityMetalFurnaceCompatibility;
+import rebelkeithy.mods.metallurgy.compatibility.TileEntityMintCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityMintStorageCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityNetherForgeCompatibility;
 import rebelkeithy.mods.metallurgy.compatibility.TileEntityPreciousChestCompatibility;
@@ -403,7 +404,7 @@ public class MetallurgyMachines
         GameRegistry.registerTileEntity(TileEntityMint.class, "TileEntityMint");
         GameRegistry.registerTileEntity(TileEntityMintStorage.class, "TileEntityMintStorage");
         if (MetallurgyCore.metallurgy2Compatibility) {
-        	GameRegistry.registerTileEntity(TileEntityMintStorageCompatibility.class, "Mint");
+        	GameRegistry.registerTileEntity(TileEntityMintCompatibility.class, "Mint");
         	GameRegistry.registerTileEntity(TileEntityMintStorageCompatibility.class, "MintStorage");
         }
 
