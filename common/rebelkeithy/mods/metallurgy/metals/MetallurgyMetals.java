@@ -24,6 +24,7 @@ import rebelkeithy.mods.metallurgy.integration.IndustrialCraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.RailcraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.ThaumcraftIntegration;
 import rebelkeithy.mods.metallurgy.integration.TreeCapitatorIntegration;
+import rebelkeithy.mods.metallurgy.machines.ConfigMachines;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemFertilizer;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.ItemIgniter;
 import rebelkeithy.mods.metallurgy.metals.utilityItems.tnt.BlockLargeTNT;
@@ -69,12 +70,15 @@ public class MetallurgyMetals
     public static CreativeTabs utilityTab;
 
     public static Configuration baseConfig;
+    public static Configuration vanillaConfig;
     public static Configuration utilityConfig;
     public static Configuration fantasyConfig;
 
     // Vanilla Items
     public static Item dustIron;
     public static Item dustGold;
+    public static int ironDustID = 29000;
+    public static int goldDustID = 29001;
 
     // Utility Items
     public static Item magnesiumIgniter;
@@ -193,6 +197,11 @@ public class MetallurgyMetals
         {
             fantasySet.getOreInfo("Oureclase").sword.addHitListener(swordEffects);
             fantasySet.getOreInfo("Oureclase").sword.setSubText("7Resistance I");
+        }
+        if (netherSet.getOreInfo("Aredrite").sword != null)
+        {
+            fantasySet.getOreInfo("Aredrite").sword.addHitListener(swordEffects);
+            fantasySet.getOreInfo("Aredrite").sword.setSubText("7Resistance I");
         }
         if (netherSet.getOreInfo("Astral Silver").sword != null)
         {
@@ -512,6 +521,18 @@ public class MetallurgyMetals
         {
         	baseConfig.save();
         }
+        
+        vanillaConfig = initConfig("Vanilla");
+        vanillaConfig.load();
+        
+        ironDustID = vanillaConfig.get("Item IDs", "Iron Dust", ironDustID).getInt();
+        goldDustID = vanillaConfig.get("Item IDs", "Gold Dust", goldDustID).getInt();
+        
+        if(vanillaConfig.hasChanged())
+        {
+        	vanillaConfig.save();
+        }
+        
 
         utilityConfig = initConfig("Utility");
         utilityConfig.load();
@@ -590,9 +611,9 @@ public class MetallurgyMetals
         enderSet = new MetalSet("Ender", MetalInfoDatabase.getSpreadsheetDataForSet("Ender"), enderTab);
         utilitySet = new MetalSet("Utility", MetalInfoDatabase.getSpreadsheetDataForSet("Utility"), utilityTab);
 
-        dustIron = new ItemMetallurgy(5100).setTextureName("Metallurgy:Vanilla/IronDust").setUnlocalizedName("Metallurgy:Vanilla/IronDust")
+        dustIron = new ItemMetallurgy(ironDustID).setTextureName("Metallurgy:Vanilla/IronDust").setUnlocalizedName("Metallurgy:Vanilla/IronDust")
                 .setCreativeTab(CreativeTabs.tabMaterials);
-        dustGold = new ItemMetallurgy(5101).setTextureName("Metallurgy:Vanilla/GoldDust").setUnlocalizedName("Metallurgy:Vanilla/GoldDust")
+        dustGold = new ItemMetallurgy(goldDustID).setTextureName("Metallurgy:Vanilla/GoldDust").setUnlocalizedName("Metallurgy:Vanilla/GoldDust")
                 .setCreativeTab(CreativeTabs.tabMaterials);
 
         if (isSetEnabled("Utility"))

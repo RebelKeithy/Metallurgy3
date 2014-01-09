@@ -13,7 +13,7 @@ public class GuiAbstractor extends GuiContainer
     private final TileEntityAbstractor abstractorInventory;
 
     String[] names =
-    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
+    { "Prometheum", "Deep Iron", "Black Steel", "Oureclase", "Aredrite", "Mithril", "Haderoth", "Orichalcum", "Adamantine", "Atlarus", "Tartarite" };
     int type;
 
     private final ResourceLocation background = new ResourceLocation("Metallurgy:textures/guis/abstracter.png");

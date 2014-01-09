@@ -10,15 +10,15 @@ import rebelkeithy.mods.metallurgy.machines.MetallurgyMachines;
 
 public class TileEntityMintStorage extends TileEntity implements IInventory
 {
-    private ItemStack[] chestContents = new ItemStack[6];
+    protected ItemStack[] chestContents = new ItemStack[6];
 
     /** The number of players currently using this chest */
     public int numUsingPlayers;
 
     /** Server sync counter (once per 20 ticks) */
-    private int ticksSinceSync;
+    protected int ticksSinceSync;
 
-    private int direction;
+    protected int direction;
 
     @Override
     public void closeChest()

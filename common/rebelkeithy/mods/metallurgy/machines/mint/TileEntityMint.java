@@ -20,7 +20,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class TileEntityMint extends TileEntity
 {
     public int direction = 0;
-    private int ingotId = 0;
+    protected int ingotId = 0;
     public int amount = 0;
 
     public int resetTime = 0;

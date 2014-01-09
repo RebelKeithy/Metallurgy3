@@ -33,7 +33,9 @@ public class MetallurgyCore
 
     @Instance(value = "Metallurgy3Core")
     public static MetallurgyCore instance;
-
+    
+	public static boolean metallurgy2Compatibility = false;
+    
     public static boolean spawnInAir = false;
 
     public static boolean DEBUG = true;
@@ -93,6 +95,9 @@ public class MetallurgyCore
 
         csvFiles = Arrays.asList(config.get("Metal Sets", "File List", "").getString().split("\\s*,\\s*"));
         setsToRead = Arrays.asList(config.get("Metal Sets", "Metal Set List", "").getString().split("\\s*,\\s*"));
+        
+        metallurgy2Compatibility = config.get("Compatibility", "Metallurgy 2", metallurgy2Compatibility).getBoolean (metallurgy2Compatibility);
+        
         log.info("reading sets " + setsToRead.size());
 
         if (config.hasChanged())
