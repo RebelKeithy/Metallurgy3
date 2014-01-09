@@ -74,7 +74,7 @@ public class MetallurgyMetals
     public static Configuration utilityConfig;
     public static Configuration fantasyConfig;
 
-    // m Items
+    // Vanilla Items
     public static Item dustIron;
     public static Item dustGold;
     public static int ironDustID = 29000;
