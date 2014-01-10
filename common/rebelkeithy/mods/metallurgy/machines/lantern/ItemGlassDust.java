@@ -12,56 +12,36 @@ import net.minecraft.util.Icon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemGlassDust extends Item 
+public class ItemGlassDust extends Item
 {
-	private Map<Integer, Icon> iconMap;
-	private static String[] names = {"Glass", "Red", "Green", "Blue", "Orange", "Yellow", "Purple", "Grey", "White"};
-	
-	public ItemGlassDust(int i) 
-	{
-		super(i);
-		setHasSubtypes(true);
-        this.setMaxDamage(0);
-	}
+    private Map<Integer, Icon> iconMap;
+    private static String[] names =
+    { "Glass", "Red", "Green", "Blue", "Orange", "Yellow", "Purple", "Grey", "White" };
 
-	@Override
-	public int getMetadata(int i) {
-		return i;
-	}
-	
+    public ItemGlassDust(int i)
+    {
+        super(i);
+        setHasSubtypes(true);
+        setMaxDamage(0);
+    }
+
     /**
      * Gets an icon index based on an item's damage value
      */
-	@Override
+    @Override
     public Icon getIconFromDamage(int par1)
     {
         return iconMap.get(par1);
     }
 
-	@Override
-	public String getUnlocalizedName(ItemStack itemstack) {
-		String name = "";
-		if(itemstack.getItemDamage() < 9)
-		 return getUnlocalizedName() + "." + names[itemstack.getItemDamage()];
-		
-		return getUnlocalizedName();
-	}
-
-	@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    @Override
+    public int getMetadata(int i)
     {
-		iconMap = new HashMap<Integer, Icon>();
-		iconMap.put(0, par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust"));
-    	for(int i = 1; i < 9; i++)
-    	{
-    		Icon icon = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust" + names[i]);
-    		iconMap.put(i, icon);
-    	}
+        return i;
     }
-    
-    @SideOnly(Side.CLIENT)
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SideOnly(Side.CLIENT)
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
@@ -71,6 +51,30 @@ public class ItemGlassDust extends Item
         for (int var4 = 0; var4 < 9; ++var4)
         {
             par3List.add(new ItemStack(par1, 1, var4));
+        }
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack itemstack)
+    {
+        if (itemstack.getItemDamage() < 9)
+        {
+            return getUnlocalizedName() + "." + names[itemstack.getItemDamage()];
+        }
+
+        return getUnlocalizedName();
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        iconMap = new HashMap<Integer, Icon>();
+        iconMap.put(0, par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust"));
+        for (int i = 1; i < 9; i++)
+        {
+            final Icon icon = par1IconRegister.registerIcon("Metallurgy:machines/lantern/GlassDust" + names[i]);
+            iconMap.put(i, icon);
         }
     }
 }

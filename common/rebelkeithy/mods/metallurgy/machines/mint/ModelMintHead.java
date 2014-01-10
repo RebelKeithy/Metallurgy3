@@ -1,22 +1,22 @@
 package rebelkeithy.mods.metallurgy.machines.mint;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-
 
 public class ModelMintHead extends ModelBase
 {
 
-    private ModelRenderer Body;
-    private ModelRenderer Shape2;
-    private ModelRenderer Shape3;
-    private ModelRenderer Shape4;
-    private ModelRenderer Shape5;
-    private ModelRenderer Bar0;
-    private ModelRenderer Bar1;
-    private ModelRenderer Bar2;
-    private ModelRenderer Bar3;
-    private ModelRenderer Head;
-    
+    private final ModelRenderer Body;
+    private final ModelRenderer Shape2;
+    private final ModelRenderer Shape3;
+    private final ModelRenderer Shape4;
+    private final ModelRenderer Shape5;
+    private final ModelRenderer Bar0;
+    private final ModelRenderer Bar1;
+    private final ModelRenderer Bar2;
+    private final ModelRenderer Bar3;
+    private final ModelRenderer Head;
+
     public ModelMintHead()
     {
         textureWidth = 64;
@@ -26,7 +26,7 @@ public class ModelMintHead extends ModelBase
         Body.addBox(0F, 11F, 0F, 16, 5, 16);
         Body.setTextureSize(64, 32);
         Body.mirror = true;
-        
+
         Shape2 = new ModelRenderer(this, 12, 0);
         Shape2.addBox(0F, 10F, 0F, 16, 1, 4);
         Shape2.setTextureSize(64, 32);
@@ -80,24 +80,18 @@ public class ModelMintHead extends ModelBase
      */
     public void renderAll()
     {
-    	/*
-        Body.render(0.0625F);
-        Shape2.render(0.0625F);
-        Shape3.render(0.0625F);
-        Shape4.render(0.0625F);
-        Shape5.render(0.0625F);
-        Bar0.render(0.0625F);
-        Bar1.render(0.0625F);
-        Bar2.render(0.0625F);
-        Bar3.render(0.0625F);
-        */
+        /*
+         * Body.render(0.0625F); Shape2.render(0.0625F); Shape3.render(0.0625F);
+         * Shape4.render(0.0625F); Shape5.render(0.0625F); Bar0.render(0.0625F);
+         * Bar1.render(0.0625F); Bar2.render(0.0625F); Bar3.render(0.0625F);
+         */
         Head.render(0.0625F);
     }
-    
+
     private void setRotation(ModelRenderer model, float x, float y, float z)
     {
-      model.rotateAngleX = x;
-      model.rotateAngleY = y;
-      model.rotateAngleZ = z;
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
     }
 }

@@ -10,65 +10,20 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemBlockColoredGlass extends ItemBlock
 {
-	public ItemBlockColoredGlass(int i) {
-		super(i);
-		setHasSubtypes(true);
-	}
+    public ItemBlockColoredGlass(int i)
+    {
+        super(i);
+        setHasSubtypes(true);
+    }
 
-	@Override
-	public int getMetadata(int i) {
-		return i;
-	}
+    @Override
+    public int getMetadata(int i)
+    {
+        return i;
+    }
 
-
-	@Override
-	public String getUnlocalizedName(ItemStack itemstack) {
-		String name = "";
-		switch (itemstack.getItemDamage()+1) {
-		case 0: {
-			name = "glass";
-			break;
-		}
-		case 1: {
-			name = "red";
-			break;
-		}
-		case 2: {
-			name = "green";
-			break;
-		}
-		case 3: {
-			name = "blue";
-			break;
-		}
-		case 4: {
-			name = "orange";
-			break;
-		}
-		case 5: {
-			name = "yellow";
-			break;
-		}
-		case 6: {
-			name = "purple";
-			break;
-		}
-		case 7: {
-			name = "grey";
-			break;
-		}
-		case 8: {
-			name = "white";
-			break;
-		}
-		default:
-			name = "error";
-		}
-		return getUnlocalizedName() + "." + name;
-	}
-
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @SideOnly(Side.CLIENT)
-
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
@@ -79,6 +34,63 @@ public class ItemBlockColoredGlass extends ItemBlock
         {
             par3List.add(new ItemStack(par1, 1, var4));
         }
+    }
+
+    @Override
+    public String getUnlocalizedName(ItemStack itemstack)
+    {
+        String name = "";
+        switch (itemstack.getItemDamage() + 1)
+        {
+        case 0:
+        {
+            name = "glass";
+            break;
+        }
+        case 1:
+        {
+            name = "red";
+            break;
+        }
+        case 2:
+        {
+            name = "green";
+            break;
+        }
+        case 3:
+        {
+            name = "blue";
+            break;
+        }
+        case 4:
+        {
+            name = "orange";
+            break;
+        }
+        case 5:
+        {
+            name = "yellow";
+            break;
+        }
+        case 6:
+        {
+            name = "purple";
+            break;
+        }
+        case 7:
+        {
+            name = "grey";
+            break;
+        }
+        case 8:
+        {
+            name = "white";
+            break;
+        }
+        default:
+            name = "error";
+        }
+        return getUnlocalizedName() + "." + name;
     }
 
 }

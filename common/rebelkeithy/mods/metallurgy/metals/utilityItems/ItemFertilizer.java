@@ -17,18 +17,12 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 public class ItemFertilizer extends Item
 {
-	public ItemFertilizer(int par1) 
-	{
-		super(par1);
-	}
-	
-    public ItemFertilizer setTextureName(String par1Str)
+    public ItemFertilizer(int par1)
     {
-        super.func_111206_d(par1Str);
-        return this;
+        super(par1);
     }
 
-	@Override
+    @Override
     public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
         if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack))
@@ -39,10 +33,10 @@ public class ItemFertilizer extends Item
         {
             int var11;
             int var12;
-            
+
             var11 = par3World.getBlockId(par4, par5, par6);
 
-            BonemealEvent event = new BonemealEvent(par2EntityPlayer, par3World, var11, par4, par5, par6);
+            final BonemealEvent event = new BonemealEvent(par2EntityPlayer, par3World, var11, par4, par5, par6);
             if (MinecraftForge.EVENT_BUS.post(event))
             {
                 return false;
@@ -61,7 +55,7 @@ public class ItemFertilizer extends Item
             {
                 if (!par3World.isRemote)
                 {
-                    ((BlockSapling)Block.sapling).growTree(par3World, par4, par5, par6, par3World.rand);
+                    ((BlockSapling) Block.sapling).growTree(par3World, par4, par5, par6, par3World.rand);
                     --par1ItemStack.stackSize;
                 }
 
@@ -70,7 +64,7 @@ public class ItemFertilizer extends Item
 
             if (var11 == Block.mushroomBrown.blockID || var11 == Block.mushroomRed.blockID)
             {
-                if (!par3World.isRemote && ((BlockMushroom)Block.blocksList[var11]).fertilizeMushroom(par3World, par4, par5, par6, par3World.rand))
+                if (!par3World.isRemote && ((BlockMushroom) Block.blocksList[var11]).fertilizeMushroom(par3World, par4, par5, par6, par3World.rand))
                 {
                     --par1ItemStack.stackSize;
                 }
@@ -87,7 +81,7 @@ public class ItemFertilizer extends Item
 
                 if (!par3World.isRemote)
                 {
-                    ((BlockStem)Block.blocksList[var11]).fertilizeStem(par3World, par4, par5, par6);
+                    ((BlockStem) Block.blocksList[var11]).fertilizeStem(par3World, par4, par5, par6);
                     --par1ItemStack.stackSize;
                 }
 
@@ -103,7 +97,7 @@ public class ItemFertilizer extends Item
 
                 if (!par3World.isRemote)
                 {
-                    ((BlockCrops)Block.blocksList[var11]).fertilize(par3World, par4, par5, par6);
+                    ((BlockCrops) Block.blocksList[var11]).fertilize(par3World, par4, par5, par6);
                     --par1ItemStack.stackSize;
                 }
 
@@ -164,10 +158,17 @@ public class ItemFertilizer extends Item
                 }
 
                 return true;
-                
+
             }
 
             return false;
         }
+    }
+
+    @Override
+    public ItemFertilizer setTextureName(String par1Str)
+    {
+        super.setTextureName(par1Str);
+        return this;
     }
 }

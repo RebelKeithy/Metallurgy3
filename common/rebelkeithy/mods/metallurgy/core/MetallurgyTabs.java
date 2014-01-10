@@ -4,22 +4,22 @@ import net.minecraft.creativetab.CreativeTabs;
 
 public class MetallurgyTabs extends CreativeTabs
 {
-	int iconID = 1;
+    int iconID = 1;
 
-	public MetallurgyTabs(String label) 
-	{
-		super(label);
-	}
-	
-	public void setIconItem(int id)
-	{
-		iconID = id;
-	}
-	
-	@Override
+    public MetallurgyTabs(String label)
+    {
+        super(label);
+    }
+
+    @Override
     public int getTabIconItemIndex()
     {
         return iconID;
+    }
+
+    public void setIconItem(int id)
+    {
+        iconID = id;
     }
 
 }
